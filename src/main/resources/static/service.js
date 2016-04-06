@@ -5,11 +5,11 @@
 angular.module('app.services', []).factory('UserService', ['$resource', function ($resource) {
 
     return $resource(
-        'http://localhost:8080/api/time/:id',
+        'http://localhost:8080/time/:id',
         {id: '@id'},
         {
-            update: {
-                method: 'PUT'
+            update:{
+                method: "PUT"
             }
         }
     );

@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.*;
 
-/**
- *
- */
+// TODO: 2016-04-06 :20:13 started coding on webinterface
 
 /**
  * Created by Anton on 2016-04-05.
@@ -23,6 +21,7 @@ import java.util.*;
 *             localhost:8080/api/time/{id}
 *             localhost:8080/api/time/{id}/times
 **/
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/time")
 public class TimeController {

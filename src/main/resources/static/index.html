@@ -13,58 +13,53 @@
             <h3>All users</h3>
             <div>{{allusers}}</div>
         </div>
+        <h3>Get with $http</h3>
+        <div>{{httpGet}}</div>
+        <div>
+        	<h3>Get a user</h3>
+            <form ng-submit="getUser()">
+                id: <input type="text"  ng-model="currentUser.id">
+                <input type="submit" value="get">
+                <h4>Got!</h4>
+                <div>{{currentUser}}</div>
+            </form>
+
+            <br>
+            <div>Update User</div>
+            <form ng-submit="updateUser()">
+               	id: <input type="text" ng-model="currentUser.id"><br>
+                firstName: <input type="text" ng-model="currentUser.firstName"><br>
+                lastName: <input type="text" ng-model="currentUser.lastName"><br>
+                rfid: <input type="text" ng-model="currentUser.rfid"><br>
+                samples: <p>{{currentUser.samples}}</p>
+                
+                <input type="submit" value="save">
+            </form>
+        </div>
+        <br>
+        
+        <div>
+            <div>Remove book</div>
+            <form ng-submit="delUser()">
+                id: <input type="text" ng-model="dUser.id">
+                <input type="submit" value="delete">
+            </form>
+            <div>Removed user {{dUser.firstName}}</div>
+            <div>{{dUser}}</div>
+        </div>
+
+		<br>
+        <div>
+            <div>Add User</div>
+            <form ng-submit="addUser()">
+                firstname: <input type="text" ng-model="aUser.firstName"><br>
+                lastname: <input type="text" ng-model="aUser.lastName"><br>
+                rfid: <input type="text" ng-model="aUser.rfid"><br>
+                <input type="submit" value="save">
+            </form>
+            <div>{{aUser}}</div>
+        </div>
     </div>
-
-    <!--<div>-->
-        <!--<div>Add book</div>-->
-        <!--<form ng-submit="addBook()">-->
-            <!--name: <input type="text" ng-model="abook.name"><br>-->
-            <!--isbn: <input type="text" ng-model="abook.isbn"><br>-->
-            <!--author: <input type="text" ng-model="abook.author"><br>-->
-            <!--pages: <input type="number" ng-model="abook.pages"><br>-->
-            <!--<input type="submit" value="save">-->
-        <!--</form>-->
-    <!--</div>-->
-    <!--<br>-->
-    <!--<div>-->
-        <!--<div>Remove book</div>-->
-        <!--<form ng-submit="delBook()">-->
-            <!--id: <input type="text" ng-model="delID">-->
-            <!--<input type="submit" value="delete">-->
-        <!--</form>-->
-    <!--</div>-->
-    <!--<br>-->
-    <!--<div>-->
-        <!--<div>Get Book</div>-->
-        <!--<form ng-submit="getBook()">-->
-            <!--id: <input type="text" ng-model="gbook.id">-->
-            <!--<input type="submit" value="get">-->
-        <!--</form>-->
-        <!--<br>-->
-        <!--<div>Update book</div>-->
-        <!--<form ng-submit="updateBook()">-->
-            <!--name: <input type="text" ng-model="gbook.name"><br>-->
-            <!--isbn: <input type="text" ng-model="gbook.isbn"><br>-->
-            <!--author: <input type="text" ng-model="gbook.author"><br>-->
-            <!--pages: <input type="number" ng-model="gbook.pages"><br>-->
-            <!--<input type="submit" value="save">-->
-        <!--</form>-->
-    <!--</div>-->
-
-    <!--<div>-->
-        <!--<h3>Got with $resource</h3>-->
-        <!--<div>{{rgot}}</div>-->
-
-        <!--<div>list of books</div>-->
-        <!--<ul>-->
-            <!--<li ng-repeat="rbook in rBooks">-->
-                <!--name= {{rbook.name}}-->
-                <!--isbn: {{rbook.isbn}}-->
-                <!--author: {{rbook.author}}-->
-                <!--pages: {{rbook.pages}}-->
-            <!--</li>-->
-        <!--</ul>-->
-    <!--</div>-->
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>

@@ -114,7 +114,7 @@ public class MemberService {
 //        System.out.println(hitler);
 
 	    //find file path
-	    Files.walk(Paths.get("src/main/java/org/demo/files")).forEach( filepath ->{
+	    Files.walk(Paths.get("src/main/java/org/demo/files")).forEach(filepath ->{
 		    if (Files.isRegularFile(filepath)) {
 			    System.out.println(filepath);
 		    }
