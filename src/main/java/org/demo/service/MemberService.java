@@ -104,7 +104,7 @@ public class MemberService {
     public static void main(String[] args) throws IOException {
 //	    File r = new File("src/main/java/org/demo/files/Lantagare.txt");
         MemberService dildo = new MemberService();
-	    HashMap<String, User> got = dildo.loadMember();
+
 //        HashMap<String, User> hitler = dildo.getUsers();
 //        System.out.println(hitler);
 
