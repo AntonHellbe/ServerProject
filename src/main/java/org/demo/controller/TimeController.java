@@ -20,10 +20,10 @@ public class TimeController {
     private HashMap<String, User> userMap = new HashMap<>();
 
     public TimeController() {
-        userList.add(new User("jonas","kkk","1","1"));
+        userList.add(new User("Jonas","Börebäck","RFID = 1","ID = 1"));
 
-        userList.add(new User("robin","kkk","2", "2"));
-        userList.add(new User("anton","kkk","3", "3"));
+        userList.add(new User("Robin","Johnsson","RFID = 2", "ID = 2"));
+        userList.add(new User("Anton","Hellbe","RFID = 3", "ID = 3"));
 
         userMap.put("1",userList.get(0));
         userMap.put("2",userList.get(1));
@@ -41,7 +41,6 @@ public class TimeController {
         TimeSamples timestamp = new TimeSamples();
         Map<String, Object> response = new LinkedHashMap<String, Object>();
         response.put("message", "TimeStamp created succesfully");
-
         response.put("Timestamp", timeStamps.add(timestamp));
 
         return response;
@@ -66,36 +65,18 @@ public class TimeController {
 
     @RequestMapping("/{id}/times")
     public ResponseEntity<ArrayList> getUsersTimeStamps(@PathVariable("id")  String id) {
-        System.out.println("hello from times");
-//        for(int i=0; i<timeStamps.size(); i++){
-//            if(timeStamps.get(i).getUserId().equals(id)){
-//
-//            }
-//        }
-        //TimeSamples timestamp = timeStamps.get(Integer.parseInt(id));
+
         User current = this.userMap.get(id);
         ArrayList<TimeSamples> listOfStamps = current.getSamples();
         System.out.println(listOfStamps.toString());
-//        if(timestamp == null) {
-//            return new ResponseEntity<TimeSamples>(HttpStatus.NOT_FOUND);
-//        }
 
         return new ResponseEntity<ArrayList>(listOfStamps, HttpStatus.OK);
     }
 
     @RequestMapping("/{id}")
     public ResponseEntity<User> getTimeStamp(@PathVariable("id")  String id) {
-//        for(int i=0; i<timeStamps.size(); i++){
-//            if(timeStamps.get(i).getUserId().equals(id)){
-//
-//            }
-//        }
-        //TimeSamples timestamp = timeStamps.get(Integer.parseInt(id));
-        User current = this.userMap.get(id);
 
-//        if(timestamp == null) {
-//            return new ResponseEntity<TimeSamples>(HttpStatus.NOT_FOUND);
-//        }
+        User current = this.userMap.get(id);
 
         return new ResponseEntity<User>(current, HttpStatus.OK);
     }
