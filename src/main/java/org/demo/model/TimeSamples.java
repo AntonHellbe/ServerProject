@@ -17,15 +17,12 @@ public class TimeSamples implements Serializable{
     private String userId;
     private Date date;
 
-
     public TimeSamples() {
         this.date = new Date();
         //userId = currentUser.getId();
     }
     public Date newTimeSample() {
-
         return date;
-
     }
 
     public String getUserId() {
