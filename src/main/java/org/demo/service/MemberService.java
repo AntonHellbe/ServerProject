@@ -5,6 +5,7 @@ import org.demo.model.User;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -66,7 +67,7 @@ public class MemberService {
      *
      * @return List of members
      **/
-    public HashMap<String, User> getUsers() {
+    public HashMap<String, User> getMap() {
         return memberTree;
     }
 
@@ -91,6 +92,10 @@ public class MemberService {
 
     public void setCurrentUserID(String rfid) {
         this.currentUserID = rfid;
+    }
+
+    public ArrayList<User> getUsers() {
+        return new ArrayList(memberTree.values());
     }
 
 

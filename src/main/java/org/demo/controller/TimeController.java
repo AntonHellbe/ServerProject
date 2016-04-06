@@ -2,10 +2,12 @@ package org.demo.controller;
 
 import org.demo.model.TimeSamples;
 import org.demo.model.User;
+import org.demo.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -30,14 +32,14 @@ public class TimeController {
     private HashMap<String, User> userMap = new HashMap<>();
 
     public TimeController() {
-        userList.add(new User("Jonas","Börebäck","RFID = 1","ID = 1"));
+        MemberService test = new MemberService();
+        try {
+            userMap = test.loadMember();
+            userList = test.getUsers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        userList.add(new User("Robin","Johnsson","RFID = 2", "ID = 2"));
-        userList.add(new User("Anton","Hellbe","RFID = 3", "ID = 3"));
-
-        userMap.put("1",userList.get(0));
-        userMap.put("2",userList.get(1));
-        userMap.put("3",userList.get(2));
 
         User temp = userMap.get("1");
         temp.newSample();
