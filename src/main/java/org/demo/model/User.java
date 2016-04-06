@@ -57,13 +57,4 @@ public class User {
         return samples;
     }
 
-    public static void main(String[] args) {
-
-        TimeSamples samples = new TimeSamples();
-        samples.newTimeSample();
-        User p1 = new User("Anton", "Hellbe", "345", "678");
-        System.out.println(p1.getSamples());
-
-    }
-
 }

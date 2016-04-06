@@ -1,12 +1,11 @@
 package org.demo.controller;
 
 import org.demo.model.TimeSamples;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.demo.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Timestamp;
 import java.util.*;
 
 /**
@@ -15,10 +14,24 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/time")
 public class TimeController {
-    private ArrayList<TimeSamples> timeStamps;
+    private ArrayList<TimeSamples> timeStamps = new ArrayList<>();
+    private ArrayList<User> userList = new ArrayList<>();
+    //stringrfid key , User value
+    private HashMap<String, User> userMap = new HashMap<>();
+
+    public TimeController() {
+        userList.add(new User("jonas","kkk","1","1"));
+
+        userList.add(new User("robin","kkk","2", "2"));
+        userList.add(new User("anton","kkk","3", "3"));
+
+        userMap.put("1",userList.get(0));
+        userMap.put("2",userList.get(1));
+        userMap.put("3",userList.get(2));
+    }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String, Object> timeStamps(@RequestBody Map <String, Object> timeMap){
+    public Map<String, Object> timeStamps(@RequestBody User usertest){
 
         TimeSamples timestamp = new TimeSamples();
         Map<String, Object> response = new LinkedHashMap<String, Object>();
@@ -42,23 +55,44 @@ public class TimeController {
     public Map<String, Object> getAllTimeStamps() {
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("totalTimestamps", timeStamps.size());
-        response.put("UserID", timeStamps);
+        response.put("Users", this.userList);
         return response;
     }
-    @RequestMapping("/time&{id}")
-    public ResponseEntity<TimeSamples> getTimeStamp(@PathVariable("id")  String id) {
+
+    @RequestMapping("/{id}/times")
+    public ResponseEntity<TimeSamples[]> getUsersTimeStamps(@PathVariable("id")  String id) {
+        System.out.println("hello from times");
 //        for(int i=0; i<timeStamps.size(); i++){
 //            if(timeStamps.get(i).getUserId().equals(id)){
 //
 //            }
 //        }
-        TimeSamples timestamp = timeStamps.get(Integer.parseInt(id));
+        //TimeSamples timestamp = timeStamps.get(Integer.parseInt(id));
+        User current = this.userMap.get(id);
+        TimeSamples[] listOfStamps = current.getSamples();
 
-        if(timestamp == null) {
-            return new ResponseEntity<TimeSamples>(HttpStatus.NOT_FOUND);
-        }
+//        if(timestamp == null) {
+//            return new ResponseEntity<TimeSamples>(HttpStatus.NOT_FOUND);
+//        }
 
-        return new ResponseEntity<TimeSamples>(timestamp, HttpStatus.OK);
+        return new ResponseEntity<TimeSamples[]>(listOfStamps, HttpStatus.OK);
+    }
+
+    @RequestMapping("/{id}")
+    public ResponseEntity<User> getTimeStamp(@PathVariable("id")  String id) {
+//        for(int i=0; i<timeStamps.size(); i++){
+//            if(timeStamps.get(i).getUserId().equals(id)){
+//
+//            }
+//        }
+        //TimeSamples timestamp = timeStamps.get(Integer.parseInt(id));
+        User current = this.userMap.get(id);
+
+//        if(timestamp == null) {
+//            return new ResponseEntity<TimeSamples>(HttpStatus.NOT_FOUND);
+//        }
+
+        return new ResponseEntity<User>(current, HttpStatus.OK);
     }
 
 
