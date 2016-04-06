@@ -6,7 +6,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Anton on 2016-04-06.
@@ -26,8 +25,8 @@ public class MemberService {
 
 	}
 
-	public void loadMember() throws IOException {
-        loadMember(path);
+	public HashMap<String, User> loadMember() throws IOException {
+        return loadMember(path);
     }
 
     /**
@@ -105,9 +104,11 @@ public class MemberService {
     public static void main(String[] args) throws IOException {
 //	    File r = new File("src/main/java/org/demo/files/Lantagare.txt");
         MemberService dildo = new MemberService();
-        dildo.loadMember();
+	    HashMap<String, User> got = dildo.loadMember();
 //        HashMap<String, User> hitler = dildo.getUsers();
 //        System.out.println(hitler);
+
+	    //find file path
 	    Files.walk(Paths.get("src/main/java/org/demo/files")).forEach( filepath ->{
 		    if (Files.isRegularFile(filepath)) {
 			    System.out.println(filepath);
