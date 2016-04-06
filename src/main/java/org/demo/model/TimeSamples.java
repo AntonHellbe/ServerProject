@@ -21,7 +21,7 @@ public class TimeSamples implements Serializable{
     public TimeSamples() {
 
     }
-    public String newTimeSample() {
+    public void newTimeSample() {
         Date date = new Date();
         this.userId = currentUser.getId();
     }
