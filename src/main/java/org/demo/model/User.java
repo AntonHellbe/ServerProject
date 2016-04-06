@@ -1,5 +1,8 @@
 package org.demo.model;
 import org.springframework.data.annotation.Id;
+
+import java.util.ArrayList;
+
 /**
  * Created by Anton on 2016-04-06.
  */
@@ -10,7 +13,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String rfid;
-    private TimeSamples[] samples;
+    private ArrayList<TimeSamples> samples = new ArrayList<>();
 
     @Id
     private String id;
@@ -53,8 +56,13 @@ public class User {
         return rfid;
     }
 
-    public TimeSamples[] getSamples() {
+    public ArrayList<TimeSamples> getSamples() {
         return samples;
     }
+
+    public void newSample() {
+       samples.add(new TimeSamples());
+}
+
 
 }

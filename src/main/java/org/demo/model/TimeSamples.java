@@ -19,11 +19,13 @@ public class TimeSamples implements Serializable{
 
 
     public TimeSamples() {
-
+        this.date = new Date();
+        //userId = currentUser.getId();
     }
-    public void newTimeSample() {
-        Date date = new Date();
-        this.userId = currentUser.getId();
+    public Date newTimeSample() {
+
+        return date;
+
     }
 
     public String getUserId() {
@@ -50,6 +52,11 @@ public class TimeSamples implements Serializable{
     public User getCurrentUser() {
         return currentUser;
     }
+
+    public String toString() {
+        return this.date.toString();
+    }
+
 
 
 

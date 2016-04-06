@@ -28,6 +28,11 @@ public class TimeController {
         userMap.put("1",userList.get(0));
         userMap.put("2",userList.get(1));
         userMap.put("3",userList.get(2));
+
+        User temp = userMap.get("1");
+        temp.newSample();
+        temp.newSample();
+
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -60,7 +65,7 @@ public class TimeController {
     }
 
     @RequestMapping("/{id}/times")
-    public ResponseEntity<TimeSamples[]> getUsersTimeStamps(@PathVariable("id")  String id) {
+    public ResponseEntity<ArrayList> getUsersTimeStamps(@PathVariable("id")  String id) {
         System.out.println("hello from times");
 //        for(int i=0; i<timeStamps.size(); i++){
 //            if(timeStamps.get(i).getUserId().equals(id)){
@@ -69,13 +74,13 @@ public class TimeController {
 //        }
         //TimeSamples timestamp = timeStamps.get(Integer.parseInt(id));
         User current = this.userMap.get(id);
-        TimeSamples[] listOfStamps = current.getSamples();
-
+        ArrayList<TimeSamples> listOfStamps = current.getSamples();
+        System.out.println(listOfStamps.toString());
 //        if(timestamp == null) {
 //            return new ResponseEntity<TimeSamples>(HttpStatus.NOT_FOUND);
 //        }
 
-        return new ResponseEntity<TimeSamples[]>(listOfStamps, HttpStatus.OK);
+        return new ResponseEntity<ArrayList>(listOfStamps, HttpStatus.OK);
     }
 
     @RequestMapping("/{id}")
