@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" ng-ap="app">
+<head>
+    <meta charset="UTF-8">
+    <title>I Tid</title>
+</head>
+<body>
+
+<!--/*-->
+<!--* Endpoints: localhost:8080/api/time-->
+<!--*             localhost:8080/api/time/{id}-->
+<!--*             localhost:8080/api/time/{id}/times-->
+<!--/-->
+<div ng-controller="AppCtrl">
+    <div>
+        <h3>all users</h3>
+        <div>{{allusers}}</div>
+    </div>
+    <div>
+        <h3>Current users times</h3>
+        <form ng-submit="getUser()">
+            id: <input type="text" ng-model="userId">
+            <input type="submit" value="getUser times">
+        </form>
+    </div>
+    <h3></h3>
+
+
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-resource.js"></script>
+<script src="app.js"></script>
+<script src="service.js"></script>
+<script src="controller.js"></script>
+</body>
+</html>

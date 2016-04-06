@@ -3,6 +3,8 @@ package org.demo.service;
 import org.demo.model.User;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,10 +18,15 @@ public class MemberService {
     private InputStream path;
 
     public MemberService(String path) {
-        this.path = getClass().getResourceAsStream("/" + path);
+//        this.path = getClass().getResourceAsStream("/" + path);
+        this.path = getClass().getResourceAsStream("src/main/java/org/demo/files/Lantagare.txt");
     }
 
-    public void loadMember() throws IOException {
+	public MemberService() {
+
+	}
+
+	public void loadMember() throws IOException {
         loadMember(path);
     }
 
@@ -32,10 +39,11 @@ public class MemberService {
 
     private HashMap<String, User> loadMember(InputStream path) throws IOException {
 
+	    String thePath = "src/main/java/org/demo/files/Lantagare.txt";
         memberTree = new HashMap<>();
         BufferedReader br;
         try {
-            br = new BufferedReader(new InputStreamReader(path));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(thePath)));
         } catch (Exception e) {
             throw new FileNotFoundException("Couldnt find MemberService File");
         }
@@ -43,7 +51,8 @@ public class MemberService {
         String[] parts;
         String text = br.readLine();
         while (text != null) {
-            parts = text.split(";");
+	        System.out.println(text);
+	        parts = text.split(";");
             User user = new User(parts[0], parts[1], parts[2], parts[3]);
             memberTree.put(user.getRfid(), user);
             text = br.readLine();
@@ -94,9 +103,15 @@ public class MemberService {
     }
 
     public static void main(String[] args) throws IOException {
-        MemberService dildo = new MemberService("org/demo/files/Lantagare.txt");
+//	    File r = new File("src/main/java/org/demo/files/Lantagare.txt");
+        MemberService dildo = new MemberService();
         dildo.loadMember();
-        HashMap<String, User> hitler = dildo.getUsers();
-        System.out.println(hitler);
+//        HashMap<String, User> hitler = dildo.getUsers();
+//        System.out.println(hitler);
+	    Files.walk(Paths.get("src/main/java/org/demo/files")).forEach( filepath ->{
+		    if (Files.isRegularFile(filepath)) {
+			    System.out.println(filepath);
+		    }
+	    });
     }
 }
