@@ -15,17 +15,26 @@ public class User {
     @Id
     private String id;
 
-    public User(String firstName, String lastName, String rfid, String id, ){
+    public User(String firstName, String lastName, String rfid, String id, TimeSamples[] samples){
         this.firstName = firstName;
         this.lastName = lastName;
         this.rfid = rfid;
         this.id = id;
+        this.samples = samples;
     }
 
     public boolean checkIdentity(String name) {
         if(name.equals(this.firstName)) {
             return true;
         }
+        return false;
+    }
+
+    public boolean checkRfid(String rfid) {
+        if(this.rfid.equals(rfid)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -48,4 +57,14 @@ public class User {
     public TimeSamples[] getSamples() {
         return samples;
     }
+
+    public static void main(String[] args) {
+        User p1 = new User("Anton", "Hellbe", "345", "678");
+        TimeSamples samples = new TimeSamples();
+        samples.newTimeSample();
+
+        System.out.println(p1.getSamples());
+
+    }
+
 }
