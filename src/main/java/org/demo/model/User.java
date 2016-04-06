@@ -15,12 +15,11 @@ public class User {
     @Id
     private String id;
 
-    public User(String firstName, String lastName, String rfid, String id, TimeSamples[] samples){
+    public User(String firstName, String lastName, String rfid, String id){
         this.firstName = firstName;
         this.lastName = lastName;
         this.rfid = rfid;
         this.id = id;
-        this.samples = samples;
     }
 
     public boolean checkIdentity(String name) {
@@ -59,10 +58,10 @@ public class User {
     }
 
     public static void main(String[] args) {
-        User p1 = new User("Anton", "Hellbe", "345", "678");
+
         TimeSamples samples = new TimeSamples();
         samples.newTimeSample();
-
+        User p1 = new User("Anton", "Hellbe", "345", "678");
         System.out.println(p1.getSamples());
 
     }
