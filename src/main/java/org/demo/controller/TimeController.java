@@ -11,6 +11,12 @@ import java.util.*;
 /**
  * Created by Anton on 2016-04-05.
  */
+
+/*
+* Endpoints: localhost:8080/api/time
+*             localhost:8080/api/time/{id}
+*             localhost:8080/api/time/{id}/times
+**/
 @RestController
 @RequestMapping("/api/time")
 public class TimeController {
