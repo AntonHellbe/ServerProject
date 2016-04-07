@@ -10,6 +10,19 @@ public class TimeStamp extends Stamp {
 
     private RfidKey rfidKey;
 
+	@Override
+	public String toString() {
+		return "TimeStamp{" +
+				"rfidKey=" + rfidKey +"\n"+
+				super.toString()+
+				'}';
+	}
+
+	public TimeStamp() {
+        super();
+
+    }
+
     public TimeStamp(Calendar date, boolean checkIn, RfidKey rfidkey) {
         super(date, checkIn);
         this.rfidKey = rfidkey;

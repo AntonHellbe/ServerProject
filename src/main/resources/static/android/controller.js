@@ -19,12 +19,13 @@ angular.module('app.controllers', []).controller('AppCtrl', function ($scope, $h
     $scope.getAll=function() {
         var id = $scope.currentUser.id;
         console.log("get all with id: " + id);
-        var id = $scope.currentUser.id;
-        
-//        $scope.allStamps = "get all with id "+id;
-        //$http.post('http://localhost:8080/android/all',{id:id}).then(function (response) {
-        //    $scope.allStamps = response;
-        //});
+        var id = $scope.currentUser.rfid;
+        var test = $scope.currentUser.rfid;
+        console.log("sending rfid: " + JSON.stringify(test));
+
+        $http.post('http://localhost:8080/android/all2/',test).then(function (response) {
+            $scope.allStamps = response;
+        });
 
         //$scope.currentUser = AndroidService.get({id:id});
     };
