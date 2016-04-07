@@ -5,7 +5,7 @@
 angular.module('app.services', []).factory('AndroidService', ['$resource', function ($resource) {
 
     return $resource(
-        'http://localhost:8080/time/:id',
+        'http://localhost:8080/android/:id',
         {id: '@id'},
         {
             update:{

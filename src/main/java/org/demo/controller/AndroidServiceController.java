@@ -15,6 +15,7 @@ import java.util.HashMap;
  * Created by Anton on 2016-04-07.
  */
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/android")
 public class AndroidServiceController {
