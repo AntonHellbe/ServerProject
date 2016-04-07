@@ -29,6 +29,23 @@ angular.module('app.controllers', []).controller('AppCtrl', function ($scope, $h
 
         //$scope.currentUser = AndroidService.get({id:id});
     };
+    
+    $scope.getBetween=function(){
+        
+        var id = $scope.currentUser.id;
+        $scope.currentUser = AndroidService.get({id:id});
+//         Calendar from= new GregorianCalendar(2014, 1, 06,10,00);
+//	    Calendar to= new GregorianCalendar(2014, 1, 06,16,00);
+//         var d = new Date(year, month, day, hours, minutes, seconds, milliseconds); 
+        var from = new Date(2014,1,06,10,00).getTime();
+        var to = new Date(2014,1,06,11,00).getTime();
+        var betweenData ={id,from,to};
+        $http.post('http://localhost:8080/android/between/',betweenData).then(function (response) {
+            $scope.betweenStamps = response;
+        });
+        
+        
+    }
 
     //
     //

@@ -45,6 +45,8 @@ public class PiServiceController {
 		timeStampMap.put(new RfidKey("2"), timeStamps);
 	}
 
+
+
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public User timeStampUser(@PathVariable("id") RfidKey rfidKey) {
 
@@ -61,5 +63,6 @@ public class PiServiceController {
 
 		return timeUser;
 	}
+	// TODO: 2016-04-07 klar med rest f;r PI 1h
 
 }

@@ -126,8 +126,13 @@ public class AndroidServiceController {
 	    });
 
 	    String key = betweenJSON.get("id").toString();
-	    Calendar from = (Calendar) betweenJSON.get("from");
-	    Calendar to = (Calendar) betweenJSON.get("to");
+
+//	    Date dt = new Date(betweenJSON.get("from").toString());
+	    Date from = new Date((Long) betweenJSON.get("from"));
+	    Date to = new Date((Long) betweenJSON.get("to"));
+
+//	    Calendar from = (Calendar) betweenJSON.get("from");
+//	    Calendar to = (Calendar) betweenJSON.get("to");
 
 	    // TODO Fix returning between list
 
@@ -136,9 +141,14 @@ public class AndroidServiceController {
 	    ArrayList<TimeStamp> userStamps = this.timeStampMap.get(rfidKey);
 	    ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
 
-//	    userStamps.forEach(timeStamp -> {
-////		    if(timeStamp.getDate().getTime().compareTo())
-//	    });
+	    userStamps.forEach(timeStamp -> {
+		    // TODO Fix missing timestamp date check
+//		    if(timeStamp.getDate().getTime().compareTo(from.getTime())){
+////
+//		    }
+		    betweenTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
+
+	    });
 
 
 
