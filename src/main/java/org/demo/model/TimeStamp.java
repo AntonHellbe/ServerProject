@@ -10,7 +10,7 @@ public class TimeStamp extends Stamp {
 
     private RfidKey rfidKey;
 
-	@Override
+    @Override
 	public String toString() {
 		return "TimeStamp{" +
 				"rfidKey=" + rfidKey +"\n"+
