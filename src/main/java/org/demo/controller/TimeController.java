@@ -70,7 +70,7 @@ public class TimeController {
     public Map<String, Object> getAllTimeStamps() {
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("totalTimestamps", timeStamps.size());
-        response.put("Users", this.userList);
+        response.put("User", userList.get(0).getFirstName() + " " + userList.get(0).getLastName());
         return response;
     }
 
