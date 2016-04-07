@@ -1,6 +1,7 @@
 package org.demo.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.crossstore.HashMapChangeSet;
 
 import java.util.ArrayList;
 
@@ -12,8 +13,7 @@ public class User {
 
 	private String firstName;
 	private String lastName;
-	private String rfid;
-	private ArrayList<TimeSamples> samples = new ArrayList<>();
+	private RfidKey key;
 
 	@Id
 	private String id;
@@ -25,10 +25,10 @@ public class User {
 		secretId++;
 	}
 
-	public User(String firstName, String lastName, String rfid, String id) {
+	public User(String firstName, String lastName, RfidKey rfid, String id) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.rfid = rfid;
+		this.key = rfid;
 		this.id = id;
 		try {
 			if (Integer.parseInt(id) > 0) {
@@ -55,7 +55,7 @@ public class User {
 	}
 
 	public boolean checkRfid(String rfid) {
-		if (this.rfid.equals(rfid)) {
+		if (this.key.equals(rfid)) {
 			return true;
 		}
 
@@ -74,14 +74,10 @@ public class User {
 		return id;
 	}
 
-	public String getRfid() {
-		return rfid;
+	public RfidKey getRfid() {
+		return key;
 	}
-
-	public ArrayList<TimeSamples> getSamples() {
-		return samples;
-	}
-
+	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -90,29 +86,21 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
-	}
-
-	public void setSamples(ArrayList<TimeSamples> samples) {
-		this.samples = samples;
+	public void setRfid(RfidKey rfid) {
+		this.key = rfid;
 	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void newSample() {
-		samples.add(new TimeSamples());
-	}
 
 	@Override
 	public String toString() {
 		return "User{" +
 				"firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
-				", rfid='" + rfid + '\'' +
-				", samples=" + samples +
+				", rfid='" + key + '\'' +
 				", id='" + id + '\'' +
 				'}';
 	}

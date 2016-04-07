@@ -8,19 +8,19 @@ import java.util.Calendar;
 public class TimeStamp extends Stamp {
 
 
-    private RfidKey rfidkey;
+    private RfidKey rfidKey;
 
     public TimeStamp(Calendar date, boolean checkIn, RfidKey rfidkey) {
         super(date, checkIn);
-        this.rfidkey = rfidkey;
+        this.rfidKey = rfidkey;
     }
 
     public RfidKey getRfidkey() {
-        return rfidkey;
+        return rfidKey;
     }
 
     public void setRfidkey(RfidKey rfidkey) {
-        this.rfidkey = rfidkey;
+        this.rfidKey = rfidkey;
     }
 
     public Calendar getDate() {

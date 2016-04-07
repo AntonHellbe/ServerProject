@@ -1,16 +1,16 @@
 package org.demo.controller;
 
+import org.demo.model.RfidKey;
 import org.demo.model.TimeSamples;
+import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+
 /**
  * Created by Anton on 2016-04-05.
  */
@@ -27,7 +27,8 @@ public class TimeControllerV2 {
 	private ArrayList<TimeSamples> timeStamps = new ArrayList<>();
 	private ArrayList<User> userList = new ArrayList<>();
 	//stringrfid key , User value
-	private HashMap<String, User> userMap = new HashMap<>();
+	private HashMap<RfidKey, User> userMap = new HashMap<>();
+	private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
 	public TimeControllerV2() {
 		MemberService test = new MemberService();
@@ -44,9 +45,6 @@ public class TimeControllerV2 {
 
 
 		User temp = userMap.get("1");
-		temp.newSample();
-		temp.newSample();
-
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -135,10 +133,10 @@ public class TimeControllerV2 {
 
 		if (updatedUserJSON.get("rfid") != null) {
 			System.out.println("update rfid");
-			currentUser.setRfid(updatedUserJSON.get("rfid").toString());
+			currentUser.getRfid().setId(updatedUserJSON.get("rfid").toString());
 		}
 
-		User updatedUser = userMap.replace(id, currentUser);
+		User updatedUser = userMap.replace(new RfidKey(id), currentUser);
 		userList.set(Integer.parseInt(id)-1, updatedUser);
 
 
@@ -153,7 +151,15 @@ public class TimeControllerV2 {
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/newTime")
 	public User timeStampUser (@PathVariable("id") String id){
 		User timeUser = this.userMap.get(id);
-		timeUser.newSample();
+		RfidKey key = timeUser.getRfid();
+		ArrayList<TimeStamp> userList = timeStampMap.get(key);
+		boolean state = false;
+		if(userList.size() % 2 == 0) {
+
+			userList.add(new TimeStamp(Calendar.getInstance(), state, key));
+		}
+		state = true;
+		userList.add(new TimeStamp(Calendar.getInstance(),state, key));
 
 		return timeUser;
 	}

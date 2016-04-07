@@ -6,4 +6,20 @@ package org.demo.model;
 public class RfidKey {
 
     private String id;
+
+    public RfidKey(String part) {
+        String id = part;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String toString() {
+        return id;
+    }
 }

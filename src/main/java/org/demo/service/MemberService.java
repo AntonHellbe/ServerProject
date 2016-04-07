@@ -1,5 +1,6 @@
 package org.demo.service;
 
+import org.demo.model.RfidKey;
 import org.demo.model.User;
 
 import java.io.*;
@@ -13,7 +14,7 @@ import java.util.HashMap;
  */
 public class MemberService {
 
-    private static HashMap<String, User> memberTree;
+    private static HashMap<RfidKey, User> memberTree;
     private String currentUserID;
     private InputStream path;
 
@@ -26,7 +27,7 @@ public class MemberService {
 
 	}
 
-	public HashMap<String, User> loadMember() throws IOException {
+	public HashMap<RfidKey, User> loadMember() throws IOException {
         return loadMember(path);
     }
 
@@ -37,7 +38,7 @@ public class MemberService {
      * @return Filled out memberTree, with all members added
      **/
 
-    private HashMap<String, User> loadMember(InputStream path) throws IOException {
+    private HashMap<RfidKey, User> loadMember(InputStream path) throws IOException {
 
 	    String thePath = "src/main/java/org/demo/files/Lantagare.txt";
         memberTree = new HashMap<>();
@@ -53,7 +54,7 @@ public class MemberService {
         while (text != null) {
 	        System.out.println(text);
 	        parts = text.split(";");
-            User user = new User(parts[0], parts[1], parts[2], parts[3]);
+            User user = new User(parts[0], parts[1], new RfidKey(parts[2]), parts[3]);
             memberTree.put(user.getRfid(), user);
             text = br.readLine();
         }
@@ -67,7 +68,7 @@ public class MemberService {
      *
      * @return List of members
      **/
-    public HashMap<String, User> getMap() {
+    public HashMap<RfidKey, User> getMap() {
         return memberTree;
     }
 
