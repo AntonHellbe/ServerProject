@@ -153,5 +153,11 @@ public class TimeControllerV2 {
 		return updatedUser;
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/newTime")
+	public void timeStampUser (@PathVariable("id") String id){
+		User timeUser = this.userMap.get(id);
+		timeUser.newSample();
+	}
+
 
 }
