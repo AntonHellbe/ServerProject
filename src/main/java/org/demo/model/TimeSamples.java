@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import com.mongodb.util.JSON;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -13,28 +16,21 @@ import java.util.Date;
 
 public class TimeSamples implements Serializable{
 
-    private User currentUser;
-    private String userId;
+    private boolean inCheckning;
     private Date date;
 
+
+
     public TimeSamples() {
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
         this.date = new Date();
-        //userId = currentUser.getId();
+
+        Calendar cal = Calendar.getInstance();
     }
     public Date newTimeSample() {
         return date;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     @JsonSerialize(using = DateSerializer.class)
@@ -44,10 +40,6 @@ public class TimeSamples implements Serializable{
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public User getCurrentUser() {
-        return currentUser;
     }
 
     public String toString() {

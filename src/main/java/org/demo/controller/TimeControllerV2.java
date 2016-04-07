@@ -10,19 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-/**
- *
- */
-
 /**
  * Created by Anton on 2016-04-05.
  */
 
 /*
-* Endpoints: localhost:8080/api/time
-*             localhost:8080/api/time/{id}
-*             localhost:8080/api/time/{id}/times
+* Endpoints: localhost:8080/time
+*             localhost:8080/time/{id}
+*             localhost:8080/time/{id}/times
 **/
 @CrossOrigin(origins = "*")
 @RestController
@@ -91,7 +86,7 @@ public class TimeControllerV2 {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ArrayList<User> getAllTimeStamps() {
+	public ArrayList<User> getAllUsers() {
 		System.out.println("Get all users");
 		Map<String, Object> response = new LinkedHashMap<>();
 		response.put("totalTimestamps", timeStamps.size());
@@ -122,7 +117,7 @@ public class TimeControllerV2 {
 			System.out.println("VALUE: "+obj.toString());
 		});
 
-		//get hte user
+		//get the user
 		User currentUser = userMap.get(id);
 
 		//check if i should update firstName
