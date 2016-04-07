@@ -40,6 +40,7 @@ public class AndroidServiceController {
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public User getUser(@PathVariable("id") String id){
         User wantedUser = this.userMap.get(id);
+        System.out.println(wantedUser);
         return wantedUser;
     }
 
@@ -64,8 +65,8 @@ public class AndroidServiceController {
      **/
     @RequestMapping(value = "/between", method = RequestMethod.POST)
     public ArrayList<AndroidStamp> getBetween(@RequestBody RfidKey rfidKey,
-                                              String from,
-                                              String to){
+                                              @RequestBody String from,
+                                              @RequestBody String to){
 
         ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
         User currentUser = userMap.get(rfidKey);

@@ -7,8 +7,8 @@ public class RfidKey {
 
     private String id;
 
-    public RfidKey(String part) {
-        String id = part;
+    public RfidKey(String id) {
+        this.id = id;
     }
 
     public String getId() {
@@ -17,9 +17,5 @@ public class RfidKey {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String toString() {
-        return id;
     }
 }
