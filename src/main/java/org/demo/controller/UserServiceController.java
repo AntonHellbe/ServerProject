@@ -32,29 +32,29 @@ public class UserServiceController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}/")
-    public ArrayList<TimeStamp> getAllTimeStamps(@PathVariable("id") String id) {
-        RfidKey rfidKey = new RfidKey(id);
-        ArrayList<TimeStamp> allTimes = new ArrayList<>();
-        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
-        userStamps.forEach(timeStamp -> {
-            allTimes.add(new TimeStamp(timeStamp.getDate(), timeStamp.getCheckIn(), timeStamp.getRfidkey()));
-
-        });
-        allTimes.forEach(timeStamp -> {
-            System.out.println(timeStamp);
-        });
-        return allTimes;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}/{stampId}")
-    public TimeStamp getTimeStamps(@PathVariable("id") String id, @PathVariable("stampId") int stampID) {
-        RfidKey rfidKey = new RfidKey(id);
-        ArrayList<TimeStamp> allTimes = new ArrayList<>();
-        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
-        System.out.println(userStamps.get(stampID));
-        return userStamps.get(stampID);
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/{id}/")
+//    public ArrayList<TimeStamp> getAllTimeStamps(@PathVariable("id") String id) {
+//        RfidKey rfidKey = new RfidKey(id);
+//        ArrayList<TimeStamp> allTimes = new ArrayList<>();
+//        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
+//        userStamps.forEach(timeStamp -> {
+//            allTimes.add(new TimeStamp(timeStamp.getDate(), timeStamp.getCheckIn(), timeStamp.getRfidkey()));
+//
+//        });
+//        allTimes.forEach(timeStamp -> {
+//            System.out.println(timeStamp);
+//        });
+//        return allTimes;
+//    }
+//
+//    @RequestMapping(method = RequestMethod.GET, value = "/{id}/{stampId}")
+//    public TimeStamp getTimeStamps(@PathVariable("id") String id, @PathVariable("stampId") int stampID) {
+//        RfidKey rfidKey = new RfidKey(id);
+//        ArrayList<TimeStamp> allTimes = new ArrayList<>();
+//        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
+//        System.out.println(userStamps.get(stampID));
+//        return userStamps.get(stampID);
+//    }
 
 
 
