@@ -58,7 +58,6 @@ public class AndroidServiceController {
 
     /**
      * Used when you want to get all the times of a given user
-     * @param rfidKey the rfid-key that is used to find the times created with the rfid-key
      * @return all the times associated with the rfid-key
      **/
 //    @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -117,12 +116,35 @@ public class AndroidServiceController {
      * @param to to what time we wanna search
      * @return the times associated with the rfid-key and in the period given
      **/
-    @RequestMapping(value = "/between", method = RequestMethod.POST)
-    public ArrayList<AndroidStamp> getBetween(@RequestBody RfidKey rfidKey,
-                                              @RequestBody String from,
-                                              @RequestBody String to){
+//
+//    @RequestMapping(value = "/all",method = RequestMethod.POST)
+//    public ArrayList<AndroidStamp> getAll(@RequestBody Map<String, Object> betweenJSON){
 
-        ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
+
+    @RequestMapping(value = "/between", method = RequestMethod.POST)
+    public ArrayList<AndroidStamp> getBetween(@RequestBody Map<String, Object> betweenJSON){
+
+	    betweenJSON.forEach((s, o) -> {
+		    System.out.println("[KEY]"+s+" [VALUE]"+o);
+	    });
+
+	    String key = betweenJSON.get("id").toString();
+	    Date from = (Date) betweenJSON.get("from");
+	    Date to = (Date) betweenJSON.get("to");
+
+	    // TODO Fix returning between list
+
+	    RfidKey rfidKey = new RfidKey(key);
+
+	    ArrayList<TimeStamp> userStamps = this.timeStampMap.get(rfidKey);
+	    ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
+
+//	    userStamps.forEach(timeStamp -> {
+//		    if(timeStamp.getDate() > from)
+//	    });
+
+
+
         User currentUser = userMap.get(rfidKey);
         return betweenTimes;
     }
