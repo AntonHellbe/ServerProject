@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class MemberService {
 
-    private static HashMap<RfidKey, User> memberTree;
+    private static HashMap<RfidKey, User> userMap;
     private String currentUserID;
     private InputStream path;
 
@@ -35,13 +35,13 @@ public class MemberService {
      * Reads from file and places data in a BST
      *
      * @param path file path to file with members
-     * @return Filled out memberTree, with all members added
+     * @return Filled out userMap, with all members added
      **/
 
     private HashMap<RfidKey, User> loadMember(InputStream path) throws IOException {
 
 	    String thePath = "src/main/java/org/demo/files/Lantagare.txt";
-        memberTree = new HashMap<>();
+        userMap = new HashMap<>();
         BufferedReader br;
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(thePath)));
@@ -55,12 +55,12 @@ public class MemberService {
 	        System.out.println(text);
 	        parts = text.split(";");
             User user = new User(parts[0], parts[1], new RfidKey(parts[2]), parts[3]);
-            memberTree.put(user.getRfid(), user);
+            userMap.put(user.getRfid(), user);
             text = br.readLine();
         }
         br.close();
 
-        return memberTree;
+        return userMap;
     }
 
     /**
@@ -69,7 +69,7 @@ public class MemberService {
      * @return List of members
      **/
     public HashMap<RfidKey, User> getMap() {
-        return memberTree;
+        return userMap;
     }
 
     /**
@@ -79,7 +79,7 @@ public class MemberService {
      **/
     public boolean userExists() throws NullPointerException {
         try {
-            return memberTree.containsValue(currentUserID);
+            return userMap.containsValue(currentUserID);
         } catch (Exception e) {
             throw new NullPointerException("Null pointer exception on finding member");
         }
@@ -96,15 +96,14 @@ public class MemberService {
     }
 
     public ArrayList<User> getUsers() {
-        return new ArrayList(memberTree.values());
+        return new ArrayList<User>(userMap.values());
     }
-
 
     /**
      * Fetches a specified member through the use of their memberID
      **/
     public User getCurrentUser() {
-        return this.memberTree.get(currentUserID);
+        return this.userMap.get(currentUserID);
     }
 
     public static void main(String[] args) throws IOException {
