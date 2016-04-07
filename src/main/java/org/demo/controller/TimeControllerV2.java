@@ -3,6 +3,7 @@ package org.demo.controller;
 import org.demo.model.TimeSamples;
 import org.demo.model.User;
 import org.demo.service.MemberService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -103,9 +104,10 @@ public class TimeControllerV2 {
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public User getTimeStamp(@PathVariable("id") String id) {
 		System.out.println("Get the user with id: "+id);
-		//get a user
+		//get a user with RFID
 		User gotUser = this.userMap.get(id);
 
+//		new ResponseEntity<User>("Couldnt find User", HttpStatus.NOT_FOUND);
 //        return new ResponseEntity<User>(current, HttpStatus.OK);
 		return gotUser;
 	}
