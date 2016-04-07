@@ -75,6 +75,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="angular" level="application" />
     <orderEntry type="library" name="angular-resource" level="application" />
-    <orderEntry type="library" name="angularjs-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="angular" level="application" />
+    <orderEntry type="library" name="angular-resource" level="application" />
   </component>
 </module>

@@ -58,6 +58,13 @@ angular.module('app.controllers', []).controller('AppCtrl', function ($scope, $h
 
 
     };
+    
+    $scope.addTimestamp= function(){
+       var id = $scope.currentUser.id; $http.get('http://localhost:8080/time/'+id+'/newTime').then(function (response) {
+        $scope.currentUser = response;
+       // $scope.allusers = UserService.query();
+    });
+    }
 
 
 
