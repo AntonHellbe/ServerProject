@@ -84,7 +84,7 @@ public class AndroidServiceController {
 
 
 	@RequestMapping(value = "/all",method = RequestMethod.POST)
-	public ArrayList<AndroidStamp> getAll2(@RequestBody Map<String, Object> rfidkeyJSON){
+	public ArrayList<AndroidStamp> getAll(@RequestBody Map<String, Object> rfidkeyJSON){
 
 		rfidkeyJSON.forEach((s, o) -> {
 			System.out.println("[KEY]"+s+" [VALUE]"+o);
