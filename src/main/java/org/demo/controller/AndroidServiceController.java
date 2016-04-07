@@ -62,28 +62,28 @@ public class AndroidServiceController {
      * @return all the times associated with the rfid-key
      **/
 //    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    @RequestMapping(value = "/all/{id}",method = RequestMethod.GET)
-    public ArrayList<AndroidStamp> getAll(@PathVariable("id") RfidKey rfidKey){
+//    @RequestMapping(value = "/all/{id}",method = RequestMethod.GET)
+//    public ArrayList<AndroidStamp> getAll(@PathVariable("id") RfidKey rfidKey){
+//
+//	    System.out.println("get all stamps for id "+rfidKey);
+//
+//	    ArrayList<AndroidStamp> allTimes = new ArrayList<>();
+////        User currentUser = userMap.get(rfidKey);
+//	    ArrayList<TimeStamp> userStamps = this.timeStampMap.get(rfidKey);
+//	    userStamps.forEach(timeStamp -> {
+//		    allTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
+//
+//	    });
+//
+//	    System.out.println("sending to client");
+//	    allTimes.forEach(item -> System.out.println(item));
+//
+//        return allTimes;
+//    }
 
-	    System.out.println("get all stamps for id "+rfidKey);
-
-	    ArrayList<AndroidStamp> allTimes = new ArrayList<>();
-//        User currentUser = userMap.get(rfidKey);
-	    ArrayList<TimeStamp> userStamps = this.timeStampMap.get(rfidKey);
-	    userStamps.forEach(timeStamp -> {
-		    allTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
-
-	    });
-
-	    System.out.println("sending to client");
-	    allTimes.forEach(item -> System.out.println(item));
-
-        return allTimes;
-    }
 
 
-
-	@RequestMapping(value = "/all2",method = RequestMethod.POST)
+	@RequestMapping(value = "/all",method = RequestMethod.POST)
 	public ArrayList<AndroidStamp> getAll2(@RequestBody Map<String, Object> rfidkeyJSON){
 
 		rfidkeyJSON.forEach((s, o) -> {
