@@ -20,15 +20,13 @@ import java.util.HashMap;
 public class AndroidServiceController {
 
     private ArrayList<TimeSamples> timeStamps = new ArrayList<>();
-    private ArrayList<User> userList = new ArrayList<>();
     //stringrfid key , User value
-    private HashMap<String, User> userMap = new HashMap<>();
+    private HashMap<RfidKey, User> userMap = new HashMap<>();
 
     public AndroidServiceController(){
         MemberService test = new MemberService();
         try {
             userMap = test.loadMember();
-            userList = test.getUsers();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,10 +59,14 @@ public class AndroidServiceController {
      * Used when you want to get all the times of a given user
      * @param rfidKey the rfid-key that is used to find the times created with the rfid-key
      * @param from from what time we wanna search
-     * @param too too what time we wanna search
+     * @param to to what time we wanna search
      * @return the times associated with the rfid-key and in the period given
      **/
-    public ArrayList<AndroidStamp> getBetween(@RequestBody RfidKey rfidKey, String from, String too){
+    @RequestMapping(value = "/between", method = RequestMethod.POST)
+    public ArrayList<AndroidStamp> getBetween(@RequestBody RfidKey rfidKey,
+                                              @RequestBody String from,
+                                              @RequestBody String to){
+
         ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
         User currentUser = userMap.get(rfidKey);
         return betweenTimes;
