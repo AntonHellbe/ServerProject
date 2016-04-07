@@ -25,16 +25,13 @@ import java.util.*;
 @RequestMapping("/time")
 public class TimeControllerV2 {
 	private ArrayList<TimeSamples> timeStamps = new ArrayList<>();
-	private ArrayList<User> userList = new ArrayList<>();
 	//stringrfid key , User value
 	private HashMap<RfidKey, User> userMap = new HashMap<>();
 	private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
-
 	public TimeControllerV2() {
 		MemberService test = new MemberService();
 		try {
 			userMap = test.loadMember();
-			userList = test.getUsers();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +48,6 @@ public class TimeControllerV2 {
 	public User timeStamps(@RequestBody User usertest) {
 		System.out.println("add User");
 		System.out.println(usertest);
-		this.userList.add(usertest);
 		User addUser = this.userMap.put(usertest.getRfid(), usertest);
 
 		return addUser;
@@ -67,18 +63,14 @@ public class TimeControllerV2 {
 		User removedUser = this.userMap.remove(id);
 
 		//remove the user from the list
-		this.userList.remove(theUser);
 
 		userMap.forEach((s, user) -> {
 			System.out.println("[KEY]: "+s+" [Value]: "+user.getFirstName());
 		});
 
-		User.setSecretId(userList.size());
 
 		System.out.println();
 		System.out.println();
-
-		userList.forEach(user -> System.out.println(user.getFirstName()));
 
 		//return the removed user
 		return removedUser;
@@ -88,9 +80,10 @@ public class TimeControllerV2 {
 	public ArrayList<User> getAllUsers() {
 		System.out.println("Get all users");
 		Map<String, Object> response = new LinkedHashMap<>();
+		ArrayList<User> userList = new ArrayList<>(userMap.values());
 		response.put("totalTimestamps", timeStamps.size());
-		response.put("Users", this.userList);
-		return this.userList;
+		response.put("Users", userList);
+		return userList;
 	}
 
 
@@ -137,7 +130,6 @@ public class TimeControllerV2 {
 		}
 
 		User updatedUser = userMap.replace(new RfidKey(id), currentUser);
-		userList.set(Integer.parseInt(id)-1, updatedUser);
 
 
 		System.out.println("updated map");

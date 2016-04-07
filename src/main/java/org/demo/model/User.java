@@ -30,13 +30,13 @@ public class User {
 		this.lastName = lastName;
 		this.key = rfid;
 		this.id = id;
-		try {
-			if (Integer.parseInt(id) > 0) {
-				secretId = Integer.parseInt(id);
-			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (Integer.parseInt(id) > 0) {
+//				secretId = Integer.parseInt(id);
+//			}
+//		} catch (NumberFormatException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public static int getSecretId() {
@@ -77,7 +77,7 @@ public class User {
 	public RfidKey getRfid() {
 		return key;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
