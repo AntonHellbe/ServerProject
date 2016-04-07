@@ -64,8 +64,8 @@ public class AndroidServiceController {
      **/
     @RequestMapping(value = "/between", method = RequestMethod.POST)
     public ArrayList<AndroidStamp> getBetween(@RequestBody RfidKey rfidKey,
-                                              @RequestBody String from,
-                                              @RequestBody String to){
+                                              String from,
+                                              String to){
 
         ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
         User currentUser = userMap.get(rfidKey);
