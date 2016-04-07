@@ -111,9 +111,6 @@ public class AndroidServiceController {
 
     /**
      * Used when you want to get all the times of a given user
-     * @param rfidKey the rfid-key that is used to find the times created with the rfid-key
-     * @param from from what time we wanna search
-     * @param to to what time we wanna search
      * @return the times associated with the rfid-key and in the period given
      **/
 //
@@ -129,8 +126,8 @@ public class AndroidServiceController {
 	    });
 
 	    String key = betweenJSON.get("id").toString();
-	    Date from = (Date) betweenJSON.get("from");
-	    Date to = (Date) betweenJSON.get("to");
+	    Calendar from = (Calendar) betweenJSON.get("from");
+	    Calendar to = (Calendar) betweenJSON.get("to");
 
 	    // TODO Fix returning between list
 
@@ -140,7 +137,7 @@ public class AndroidServiceController {
 	    ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
 
 //	    userStamps.forEach(timeStamp -> {
-//		    if(timeStamp.getDate() > from)
+////		    if(timeStamp.getDate().getTime().compareTo())
 //	    });
 
 
