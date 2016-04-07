@@ -23,7 +23,7 @@ angular.module('app.controllers', []).controller('AppCtrl', function ($scope, $h
         var test = $scope.currentUser.rfid;
         console.log("sending rfid: " + JSON.stringify(test));
 
-        $http.post('http://localhost:8080/android/all2/',test).then(function (response) {
+        $http.post('http://localhost:8080/android/all/',test).then(function (response) {
             $scope.allStamps = response;
         });
 
