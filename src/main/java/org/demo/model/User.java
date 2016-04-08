@@ -2,11 +2,13 @@ package org.demo.model;
 
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
+
 /**
  * Created by Anton on 2016-04-06.
  */
 
-public class User {
+public class User implements Serializable{
 
 	private String firstName;
 	private String lastName;

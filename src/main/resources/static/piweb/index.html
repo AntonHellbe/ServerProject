@@ -16,17 +16,28 @@
         <div>
             <h3>Get a user</h3>
             <form ng-submit="getUser()">
-                id: <input type="text"  ng-model="currentUser.id">
+                id: <input type="text" ng-model="currentUser.id">
                 <input type="submit" value="get">
+            </form>
+            <div>
                 <h4>Got!</h4>
                 <div>{{currentUser}}</div>
-            </form>
+            </div>
+            <div>
+                <h3>Get stamps for current User</h3>
+                <form ng-submit="getStamps()">
+                    id: <input type="text" ng-model="currentUser.id">
+                    <input type="submit" value="get">
+                </form>
+                <div>Got! Stamps</div>
+                <div>{{currentUser.stamps}}</div>
+            </div>
 
             <h3>Add new timestamp</h3>
             <form ng-submit="addTimestamp()">
                 id: <input type="text" ng-model="currentUser.id">
                 <input type="submit" value="add">
-                <h4>Got!</h4>
+                <h4>added stamp to user</h4>
                 <div>{{resultOfTimestamp}}</div>
             </form>
         </div>

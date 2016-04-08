@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 /**
@@ -28,6 +30,17 @@ public class ListRepository {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		Calendar from = new GregorianCalendar(2014, 1, 06, 10, 00);
+		Calendar to = new GregorianCalendar(2014, 1, 06, 16, 00);
+
+		ArrayList<TimeStamp> timeStamps = new ArrayList<>();
+
+		timeStamps.add(new TimeStamp(from, true, new RfidKey("1")));
+		timeStamps.add(new TimeStamp(to, false, new RfidKey("1")));
+
+		timeStampMap.put(new RfidKey("1"), timeStamps);
+		timeStampMap.put(new RfidKey("2"), timeStamps);
 	}
 
 	public HashMap<RfidKey, ArrayList<TimeStamp>> getTimeStampMap() {

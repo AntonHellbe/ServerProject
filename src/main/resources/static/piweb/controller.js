@@ -22,21 +22,33 @@ angular.module('app.controllers', []).controller('AppCtrl', function ($scope, $h
     $scope.getUser = function () {
         /** @namespace $scope.currentUser */
         var id = $scope.currentUser.id;
-        console.log("get user with id "+id);
+        console.log("get user with id " + id);
         $scope.currentUser = UserService.get({id: id});
 
     };
 
 
-    $scope.addTimestamp= function(){
+    $scope.addTimestamp = function () {
         console.log("Add time stamp");
-       var id = $scope.currentUser.id; $http.get('http://localhost:8080/pi/'+id).then(function (response) {
-        $scope.resultOfTimestamp = response.data;
-       // $scope.allusers = UserService.query();
-    });
-    }
+        var id = $scope.currentUser.id;
+        $http.get('http://localhost:8080/pi/' + id).then(function (response) {
+            $scope.resultOfTimestamp = response.data;
+            // $scope.allusers = UserService.query();
+        });
+    };
+
+    $scope.getStamps = function () {
+        
+        var id = $scope.currentUser.id;
+        console.log("get user stamps with id: "+id );
+        $http.get('http://localhost:8080/time/1').then(function (response) {
+            $scope.currentUser.stamps = response.data;
+            // $scope.allusers = UserService.query();
+        });
+        
+        
+    };
 
 
-
-
+//end of controller
 });

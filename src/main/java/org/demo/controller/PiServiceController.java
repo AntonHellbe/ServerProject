@@ -23,25 +23,15 @@ import java.util.HashMap;
 @RequestMapping("/pi")
 public class PiServiceController {
 
+
 	@Autowired
 	private ListRepository listRepository;
-	private final HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
-	private HashMap<RfidKey, User> userMap;
+	//private final HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
+	//private HashMap<RfidKey, User> userMap;
 
 	public PiServiceController() {
-		listRepository = new ListRepository();
-		userMap = listRepository.getUserMap();
 
-		Calendar from = new GregorianCalendar(2014, 1, 06, 10, 00);
-		Calendar to = new GregorianCalendar(2014, 1, 06, 16, 00);
 
-		ArrayList<TimeStamp> timeStamps = new ArrayList<>();
-
-		timeStamps.add(new TimeStamp(from, true, new RfidKey("1")));
-		timeStamps.add(new TimeStamp(to, false, new RfidKey("1")));
-
-		timeStampMap.put(new RfidKey("1"), timeStamps);
-		timeStampMap.put(new RfidKey("2"), timeStamps);
 	}
 
 
@@ -50,8 +40,8 @@ public class PiServiceController {
 	public User timeStampUser(@PathVariable("id") RfidKey rfidKey) {
 
 
-		User timeUser = this.userMap.get(rfidKey);
-		ArrayList<TimeStamp> userList = timeStampMap.get(rfidKey);
+		User timeUser = this.listRepository.getUserMap().get(rfidKey);
+		ArrayList<TimeStamp> userList = listRepository.getTimeStampMap().get(rfidKey);
 		boolean state = false;
 		if (userList.size() % 2 == 0) {
 
@@ -59,6 +49,8 @@ public class PiServiceController {
 		}
 		state = true;
 		userList.add(new TimeStamp(Calendar.getInstance(), state, rfidKey));
+		// TODO fixa sa att timestamps sparas po ratt stalle
+
 
 		return timeUser;
 	}

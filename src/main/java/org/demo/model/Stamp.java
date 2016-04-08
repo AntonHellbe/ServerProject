@@ -1,13 +1,20 @@
 package org.demo.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import org.springframework.data.annotation.Id;
 
 /**
  * Created by Anton on 2016-04-07.
  */
-public class Stamp {
+public class Stamp implements Serializable{
+
+	@JsonSerialize(using = CalendarSerializer.class)
     private Calendar date;
     private boolean checkIn;
 
