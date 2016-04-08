@@ -1,5 +1,6 @@
 package org.demo.controller;
 
+import org.demo.Repository.ListRepository;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
@@ -21,21 +22,20 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserServiceController {
 
+    @Autowired
+    private ListRepository listRepository;
 
     private HashMap<RfidKey, User> userMap = new HashMap<>();
     private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
     public UserServiceController() {
-        MemberService test = new MemberService();
-        try {
-            userMap = test.loadMember();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        listRepository = new ListRepository();
+        userMap = listRepository.getUserMap();
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<User> getAllUser() {
+        listRepository.getHello();
         System.out.println("Get all users");
         Map<String, Object> response = new LinkedHashMap<>();
         ArrayList<User> userList = new ArrayList<>(userMap.values());

@@ -1,9 +1,11 @@
 package org.demo.controller;
 
+import org.demo.Repository.ListRepository;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -23,6 +25,8 @@ import java.util.*;
 @RequestMapping("/time")
 public class TimeServiceController {
 
+    @Autowired
+    private ListRepository listRepository;
     private HashMap<RfidKey, User> userMap = new HashMap<>();
     private HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
@@ -30,12 +34,8 @@ public class TimeServiceController {
      * Controller that loads users from a Text file, just used until we get the database working
      **/
     public TimeServiceController() {
-        MemberService test = new MemberService();
-        try {
-            userMap = test.loadMember();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        listRepository = new ListRepository();
+        userMap = listRepository.getUserMap();
     }
 
     /**
@@ -44,7 +44,7 @@ public class TimeServiceController {
      * @param id the user
      * @return the time we searched added
      **/
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}/cT")
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}/ct")
     public TimeStamp createTime(@PathVariable("id") String id) {
         User currentUser = userMap.get(new RfidKey(id));
         System.out.println(currentUser.toString());
@@ -71,7 +71,7 @@ public class TimeServiceController {
      * @param stampId the id of the time to be deleted
      * @return the time we deleted
      **/
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dT")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dt")
     public TimeStamp deleteTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
         RfidKey rfidKey = new RfidKey(id);
         ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
@@ -87,7 +87,7 @@ public class TimeServiceController {
      * @param updatedTimeJSON JSON of the updated object
      * @return updated time
      **/
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}/uT")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}/ut")
     public TimeStamp updateTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId,
                                 @RequestBody Map<String, Object> updatedTimeJSON) {
         //TimeStamp currentTime = getTime(id, stampId);

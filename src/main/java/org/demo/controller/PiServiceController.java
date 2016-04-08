@@ -1,9 +1,11 @@
 package org.demo.controller;
 
+import org.demo.Repository.ListRepository;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -21,17 +23,14 @@ import java.util.HashMap;
 @RequestMapping("/pi")
 public class PiServiceController {
 
+	@Autowired
+	private ListRepository listRepository;
 	private final HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 	private HashMap<RfidKey, User> userMap;
 
 	public PiServiceController() {
-
-		MemberService test = new MemberService();
-		try {
-			userMap = test.loadMember();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		listRepository = new ListRepository();
+		userMap = listRepository.getUserMap();
 
 		Calendar from = new GregorianCalendar(2014, 1, 06, 10, 00);
 		Calendar to = new GregorianCalendar(2014, 1, 06, 16, 00);

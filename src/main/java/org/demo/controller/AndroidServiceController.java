@@ -1,7 +1,9 @@
 package org.demo.controller;
 
+import org.demo.Repository.ListRepository;
 import org.demo.model.*;
 import org.demo.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -16,18 +18,17 @@ import java.util.*;
 @RequestMapping("/android")
 public class AndroidServiceController {
 
+	@Autowired
+	private ListRepository listRepository;
+
 
     //stringrfid key , User value
     private HashMap<RfidKey, User> userMap = new HashMap<>();
 	HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
     public AndroidServiceController(){
-        MemberService test = new MemberService();
-        try {
-            userMap = test.loadMember();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		listRepository = new ListRepository();
+		userMap = listRepository.getUserMap();
 
 	    Calendar from= new GregorianCalendar(2014, 1, 06,10,00);
 	    Calendar to= new GregorianCalendar(2014, 1, 06,16,00);
