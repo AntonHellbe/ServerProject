@@ -24,6 +24,7 @@ public class UserServiceController {
 
     private HashMap<RfidKey, User> userMap = new HashMap<>();
     private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
+
     public UserServiceController() {
         MemberService test = new MemberService();
         try {

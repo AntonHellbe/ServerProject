@@ -22,6 +22,7 @@ public class User {
 		secretId++;
 	}
 
+
 	public User(String firstName, String lastName, RfidKey rfid, String id) {
 		this.firstName = firstName;
 		this.lastName = lastName;
