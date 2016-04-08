@@ -1,9 +1,6 @@
 package org.demo.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.crossstore.HashMapChangeSet;
-
-import java.util.ArrayList;
 
 /**
  * Created by Anton on 2016-04-06.

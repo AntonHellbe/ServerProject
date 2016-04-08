@@ -1,9 +1,11 @@
 package org.demo.controller;
 
+import org.demo.Repository.TimeRepository;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -21,21 +23,13 @@ import java.util.*;
 @RequestMapping("/time")
 public class TimeServiceController {
 
+    @Autowired
+    private TimeRepository timeRepository;
+
     private ArrayList<TimeStamp> timeStamps = new ArrayList<>();
     private HashMap<RfidKey, User> userMap = new HashMap<>();
     private HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
-    /**
-     *Controller that loads users from a Text file, just used until we get the database working
-     **/
-    public TimeServiceController() {
-        MemberService test = new MemberService();
-        try {
-            userMap = test.loadMember();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      *Assigns a new TimeStamp to the user
@@ -44,11 +38,12 @@ public class TimeServiceController {
      **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/cT")
     public TimeStamp createTime(@PathVariable("id")String id){
-        timeStamps.add(new TimeStamp(Calendar.getInstance(),(timeStamps.size() % 2 == 0),new RfidKey(id)));
+        TimeStamp newTime = (new TimeStamp(Calendar.getInstance(),(timeStamps.size() % 2 == 0),new RfidKey(id)));
+        timeStamps.add(newTime);
         timeStampMap.put(new RfidKey(id), timeStamps);
-        System.out.println("\n timeStampMap size : " + timeStamps.size());
-        //System.out.println(timeStamps.get(timeStamps.size()-1));
-        System.out.println("\ntimeStampMap :\n " + timeStamps.toString());
+        // TODO: 08/04/2016 check here
+        System.out.println(timeRepository.getHello());
+        //  timeRepository.save(newTime);
         return timeStamps.get(timeStamps.size()-1);
 
         //        User currentUser = userMap.get(new RfidKey(id));
@@ -69,6 +64,7 @@ public class TimeServiceController {
         RfidKey rfidKey = new RfidKey(id);
         ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
         TimeStamp removedTime = userStamps.remove(stampId);
+        //   timeRepository.delete(removedTime);
         return removedTime;
     }
 
@@ -101,6 +97,7 @@ public class TimeServiceController {
         //User updatedUser = userMap.replace(new RfidKey(id), currentUser);
         //timeStampMap.replace(currentUser.getRfid(),timeStamps);
         //TimeStamp updatedTime = timeStampMap.replace(currentUser.getRfid(),timeStamps).get(stampId);
+        //timeRepository.save(dildo);
         return dildo;
     }
 
@@ -116,6 +113,7 @@ public class TimeServiceController {
         ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
         if(userStamps.size() < stampId){return null;}
         System.out.println(userStamps.get(stampId));
+        //  timeRepository.findOne(stampId);
         return userStamps.get(stampId);
     }
 
@@ -138,6 +136,7 @@ public class TimeServiceController {
             System.out.println(timeStamp);
         });
         //if (allTimes.isEmpty()){return null;}
+        //  timeRepository.findOne(id);
         return allTimes;
     }
 }

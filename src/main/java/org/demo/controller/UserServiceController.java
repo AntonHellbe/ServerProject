@@ -1,11 +1,10 @@
 package org.demo.controller;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.demo.model.AndroidStamp;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -21,6 +20,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users")
 public class UserServiceController {
+
 
     private HashMap<RfidKey, User> userMap = new HashMap<>();
     private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
@@ -92,7 +92,8 @@ public class UserServiceController {
         System.out.println("Removing following user" + userToRemove.getFirstName());
 
         userToRemove = userMap.remove(userToRemove.getRfid());
-
+        //Removes the user??
+        //userRepository.delete(userToRemove);
         return userToRemove;
 
     }
@@ -104,6 +105,8 @@ public class UserServiceController {
         User newUser = new User(newUserJSON.get("firstName").toString(), newUserJSON.get("lastName").toString(), new RfidKey(newUserJSON.get("rfid").toString()), "10");
 
         userMap.put(newUser.getRfid(), newUser);
+        //Saves a user in mongoDb?
+        //userRepository.save(newUser);
 
         return newUser;
     }
