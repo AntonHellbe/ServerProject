@@ -18,7 +18,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/time")
+@RequestMapping("/user")
 public class UserServiceController {
 
     private HashMap<RfidKey, User> userMap = new HashMap<>();
@@ -31,6 +31,56 @@ public class UserServiceController {
             e.printStackTrace();
         }
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ArrayList<User> getAllUser() {
+        System.out.println("Get all users");
+        Map<String, Object> response = new LinkedHashMap<>();
+        ArrayList<User> userList = new ArrayList<>(userMap.values());
+        response.put("totalTimestamps", userList.size());
+        response.put("Users", userList);
+        return userList;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public User getUser(@PathVariable("id") String id) {
+        System.out.println("getUser with id" + id);
+        User gotUser = userMap.get(new RfidKey(id));
+
+        return gotUser;
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id")
+    public User updateUser(@PathVariable("id") String id,
+                           @RequestBody Map<String, Object> updatedUserJSON) {
+
+        System.out.println("Update user: " + id);
+
+        User currentUser = userMap.get(new RfidKey(id));
+
+        if(updatedUserJSON.get("firstName") != null) {
+            System.out.println("Username updated");
+            currentUser.setFirstName(updatedUserJSON.get("firstName").toString());
+        }
+
+        if(updatedUserJSON.get("lastName") != null) {
+            System.out.println("Lastname updated");
+            currentUser.setLastName(updatedUserJSON.get("lastName").toString());
+        }
+        if(updatedUserJSON.get("rfid") != null) {
+            System.out.println("RFID updated");
+            currentUser.setRfid(new RfidKey(updatedUserJSON.get("rfid").toString()));
+        }
+
+        User updatedUser = userMap.replace(currentUser.getRfid(), currentUser);
+
+        return updatedUser;
+
+
+    }
+
+
+
 
 //    @RequestMapping(method = RequestMethod.GET, value = "/{id}/")
 //    public ArrayList<TimeStamp> getAllTimeStamps(@PathVariable("id") String id) {

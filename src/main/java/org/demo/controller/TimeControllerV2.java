@@ -22,7 +22,7 @@
 //**/
 //@CrossOrigin(origins = "*")
 //@RestController
-//@RequestMapping("/timez")
+//@RequestMapping("/time")
 //public class TimeControllerV2 {
 //	private ArrayList<TimeSamples> timeStamps = new ArrayList<>();
 //	//stringrfid key , User value
@@ -76,15 +76,15 @@
 //		return removedUser;
 //	}
 //
-//	@RequestMapping(method = RequestMethod.GET)
-//	public ArrayList<User> getAllUsers() {
-//		System.out.println("Get all users");
-//		Map<String, Object> response = new LinkedHashMap<>();
-//		ArrayList<User> userList = new ArrayList<>(userMap.values());
-//		response.put("totalTimestamps", timeStamps.size());
-//		response.put("Users", userList);
-//		return userList;
-//	}
+////	@RequestMapping(method = RequestMethod.GET)
+////	public ArrayList<User> getAllUsers() {
+////		System.out.println("Get all users");
+////		Map<String, Object> response = new LinkedHashMap<>();
+////		ArrayList<User> userList = new ArrayList<>(userMap.values());
+////		response.put("totalTimestamps", timeStamps.size());
+////		response.put("Users", userList);
+////		return userList;
+////	}
 //
 //
 //	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
