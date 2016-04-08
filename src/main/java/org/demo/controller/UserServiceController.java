@@ -1,5 +1,6 @@
 package org.demo.controller;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.demo.model.AndroidStamp;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserServiceController {
 
     private HashMap<RfidKey, User> userMap = new HashMap<>();
@@ -50,11 +51,16 @@ public class UserServiceController {
         return gotUser;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id")
+    @RequestMapping(method = RequestMethod.PUT, value = "{id}")
     public User updateUser(@PathVariable("id") String id,
                            @RequestBody Map<String, Object> updatedUserJSON) {
 
         System.out.println("Update user: " + id);
+
+            updatedUserJSON.forEach((key, obj) -> {
+	        System.out.println("KEY: "+key);
+			System.out.println("VALUE: "+obj.toString());
+		});
 
         User currentUser = userMap.get(new RfidKey(id));
 
@@ -75,8 +81,31 @@ public class UserServiceController {
         User updatedUser = userMap.replace(currentUser.getRfid(), currentUser);
 
         return updatedUser;
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public User removeUser(@PathVariable("id") String id){
+        System.out.println("Remove following user" + id);
+
+        User userToRemove = userMap.get(new RfidKey(id));
+
+        System.out.println("Removing following user" + userToRemove.getFirstName());
+
+        userToRemove = userMap.remove(userToRemove.getRfid());
+
+        return userToRemove;
+
+    }
 
 
+    @RequestMapping(method = RequestMethod.POST, value = "/{id}")
+    public User addUser(@RequestBody Map<String, Object> newUserJSON){
+
+        User newUser = new User(newUserJSON.get("firstName").toString(), newUserJSON.get("lastName").toString(), new RfidKey(newUserJSON.get("rfid").toString()), "10");
+
+        userMap.put(newUser.getRfid(), newUser);
+
+        return newUser;
     }
 
 
