@@ -3,47 +3,71 @@
  */
 
 
-angular.module('app.controllers', []).controller('AppCtrl', function ($scope, $http, $log, UserService) {
+angular.module('app.controllers', []).controller('AppCtrl', function ($scope, $q, $http, $log, UserService) {
 
-    var users = [{name: "hello"}, {name: "lalal"}];
-    //$scope.allusers = users;
-    //$http.get('http://localhost:8080/time').then(function (response) {
-    //    $scope.httpGet = response;
-    //});
-    $scope.allusers = UserService.query();
-//    $scope.currentUser={};
+
+    //$scope.allusers = UserService.query();
+
+    UserService.query().$promise.then(
+        function (success) {
+            console.log("Success on get all");
+            $scope.allusers = success;
+        },
+        function (error) {
+            alert("Failed " + JSON.stringify(error));
+        },
+        function (update) {
+            alert("Got notification" + JSON.stringify(update));
+        });
+
+
     $scope.getUser = function () {
         /** @namespace $scope.currentUser */
-        var id = $scope.currentUser.id;
-        console.log("hello");
-        $scope.currentUser = UserService.get({id: id});
+        var id = {id:$scope.currentUser.id};
+        //$scope.currentUser = UserService.get(id);
+
+        UserService.get(id)
+            .$promise.then(
+            function (success) {
+                console.log("Successfuly got");
+                // $scope.items.push(success);
+                $scope.currentUser = success;
+            },
+            function (error) {
+                alert("Failed " + JSON.stringify(error));
+            },
+            function (update) {
+                alert("Got notification" + JSON.stringify(update));
+            });
+
+
     };
-
-    $scope.getUser = function () {
-        /** @namespace $scope.currentUser */
-        var id = $scope.currentUser.id;
-        console.log("get user with id " + id);
-        $scope.currentUser = UserService.get({id: id});
-
-    };
-
 
     $scope.addTimestamp = function () {
         console.log("Add time stamp");
         var id = $scope.currentUser.id;
-        $http.get('http://localhost:8080/pi/' + id).then(function (response) {
-            $scope.resultOfTimestamp = response.data;
-            // $scope.allusers = UserService.query();
+
+        $http.get('http://localhost:8080/pi/' + id).then(function successCallback(success){
+            $scope.resultOfTimestamp = success.data;
+        },function errorCallback(error){
+            alert("Failed " + JSON.stringify(error));
         });
+
+        //$http.get('http://localhost:8080/pi/' + id).then(function (response) {
+        //    $scope.resultOfTimestamp = response.data;
+        //    // $scope.allusers = UserService.query();
+        //});
     };
 
     $scope.getStamps = function () {
         
         var id = $scope.currentUser.id;
         console.log("get user stamps with id: "+id );
-        $http.get('http://localhost:8080/time/1').then(function (response) {
-            $scope.currentUser.stamps = response.data;
-            // $scope.allusers = UserService.query();
+        $http.get('http://localhost:8080/time/'+id).then(function (success) {
+            $scope.currentUser.stamps = success.data;
+
+        },function(error){
+            alert("Failed " + JSON.stringify(error));
         });
         
         
