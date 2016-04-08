@@ -106,18 +106,18 @@ public class MemberService {
         return this.userMap.get(currentUserID);
     }
 
-    public static void main(String[] args) throws IOException {
-//	    File r = new File("src/main/java/org/demo/files/Lantagare.txt");
-        MemberService dildo = new MemberService();
-
-//        HashMap<String, User> hitler = dildo.getUsers();
-//        System.out.println(hitler);
-
-	    //find file path
-	    Files.walk(Paths.get("src/main/java/org/demo/files")).forEach(filepath ->{
-		    if (Files.isRegularFile(filepath)) {
-			    System.out.println(filepath);
-		    }
-	    });
-    }
+//    public static void main(String[] args) throws IOException {
+////	    File r = new File("src/main/java/org/demo/files/Lantagare.txt");
+//        MemberService dildo = new MemberService();
+//
+////        HashMap<String, User> hitler = dildo.getUsers();
+////        System.out.println(hitler);
+//
+//	    //find file path
+//	    Files.walk(Paths.get("src/main/java/org/demo/files")).forEach(filepath ->{
+//		    if (Files.isRegularFile(filepath)) {
+//			    System.out.println(filepath);
+//		    }
+//	    });
+//    }
 }

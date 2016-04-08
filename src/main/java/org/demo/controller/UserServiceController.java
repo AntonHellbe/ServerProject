@@ -1,14 +1,12 @@
 package org.demo.controller;
 
-import org.demo.Repository.ListRepository;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
-import org.demo.service.MemberService;
+import org.demo.repository.ListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,20 +23,19 @@ public class UserServiceController {
     @Autowired
     private ListRepository listRepository;
 
-    private HashMap<RfidKey, User> userMap = new HashMap<>();
+//    private HashMap<RfidKey, User> userMap = new HashMap<>();
     private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
     public UserServiceController() {
-        listRepository = new ListRepository();
-        userMap = listRepository.getUserMap();
+//        listRepository = new ListRepository();
+//        userMap = listRepository.getUserMap();
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<User> getAllUser() {
-        listRepository.getHello();
         System.out.println("Get all users");
         Map<String, Object> response = new LinkedHashMap<>();
-        ArrayList<User> userList = new ArrayList<>(userMap.values());
+        ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
         response.put("totalTimestamps", userList.size());
         response.put("Users", userList);
         return userList;
@@ -47,7 +44,7 @@ public class UserServiceController {
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public User getUser(@PathVariable("id") String id) {
         System.out.println("getUser with id" + id);
-        User gotUser = userMap.get(new RfidKey(id));
+        User gotUser = listRepository.getUserMap().get(new RfidKey(id));
 
         return gotUser;
     }
@@ -63,7 +60,7 @@ public class UserServiceController {
 			System.out.println("VALUE: "+obj.toString());
 		});
 
-        User currentUser = userMap.get(new RfidKey(id));
+        User currentUser = listRepository.getUserMap().get(new RfidKey(id));
 
         if(updatedUserJSON.get("firstName") != null) {
             System.out.println("Username updated");
@@ -79,7 +76,7 @@ public class UserServiceController {
             currentUser.setRfid(new RfidKey(updatedUserJSON.get("rfid").toString()));
         }
 
-        User updatedUser = userMap.replace(currentUser.getRfid(), currentUser);
+        User updatedUser = listRepository.getUserMap().replace(currentUser.getRfid(), currentUser);
 
         return updatedUser;
     }
@@ -88,11 +85,11 @@ public class UserServiceController {
     public User removeUser(@PathVariable("id") String id){
         System.out.println("Remove following user" + id);
 
-        User userToRemove = userMap.get(new RfidKey(id));
+        User userToRemove = listRepository.getUserMap().get(new RfidKey(id));
 
         System.out.println("Removing following user" + userToRemove.getFirstName());
 
-        userToRemove = userMap.remove(userToRemove.getRfid());
+        userToRemove = listRepository.getUserMap().remove(userToRemove.getRfid());
         //Removes the user??
         //userRepository.delete(userToRemove);
         return userToRemove;
@@ -105,7 +102,7 @@ public class UserServiceController {
 
         User newUser = new User(newUserJSON.get("firstName").toString(), newUserJSON.get("lastName").toString(), new RfidKey(newUserJSON.get("rfid").toString()), "10");
 
-        userMap.put(newUser.getRfid(), newUser);
+        listRepository.getUserMap().put(newUser.getRfid(), newUser);
         //Saves a user in mongoDb?
         //userRepository.save(newUser);
 

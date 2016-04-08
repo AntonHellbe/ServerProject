@@ -1,7 +1,7 @@
 package org.demo.controller;
 
-import org.demo.Repository.ListRepository;
 import org.demo.model.*;
+import org.demo.repository.ListRepository;
 import org.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -129,13 +129,15 @@ public class AndroidServiceController {
 	    String key = betweenJSON.get("id").toString();
 
 //	    Date dt = new Date(betweenJSON.get("from").toString());
-	    Date from = new Date((Long) betweenJSON.get("from"));
-	    Date to = new Date((Long) betweenJSON.get("to"));
 
-//	    Calendar from = (Calendar) betweenJSON.get("from");
-//	    Calendar to = (Calendar) betweenJSON.get("to");
+	    Long fromDate = (Long) betweenJSON.get("from");
+	    Long  toDate = (Long) betweenJSON.get("to");
+	    Calendar from = new GregorianCalendar();
+	    from.setTimeInMillis(fromDate);
 
-	    // TODO Fix returning between list
+	    Calendar to= new GregorianCalendar();
+	    from.setTimeInMillis(toDate);
+
 
 	    RfidKey rfidKey = new RfidKey(key);
 
@@ -144,6 +146,8 @@ public class AndroidServiceController {
 
 	    userStamps.forEach(timeStamp -> {
 		    // TODO Fix missing timestamp date check
+//		    if () {
+//		    }
 //		    if(timeStamp.getDate().getTime().compareTo(from.getTime())){
 ////
 //		    }

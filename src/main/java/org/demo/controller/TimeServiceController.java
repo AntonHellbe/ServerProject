@@ -1,9 +1,9 @@
 package org.demo.controller;
 
-import org.demo.Repository.ListRepository;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
+import org.demo.repository.ListRepository;
 import org.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +27,15 @@ public class TimeServiceController {
 
     @Autowired
     private ListRepository listRepository;
-    private HashMap<RfidKey, User> userMap = new HashMap<>();
-    private HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
+//    private HashMap<RfidKey, User> userMap = new HashMap<>();
+//    private HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
     /**
      * Controller that loads users from a Text file, just used until we get the database working
      **/
     public TimeServiceController() {
-        listRepository = new ListRepository();
-        userMap = listRepository.getUserMap();
+//        listRepository = new ListRepository();
+//        userMap = listRepository.getUserMap();
     }
 
     /**
@@ -46,20 +46,20 @@ public class TimeServiceController {
      **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/ct")
     public TimeStamp createTime(@PathVariable("id") String id) {
-        User currentUser = userMap.get(new RfidKey(id));
+        User currentUser = listRepository.getUserMap().get(new RfidKey(id));
         System.out.println(currentUser.toString());
-        ArrayList<TimeStamp> temp = timeStampMap.get(currentUser.getRfid());
+        ArrayList<TimeStamp> temp = listRepository.getTimeStampMap().get(currentUser.getRfid());
         boolean state = true;
         TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentUser.getRfid());
         if(temp == null) {
             newStamp.setCheckIn(state);
             temp = new ArrayList<TimeStamp>();
             temp.add(newStamp);
-            timeStampMap.put(currentUser.getRfid(), temp);
+            listRepository.getTimeStampMap().put(currentUser.getRfid(), temp);
         }else {
-            state = timeStampMap.get(currentUser.getRfid()).size() % 2 == 0;
+            state = listRepository.getTimeStampMap().get(currentUser.getRfid()).size() % 2 == 0;
             newStamp.setCheckIn(state);
-            timeStampMap.get(currentUser.getRfid()).add(newStamp);
+            listRepository.getTimeStampMap().get(currentUser.getRfid()).add(newStamp);
         }
         return newStamp;
     }
@@ -74,7 +74,7 @@ public class TimeServiceController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dt")
     public TimeStamp deleteTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
         RfidKey rfidKey = new RfidKey(id);
-        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
+        ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
         TimeStamp removedTime = userStamps.remove(stampId);
         return removedTime;
     }
@@ -91,8 +91,8 @@ public class TimeServiceController {
     public TimeStamp updateTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId,
                                 @RequestBody Map<String, Object> updatedTimeJSON) {
         //TimeStamp currentTime = getTime(id, stampId);
-        User currentUser = userMap.get(new RfidKey(id));
-        ArrayList<TimeStamp> temp = timeStampMap.get(currentUser.getRfid());
+        User currentUser = listRepository.getUserMap().get(new RfidKey(id));
+        ArrayList<TimeStamp> temp = listRepository.getTimeStampMap().get(currentUser.getRfid());
         TimeStamp dildo = temp.get(stampId);
         Calendar cal = new GregorianCalendar();
         if (updatedTimeJSON.get("date") != null) {
@@ -122,7 +122,7 @@ public class TimeServiceController {
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/{stampId}")
     public TimeStamp getTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
         RfidKey rfidKey = new RfidKey(id);
-        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
+        ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
         if (userStamps.size() < stampId) {
             return null;
         }
@@ -136,11 +136,11 @@ public class TimeServiceController {
      * @param id the user
      * @return all the times for the user
      **/
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}/")
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ArrayList<TimeStamp> getAll(@PathVariable("id") String id) {
         RfidKey rfidKey = new RfidKey(id);
         ArrayList<TimeStamp> allTimes = new ArrayList<>();
-        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
+        ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
         if (userStamps == null) {
             return new ArrayList<>();
         }
