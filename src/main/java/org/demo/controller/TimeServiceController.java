@@ -36,7 +36,7 @@ public class TimeServiceController {
      * @param id the user
      * @return the time we searched added
      **/
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}/cT")
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}/ct")
     public TimeStamp createTime(@PathVariable("id")String id){
         TimeStamp newTime = (new TimeStamp(Calendar.getInstance(),(timeStamps.size() % 2 == 0),new RfidKey(id)));
         timeStamps.add(newTime);
@@ -59,7 +59,7 @@ public class TimeServiceController {
      * @param stampId the id of the time to be deleted
      * @return the time we deleted
      **/
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dT")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dt")
     public TimeStamp deleteTime(@PathVariable("id")String id, @PathVariable("stampId")int stampId){
         RfidKey rfidKey = new RfidKey(id);
         ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
@@ -75,7 +75,7 @@ public class TimeServiceController {
      * @param updatedTimeJSON JSON of the updated object
      * @return updated time
      **/
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}/uT")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}/ut")
     public TimeStamp updateTime(@PathVariable("id")String id,@PathVariable("stampId")int stampId,
                                 @RequestBody Map<String, Object> updatedTimeJSON){
         //TimeStamp currentTime = getTime(id, stampId);
