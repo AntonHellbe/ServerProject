@@ -55,24 +55,7 @@
 //
 //	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 //	public User deleteTimeStamp(@PathVariable("id") String id) {
-//		System.out.println("remove id: " + id);
-//		//find the user in the map
-//		User theUser = this.userMap.get(id);
-//		System.out.println("removing user: "+theUser.getFirstName());
-//		//remove the user from the map
 //		User removedUser = this.userMap.remove(id);
-//
-//		//remove the user from the list
-//
-//		userMap.forEach((s, user) -> {
-//			System.out.println("[KEY]: "+s+" [Value]: "+user.getFirstName());
-//		});
-//
-//
-//		System.out.println();
-//		System.out.println();
-//
-//		//return the removed user
 //		return removedUser;
 //	}
 //

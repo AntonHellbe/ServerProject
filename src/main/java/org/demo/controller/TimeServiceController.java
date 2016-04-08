@@ -12,16 +12,22 @@ import java.util.*;
 /**
  * Created by Robin_2 on 07/04/2016.
  */
+
+/**
+ *Class that creates and handles the TimeStamps that are assigned to users
+ **/
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/time")
 public class TimeServiceController {
 
     private ArrayList<TimeStamp> timeStamps = new ArrayList<>();
-    //stringrfid key , User value
     private HashMap<RfidKey, User> userMap = new HashMap<>();
     private HashMap<RfidKey, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
+    /**
+     *Controller that loads users from a Text file, just used until we get the database working
+     **/
     public TimeServiceController() {
         MemberService test = new MemberService();
         try {
@@ -31,6 +37,11 @@ public class TimeServiceController {
         }
     }
 
+    /**
+     *Assigns a new TimeStamp to the user
+     * @param id the user
+     * @return the time we searched added
+     **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/cT")
     public TimeStamp createTime(@PathVariable("id")String id){
         timeStamps.add(new TimeStamp(Calendar.getInstance(),(timeStamps.size() % 2 == 0),new RfidKey(id)));
@@ -39,31 +50,66 @@ public class TimeServiceController {
         //System.out.println(timeStamps.get(timeStamps.size()-1));
         System.out.println("\ntimeStampMap :\n " + timeStamps.toString());
         return timeStamps.get(timeStamps.size()-1);
+
+        //        User currentUser = userMap.get(new RfidKey(id));
+//        ArrayList<TimeStamp> temp = timeStampMap.get(currentUser.getRfid());
+//        temp.add(new TimeStamp(Calendar.getInstance(),(temp.size() % 2 == 0),currentUser.getRfid()));
+//        temp = timeStampMap.replace(currentUser.getRfid(), temp);
+//        return temp.get(temp.size()-1);
     }
 
+    /**
+     *Removes the given time of a specific user
+     * @param id the user
+     * @param stampId the id of the time to be deleted
+     * @return the time we deleted
+     **/
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dT")
     public TimeStamp deleteTime(@PathVariable("id")String id, @PathVariable("stampId")int stampId){
         RfidKey rfidKey = new RfidKey(id);
         ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
-        if(userStamps.size()-1 < Integer.parseInt(id)){return null;}
-        System.out.println(userStamps.get(stampId));
-        return userStamps.remove(stampId);
+        TimeStamp removedTime = userStamps.remove(stampId);
+        return removedTime;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}")
+    /**
+     *Updates the given time of a specific user
+     * @param id the user
+     * @param stampId the id of the time to be changed
+     * @param updatedTimeJSON JSON of the updated object
+     * @return updated time
+     **/
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}/uT")
     public TimeStamp updateTime(@PathVariable("id")String id,@PathVariable("stampId")int stampId,
-                                @RequestBody Map<String, Object> updatedUserJSON){
-        TimeStamp currentTime = getTime(id, stampId);
-        User currentUser = userMap.get(id);
-        if (updatedUserJSON.get("updatedTime") != null) {
-            System.out.println("update time");
-            currentTime.setDate((Calendar)updatedUserJSON.get("updatedTime"));
+                                @RequestBody Map<String, Object> updatedTimeJSON){
+        //TimeStamp currentTime = getTime(id, stampId);
+        User currentUser = userMap.get(new RfidKey(id));
+        ArrayList<TimeStamp> temp = timeStampMap.get(currentUser.getRfid());
+        TimeStamp dildo = temp.get(stampId);
+        Calendar cal = new GregorianCalendar();
+        if (updatedTimeJSON.get("date") != null) {
+            long date = Long.parseLong(updatedTimeJSON.get("date").toString());
+            cal.setTimeInMillis(date);
+            dildo.setDate(cal);
         }
-        timeStampMap.replace(currentUser.getRfid(),timeStamps);
-        TimeStamp updatedTime = getTime(id, stampId);
-        return updatedTime;
+        if (updatedTimeJSON.get("checkIn") != null) {
+            dildo.setCheckIn(updatedTimeJSON.get("checkIn").toString()=="true");
+        }
+        if (updatedTimeJSON.get("rfid") != null) {
+            dildo.setRfidkey(new RfidKey(updatedTimeJSON.get("rfid").toString()));
+        }
+        //User updatedUser = userMap.replace(new RfidKey(id), currentUser);
+        //timeStampMap.replace(currentUser.getRfid(),timeStamps);
+        //TimeStamp updatedTime = timeStampMap.replace(currentUser.getRfid(),timeStamps).get(stampId);
+        return dildo;
     }
 
+    /**
+     *Fetches the given time of a specific user
+     * @param id the user
+     * @param stampId the id of the time to be fetched
+     * @return the time we searched for
+     **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/{stampId}")
     public TimeStamp getTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId){
         RfidKey rfidKey = new RfidKey(id);
@@ -73,6 +119,11 @@ public class TimeServiceController {
         return userStamps.get(stampId);
     }
 
+    /**
+     *Fetches all the times assigned to the user
+     * @param id the user
+     * @return all the times for the user
+     **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/")
     public ArrayList<TimeStamp> getAll(@PathVariable("id") String id){
         RfidKey rfidKey = new RfidKey(id);
