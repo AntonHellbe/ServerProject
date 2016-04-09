@@ -54,4 +54,8 @@ public class ListRepository {
 	public HashMap<RfidKey, User> getUserMap() {
 		return userHashMap;
 	}
+
+	public void setUserMap(HashMap<RfidKey, User> userMap) {
+		this.userHashMap = userMap;
+	}
 }

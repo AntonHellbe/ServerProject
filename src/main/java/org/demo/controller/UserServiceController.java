@@ -21,96 +21,102 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserServiceController {
 
-    @Autowired
-    private ListRepository listRepository;
+	@Autowired
+	private ListRepository listRepository;
 
-//    private HashMap<RfidKey, User> userMap = new HashMap<>();
-    private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
+	//    private HashMap<RfidKey, User> userMap = new HashMap<>();
+	private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
-    public UserServiceController() {
+	public UserServiceController() {
 //        listRepository = new ListRepository();
 //        userMap = listRepository.getUserMap();
-    }
+	}
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ArrayList<User> getAllUser() {
-        System.out.println("Get all users");
-        Map<String, Object> response = new LinkedHashMap<>();
-        ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
-        response.put("totalTimestamps", userList.size());
-        response.put("Users", userList);
-        return userList;
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	public ArrayList<User> getAllUser() {
+		System.out.println("Get all users");
+		Map<String, Object> response = new LinkedHashMap<>();
+		ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
+		response.put("totalTimestamps", userList.size());
+		response.put("Users", userList);
+		return userList;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public User getUser(@PathVariable("id") String id) {
-        System.out.println("getUser with id" + id);
-        User gotUser = listRepository.getUserMap().get(new RfidKey(id));
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	public User getUser(@PathVariable("id") String id) {
+		System.out.println("getUser with id" + id);
+		User gotUser = listRepository.getUserMap().get(new RfidKey(id));
 
-        return gotUser;
-    }
+		return gotUser;
+	}
 
-    @RequestMapping(method = RequestMethod.PUT, value = "{id}")
-    public User updateUser(@PathVariable("id") String id,
-                           @RequestBody Map<String, Object> updatedUserJSON) {
+	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
+	public User updateUser(@PathVariable("id") String id,
+	                       @RequestBody Map<String, Object> updatedUserJSON) {
 
-        System.out.println("Update user: " + id);
+		System.out.println("Update user: " + id);
 
-            updatedUserJSON.forEach((key, obj) -> {
-	        System.out.println("KEY: "+key);
-			System.out.println("VALUE: "+obj.toString());
+		updatedUserJSON.forEach((key, obj) -> {
+			System.out.println("KEY: " + key);
+			System.out.println("VALUE: " + obj.toString());
 		});
 
-        User currentUser = listRepository.getUserMap().get(new RfidKey(id));
+		User currentUser = listRepository.getUserMap().get(new RfidKey(id));
 
-        if(updatedUserJSON.get("firstName") != null) {
-            System.out.println("Username updated");
-            currentUser.setFirstName(updatedUserJSON.get("firstName").toString());
-        }
+		if (updatedUserJSON.get("firstName") != null) {
+			System.out.println("Username updated");
+			currentUser.setFirstName(updatedUserJSON.get("firstName").toString());
+		}
 
-        if(updatedUserJSON.get("lastName") != null) {
-            System.out.println("Lastname updated");
-            currentUser.setLastName(updatedUserJSON.get("lastName").toString());
-        }
-        if(updatedUserJSON.get("rfid") != null) {
-            System.out.println("RFID updated");
-            currentUser.setRfid(new RfidKey(updatedUserJSON.get("rfid").toString()));
-        }
+		if (updatedUserJSON.get("lastName") != null) {
+			System.out.println("Lastname updated");
+			currentUser.setLastName(updatedUserJSON.get("lastName").toString());
+		}
+		if (updatedUserJSON.get("rfid") != null) {
+			System.out.println("RFID updated");
+			Map<String,String> rfid = (Map<String,String>) updatedUserJSON.get("rfid");
+			currentUser.setRfid(new RfidKey(rfid.get("id")));
+		}
 
-        User updatedUser = listRepository.getUserMap().replace(currentUser.getRfid(), currentUser);
+		User updatedUser = listRepository.getUserMap().replace(currentUser.getRfid(), currentUser);
 
-        return updatedUser;
-    }
+		return updatedUser;
+	}
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public User removeUser(@PathVariable("id") String id){
-        System.out.println("Remove following user" + id);
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public User removeUser(@PathVariable("id") String id) {
+		System.out.println("Remove following user" + id);
 
-        User userToRemove = listRepository.getUserMap().get(new RfidKey(id));
+		User userToRemove = listRepository.getUserMap().get(new RfidKey(id));
 
-        System.out.println("Removing following user" + userToRemove.getFirstName());
+		System.out.println("Removing following user" + userToRemove.getFirstName());
 
-        userToRemove = listRepository.getUserMap().remove(userToRemove.getRfid());
-        //Removes the user??
-        //userRepository.delete(userToRemove);
-        return userToRemove;
+		// TODO: 2016-04-09 :23:36 fixed so that remove works
+		HashMap<RfidKey, User> userMap = listRepository.getUserMap();
+		userToRemove = userMap.remove(userToRemove.getRfid());
+		listRepository.setUserMap(userMap);
 
-    }
+//        userToRemove = listRepository.getUserMap().remove(userToRemove.getRfid());
+		//Removes the user??
+		//userRepository.delete(userToRemove);
+		return userToRemove;
 
-
-    @RequestMapping(method = RequestMethod.POST, value = "/{id}")
-    public User addUser(@RequestBody Map<String, Object> newUserJSON){
-
-        User newUser = new User(newUserJSON.get("firstName").toString(), newUserJSON.get("lastName").toString(), new RfidKey(newUserJSON.get("rfid").toString()), "10");
-
-        listRepository.getUserMap().put(newUser.getRfid(), newUser);
-        //Saves a user in mongoDb?
-        //userRepository.save(newUser);
-
-        return newUser;
-    }
+	}
 
 
+	@RequestMapping(method = RequestMethod.POST)
+	public User addUser(@RequestBody Map<String, Object> newUserJSON) {
+
+		// TODO: 2016-04-09 :23:34 Hitta bug, la till alltid 10 som id andra till size
+		int id = listRepository.getUserMap().size();
+		User newUser = new User(newUserJSON.get("firstName").toString(), newUserJSON.get("lastName").toString(), new RfidKey(newUserJSON.get("rfid").toString()), String.valueOf(id));
+
+		listRepository.getUserMap().put(newUser.getRfid(), newUser);
+		//Saves a user in mongoDb?
+		//userRepository.save(newUser);
+
+		return newUser;
+	}
 
 
 //    @RequestMapping(method = RequestMethod.GET, value = "/{id}/")
@@ -136,10 +142,6 @@ public class UserServiceController {
 //        System.out.println(userStamps.get(stampID));
 //        return userStamps.get(stampID);
 //    }
-
-
-
-
 
 
 }

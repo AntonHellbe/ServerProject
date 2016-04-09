@@ -4,14 +4,13 @@ import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.repository.ListRepository;
-import org.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.sql.Time;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Map;
 
 /**
  * Created by Robin_2 on 07/04/2016.
@@ -154,4 +153,34 @@ public class TimeServiceController {
         //if (allTimes.isEmpty()){return null;}
         return allTimes;
     }
+
+	@RequestMapping(method = RequestMethod.POST, value = "/{id}")
+	public TimeStamp addTime(@PathVariable("id") String id) {
+		User currentUser = listRepository.getUserMap().get(new RfidKey(id));
+		System.out.println(currentUser.toString());
+		ArrayList<TimeStamp> temp = listRepository.getTimeStampMap().get(currentUser.getRfid());
+		boolean state = true;
+		TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentUser.getRfid());
+		if(temp == null) {
+			newStamp.setCheckIn(state);
+			temp = new ArrayList<TimeStamp>();
+			temp.add(newStamp);
+			listRepository.getTimeStampMap().put(currentUser.getRfid(), temp);
+		}else {
+			state = listRepository.getTimeStampMap().get(currentUser.getRfid()).size() % 2 == 0;
+			newStamp.setCheckIn(state);
+			listRepository.getTimeStampMap().get(currentUser.getRfid()).add(newStamp);
+		}
+		return newStamp;
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}")
+	public TimeStamp removeTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
+		RfidKey rfidKey = new RfidKey(id);
+		ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
+		TimeStamp removedTime = userStamps.remove(stampId);
+		// TODO: 2016-04-10 :00:40 hur vet klienten vad stampId:et ar!?
+		return removedTime;
+	}
+
 }

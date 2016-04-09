@@ -1,86 +1,132 @@
-<!doctype html>
-<html ng-app="app">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Hello AngularJS</title>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css"/>
 </head>
-
-<body>
-<div ng-controller="AppCtrl">
-    <h1>testing Rest with Angular OLD Not updated</h1>
-    <div>better try the new APIs</div>
-    <ul>
-		<li><a href="/andw">Android web</a></li>
-		<li><a href="/iweb">Item web</a></li>
-		<li><a href="/piw">PI web</a></li>
-    </ul>
-    <div>
-        <div>
-            <h3>All users</h3>
-            <div>{{allusers}}</div>
+<body ng-app="myApp">
+<div class="container" ng-controller="AppController">
+    <div class="page-header">
+        <h1>Rest for User <small>Implements the Rest interface</small></h1>
+    </div>
+    <div class="alert alert-info" role="alert" ng-hide="users &amp;&amp; users.length > 0">
+        There are no Users yet.
+    </div>
+    <form class="form-horizontal" role="form" ng-submit="addUser(newUser)">
+        <div class="form-group" ng-repeat="user in users">
+          	<div class="col-xs-1">
+                <button class="pull-right btn btn-primary" type="button" title="update"
+                        ng-click="updateUser(user)">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                </button>
+            </div>
+           	<div class="col-xs-8">
+				<label>
+					<span class="col-xs-2" >ID: {{user.id}} </span>
+					<input class="col-xs-3" type="text" ng-model="user.firstName" placeholder="missing firstname"/>
+					<input class="col-xs-3" type="text" ng-model="user.lastName" placeholder="missing lastname"/>
+					<div class="form-group">
+					    <label class="col-xs-2" for="rfidInputName">RFID</label>
+						<input class="col-xs-2" id="rfidInputName" type="text" ng-model="user.rfid.id" placeholder="missing RFID"/>					
+					</div>
+				</label>
+			</div>
+          	<div class="col-xs-1">
+                <button class="pull-right btn btn-danger" type="button" title="Delete"
+                        ng-click="deleteUser(user)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </div>
+           	
         </div>
-        <h3>Add new timestamp</h3>
-        <form ng-submit="addTimestamp()">
-                id: <input type="text"  ng-model="currentUser.id">
-                <input type="submit" value="add">
-                <h4>Got!</h4>
-                <div>{{currentUser}}</div>
-            </form>
-        <div>
-        	<h3>Get a user</h3>
-            <form ng-submit="getUser()">
-                id: <input type="text"  ng-model="currentUser.id">
-                <input type="submit" value="get">
-                <h4>Got!</h4>
-                <div>{{currentUser}}</div>
-            </form>
-
-            <br>
-            <div>Update User</div>
-            <form ng-submit="updateUser()">
-               	id: <input type="text" ng-model="currentUser.id"><br>
-                firstName: <input type="text" ng-model="currentUser.firstName"><br>
-                lastName: <input type="text" ng-model="currentUser.lastName"><br>
-                rfid: <input type="text" ng-model="currentUser.rfid.id"><br>
-                samples: <p>{{currentUser.samples}}</p>
-                
-                <input type="submit" value="save">
-            </form>
+        <hr/>
+        <label>Add User</label>
+        <div class="input-group col-xs-4">
+          	<input type="text" ng-model="newUser.firstName" placeholder="new user firstname"/>
+			<input type="text" ng-model="newUser.lastName" placeholder="new user lastname"/>
+			<input type="text" ng-model="newUser.rfid" placeholder="new user rfid"/>
+        	<span class="input-group-btn">
+				<button class="btn btn-default" type="submit" title="Add"
+				ng-disabled="!newUser.firstName && !newUser.lastName">
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
+			</span>
         </div>
         <br>
-        
-        <div>
-            <div>Remove book</div>
-            <form ng-submit="delUser()">
-                id: <input type="text" ng-model="dUser.id">
-                <input type="submit" value="delete">
-            </form>
-            <div>Removed user {{dUser.firstName}}</div>
-            <div>{{dUser}}</div>
+        <br>
+        <label>Get User</label>
+        <div class="input-group  col-xs-5">
+            <input type="text" class="form-control" ng-model="oldUser.rfid.id" placeholder="Enter the rfid for get a user"/>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-disabled="!oldUser" title="Get"
+                    ng-click = 'getUser(oldUser)'>
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+          </span>
         </div>
+        <div> Got</div>
+        <ul>
+        	<li>{{oldUser.id}}</li>
+        	<li>{{oldUser.firstName}} {{oldUser.lastName}}</li>
+        	<li>{{oldUser.rfid.id}}</li>
+        </ul>
+        <br>
 
-		<br>
-        <div>
-            <div>Add User</div>
-            <form ng-submit="addUser()">
-                firstname: <input type="text" ng-model="aUser.firstName"><br>
-                lastname: <input type="text" ng-model="aUser.lastName"><br>
-                rfid: <input type="text" ng-model="aUser.rfid"><br>
-                <input type="submit" value="save">
-            </form>
-            <div>{{aUser}}</div>
-        </div>
+    </form>
+    
+    <hr class="btn-primary">
+    
+	<div class="page-header">
+        <h1>Rest for Time <small>Implements the Rest interface</small></h1>
     </div>
-
+    
+    <label>Get User</label>
+        <div class="input-group  col-xs-5">
+            <input type="text" class="form-control" ng-model="oldUser.rfid.id" placeholder="Enter the rfid for get a user"/>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-disabled="!oldUser" title="Get"
+                    ng-click = 'getUser(oldUser)'>
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+          </span>
+        </div>
+        <div> Got</div>
+        <ul>
+        	<li>{{oldUser.id}}</li>
+        	<li>{{oldUser.firstName}} {{oldUser.lastName}}</li>
+        	<li>{{oldUser.rfid.id}}</li>
+        </ul>
+        <br>
+        <button class="btn btn-primary" ng-click="getStamps()"
+        	ng-disabled="!oldUser.id">
+        get timestamps</button>
+        <br>
+        <br>
+        
+        <div>list of stamps</div>
+        <ul>
+        	<li ng-repeat="stamp in oldUser.stamps">
+        	<label>{{stamp.date | date:"yyyy-MM-dd h:mm:ss"}} <strong>checkIn: {{stamp.checkIn}}</strong></label>
+        	<span>
+                <button class="btn btn-danger" type="button" title="Delete"
+                        ng-click="deleteStamp($index)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </span>
+            <br>
+            <br>
+        	</li>
+        </ul>
+        <br>
+        <button class="btn btn-primary" ng-click="addStamp()"
+        	ng-disabled="!oldUser.id">
+        add timestamps</button>
+    
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-resource.js"></script>
-<!--    <script src="angular.min.js"></script>-->
-
 <script src="app.js"></script>
-<script src="service.js"></script>
-<script src="controller.js"></script>
-
-
+<script src="controllers.js"></script>
+<script src="services.js"></script>
 </body>
 </html>
