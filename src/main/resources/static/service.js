@@ -5,7 +5,7 @@
 angular.module('app.services', []).factory('UserService', ['$resource', function ($resource) {
 
     return $resource(
-        'http://localhost:8080/user/:id',
+        'http://localhost:8080/users/:id',
         {id: '@id'},
         {
             update:{
