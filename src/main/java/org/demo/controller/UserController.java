@@ -24,44 +24,36 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
 
-	@Autowired
-	UserService userService;
-
-	//    private HashMap<RfidKey, User> userMap = new HashMap<>();
-	private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
-
-	public UserController() {
-//        listRepository = new ListRepository();
-//        userMap = listRepository.getUserMap();
-	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<ArrayList<User>> getAllUser() {
-		return userService.getAllUser();
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public ResponseEntity<User> getUser(@PathVariable("id") String id) {
-		return userService.getUser(id);
-	}
-
-	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
-	public ResponseEntity<User> updateUser(@PathVariable("id") String id,
-	                       @RequestBody Map<String, Object> updatedUserJSON) {
-
-		return userService.updateUser(id, updatedUserJSON);
-	}
-
-	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public ResponseEntity<User> removeUser(@PathVariable("id") String id) {
-		return userService.removeUser(id);
-
-	}
+    @Autowired
+    UserService userService;
 
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<User> addUser(@RequestBody Map<String, Object> newUserJSON) {
-		return userService.addUser(newUserJSON);
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<User>> getAllUser() {
+        return userService.getAllUser();
+    }
 
-	}
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ResponseEntity<User> getUser(@PathVariable("id") String id) {
+        return userService.getUser(id);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") String id,
+                                           @RequestBody Map<String, Object> updatedUserJSON) {
+
+        return userService.updateUser(id, updatedUserJSON);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public ResponseEntity<User> removeUser(@PathVariable("id") String id) {
+        return userService.removeUser(id);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<User> addUser(@RequestBody Map<String, Object> newUserJSON) {
+        return userService.addUser(newUserJSON);
+
+    }
 }
