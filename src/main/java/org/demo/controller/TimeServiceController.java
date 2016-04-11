@@ -92,23 +92,23 @@ public class TimeServiceController {
         //TimeStamp currentTime = getTime(id, stampId);
         User currentUser = listRepository.getUserMap().get(new RfidKey(id));
         ArrayList<TimeStamp> temp = listRepository.getTimeStampMap().get(currentUser.getRfid());
-        TimeStamp dildo = temp.get(stampId);
+        TimeStamp timeToUpdate = temp.get(stampId);
         Calendar cal = new GregorianCalendar();
         if (updatedTimeJSON.get("date") != null) {
             long date = Long.parseLong(updatedTimeJSON.get("date").toString());
             cal.setTimeInMillis(date);
-            dildo.setDate(cal);
+            timeToUpdate.setDate(cal);
         }
         if (updatedTimeJSON.get("checkIn") != null) {
-            dildo.setCheckIn(updatedTimeJSON.get("checkIn").toString() == "true");
+            timeToUpdate.setCheckIn(updatedTimeJSON.get("checkIn").toString() == "true");
         }
         if (updatedTimeJSON.get("rfid") != null) {
-            dildo.setRfidkey(new RfidKey(updatedTimeJSON.get("rfid").toString()));
+            timeToUpdate.setRfidkey(new RfidKey(updatedTimeJSON.get("rfid").toString()));
         }
         //User updatedUser = userMap.replace(new RfidKey(id), currentUser);
         //timeStampMap.replace(currentUser.getRfid(),timeStamps);
         //TimeStamp updatedTime = timeStampMap.replace(currentUser.getRfid(),timeStamps).get(stampId);
-        return dildo;
+        return timeToUpdate;
     }
 
     /**
