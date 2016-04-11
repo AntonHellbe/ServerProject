@@ -1,4 +1,4 @@
-package org.demo.service;
+package org.demo.service.databaseservice;
 
 import org.demo.model.User;
 import java.io.IOException;

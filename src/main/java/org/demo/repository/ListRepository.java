@@ -3,7 +3,7 @@ package org.demo.repository;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
-import org.demo.service.MemberService;
+import org.demo.service.databaseservice.MemberService;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

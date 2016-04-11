@@ -4,7 +4,7 @@
 //import org.demo.model.TimeSamples;
 //import org.demo.model.TimeStamp;
 //import org.demo.model.User;
-//import org.demo.service.MemberService;
+//import org.demo.service.databaseservice.MemberService;
 //
 //import java.io.IOException;
 //import java.util.ArrayList;

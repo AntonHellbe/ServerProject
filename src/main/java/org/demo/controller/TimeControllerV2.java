@@ -4,7 +4,7 @@
 //import org.demo.model.TimeSamples;
 //import org.demo.model.TimeStamp;
 //import org.demo.model.User;
-//import org.demo.service.MemberService;
+//import org.demo.service.databaseservice.MemberService;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.web.bind.annotation.*;
 //
