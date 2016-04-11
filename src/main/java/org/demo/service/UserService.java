@@ -1,47 +1,30 @@
 package org.demo.service;
+import org.demo.model.User;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import org.demo.model.Item;
-import org.demo.repository.ListRepository;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Anton on 2016-04-11.
  */
 
-@Service
-public class UserService implements ItemService {
+public interface UserService {
 
-    private ListRepository listRepository;
+    public ResponseEntity<ArrayList<User>> getAllUser();
 
-    @Override
-    public List<Item> findAll() {
-        return
-    }
+    public ResponseEntity<User> getUser(@PathVariable("id") String id);
 
-    @Override
-    public Item get(int id) {
-        return null;
-    }
+    public ResponseEntity<User> updateUser(@PathVariable("id") String id,
+                           @RequestBody Map<String, Object> updatedUserJSON);
 
-    @Override
-    public Integer getAId() {
-        return null;
-    }
+    public ResponseEntity<User> removeUser(@PathVariable("id") String id);
 
-    @Override
-    public Item save(Item item) {
-        return null;
-    }
+    public ResponseEntity<User> addUser(@RequestBody Map<String, Object> newUserJSON);
 
-    @Override
-    public Item update(Item updatedItem) {
-        return null;
-    }
 
-    @Override
-    public void delete(int id) {
-
-    }
 }

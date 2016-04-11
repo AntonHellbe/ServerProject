@@ -6,6 +6,8 @@ import org.demo.model.User;
 import org.demo.repository.ListRepository;
 import org.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.Map;
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	UserService userService;
 
 	//    private HashMap<RfidKey, User> userMap = new HashMap<>();
 	private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
@@ -34,115 +36,32 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ArrayList<User> getAllUser() {
-		System.out.println("Get all users");
-		Map<String, Object> response = new LinkedHashMap<>();
-		ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
-		response.put("totalTimestamps", userList.size());
-		response.put("Users", userList);
-		return userList;
+	public ResponseEntity<ArrayList<User>> getAllUser() {
+		return userService.getAllUser();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public User getUser(@PathVariable("id") String id) {
-		System.out.println("getUser with id" + id);
-		User gotUser = listRepository.getUserMap().get(new RfidKey(id));
-
-		return gotUser;
+	public ResponseEntity<User> getUser(@PathVariable("id") String id) {
+		return userService.getUser(id);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
-	public User updateUser(@PathVariable("id") String id,
+	public ResponseEntity<User> updateUser(@PathVariable("id") String id,
 	                       @RequestBody Map<String, Object> updatedUserJSON) {
 
-		System.out.println("Update user: " + id);
-
-		updatedUserJSON.forEach((key, obj) -> {
-			System.out.println("KEY: " + key);
-			System.out.println("VALUE: " + obj.toString());
-		});
-
-		User currentUser = listRepository.getUserMap().get(new RfidKey(id));
-
-		if (updatedUserJSON.get("firstName") != null) {
-			System.out.println("Username updated");
-			currentUser.setFirstName(updatedUserJSON.get("firstName").toString());
-		}
-
-		if (updatedUserJSON.get("lastName") != null) {
-			System.out.println("Lastname updated");
-			currentUser.setLastName(updatedUserJSON.get("lastName").toString());
-		}
-		if (updatedUserJSON.get("rfid") != null) {
-			System.out.println("RFID updated");
-			Map<String,String> rfid = (Map<String,String>) updatedUserJSON.get("rfid");
-			currentUser.setRfid(new RfidKey(rfid.get("id")));
-		}
-
-		User updatedUser = listRepository.getUserMap().replace(currentUser.getRfid(), currentUser);
-
-		return updatedUser;
+		return userService.updateUser(id, updatedUserJSON);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public User removeUser(@PathVariable("id") String id) {
-		System.out.println("Remove following user" + id);
-
-		User userToRemove = listRepository.getUserMap().get(new RfidKey(id));
-
-		System.out.println("Removing following user" + userToRemove.getFirstName());
-
-		// TODO: 2016-04-09 :23:36 fixed so that remove works
-		HashMap<RfidKey, User> userMap = listRepository.getUserMap();
-		userToRemove = userMap.remove(userToRemove.getRfid());
-		listRepository.setUserMap(userMap);
-
-//        userToRemove = listRepository.getUserMap().remove(userToRemove.getRfid());
-		//Removes the user??
-		//userRepository.delete(userToRemove);
-		return userToRemove;
+	public ResponseEntity<User> removeUser(@PathVariable("id") String id) {
+		return userService.removeUser(id);
 
 	}
 
 
 	@RequestMapping(method = RequestMethod.POST)
-	public User addUser(@RequestBody Map<String, Object> newUserJSON) {
+	public ResponseEntity<User> addUser(@RequestBody Map<String, Object> newUserJSON) {
+		return userService.addUser(newUserJSON);
 
-		// TODO: 2016-04-09 :23:34 Hitta bug, la till alltid 10 som id andra till size
-		int id = listRepository.getUserMap().size();
-		User newUser = new User(newUserJSON.get("firstName").toString(), newUserJSON.get("lastName").toString(), new RfidKey(newUserJSON.get("rfid").toString()), String.valueOf(id));
-
-		listRepository.getUserMap().put(newUser.getRfid(), newUser);
-		//Saves a user in mongoDb?
-		//userRepository.save(newUser);
-
-		return newUser;
 	}
-
-
-//    @RequestMapping(method = RequestMethod.GET, value = "/{id}/")
-//    public ArrayList<TimeStamp> getAllTimeStamps(@PathVariable("id") String id) {
-//        RfidKey rfidKey = new RfidKey(id);
-//        ArrayList<TimeStamp> allTimes = new ArrayList<>();
-//        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
-//        userStamps.forEach(timeStamp -> {
-//            allTimes.add(new TimeStamp(timeStamp.getDate(), timeStamp.getCheckIn(), timeStamp.getRfidkey()));
-//
-//        });
-//        allTimes.forEach(timeStamp -> {
-//            System.out.println(timeStamp);
-//        });
-//        return allTimes;
-//    }
-//
-//    @RequestMapping(method = RequestMethod.GET, value = "/{id}/{stampId}")
-//    public TimeStamp getTimeStamps(@PathVariable("id") String id, @PathVariable("stampId") int stampID) {
-//        RfidKey rfidKey = new RfidKey(id);
-//        ArrayList<TimeStamp> allTimes = new ArrayList<>();
-//        ArrayList<TimeStamp> userStamps = timeStampMap.get(rfidKey);
-//        System.out.println(userStamps.get(stampID));
-//        return userStamps.get(stampID);
-//    }
-
-
 }
