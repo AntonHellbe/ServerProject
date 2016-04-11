@@ -2,8 +2,12 @@ package org.demo.service.databaseservice;
 
 import org.demo.model.RfidKey;
 import org.demo.model.User;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,6 +16,7 @@ import java.util.HashMap;
 /**
  * Created by Anton on 2016-04-06.
  */
+@Component
 public class MemberService {
 
     private static HashMap<RfidKey, User> userMap;
@@ -20,7 +25,11 @@ public class MemberService {
 
     public MemberService(String path) {
 //        this.path = getClass().getResourceAsStream("/" + path);
-        this.path = getClass().getResourceAsStream("src/main/java/org/demo/files/Lantagare.txt");
+	    //Resource resource = resourceLoader.getResource("classpath:/files/Lantagare.txt");
+
+
+
+//        this.path = getClass().getResourceAsStream("src/main/java/org/demo/files/Lantagare.txt");
     }
 
 	public MemberService() {
@@ -40,11 +49,12 @@ public class MemberService {
 
     private HashMap<RfidKey, User> loadMember(InputStream path) throws IOException {
 
-	    String thePath = "src/main/java/org/demo/files/Lantagare.txt";
+	    ClassPathResource cpr = new ClassPathResource("files/Lantagare.txt");
+
         userMap = new HashMap<>();
         BufferedReader br;
         try {
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(thePath)));
+	        br = new BufferedReader(new InputStreamReader(cpr.getInputStream()));
         } catch (Exception e) {
             throw new FileNotFoundException("Couldnt find MemberService File");
         }
