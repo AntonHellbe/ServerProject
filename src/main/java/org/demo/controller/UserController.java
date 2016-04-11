@@ -4,6 +4,7 @@ import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.repository.ListRepository;
+import org.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,15 +20,15 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
-public class UserServiceController {
+public class UserController {
 
 	@Autowired
-	private ListRepository listRepository;
+	private UserService userService;
 
 	//    private HashMap<RfidKey, User> userMap = new HashMap<>();
 	private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
-	public UserServiceController() {
+	public UserController() {
 //        listRepository = new ListRepository();
 //        userMap = listRepository.getUserMap();
 	}
