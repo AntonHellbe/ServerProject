@@ -5,7 +5,7 @@
  * Controller for the Angular project
  */
 (function (angular) {
-    var AppController = function ($scope, $q, User, Time) {
+    var AppController = function ($scope, $q, User, Time, Pi) {
 
         //on init all the items are fetched from server
         //with a promise onsuccess update list
@@ -31,7 +31,7 @@
             var newUser = new User({
                 firstName : inputs.firstName,
                 lastName : inputs.lastName,
-                rfid: {id:inputs.rfid}
+                rfid: inputs.rfid
             });
             //server call for add
             User.save(newUser)
@@ -150,7 +150,7 @@
                 });
 		}
 		
-		$scope.deleteStamp=function(stampId){
+		$scope.deleteStamp=function(stampId, idx){
 			console.log("remove id "+stampId);
             //$scope.oldUser.stamps.splice(stampId,stampId);
             var userid = $scope.oldUser.rfid.id;
@@ -158,9 +158,8 @@
 			Time.remove({id: userid},{stampId:stampId})
                 .$promise.then(
                 function (success) {
-                    console.log("Successfuly Removed User");
-                    $scope.oldUser.stamps.splice(stampId,stampId);
-                    //$scope.oldUser.stamps.splice($scope.users.indexOf(stampId), 1);
+                    console.log("Successfuly Removed Stamp");
+                    $scope.oldUser.stamps.splice(idx,1);
                 },
                 function (error) {
                     alert("Failed " + JSON.stringify(error));
@@ -169,13 +168,31 @@
                     alert("Got notification" + JSON.stringify(update));
                 });
 		};
+
+        $scope.getPiStamp= function(piUser)
+        {
+            console.log("do Pi Stamp for id "+piUser.rfid);
+
+            Pi.doStamp(piUser.rfid)
+                .$promise.then(
+                function (success) {
+                    console.log("Successfuly sent to pi service!");
+                    $scope.piUser.answear = success;
+                },
+                function (error) {
+                    alert("Failed " + JSON.stringify(error));
+                },
+                function (update) {
+                    alert("Got notification" + JSON.stringify(update));
+                });
+        }
 		
 		
         //end of controller
     };
 
     //setup the controller injects needed Libs
-    AppController.$inject = ['$scope', '$q', 'User', 'Time'];
+    AppController.$inject = ['$scope', '$q', 'User', 'Time', 'Pi'];
     angular.module("myApp.controllers").controller("AppController", AppController);
 }(angular));
 

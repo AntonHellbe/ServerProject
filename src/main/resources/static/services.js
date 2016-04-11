@@ -44,3 +44,23 @@
     ItemFactory.$inject = ['$resource'];
     angular.module("myApp.services").factory("Time", ItemFactory);
 }(angular));
+
+(function(angular) {
+    var ItemFactory = function($resource) {
+        return $resource('http://localhost:8080/pi/:id', {
+            id: '@id'
+        }, {
+            
+            save:{
+                method: "POST"
+            },
+            doStamp:{
+                method: "GET"
+            }
+            
+        });
+    };
+
+    ItemFactory.$inject = ['$resource'];
+    angular.module("myApp.services").factory("Pi", ItemFactory);
+}(angular));

@@ -1,5 +1,7 @@
 package org.demo.model;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Calendar;
 
 /**
@@ -7,12 +9,17 @@ import java.util.Calendar;
  */
 public class TimeStamp extends Stamp {
 
+	@Id
+	private int id;
+
+	static int secretId= 0;
 
     private RfidKey rfidKey;
 
     @Override
 	public String toString() {
 		return "TimeStamp{" +
+				"ID=" + id +"\n"+
 				"rfidKey=" + rfidKey +"\n"+
 				super.toString()+
 				'}';
@@ -20,15 +27,27 @@ public class TimeStamp extends Stamp {
 
 	public TimeStamp() {
         super();
+		this.id = secretId;
+		secretId++;
 
     }
 
     public TimeStamp(Calendar date, boolean checkIn, RfidKey rfidkey) {
         super(date, checkIn);
         this.rfidKey = rfidkey;
+	    this.id = secretId;
+	    secretId++;
     }
 
-    public RfidKey getRfidkey() {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public RfidKey getRfidkey() {
         return rfidKey;
     }
 

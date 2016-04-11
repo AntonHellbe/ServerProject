@@ -37,11 +37,11 @@ public class    TimeServiceController {
      * @param stampId the id of the time to be deleted
      * @return the time we deleted
      **/
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dt")
-    public ResponseEntity<TimeStamp> deleteTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
-        return timeService.deleteTime(id, stampId);
-    }
-
+//    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dt")
+//    public ResponseEntity<TimeStamp> deleteTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
+//        return timeService.deleteTime(id, stampId);
+//    }
+//
     /**
      * Updates the given time of a specific user
      *
@@ -50,7 +50,7 @@ public class    TimeServiceController {
      * @param updatedTimeJSON JSON of the updated object
      * @return updated time
      **/
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}/ut")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}")
     public ResponseEntity<TimeStamp> updateTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId,
                                                 @RequestBody Map<String, Object> updatedTimeJSON) {
         return timeService.updateTime(id, stampId, updatedTimeJSON);

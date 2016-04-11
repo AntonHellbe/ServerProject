@@ -28,7 +28,7 @@ public class PiController {
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<PiStamp> timeStampUser(@PathVariable("id") RfidKey rfidKey) {
-
+		System.out.println("creating new Pistamp for id "+rfidKey.getId());
 		return piService.addNewStamp(rfidKey);
 
 	}

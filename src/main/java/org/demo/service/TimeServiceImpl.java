@@ -36,7 +36,9 @@ public class TimeServiceImpl implements TimeService {
         System.out.println(currentUser.toString());
         ArrayList<TimeStamp> temp = listRepository.getTimeStampMap().get(rfidKey);
         boolean state = true;
+
         TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, rfidKey);
+
         if(temp == null) {
             newStamp.setCheckIn(state);
             temp = new ArrayList<TimeStamp>();
@@ -58,7 +60,27 @@ public class TimeServiceImpl implements TimeService {
     @Override
     public ResponseEntity<TimeStamp> deleteTime(RfidKey rfidKey, int stampId) {
         ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
-        TimeStamp removedTime = userStamps.remove(stampId);
+
+	    TimeStamp removedTime = null;
+
+	    for (TimeStamp stamp : userStamps) {
+		    System.out.println("id in userStamps "+stamp.getId());
+		    if (stamp.getId() == stampId) {
+			    removedTime = stamp;
+			    break;
+		    }
+	    }
+	    //Didnt find the stamp
+	    if (removedTime == null) {
+		    System.out.println("Not found "+stampId);
+		    return new ResponseEntity(HttpStatus.NOT_FOUND);
+	    }
+
+	    userStamps.remove(removedTime);
+	    //listRepository.getTimeStampMap().replace(rfidKey, userStamps);
+
+
+
         // TODO: 2016-04-10 :00:40 hur vet klienten vad stampId:et ar!?
         return new ResponseEntity<TimeStamp>(removedTime, HttpStatus.OK);
     }
