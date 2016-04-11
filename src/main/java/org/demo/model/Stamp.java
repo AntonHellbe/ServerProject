@@ -15,8 +15,8 @@ import org.springframework.data.annotation.Id;
 public class Stamp implements Serializable{
 
 	@JsonSerialize(using = CalendarSerializer.class)
-    private Calendar date;
-    private boolean checkIn;
+	protected Calendar date;
+    protected boolean checkIn;
 
     public Stamp() {
     }
