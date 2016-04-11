@@ -8,6 +8,7 @@ import org.demo.repository.ListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import java.util.Calendar;
 /**
  * Created by seb on 2016-04-11.
  */
+@Service
 public class PiServiceImpl implements PiService {
 
 	/**

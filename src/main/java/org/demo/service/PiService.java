@@ -14,7 +14,7 @@ import java.util.Calendar;
  * Created by seb on 2016-04-11.
  */
 
-@Service
+
 public interface PiService {
 
 	/**
