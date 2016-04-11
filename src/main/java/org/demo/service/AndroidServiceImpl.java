@@ -80,17 +80,23 @@ public class AndroidServiceImpl implements AndroidService {
 
 //	    Date dt = new Date(betweenJSON.get("from").toString());
 
-        Calendar fromDate = (GregorianCalendar) betweenJSON.get("from");
-        Calendar toDate = (GregorianCalendar) betweenJSON.get("to");
+        Calendar fromDate = new GregorianCalendar();
+        fromDate.setTimeInMillis(Long.parseLong(betweenJSON.get("from").toString()));
+        Calendar toDate = new GregorianCalendar();
+        toDate.setTimeInMillis(Long.parseLong(betweenJSON.get("to").toString()));
 
         RfidKey rfidKey = new RfidKey(key);
 
         ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
         ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
 
+        //1460384544658 -----1460384551260  &&(timeStamp.getDate().before(toDate))==true
         userStamps.forEach(timeStamp -> {
+            System.out.println(timeStamp.getDate().getTimeInMillis());
+            //System.out.println("From: " + fromDate + " To: " + toDate);
             // TODO Fix missing timestamp date check
-            if(timeStamp.getDate().after(fromDate) && timeStamp.getDate().before(toDate)) {
+            if((timeStamp.getDate().after(fromDate))==true &&(timeStamp.getDate().before(toDate))==true) {
+                System.out.println("1");
                 betweenTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
             }
         });
