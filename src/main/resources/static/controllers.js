@@ -5,7 +5,7 @@
  * Controller for the Angular project
  */
 (function (angular) {
-    var AppController = function ($scope, $q, User, Time, Pi) {
+    var AppController = function ($scope, $http, $q, User, Time, Pi) {
 
         //on init all the items are fetched from server
         //with a promise onsuccess update list
@@ -26,11 +26,11 @@
          * Add a new item
          * @param description the description in the new item
          */
-        $scope.addUser= function (inputs) {
+        $scope.addUser = function (inputs) {
             console.log("add user");
             var newUser = new User({
-                firstName : inputs.firstName,
-                lastName : inputs.lastName,
+                firstName: inputs.firstName,
+                lastName: inputs.lastName,
                 rfid: inputs.rfid
             });
             //server call for add
@@ -96,7 +96,7 @@
          */
         $scope.getUser = function (getUser) {
             console.log("get item on id: " + getUser.rfid.id);
-			var id = getUser.rfid;
+            var id = getUser.rfid;
             User.get(id)
                 .$promise.then(
                 function (success) {
@@ -111,12 +111,11 @@
                     alert("Got notification" + JSON.stringify(update));
                 });
         };
-		
-		
-		$scope.getStamps= function()
-		{
+
+
+        $scope.getStamps = function () {
             var rfid = $scope.oldUser.rfid;
-			console.log("get all stamps for user "+rfid.id);
+            console.log("get all stamps for user " + rfid.id);
             Time.query({id: rfid.id}).$promise.then(
                 function (success) {
                     console.log("Success");
@@ -128,56 +127,18 @@
                 function (update) {
                     alert("Got notification" + JSON.stringify(update));
                 });
-			
-			
-		}
-		
-		$scope.addStamp= function()
-		{
-			var rfid = $scope.oldUser.rfid;
-			console.log("get all stamps for user "+rfid.id);
+
+
+        }
+
+        $scope.addStamp = function () {
+            var rfid = $scope.oldUser.rfid;
+            console.log("get all stamps for user " + rfid.id);
             Time.save({id: rfid.id}).$promise.then(
                 function (success) {
                     console.log("Success");
-                    
-					$scope.oldUser.stamps.push(success);
-                },
-                function (error) {
-                    alert("Failed " + JSON.stringify(error));
-                },
-                function (update) {
-                    alert("Got notification" + JSON.stringify(update));
-                });
-		}
-		
-		$scope.deleteStamp=function(stampId, idx){
-			console.log("remove id "+stampId);
-            //$scope.oldUser.stamps.splice(stampId,stampId);
-            var userid = $scope.oldUser.rfid.id;
-           // $http.delete("localhost:8080/"+userid,stampId);
-			Time.remove({id: userid},{stampId:stampId})
-                .$promise.then(
-                function (success) {
-                    console.log("Successfuly Removed Stamp");
-                    $scope.oldUser.stamps.splice(idx,1);
-                },
-                function (error) {
-                    alert("Failed " + JSON.stringify(error));
-                },
-                function (update) {
-                    alert("Got notification" + JSON.stringify(update));
-                });
-		};
 
-        $scope.getPiStamp= function(piUser)
-        {
-            console.log("do Pi Stamp for id "+piUser.rfid);
-
-            Pi.doStamp(piUser.rfid)
-                .$promise.then(
-                function (success) {
-                    console.log("Successfuly sent to pi service!");
-                    $scope.piUser.answear = success;
+                    $scope.oldUser.stamps.push(success);
                 },
                 function (error) {
                     alert("Failed " + JSON.stringify(error));
@@ -186,13 +147,50 @@
                     alert("Got notification" + JSON.stringify(update));
                 });
         }
-		
-		
+
+        $scope.deleteStamp = function (stampId, idx) {
+            console.log("remove id " + stampId);
+            //$scope.oldUser.stamps.splice(stampId,stampId);
+            var userid = $scope.oldUser.rfid.id;
+            // $http.delete("localhost:8080/"+userid,stampId);
+            Time.remove({id: userid}, {stampId: stampId})
+                .$promise.then(
+                function (success) {
+                    console.log("Successfuly Removed Stamp");
+                    $scope.oldUser.stamps.splice(idx, 1);
+                },
+                function (error) {
+                    alert("Failed " + JSON.stringify(error));
+                },
+                function (update) {
+                    alert("Got notification" + JSON.stringify(update));
+                });
+        };
+
+        $scope.getPiStamp = function (piUser) {
+            console.log("do Pi Stamp for id " + piUser.rfid);
+
+            $http.get('http://localhost:8080/pi/' + piUser.rfid)
+                .then(function successCallback(success) {
+                    console.log("Successfuly sent to pi service!");
+                    $scope.piUser.answear = success.data;
+                $scope.piUser.firstName = success.data.firstName;
+                $scope.piUser.lastName= success.data.lastName;
+                $scope.piUser.checkIn = success.data.checkIn;
+                $scope.piUser.date = success.data.date;
+                
+                
+                }, function errorCallback(error) {
+                    alert("Failed " + JSON.stringify(error));
+                });
+        }
+
+
         //end of controller
     };
 
     //setup the controller injects needed Libs
-    AppController.$inject = ['$scope', '$q', 'User', 'Time', 'Pi'];
+    AppController.$inject = ['$scope', '$http', '$q', 'User', 'Time', 'Pi'];
     angular.module("myApp.controllers").controller("AppController", AppController);
 }(angular));
 
