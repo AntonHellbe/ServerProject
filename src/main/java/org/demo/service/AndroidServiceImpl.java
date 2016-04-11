@@ -23,6 +23,7 @@ import java.util.Map;
 /**
  * Created by Anton on 2016-04-11.
  */
+
 @Service
 public class AndroidServiceImpl implements AndroidService {
 
@@ -79,14 +80,8 @@ public class AndroidServiceImpl implements AndroidService {
 
 //	    Date dt = new Date(betweenJSON.get("from").toString());
 
-        Long fromDate = (Long) betweenJSON.get("from");
-        Long  toDate = (Long) betweenJSON.get("to");
-        Calendar from = new GregorianCalendar();
-        from.setTimeInMillis(fromDate);
-
-        Calendar to= new GregorianCalendar();
-        from.setTimeInMillis(toDate);
-
+        Calendar fromDate = (GregorianCalendar) betweenJSON.get("from");
+        Calendar toDate = (GregorianCalendar) betweenJSON.get("to");
 
         RfidKey rfidKey = new RfidKey(key);
 
@@ -95,18 +90,10 @@ public class AndroidServiceImpl implements AndroidService {
 
         userStamps.forEach(timeStamp -> {
             // TODO Fix missing timestamp date check
-//		    if () {
-//		    }
-//		    if(timeStamp.getDate().getTime().compareTo(from.getTime())){
-////
-//		    }
-            betweenTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
-
+            if(timeStamp.getDate().after(fromDate) && timeStamp.getDate().before(toDate)) {
+                betweenTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
+            }
         });
-
-
-
-        User currentUser = listRepository.getUserMap().get(rfidKey);
 
         if(betweenTimes != null) {
             return new ResponseEntity<ArrayList<AndroidStamp>>(betweenTimes, HttpStatus.OK);
