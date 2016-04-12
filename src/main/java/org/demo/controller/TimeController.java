@@ -1,99 +1,103 @@
-//package org.demo.controller;
-//
-//import org.demo.model.TimeSamples;
-//import org.demo.model.User;
-//import org.demo.service.databaseservice.MemberService;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.io.IOException;
-//import java.util.*;
-//
-//// TODO: 2016-04-06 :20:13 started coding on webinterface
-//
-///**
-// * Created by Anton on 2016-04-05.
-// */
-//
-///*
-//* Endpoints: localhost:8080/api/time
-//*             localhost:8080/api/time/{id}
-//*             localhost:8080/api/time/{id}/times
-//**/
-//@CrossOrigin(origins = "*")
-//@RestController
-//@RequestMapping("/api/time")
-//public class TimeController {
-//    private ArrayList<TimeSamples> timeStamps = new ArrayList<>();
-//    private ArrayList<User> userList = new ArrayList<>();
-//    //stringrfid key , User value
-//    private HashMap<String, User> userMap = new HashMap<>();
-//
-//    public TimeController() {
-//        MemberService test = new MemberService();
-//        try {
-//            userMap = test.loadMember();
-//            userList = test.getUsers();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        User temp = userMap.get("1");
-//        temp.newSample();
-//        temp.newSample();
-//
+package org.demo.controller;
+
+import org.demo.model.TimeStamp;
+import org.demo.service.TimeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+/**
+ * Created by Robin_2 on 07/04/2016.
+ */
+
+/**
+ * Class that creates and handles the TimeStamps that are assigned to users
+ **/
+@CrossOrigin(origins = "*")
+@RestController
+@RequestMapping("/time")
+public class TimeController {
+
+    @Autowired
+    TimeService timeService;
+
+    /**
+     * Controller that loads users from a Text file, just used until we get the database working
+     **/
+    public TimeController() {
+    }
+
+    /**
+     * Removes the given time of a specific user
+     *
+     * @param id      the user
+     * @param stampId the id of the time to be deleted
+     * @return the time we deleted
+     **/
+//    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dt")
+//    public ResponseEntity<TimeStamp> deleteTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
+//        return timeService.deleteTime(id, stampId);
 //    }
 //
-//    @RequestMapping(method = RequestMethod.POST)
-//    public Map<String, Object> timeStamps(@RequestBody User usertest){
-//
-//        TimeSamples timestamp = new TimeSamples();
-//        Map<String, Object> response = new LinkedHashMap<String, Object>();
-//        response.put("message", "TimeStamp created succesfully");
-//        response.put("Timestamp", timeStamps.add(timestamp));
-//
-//        return response;
-//    }
-//
-//    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-//    public Map<String, String> deleteTimeStamp(@PathVariable("id") String id) {
-//        timeStamps.remove(id);
-//        Map<String, String> response = new HashMap<>();
-//        response.put("message", "Timestamp deleted successfully");
-//
-//        return response;
-//    }
-//
-//    @RequestMapping(method = RequestMethod.GET)
-//    public Map<String, Object> getAllTimeStamps() {
-//        Map<String, Object> response = new LinkedHashMap<>();
-//        response.put("totalTimestamps", timeStamps.size());
-//        response.put("User", userList.get(0).getFirstName() + " " + userList.get(0).getLastName());
-//        return response;
-//    }
-//
-//    @RequestMapping("/{id}/times")
-//    public ResponseEntity<ArrayList> getUsersTimeStamps(@PathVariable("id")  String id) {
-//
-//        User current = this.userMap.get(id);
-//        ArrayList<TimeSamples> listOfStamps = current.getSamples();
-//        System.out.println(listOfStamps.toString());
-//
-//        return new ResponseEntity<ArrayList>(listOfStamps, HttpStatus.OK);
-//    }
-//
-//    @RequestMapping("/{id}")
-//    public ResponseEntity<User> getTimeStamp(@PathVariable("id")  String id) {
-//
-//        User current = this.userMap.get(id);
-//
-//        return new ResponseEntity<User>(current, HttpStatus.OK);
-//    }
-//
-//
-//
-//
-//
-//}
+    /**
+     * Updates the given time of a specific user
+     *
+     * @param id              the user
+     * @param stampId         the id of the time to be changed
+     * @param updatedTimeJSON JSON of the updated object
+     * @return updated time
+     **/
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}")
+    public ResponseEntity<TimeStamp> updateTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId,
+                                                @RequestBody Map<String, Object> updatedTimeJSON) {
+        return timeService.updateTime(id, stampId, updatedTimeJSON);
+    }
+
+    /**
+     * Fetches the given time of a specific user
+     *
+     * @param id      the user
+     * @param stampId the id of the time to be fetched
+     * @return the time we searched for
+     **/
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}/{stampId}")
+    public ResponseEntity<TimeStamp> getTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
+        return timeService.getTime(id, stampId);
+    }
+
+    /**
+     * Fetches all the times assigned to the user
+     *
+     * @param id the user
+     * @return all the times for the user
+     **/
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ResponseEntity<ArrayList<TimeStamp>> getAll(@PathVariable("id") String id) {
+        return timeService.getAll(id);
+    }
+
+    /**
+     *Adds a new TimeStamp to the user
+     * @param id the id of the user
+     * @return the added TimeStamp
+     **/
+	@RequestMapping(method = RequestMethod.POST, value = "/{id}")
+	public ResponseEntity<TimeStamp> addTime(@PathVariable("id") String id) {
+		return timeService.addTime(id);
+	}
+
+    /**
+     * Deletes the specified TimeStamp from the given user
+     * @param id id of the user
+     * @param stampId the TimeStamp to be deleted
+     * @return the deleted time
+     **/
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}")
+	public ResponseEntity<TimeStamp> removeTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
+		return timeService.deleteTime(id,stampId);
+	}
+
+}

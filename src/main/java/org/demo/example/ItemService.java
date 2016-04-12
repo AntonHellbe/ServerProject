@@ -1,4 +1,4 @@
-package org.demo.service;
+package org.demo.example;
 
 import org.demo.model.Item;
 
