@@ -16,7 +16,7 @@ import java.util.*;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/android")
-public class AndroidServiceController {
+public class AndroidController {
 
 	@Autowired
 	AndroidService androidService;

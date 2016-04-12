@@ -1,7 +1,6 @@
-package org.demo.service;
+package org.demo.example;
 
 import org.demo.model.Item;
-import org.demo.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
