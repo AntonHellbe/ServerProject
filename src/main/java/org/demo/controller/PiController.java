@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by seb on 2016-04-07.
+ *
+ * Controller class for RaspberryPi methods and other classes, contains methods that the Pi-client makes use of.
  */
 
 @CrossOrigin(origins = "*")
@@ -22,9 +24,9 @@ public class PiController {
 
 
 	/***
-	 * Handle rest request from client
-	 * @param rfidKey
-	 * @return
+	 * Adds a new timestamp to the sent in RFID-key
+	 * @param rfidKey belonging to the user to be given a new timestamp
+	 * @return the name of the user, aswell as the timestamp
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<PiStamp> timeStampUser(@PathVariable("id") RfidKey rfidKey) {

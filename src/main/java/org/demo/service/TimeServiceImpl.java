@@ -17,6 +17,9 @@ import java.util.Map;
 /**
  * Created by Robin_2 on 11/04/2016.
  */
+/**
+ * Contains methods that enables the use and handling of times in the server
+ **/
 @Service
 public class TimeServiceImpl implements TimeService {
 

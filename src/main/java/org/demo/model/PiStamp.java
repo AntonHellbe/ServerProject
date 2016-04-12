@@ -31,14 +31,26 @@ public class PiStamp extends Stamp implements Serializable {
 		this.lastName =user.getLastName();
 	}
 
+	/**
+	 * Fetches the last name of the user
+	 * @return the last name
+	 **/
 	public String getLastName() {
 		return lastName;
 	}
 
+	/**
+	 * Fetches the first name of th user
+	 * @return the first name
+	 **/
 	public String getFirstName() {
 		return firstName;
 	}
 
+	/**
+	 * Formats the information of the Stamp to a String
+	 * @return the formated information
+	 **/
 	@Override
 	public String toString() {
 		return "PiStamp{" +

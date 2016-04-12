@@ -21,14 +21,15 @@ import java.util.Map;
 /**
  * Created by Anton on 2016-04-11.
  */
+/**
+ * Contains methods that enables the use and handling of users in the server
+ **/
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private ListRepository listRepository;
 
-
-    //    private HashMap<RfidKey, User> userMap = new HashMap<>();
     private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
 

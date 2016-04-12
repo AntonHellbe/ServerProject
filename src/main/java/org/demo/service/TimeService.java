@@ -10,6 +10,10 @@ import java.util.Map;
 /**
  * Created by Robin_2 on 11/04/2016.
  */
+
+/**
+ * Interface for methods used by the server to handle times
+ **/
 public interface TimeService {
 
     /**

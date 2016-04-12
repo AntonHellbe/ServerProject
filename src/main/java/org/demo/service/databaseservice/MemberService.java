@@ -16,6 +16,11 @@ import java.util.HashMap;
 /**
  * Created by Anton on 2016-04-06.
  */
+
+/**
+ * Temporary class along with the interface, loads in a text file filled with:
+ * userNames, id and RFID
+ **/
 @Component
 public class MemberService {
 
@@ -23,19 +28,11 @@ public class MemberService {
     private String currentUserID;
     private InputStream path;
 
-    public MemberService(String path) {
-//        this.path = getClass().getResourceAsStream("/" + path);
-	    //Resource resource = resourceLoader.getResource("classpath:/files/Lantagare.txt");
 
-
-
-//        this.path = getClass().getResourceAsStream("src/main/java/org/demo/files/Lantagare.txt");
-    }
-
-	public MemberService() {
-
-	}
-
+    /**
+     * Calls the private method "loadMember(String path)"
+     * Reads from file and places data in a BST
+     **/
 	public HashMap<RfidKey, User> loadMember() throws IOException {
         return loadMember(path);
     }
@@ -115,19 +112,4 @@ public class MemberService {
     public User getCurrentUser() {
         return this.userMap.get(currentUserID);
     }
-
-//    public static void main(String[] args) throws IOException {
-////	    File r = new File("src/main/java/org/demo/files/Lantagare.txt");
-//        MemberService dildo = new MemberService();
-//
-////        HashMap<String, User> hitler = dildo.getUsers();
-////        System.out.println(hitler);
-//
-//	    //find file path
-//	    Files.walk(Paths.get("src/main/java/org/demo/files")).forEach(filepath ->{
-//		    if (Files.isRegularFile(filepath)) {
-//			    System.out.println(filepath);
-//		    }
-//	    });
-//    }
 }

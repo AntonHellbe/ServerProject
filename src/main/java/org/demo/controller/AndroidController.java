@@ -11,6 +11,9 @@ import java.util.*;
 
 /**
  * Created by Anton on 2016-04-07.
+ *
+ * Class that acts as the controller for Android methods and other classes, contains the methods that
+ * the android clients make use of.
  */
 
 @CrossOrigin(origins = "*")
@@ -32,16 +35,23 @@ public class AndroidController {
 
     }
 
+    /**
+     * Used when you want to get all the times of a given user
+     * @param rfidkeyJSON JSON object containing the RFID-key of the user
+     * @return all the times associated with the rfid-key
+     **/
 	@RequestMapping(value = "/all",method = RequestMethod.POST)
 	public ResponseEntity<ArrayList<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON){
 		return androidService.getAll(rfidkeyJSON);
 	}
 
-    /**
-     * Used when you want to get all the times of a given user
-     * @return the times associated with the rfid-key and in the period given
-     **/
 
+
+    /**
+     *Method used when the user wants to fetch all logged times between 2 dates
+     * @param betweenJSON JSON object containing th RFID-key of the user, aswell as the from and to date.
+     * @return the times associated with the RFID-key in the periods given
+     **/
     @RequestMapping(value = "/between", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<AndroidStamp>> getBetween(@RequestBody Map<String, Object> betweenJSON){
 		return androidService.getBetween(betweenJSON);

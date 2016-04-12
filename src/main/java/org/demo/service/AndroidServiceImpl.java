@@ -23,13 +23,20 @@ import java.util.Map;
 /**
  * Created by Anton on 2016-04-11.
  */
-
+/**
+ * Class that handles methods used by the Android clients
+ **/
 @Service
 public class AndroidServiceImpl implements AndroidService {
 
     @Autowired
     ListRepository listRepository;
 
+    /**
+     * Fetches the user with the given RFID-key, the String gets converted into an RFID-key
+     * @param id the RFID-key
+     * @return the user
+     **/
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public ResponseEntity<User> getUser(@PathVariable("id") String id) {
         System.out.println("lokking ofr rfid "+id);
@@ -43,6 +50,11 @@ public class AndroidServiceImpl implements AndroidService {
 
     }
 
+    /**
+     * Fetches all times associated with the given user
+     * @param rfidkeyJSON The user with RFID sent in a JSON
+     * @return all the times
+     **/
     @RequestMapping(value = "/all",method = RequestMethod.POST)
     public ResponseEntity<ArrayList<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON) {
         rfidkeyJSON.forEach((s, o) -> {
@@ -70,6 +82,11 @@ public class AndroidServiceImpl implements AndroidService {
         }
     }
 
+    /**
+     * Fetches the times between the given times/dates
+     * @param betweenJSON JSON containing the RFID of the user, the "from" date and the "to" date
+     * @return the times in the interval
+     **/
     @RequestMapping(value = "/between", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<AndroidStamp>> getBetween(@RequestBody Map<String, Object> betweenJSON) {
         betweenJSON.forEach((s, o) -> {

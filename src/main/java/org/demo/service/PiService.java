@@ -14,12 +14,15 @@ import java.util.Calendar;
  * Created by seb on 2016-04-11.
  */
 
-
+/**
+ * Interface for methods used by the RaspberryPi
+ **/
 public interface PiService {
 
 	/**
-	 * Handles adding new stamp from Pi
-	 * @return
+	 * Handle the request from the controller
+	 * @param rfidKey the new RFID of the user
+	 * @return a ResponseEntity of PiStamp with with userinfo and timestamp-info
 	 */
 	public ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey);
 

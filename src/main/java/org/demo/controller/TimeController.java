@@ -30,18 +30,7 @@ public class TimeController {
     public TimeController() {
     }
 
-    /**
-     * Removes the given time of a specific user
-     *
-     * @param id      the user
-     * @param stampId the id of the time to be deleted
-     * @return the time we deleted
-     **/
-//    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}/dt")
-//    public ResponseEntity<TimeStamp> deleteTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
-//        return timeService.deleteTime(id, stampId);
-//    }
-//
+
     /**
      * Updates the given time of a specific user
      *
