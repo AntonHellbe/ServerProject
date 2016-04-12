@@ -8,7 +8,7 @@
  */
 (function(angular) {
     var ItemFactory = function($resource) {
-        return $resource('http://localhost:8080/users/:id', {
+        return $resource('/users/:id', {
             id: '@id'
         }, {
             update: {
@@ -29,7 +29,7 @@
 
 (function(angular) {
     var ItemFactory = function($resource) {
-        return $resource('http://localhost:8080/time/:id/:stampId', {
+        return $resource('/time/:id/:stampId', {
             id: '@id',stampId:'@stampId'
         }, {
             update: {
@@ -47,17 +47,17 @@
 
 (function(angular) {
     var ItemFactory = function($resource) {
-        return $resource('http://localhost:8080/pi/:id', {
+        return $resource('/pi/:id', {
             id: '@id'
         }, {
-            
+
             save:{
                 method: "POST"
             },
             doStamp:{
                 method: "GET"
             }
-            
+
         });
     };
 
