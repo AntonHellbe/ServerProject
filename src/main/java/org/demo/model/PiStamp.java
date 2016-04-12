@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
  * Pistamp is used on the pi for dispalying info when a user stamps in.
  * this is the return model
  */
+
 public class PiStamp extends Stamp implements Serializable {
 
 	private final String lastName;
