@@ -72,6 +72,8 @@ public class AndroidServiceImpl implements AndroidService {
      * @param rfidkeyJSON The user with RFID sent in a JSON
      * @return all the times
      **/
+
+    // DILDO
     public ResponseEntity<ArrayList<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON) {
         rfidkeyJSON.forEach((s, o) -> {
             System.out.println("[KEY]"+s+" [VALUE]"+o);
