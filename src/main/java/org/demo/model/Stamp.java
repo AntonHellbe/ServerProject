@@ -21,6 +21,9 @@ public class Stamp implements Serializable{
 
 	@JsonSerialize(using = CalendarSerializer.class)
 	protected Calendar date;
+
+    //True = inCheckning
+    //False = utCheckning
     protected boolean checkIn;
 
     /**

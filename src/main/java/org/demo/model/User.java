@@ -78,7 +78,7 @@ public class User implements Serializable{
 	 * @param rfid the rfid to be compared with the users
 	 * @return true or false
 	 **/
-	public boolean checkRfid(String rfid) {
+	public boolean checkRfid(RfidKey rfid) {
 		if (this.key.equals(rfid)) {
 			return true;
 		}
