@@ -46,8 +46,9 @@ public class AndroidController {
 	}
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<User> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
-        return loginUser(getSpecificUserJSON);
+    public ResponseEntity<User> logInUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
+        System.out.println("Calling login User");
+        return androidService.logInUser(getSpecificUserJSON);
     }
 
 

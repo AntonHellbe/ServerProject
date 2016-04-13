@@ -51,7 +51,7 @@ public class AndroidServiceImpl implements AndroidService {
 
     }
 
-    public ResponseEntity<User> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
+    public ResponseEntity<User> logInUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
         System.out.println(getSpecificUserJSON.get("firstName").toString());
         System.out.println(getSpecificUserJSON.get("lastName").toString());
         ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
@@ -63,8 +63,6 @@ public class AndroidServiceImpl implements AndroidService {
                 return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
             }
         }
-
-
         return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
     }
 
@@ -98,6 +96,7 @@ public class AndroidServiceImpl implements AndroidService {
         }else {
             return new ResponseEntity<ArrayList<AndroidStamp>>(HttpStatus.NOT_FOUND);
         }
+        // Hello
     }
 
     /**
