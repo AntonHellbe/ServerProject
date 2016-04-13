@@ -42,9 +42,7 @@ public class RfidKey implements Serializable{
      **/
     @Override
     public String toString() {
-        return "RfidKey{" +
-                "id='" + id + '\'' +
-                '}';
+        return id;
     }
 
     /**

@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
+
 /**
  * Created by Anton on 2016-04-11.
  */
@@ -37,9 +38,9 @@ public class AndroidServiceImpl implements AndroidService {
      * @param id the RFID-key
      * @return the user
      **/
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+
     public ResponseEntity<User> getUser(@PathVariable("id") String id) {
-        System.out.println("lokking ofr rfid "+id);
+        System.out.println("looking for RFID " +id);
         User wantedUser = listRepository.getUserMap().get(new RfidKey(id));
         System.out.println("found user: "+wantedUser);
         if(wantedUser != null){
@@ -50,12 +51,29 @@ public class AndroidServiceImpl implements AndroidService {
 
     }
 
+    public ResponseEntity<User> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
+        System.out.println(getSpecificUserJSON.get("firstName").toString());
+        System.out.println(getSpecificUserJSON.get("lastName").toString());
+        ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
+        for(int i=0; i<userList.size(); i++) {
+            if(userList.get(i).getFirstName().equals(getSpecificUserJSON.get("firstName").toString()) &&
+                    userList.get(i).getLastName().equals(getSpecificUserJSON.get("lastName").toString())){
+                User wantedUser = userList.get(i);
+                System.out.println(wantedUser.toString());
+                return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
+            }
+        }
+
+
+        return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+    }
+
+
     /**
      * Fetches all times associated with the given user
      * @param rfidkeyJSON The user with RFID sent in a JSON
      * @return all the times
      **/
-    @RequestMapping(value = "/all",method = RequestMethod.POST)
     public ResponseEntity<ArrayList<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON) {
         rfidkeyJSON.forEach((s, o) -> {
             System.out.println("[KEY]"+s+" [VALUE]"+o);
@@ -87,7 +105,6 @@ public class AndroidServiceImpl implements AndroidService {
      * @param betweenJSON JSON containing the RFID of the user, the "from" date and the "to" date
      * @return the times in the interval
      **/
-    @RequestMapping(value = "/between", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<AndroidStamp>> getBetween(@RequestBody Map<String, Object> betweenJSON) {
         betweenJSON.forEach((s, o) -> {
             System.out.println("[KEY]"+s+" [VALUE]"+o);

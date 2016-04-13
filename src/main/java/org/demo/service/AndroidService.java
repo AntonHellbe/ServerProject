@@ -37,4 +37,6 @@ public interface AndroidService {
      **/
     public ResponseEntity<ArrayList<AndroidStamp>> getBetween(@RequestBody Map<String, Object> betweenJSON);
 
+    public ResponseEntity<User> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON);
+
 }

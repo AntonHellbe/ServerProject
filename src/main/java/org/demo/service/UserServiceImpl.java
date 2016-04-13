@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
     private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
 
 
-    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<ArrayList<User>> getAllUser() {
         Map<String, Object> response = new LinkedHashMap<>();
         ArrayList<User> userList = new ArrayList<User>(listRepository.getUserMap().values());
@@ -46,7 +45,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<User> getUser(@PathVariable("id") String id) {
         System.out.println("getUser with id" + id);
         User gotUser = listRepository.getUserMap().get(new RfidKey(id));
@@ -58,7 +56,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") String id,
                            @RequestBody Map<String, Object> updatedUserJSON) {
 
@@ -95,7 +92,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public ResponseEntity<User> removeUser(@PathVariable("id") String id) {
         System.out.println("Remove following user" + id);
 
@@ -116,8 +112,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-
-    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<User> addUser(@RequestBody Map<String, Object> newUserJSON) {
 
         // TODO: 2016-04-09 :23:34 Hitta bug, la till alltid 10 som id andra till size
