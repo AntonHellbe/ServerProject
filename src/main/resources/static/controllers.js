@@ -5,7 +5,7 @@
  * Controller for the Angular project
  */
 (function (angular) {
-    var AppController = function ($scope, $http, $q, User, Time, Pi) {
+    var AppController = function ($scope, $http, $q, User, Time, Pi, Android) {
 
         //on init all the items are fetched from server
         //with a promise onsuccess update list
@@ -174,23 +174,70 @@
                 .then(function successCallback(success) {
                     console.log("Successfuly sent to pi service!");
                     $scope.piUser.answear = success.data;
-                $scope.piUser.firstName = success.data.firstName;
-                $scope.piUser.lastName= success.data.lastName;
-                $scope.piUser.checkIn = success.data.checkIn;
-                $scope.piUser.date = success.data.date;
-                
-                
+                    $scope.piUser.firstName = success.data.firstName;
+                    $scope.piUser.lastName = success.data.lastName;
+                    $scope.piUser.checkIn = success.data.checkIn;
+                    $scope.piUser.date = success.data.date;
+
+                    Time.query({id: piUser.rfid}).$promise.then(
+                        function (success) {
+                            console.log("Success");
+                            $scope.piUser.stamps = success ? success : [];
+                        },
+                        function (error) {
+                            alert("Failed " + JSON.stringify(error));
+                        },
+                        function (update) {
+                            alert("Got notification" + JSON.stringify(update));
+                        });
+
+
                 }, function errorCallback(error) {
                     alert("Failed " + JSON.stringify(error));
                 });
         }
 
 
+        $scope.getAndyAll = function (user) {
+
+            console.log("param " + user.rfid);
+            $http.post('http://localhost:8080/android/all/', {id: user.rfid}).then(function (response) {
+                $scope.andyUser.stamps = response.data;
+
+            }, function errorCallback(error) {
+                alert("Failed " + JSON.stringify(error));
+            });
+
+        };
+        $scope.getAndyBetween = function (user) {
+            console.log("param " + user.rfid);
+
+            user.fromdt = new Date(user.from);
+            user.todt = new Date(user.to);
+
+            console.log("param " + user.from);
+            console.log("param " + user.to);
+
+
+            $http.post('http://localhost:8080/android/between/', {
+                id: user.rfid,
+                from: user.fromdt.getTime(),
+                to: user.todt.getTime()
+            }).then(function (response) {
+                $scope.andyUser.stamps = response.data;
+                $scope.andyUser.resp = response;
+
+            }, function errorCallback(error) {
+                alert("Failed " + JSON.stringify(error));
+            });
+        };
+
+
         //end of controller
     };
 
     //setup the controller injects needed Libs
-    AppController.$inject = ['$scope', '$http', '$q', 'User', 'Time', 'Pi'];
+    AppController.$inject = ['$scope', '$http', '$q', 'User', 'Time', 'Pi', 'Android'];
     angular.module("myApp.controllers").controller("AppController", AppController);
 }(angular));
 

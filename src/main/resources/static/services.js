@@ -8,7 +8,9 @@
  */
 (function(angular) {
     var ItemFactory = function($resource) {
-        return $resource('/users/:id', {
+        var tempUrl = "http://localhost:8080";
+        
+        return $resource(tempUrl+'/users/:id', {
             id: '@id'
         }, {
             update: {
@@ -29,7 +31,8 @@
 
 (function(angular) {
     var ItemFactory = function($resource) {
-        return $resource('/time/:id/:stampId', {
+        var tempUrl = "http://localhost:8080";
+        return $resource(tempUrl+'/time/:id/:stampId', {
             id: '@id',stampId:'@stampId'
         }, {
             update: {
@@ -47,7 +50,9 @@
 
 (function(angular) {
     var ItemFactory = function($resource) {
-        return $resource('/pi/:id', {
+        var tempUrl = "http://localhost:8080";
+        
+        return $resource(tempUrl+'/pi/:id', {
             id: '@id'
         }, {
 
@@ -63,4 +68,21 @@
 
     ItemFactory.$inject = ['$resource'];
     angular.module("myApp.services").factory("Pi", ItemFactory);
+}(angular));
+
+(function(angular) {
+    var ItemFactory = function($resource) {
+        var tempUrl = "http://localhost:8080";
+        
+        return $resource(tempUrl+'/android/:id',{id:""}, {
+
+            'getAll':{
+                method: "POST"
+            }
+
+        });
+    };
+
+    ItemFactory.$inject = ['$resource'];
+    angular.module("myApp.services").factory("Android", ItemFactory);
 }(angular));
