@@ -82,8 +82,7 @@ public class TimeServiceImpl implements TimeService {
 	    userStamps.remove(removedTime);
 	    //listRepository.getTimeStampMap().replace(rfidKey, userStamps);
 
-
-
+        System.out.println("Deleted time: " + removedTime);
         // TODO: 2016-04-10 :00:40 hur vet klienten vad stampId:et ar!?
         return new ResponseEntity<TimeStamp>(removedTime, HttpStatus.OK);
     }
@@ -122,6 +121,7 @@ public class TimeServiceImpl implements TimeService {
             // TODO: 2016-04-11 :12:45 Fix a better return?
             return null;
         }
+        System.out.println("Fetched time: " + userStamps.get(stampId));
         return new ResponseEntity<>(userStamps.get(stampId), HttpStatus.OK);
     }
 
@@ -147,6 +147,7 @@ public class TimeServiceImpl implements TimeService {
         if (updatedTimeJSON.get("rfid") != null) {
             timeToUpdate.setRfidkey(new RfidKey(updatedTimeJSON.get("rfid").toString()));
         }
+        System.out.println("Updated time: " + timeToUpdate);
         return new ResponseEntity<>(timeToUpdate, HttpStatus.OK);
     }
 }
