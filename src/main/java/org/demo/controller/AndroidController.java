@@ -47,7 +47,7 @@ public class AndroidController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<User> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
-        return loginUser(getSpecificUserJSON);
+        return androidService.loginUser(getSpecificUserJSON);
     }
 
 
