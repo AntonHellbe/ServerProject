@@ -21,6 +21,8 @@ import java.util.Map;
 @RequestMapping("/time")
 public class TimeController {
 
+	//test
+
     @Autowired
     TimeService timeService;
 
