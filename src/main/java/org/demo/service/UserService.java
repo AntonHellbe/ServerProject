@@ -22,7 +22,7 @@ public interface UserService {
      *Fetches all the users in the list
      * @return all users in the list
      **/
-    public ResponseEntity<ArrayList<User>> getAllUser();
+    public ResponseEntity<ArrayList<User>> getAllUsers();
 
     /**
      *Fetches the specified user from the list

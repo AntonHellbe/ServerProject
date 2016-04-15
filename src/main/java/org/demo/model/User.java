@@ -1,6 +1,7 @@
 package org.demo.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 /**
  * User class that contains the information about the users
  **/
+@Document
 public class User implements Serializable{
 
 	private String firstName;

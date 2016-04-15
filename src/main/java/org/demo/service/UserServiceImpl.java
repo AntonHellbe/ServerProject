@@ -4,19 +4,15 @@ import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.repository.ListRepository;
+import org.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Anton on 2016-04-11.
@@ -30,12 +26,19 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ListRepository listRepository;
 
-    private HashMap<String, ArrayList<TimeStamp>> timeStampMap = new HashMap<>();
+    @Autowired
+    private UserRepository userRepository;
 
 
-    public ResponseEntity<ArrayList<User>> getAllUser() {
+
+    public ResponseEntity<ArrayList<User>> getAllUsers() {
         Map<String, Object> response = new LinkedHashMap<>();
         ArrayList<User> userList = new ArrayList<User>(listRepository.getUserMap().values());
+        List<User> temp = userRepository.findAll();
+
+        temp.forEach(user -> {
+                System.out.println(user.toString());
+        });
         response.put("totalTimestamps", userList.size());
         response.put("Users", userList);
         if(userList != null) {
@@ -47,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     public ResponseEntity<User> getUser(@PathVariable("id") String id) {
         System.out.println("getUser with id" + id);
-        User gotUser = listRepository.getUserMap().get(new RfidKey(id));
+        User gotUser = userRepository.findWithRfidKey(new RfidKey(id));
         if(gotUser != null) {
             return new ResponseEntity<User>(gotUser, HttpStatus.OK);
         }else {
@@ -100,9 +103,7 @@ public class UserServiceImpl implements UserService {
         System.out.println("Removing following user" + userToRemove.getFirstName());
 
         // TODO: 2016-04-09 :23:36 fixed so that remove works
-        HashMap<RfidKey, User> userMap = listRepository.getUserMap();
-        userToRemove = userMap.remove(userToRemove.getRfid());
-        listRepository.setUserMap(userMap);
+        listRepository.getUserMap().remove(userToRemove.getRfid());
         if(userToRemove != null) {
             return new ResponseEntity<User>(userToRemove, HttpStatus.OK);
         }else {
