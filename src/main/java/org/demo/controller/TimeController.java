@@ -51,7 +51,7 @@ public class TimeController {
      * @return updated time
      **/
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}")
-    public ResponseEntity<TimeStamp> updateTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId,
+    public ResponseEntity<TimeStamp> updateTime(@PathVariable("id") String id, @PathVariable("stampId") String stampId,
                                                 @RequestBody Map<String, Object> updatedTimeJSON) {
         return timeService.updateTime(id, stampId, updatedTimeJSON);
     }
@@ -64,7 +64,7 @@ public class TimeController {
      * @return the time we searched for
      **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/{stampId}")
-    public ResponseEntity<TimeStamp> getTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
+    public ResponseEntity<TimeStamp> getTime(@PathVariable("id") String id, @PathVariable("stampId") String stampId) {
         return timeService.getTime(id, stampId);
     }
 
@@ -96,7 +96,7 @@ public class TimeController {
      * @return the deleted time
      **/
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}")
-	public ResponseEntity<TimeStamp> removeTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
+	public ResponseEntity<TimeStamp> removeTime(@PathVariable("id") String id, @PathVariable("stampId") String stampId) {
 		return timeService.deleteTime(id,stampId);
 	}
 

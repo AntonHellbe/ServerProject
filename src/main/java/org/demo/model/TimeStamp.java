@@ -1,6 +1,7 @@
 package org.demo.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Calendar;
 
@@ -11,12 +12,11 @@ import java.util.Calendar;
 /**
  * TimeStamp used by the Server
  **/
+@Document(collection = "TimeStamps")
 public class TimeStamp extends Stamp {
 
 	@Id
-	private int id;
-
-	static int secretId= 0;
+	private String id;
 
     private RfidKey rfidKey;
 
@@ -28,7 +28,7 @@ public class TimeStamp extends Stamp {
 	public String toString() {
 		return "TimeStamp{" +
 				"ID=" + id +"\n"+
-				"rfidKey=" + rfidKey +"\n"+
+				"rfid=" + rfidKey +"\n"+
 				super.toString()+
 				'}';
 	}
@@ -36,31 +36,24 @@ public class TimeStamp extends Stamp {
     /**
      *Constructor that creates a new Timestamp
      **/
-	public TimeStamp() {
-        super();
-		this.id = secretId;
-		secretId++;
 
-    }
 
     /**
      *Constructor that creates a new TimeStamp with given data
      * @param date the date and time of the timeStamp
      * @param checkIn the state of the TimeStamp(true/false)
-     * @param rfidkey The Rfid key that the Timestamp is associated with
+     * @param rfidKey The Rfid key that the Timestamp is associated with
      **/
-    public TimeStamp(Calendar date, boolean checkIn, RfidKey rfidkey) {
+    public TimeStamp(Calendar date, boolean checkIn, RfidKey rfidKey) {
         super(date, checkIn);
-        this.rfidKey = rfidkey;
-	    this.id = secretId;
-	    secretId++;
+        this.rfidKey = rfidKey;
     }
 
     /**
      * Fetches the id of the TimeStamp
      * @return the id of the TimeStamp
      **/
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -68,7 +61,7 @@ public class TimeStamp extends Stamp {
      * Sets the id of the TimeStamp
      * @param id the new id
      **/
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

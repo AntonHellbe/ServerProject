@@ -1,6 +1,7 @@
 package org.demo.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 
@@ -11,23 +12,22 @@ import java.io.Serializable;
 /**
  * User class that contains the information about the users
  **/
+@Document(collection = "Users")
 public class User implements Serializable{
 
 	private String firstName;
 	private String lastName;
-	private RfidKey key;
+	private RfidKey rfidKey;
 
 	@Id
 	private String id;
 
-	static int secretId= 0;
 
 	/**
 	 * Constructor that starts the creation of a user
 	 **/
 	public User() {
-		this.id = String.valueOf(secretId);
-		secretId++;
+
 	}
 
 
@@ -35,31 +35,14 @@ public class User implements Serializable{
 	 * Constructor that creates a new user
 	 * @param firstName The first name of the user
 	 * @param lastName the last name of the user
-	 * @param rfid the RFID-key of the user
-	 * @param id the id of the user
+	 * @param rfid the RFID-rfidKey of the user
 	 **/
-	public User(String firstName, String lastName, RfidKey rfid, String id) {
+	public User(String firstName, String lastName, RfidKey rfid) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.key = rfid;
-		this.id = id;
+		this.rfidKey = rfid;
 	}
 
-	/**
-	 * Fetches the secret id
-	 * @return the secret id
-	 **/
-	public static int getSecretId() {
-		return secretId;
-	}
-
-	/**
-	 * Sets the secret id
-	 * @param secretId the new value of the secret id
-	 **/
-	public static void setSecretId(int secretId) {
-		User.secretId = secretId;
-	}
 
 	/**
 	 *Checks if the sent in first-name is equal to to the users first-name
@@ -79,7 +62,7 @@ public class User implements Serializable{
 	 * @return true or false
 	 **/
 	public boolean checkRfid(String rfid) {
-		if (this.key.equals(rfid)) {
+		if (this.rfidKey.equals(rfid)) {
 			return true;
 		}
 
@@ -115,7 +98,7 @@ public class User implements Serializable{
 	 * @return the RFID
 	 **/
 	public RfidKey getRfid() {
-		return key;
+		return rfidKey;
 	}
 
 	/**
@@ -139,7 +122,7 @@ public class User implements Serializable{
 	 * @param rfid the new RFID
 	 **/
 	public void setRfid(RfidKey rfid) {
-		this.key = rfid;
+		this.rfidKey = rfid;
 	}
 
 	/**
@@ -156,7 +139,7 @@ public class User implements Serializable{
 		return "User{" +
 				"firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
-				", rfid='" + key + '\'' +
+				", rfid='" + rfidKey + '\'' +
 				", id='" + id + '\'' +
 				'}';
 	}
