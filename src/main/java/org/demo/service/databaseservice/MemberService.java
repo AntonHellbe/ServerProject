@@ -61,7 +61,7 @@ public class MemberService {
         while (text != null) {
 	        System.out.println(text);
 	        parts = text.split(";");
-            User user = new User(parts[0], parts[1], new RfidKey(parts[2]), parts[3]);
+            User user = new User(parts[0], parts[1], new RfidKey(parts[2]));
             userMap.put(user.getRfid(), user);
             text = br.readLine();
         }

@@ -5,6 +5,8 @@ import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.repository.ListRepository;
+import org.demo.repository.TimeRepository;
+import org.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by seb on 2016-04-11.
@@ -25,8 +28,12 @@ public class PiServiceImpl implements PiService {
 	/**
 	 * Get the repository
 	 */
+
 	@Autowired
-	ListRepository listRepository;
+	private UserRepository userRepository;
+
+	@Autowired
+	private TimeRepository timeRepository;
 
 	/**
 	 * Handle the request from the controller
@@ -37,24 +44,17 @@ public class PiServiceImpl implements PiService {
 	public ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey) {
 		System.out.println("add timestamp from PI, on" + rfidKey.getId());
 
-
 		try {
 
-			User currentUser = listRepository.getUserMap().get(rfidKey);
+			User currentUser = userRepository.getUserByRfid(rfidKey);
 			System.out.println(currentUser.toString());
 
-			ArrayList<TimeStamp> temp = listRepository.getTimeStampMap().get(currentUser.getRfid());
-			boolean state = true;
+			boolean state = timeRepository.getAllByRfid(rfidKey).size() % 2 == 0;
 			TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentUser.getRfid());
-			if (temp == null) {
-				newStamp.setCheckIn(state);
-				temp = new ArrayList<TimeStamp>();
-				temp.add(newStamp);
-				listRepository.getTimeStampMap().put(currentUser.getRfid(), temp);
+			if (state) {
+				timeRepository.save(newStamp);
 			} else {
-				state = listRepository.getTimeStampMap().get(currentUser.getRfid()).size() % 2 == 0;
-				newStamp.setCheckIn(state);
-				listRepository.getTimeStampMap().get(currentUser.getRfid()).add(newStamp);
+				timeRepository.save(newStamp);
 			}
 			//newStamp;
 			PiStamp piStamp = new PiStamp(newStamp.getCheckIn(), currentUser);

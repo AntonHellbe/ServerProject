@@ -5,6 +5,8 @@ import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.repository.ListRepository;
+import org.demo.repository.TimeRepository;
+import org.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.websocket.server.ServerEndpoint;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -31,7 +30,10 @@ import java.util.Map;
 public class AndroidServiceImpl implements AndroidService {
 
     @Autowired
-    ListRepository listRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private TimeRepository timeRepository;
 
     /**
      * Fetches the user with the given RFID-key, the String gets converted into an RFID-key
@@ -41,7 +43,7 @@ public class AndroidServiceImpl implements AndroidService {
 
     public ResponseEntity<User> getUser(@PathVariable("id") String id) {
         System.out.println("looking for RFID " +id);
-        User wantedUser = listRepository.getUserMap().get(new RfidKey(id));
+        User wantedUser = userRepository.findOne(id);
         System.out.println("found user: "+wantedUser);
         if(wantedUser != null){
             return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
@@ -54,7 +56,7 @@ public class AndroidServiceImpl implements AndroidService {
     public ResponseEntity<User> logInUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
         System.out.println(getSpecificUserJSON.get("firstName").toString());
         System.out.println(getSpecificUserJSON.get("lastName").toString());
-        ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
+        List<User> userList = userRepository.findAll();
         for(int i=0; i<userList.size(); i++) {
             if(userList.get(i).getFirstName().equals(getSpecificUserJSON.get("firstName").toString()) &&
                     userList.get(i).getLastName().equals(getSpecificUserJSON.get("lastName").toString())){
@@ -84,7 +86,7 @@ public class AndroidServiceImpl implements AndroidService {
 
         ArrayList<AndroidStamp> allTimes = new ArrayList<>();
 //        User currentUser = userMap.get(rfidKey);
-        ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
+        ArrayList<TimeStamp> userStamps = new ArrayList<>(timeRepository.getAllByRfid(rfidKey));
         userStamps.forEach(timeStamp -> {
             allTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
 
@@ -122,7 +124,7 @@ public class AndroidServiceImpl implements AndroidService {
 
         RfidKey rfidKey = new RfidKey(key);
 
-        ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
+        ArrayList<TimeStamp> userStamps = new ArrayList<>(timeRepository.getAllByRfid(new RfidKey(key)));
         ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
 
         //1460384544658 -----1460384551260  &&(timeStamp.getDate().before(toDate))==true

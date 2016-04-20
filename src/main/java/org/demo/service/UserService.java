@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +22,7 @@ public interface UserService {
      *Fetches all the users in the list
      * @return all users in the list
      **/
-    public ResponseEntity<ArrayList<User>> getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers();
 
     /**
      *Fetches the specified user from the list

@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +31,7 @@ public class UserController {
      * @return all users in the list
      **/
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<User>> getAllUser() {
+    public ResponseEntity<List<User>> getAllUser() {
         return userService.getAllUsers();
     }
 
@@ -72,7 +74,7 @@ public class UserController {
      * @return the newly added user
      **/
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> addUser(@RequestBody Map<String, Object> newUserJSON) {
+    public ResponseEntity<User> addUser(@RequestBody LinkedHashMap<String, Object> newUserJSON) {
         return userService.addUser(newUserJSON);
 
     }

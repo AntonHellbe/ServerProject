@@ -1,5 +1,6 @@
 package org.demo.controller;
 
+import org.bson.types.ObjectId;
 import org.demo.model.TimeStamp;
 import org.demo.service.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class TimeController {
      * @return updated time
      **/
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}")
-    public ResponseEntity<TimeStamp> updateTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId,
+    public ResponseEntity<TimeStamp> updateTime(@PathVariable("id") String id, @PathVariable("stampId") String stampId,
                                                 @RequestBody Map<String, Object> updatedTimeJSON) {
         return timeService.updateTime(id, stampId, updatedTimeJSON);
     }
@@ -64,7 +65,7 @@ public class TimeController {
      * @return the time we searched for
      **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/{stampId}")
-    public ResponseEntity<TimeStamp> getTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
+    public ResponseEntity<TimeStamp> getTime(@PathVariable("id") String id, @PathVariable("stampId") String stampId) {
         return timeService.getTime(id, stampId);
     }
 
@@ -91,13 +92,12 @@ public class TimeController {
 
     /**
      * Deletes the specified TimeStamp from the given user
-     * @param id id of the user
      * @param stampId the TimeStamp to be deleted
      * @return the deleted time
      **/
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}/{stampId}")
-	public ResponseEntity<TimeStamp> removeTime(@PathVariable("id") String id, @PathVariable("stampId") int stampId) {
-		return timeService.deleteTime(id,stampId);
+	public ResponseEntity<TimeStamp> removeTime( @PathVariable("stampId") String stampId, @PathVariable("id") String id) {
+		return timeService.deleteTime(stampId, id);
 	}
 
 }

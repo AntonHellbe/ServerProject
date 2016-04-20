@@ -10,7 +10,7 @@ import java.io.Serializable;
  * A class that creates an RFID-key from input
  **/
 
-public class RfidKey implements Serializable{
+public class RfidKey {
 
     private String id;
 
@@ -57,7 +57,7 @@ public class RfidKey implements Serializable{
 
         RfidKey rfidKey = (RfidKey) o;
 
-        return id != null ? id.equals(rfidKey.id) : rfidKey.id == null;
+        return !(id != null ? !id.equals(rfidKey.id) : rfidKey.id != null);
 
     }
 

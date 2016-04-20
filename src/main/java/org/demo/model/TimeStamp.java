@@ -1,8 +1,10 @@
 package org.demo.model;
 
 import org.springframework.data.annotation.Id;
-
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.io.Serializable;
 import java.util.Calendar;
+
 
 /**
  * Created by Anton on 2016-04-07.
@@ -11,12 +13,12 @@ import java.util.Calendar;
 /**
  * TimeStamp used by the Server
  **/
-public class TimeStamp extends Stamp {
+@Document(collection = "timestamps")
+public class TimeStamp extends Stamp implements Serializable {
 
-	@Id
-	private int id;
+    @Id
+    private String id;
 
-	static int secretId= 0;
 
     private RfidKey rfidKey;
 
@@ -24,51 +26,33 @@ public class TimeStamp extends Stamp {
      * Formats the information in the TimeStamp to a String
      * @return the formatted information
      **/
-    @Override
-	public String toString() {
-		return "TimeStamp{" +
-				"ID=" + id +"\n"+
-				"rfidKey=" + rfidKey +"\n"+
-				super.toString()+
-				'}';
-	}
 
-    /**
-     *Constructor that creates a new Timestamp
-     **/
-	public TimeStamp() {
-        super();
-		this.id = secretId;
-		secretId++;
-
-    }
 
     /**
      *Constructor that creates a new TimeStamp with given data
-     * @param date the date and time of the timeStamp
-     * @param checkIn the state of the TimeStamp(true/false)
-     * @param rfidkey The Rfid key that the Timestamp is associated with
      **/
-    public TimeStamp(Calendar date, boolean checkIn, RfidKey rfidkey) {
+    public TimeStamp() {
+
+    }
+
+    public TimeStamp(Calendar date, boolean checkIn, RfidKey rfidKey) {
         super(date, checkIn);
-        this.rfidKey = rfidkey;
-	    this.id = secretId;
-	    secretId++;
+        this.rfidKey = rfidKey;
     }
 
     /**
      * Fetches the id of the TimeStamp
      * @return the id of the TimeStamp
      **/
-	public int getId() {
-		return id;
+	public String getId() {
+		return this.id;
 	}
 
     /**
      * Sets the id of the TimeStamp
      * @param id the new id
      **/
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -76,17 +60,11 @@ public class TimeStamp extends Stamp {
      *Fetches the RFID-key of the TimeStamp
      * @return the RFID-key
      **/
-	public RfidKey getRfidkey() {
-        return rfidKey;
-    }
 
     /**
      * Sets a new RFID-key to the TimeStamp
      * @param rfidkey the new RFID-key
      **/
-    public void setRfidkey(RfidKey rfidkey) {
-        this.rfidKey = rfidkey;
-    }
 
     /**
      * Fetches the date of the TimeStamp
@@ -120,5 +98,27 @@ public class TimeStamp extends Stamp {
         super.setCheckIn(checkIn);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        TimeStamp timeStamp = (TimeStamp) o;
+
+        return !(id != null ? !id.equals(timeStamp.id) : timeStamp.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "TimeStamp{" +
+                "id='" + this.id + '\'' +
+                ", rfidKey=" + rfidKey +
+                super.toString() + '}';
+    }
 }

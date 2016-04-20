@@ -42,11 +42,11 @@ public class ListRepository {
 
 		ArrayList<TimeStamp> timeStamps = new ArrayList<>();
 
-		timeStamps.add(new TimeStamp(from, true, new RfidKey("1")));
-		timeStamps.add(new TimeStamp(to, false, new RfidKey("1")));
-
-		timeStampMap.put(new RfidKey("1"), timeStamps);
-		timeStampMap.put(new RfidKey("2"), timeStamps);
+//		timeStamps.add(new TimeStamp(from, true, new RfidKey("1")));
+//		timeStamps.add(new TimeStamp(to, false, new RfidKey("1")));
+//
+//		timeStampMap.put(new RfidKey("1"), timeStamps);
+//		timeStampMap.put(new RfidKey("2"), timeStamps);
 	}
 
 	/**
