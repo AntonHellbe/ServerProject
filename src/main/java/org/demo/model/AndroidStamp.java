@@ -52,6 +52,8 @@ public class AndroidStamp extends Stamp implements Serializable{
         return super.isCheckIn();
     }
 
-
-
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

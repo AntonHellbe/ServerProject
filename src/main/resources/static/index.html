@@ -34,7 +34,7 @@
                     </div>
                 </label>
             </div>
-            <div >
+            <div>
                 <button class="pull-right btn btn-danger" type="button" title="Delete"
                         ng-click="deleteUser(user)">
                     <span class="glyphicon glyphicon-trash"></span>
@@ -43,6 +43,7 @@
 
         </div>
         <hr/>
+
         <label>Add User</label>
         <div class="input-group col-xs-4">
             <input type="text" ng-model="newUser.firstName" placeholder="new user firstname"/>
@@ -111,12 +112,12 @@
     <br>
 
     <div>list of stamps</div>
-    
+
     <div>got!</div>
     <div>{{oldUser.stamps}}</div>
     <ul>
         <li ng-repeat="stamp in oldUser.stamps">
-            <label>{{stamp.date | date:"yyyy-MM-dd h:mm:ss"}} <strong>checkIn: {{stamp.checkIn}}</strong></label>
+            <label>{{stamp.date | date:"yyyy-MM-dd HH:mm:ss"}} <strong>checkIn: {{stamp.checkIn}}</strong></label>
         	<span>
                 <button class="btn btn-danger" type="button" title="Delete"
                         ng-click="deleteStamp(stamp.id, $index)">
@@ -155,18 +156,101 @@
 
         <div>Got</div>
         <div>{{piUser.firstName}} {{piUser.lastName}}</div>
-        <div>{{piUser.date | date:"yyyy-MM-dd h:mm:ss"}}</div>
+        <div>{{piUser.date | date:"yyyy-MM-dd HH:mm:ss"}}</div>
         <div>CheckIn= {{piUser.checkIn}}</div>
 
         <br>
-       <div>Users on server</div>
-       <ul>
-           <li ng-repeat="user in users">
-               {{user.firstName}} : {{user.rfid.id}}
-           </li>
-       </ul>
 
+        <div>Users stamps</div>
+        <ul>
+            <li ng-repeat="stamp in piUser.stamps">
+                <label>{{stamp.date | date:"yyyy-MM-dd HH:mm:ss"}} <strong>checkIn: {{stamp.checkIn}}</strong></label>
+                <br>
+                <br>
+            </li>
+        </ul>
+
+        <br>
+        <div>Users on server</div>
+        <ul>
+            <li ng-repeat="user in users">
+                {{user.firstName}} : {{user.rfid.id}}
+            </li>
+        </ul>
+
+    </div>
+    
+      <div>
+        <div class="page-header">
+            <h1>Rest for Android
+                <small>Implements the Rest interface</small>
+            </h1>
         </div>
+        
+        <h4>Get all</h4>
+        <div class="input-group  col-xs-5">
+            <input type="text" class="form-control" ng-model="andyUser.rfid" placeholder="Enter the rfid to get all stamps"/>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-disabled="!andyUser" title="Get"
+                    ng-click='getAndyAll(andyUser)'>
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+          </span>
+        </div>
+        <br>
+        <h4>Get Between</h4>
+        
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="andRfid" class="col-sm-2 control-label">Rfid</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="andRfid" placeholder="Add the rfid to get between stamps"
+              ng-model="andyUser.rfid">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="andFrom" class="col-sm-2 control-label">From</label>
+            <div class="col-sm-10">
+              <input type="datetime-local" class="form-control" id="andFrom" placeholder="from date"
+              ng-model="andyUser.from">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="andFrom" class="col-sm-2 control-label">From</label>
+            <div class="col-sm-10">
+              <input type="datetime-local" class="form-control" id="andFrom" placeholder="from date"
+              ng-model="andyUser.to">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button class="btn btn-primary" type="button" ng-disabled="!andyUser" title="Get"
+                            ng-click='getAndyBetween(andyUser)'>
+                        <span class="glyphicon glyphicon-ok"></span>
+                        Get between
+                </button>
+            </div>
+          </div>
+        </form>
+        
+        </div>
+        
+        <div>Users stamps</div>
+        <ul>
+            <li ng-repeat="stamp in andyUser.stamps">
+                <label>{{stamp.date | date:"yyyy-MM-dd HH:mm:ss"}} <strong>checkIn: {{stamp.checkIn}}</strong></label>
+                <br>
+                <br>
+            </li>
+        </ul>
+        
+        
+    </div>
+    
+    <br>
+    <br>
+    <br>
+    <br>
 
 
 </div>

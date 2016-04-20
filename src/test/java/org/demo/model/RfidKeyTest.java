@@ -12,16 +12,25 @@ public class RfidKeyTest {
     @Test
     public void testGetId() throws Exception {
         //given
-        RfidKey expected = new RfidKey("1");
+        String given = "1";
+        RfidKey expected = new RfidKey(given);
         //when
         String got = expected.getId();
         //then
-        Assert.assertEquals("1", got);
+        Assert.assertEquals(given, got);
     }
 
     @Test
     public void testSetId() throws Exception {
-
+        //given
+        String given = "2";
+        RfidKey start = new RfidKey(given);
+        //when
+        start.setId("3");
+        given = "3";
+        String got = start.getId();
+        //then
+        Assert.assertEquals(given,got );
     }
 
     @Test
