@@ -5,12 +5,13 @@ import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
 import org.demo.repository.ListRepository;
+import org.demo.repository.TimeRepository;
+import org.demo.repository.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -28,6 +29,13 @@ public class PiServiceImpl implements PiService {
 	@Autowired
 	ListRepository listRepository;
 
+
+	@Autowired
+	TimeRepository timeRepository;
+
+	@Autowired
+	UserRepositoryImpl userRepository;
+
 	/**
 	 * Handle the request from the controller
 	 * @param rfidKey the new RFID of the user
@@ -35,32 +43,19 @@ public class PiServiceImpl implements PiService {
 	 */
 	@Override
 	public ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey) {
-		System.out.println("add timestamp from PI, on" + rfidKey.getId());
-
-
+		System.out.println("add timestamp from PI, on: " + rfidKey.getId());
 		try {
+			User currentUser = userRepository.findUserByRfid(rfidKey);
 
-			User currentUser = listRepository.getUserMap().get(rfidKey);
-			System.out.println(currentUser.toString());
+			System.out.println("adding stamp on user> " + currentUser);
 
-			ArrayList<TimeStamp> temp = listRepository.getTimeStampMap().get(currentUser.getRfid());
-			boolean state = true;
+			boolean state = timeRepository.getByRfid(rfidKey).size() % 2 == 0;
 			TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentUser.getRfid());
-			if (temp == null) {
-				newStamp.setCheckIn(state);
-				temp = new ArrayList<TimeStamp>();
-				temp.add(newStamp);
-				listRepository.getTimeStampMap().put(currentUser.getRfid(), temp);
-			} else {
-				state = listRepository.getTimeStampMap().get(currentUser.getRfid()).size() % 2 == 0;
-				newStamp.setCheckIn(state);
-				listRepository.getTimeStampMap().get(currentUser.getRfid()).add(newStamp);
-			}
-			//newStamp;
-			PiStamp piStamp = new PiStamp(newStamp.getCheckIn(), currentUser);
-			//send the new Pistamp to client
-			return new ResponseEntity<PiStamp>(piStamp, HttpStatus.OK);
-		} catch (Exception e) {
+			timeRepository.save(newStamp);
+
+			return new ResponseEntity<>(new PiStamp(newStamp.getCheckIn(), currentUser), HttpStatus.OK);
+		}
+		catch (Exception e) {
 			//if there was an error!
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}

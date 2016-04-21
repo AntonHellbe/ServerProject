@@ -58,9 +58,9 @@
         </div>
         <br>
         <br>
-        <label>Get User by RFID</label>
+        <label>Get User by ID</label>
         <div class="input-group  col-xs-5">
-            <input type="text" class="form-control" ng-model="oldUser.rfid.id"
+            <input type="text" class="form-control" ng-model="oldUser.id"
                    placeholder="Enter the rfid for get a user"/>
           <span class="input-group-btn">
             <button class="btn btn-default" type="button" ng-disabled="!oldUser" title="Get"
@@ -89,7 +89,7 @@
 
     <label>Get User</label>
     <div class="input-group  col-xs-5">
-        <input type="text" class="form-control" ng-model="oldUser.rfid.id" placeholder="Enter the rfid for get a user"/>
+        <input type="text" class="form-control" ng-model="oldUser.id" placeholder="Enter the rfid for get a user"/>
           <span class="input-group-btn">
             <button class="btn btn-default" type="button" ng-disabled="!oldUser" title="Get"
                     ng-click='getUser(oldUser)'>
@@ -145,7 +145,7 @@
         </div>
 
         <div class="input-group  col-xs-5">
-            <input type="text" class="form-control" ng-model="piUser.rfid" placeholder="Enter the rfid to add PiStamp"/>
+            <input type="text" class="form-control" ng-model="piUser.rfid.id" placeholder="Enter the rfid to add PiStamp"/>
           <span class="input-group-btn">
             <button class="btn btn-default" type="button" ng-disabled="!piUser" title="Get"
                     ng-click='getPiStamp(piUser)'>

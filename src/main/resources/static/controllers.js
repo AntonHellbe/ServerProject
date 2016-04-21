@@ -95,9 +95,9 @@
          * @param id the id of the item
          */
         $scope.getUser = function (getUser) {
-            console.log("get item on id: " + getUser.rfid.id);
-            var id = getUser.rfid;
-            User.get(id)
+            console.log("get item on id: " + getUser.id);
+            var id = getUser.id;
+            User.get({id:id})
                 .$promise.then(
                 function (success) {
                     console.log("Successfuly Removed User");
@@ -115,8 +115,9 @@
 
         $scope.getStamps = function () {
             var rfid = $scope.oldUser.rfid;
+			var id = $scope.oldUser.id;
             console.log("get all stamps for user " + rfid.id);
-            Time.query({id: rfid.id}).$promise.then(
+            Time.query({id: id}).$promise.then(
                 function (success) {
                     console.log("Success");
                     $scope.oldUser.stamps = success ? success : [];
@@ -129,12 +130,12 @@
                 });
 
 
-        }
+        };
 
         $scope.addStamp = function () {
-            var rfid = $scope.oldUser.rfid;
-            console.log("get all stamps for user " + rfid.id);
-            Time.save({id: rfid.id}).$promise.then(
+            var id = $scope.oldUser.id;
+            console.log("get all stamps for user " + id);
+            Time.save({id: id}).$promise.then(
                 function (success) {
                     console.log("Success");
 
@@ -146,12 +147,12 @@
                 function (update) {
                     alert("Got notification" + JSON.stringify(update));
                 });
-        }
+        };
 
         $scope.deleteStamp = function (stampId, idx) {
             console.log("remove id " + stampId);
             //$scope.oldUser.stamps.splice(stampId,stampId);
-            var userid = $scope.oldUser.rfid.id;
+            var userid = $scope.oldUser.id;
             // $http.delete("localhost:8080/"+userid,stampId);
             Time.remove({id: userid}, {stampId: stampId})
                 .$promise.then(
@@ -168,9 +169,9 @@
         };
 
         $scope.getPiStamp = function (piUser) {
-            console.log("do Pi Stamp for id " + piUser.rfid);
+            console.log("do Pi Stamp for id " + piUser.rfid.id);
 
-            $http.get('http://localhost:8080/pi/' + piUser.rfid)
+            $http.get('http://localhost:8080/pi/' + piUser.rfid.id)
                 .then(function successCallback(success) {
                     console.log("Successfuly sent to pi service!");
                     $scope.piUser.answear = success.data;
@@ -179,17 +180,17 @@
                     $scope.piUser.checkIn = success.data.checkIn;
                     $scope.piUser.date = success.data.date;
 
-                    Time.query({id: piUser.rfid}).$promise.then(
-                        function (success) {
-                            console.log("Success");
-                            $scope.piUser.stamps = success ? success : [];
-                        },
-                        function (error) {
-                            alert("Failed " + JSON.stringify(error));
-                        },
-                        function (update) {
-                            alert("Got notification" + JSON.stringify(update));
-                        });
+//                    Time.query({id: piUser.rfid}).$promise.then(
+//                        function (success) {
+//                            console.log("Success");
+//                            $scope.piUser.stamps = success ? success : [];
+//                        },
+//                        function (error) {
+//                            alert("Failed " + JSON.stringify(error));
+//                        },
+//                        function (update) {
+//                            alert("Got notification" + JSON.stringify(update));
+//                        });
 
 
                 }, function errorCallback(error) {
