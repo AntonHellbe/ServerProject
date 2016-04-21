@@ -27,9 +27,6 @@ public class AndroidServiceImpl implements AndroidService {
 
 	private static final Logger log = LoggerFactory.getLogger(AndroidServiceImpl.class);
 
-//	@Autowired
-//	ListRepository listRepository;
-
 	@Autowired
 	TimeRepository timeRepository;
 
