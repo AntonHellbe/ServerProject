@@ -1,5 +1,7 @@
 package org.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
@@ -10,11 +12,15 @@ import java.io.Serializable;
  * A class that creates an RFID-key from input
  **/
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RfidKey implements Serializable{
 
     private String id;
 
-    /**
+	public RfidKey() {
+	}
+
+	/**
      * Constructor that creates a new RFID-key
      **/
     public RfidKey(String id) {

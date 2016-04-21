@@ -1,5 +1,6 @@
 package org.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +13,7 @@ import java.util.Calendar;
 /**
  * TimeStamp used by the Server
  **/
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection = "TimeStamps")
 public class TimeStamp extends Stamp {
 
@@ -20,23 +22,14 @@ public class TimeStamp extends Stamp {
 
     private RfidKey rfidKey;
 
-    /**
-     * Formats the information in the TimeStamp to a String
-     * @return the formatted information
-     **/
-    @Override
-	public String toString() {
-		return "TimeStamp{" +
-				"ID=" + id +"\n"+
-				"rfid=" + rfidKey +"\n"+
-				super.toString()+
-				'}';
-	}
+
 
     /**
      *Constructor that creates a new Timestamp
      **/
-
+    public TimeStamp() {
+	    super();
+    }
 
     /**
      *Constructor that creates a new TimeStamp with given data
@@ -113,5 +106,17 @@ public class TimeStamp extends Stamp {
         super.setCheckIn(checkIn);
     }
 
+	/**
+	 * Formats the information in the TimeStamp to a String
+	 * @return the formatted information
+	 **/
+	@Override
+	public String toString() {
+		return "TimeStamp{" +
+				"ID=" + id +"\n"+
+				"rfid=" + rfidKey +"\n"+
+				super.toString()+
+				'}';
+	}
 
 }

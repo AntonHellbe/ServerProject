@@ -1,144 +1,143 @@
 package org.demo.service;
 
-import org.demo.model.AndroidStamp;
-import org.demo.model.RfidKey;
-import org.demo.model.TimeStamp;
-import org.demo.model.User;
-import org.demo.repository.ListRepository;
+import org.demo.model.*;
+import org.demo.repository.TimeRepository;
+import org.demo.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.websocket.server.ServerEndpoint;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
  * Created by Anton on 2016-04-11.
  */
+
 /**
  * Class that handles methods used by the Android clients
  **/
+
 @Service
 public class AndroidServiceImpl implements AndroidService {
 
-    @Autowired
-    ListRepository listRepository;
+	private static final Logger log = LoggerFactory.getLogger(AndroidServiceImpl.class);
 
-    /**
-     * Fetches the user with the given RFID-key, the String gets converted into an RFID-key
-     * @param id the RFID-key
-     * @return the user
-     **/
+//	@Autowired
+//	ListRepository listRepository;
 
-    public ResponseEntity<User> getUser(@PathVariable("id") String id) {
-        System.out.println("looking for RFID " +id);
-        User wantedUser = listRepository.getUserMap().get(new RfidKey(id));
-        System.out.println("found user: "+wantedUser);
-        if(wantedUser != null){
-            return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-        }
+	@Autowired
+	TimeRepository timeRepository;
 
-    }
+	@Autowired
+	UserRepository userRepository;
 
-    public ResponseEntity<User> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
-        System.out.println(getSpecificUserJSON.get("firstName").toString());
-        System.out.println(getSpecificUserJSON.get("lastName").toString());
-        ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
-        for(int i=0; i<userList.size(); i++) {
-            if(userList.get(i).getFirstName().equals(getSpecificUserJSON.get("firstName").toString()) &&
-                    userList.get(i).getLastName().equals(getSpecificUserJSON.get("lastName").toString())){
-                User wantedUser = userList.get(i);
-                System.out.println(wantedUser.toString());
-                return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
-            }
-        }
+	/**
+	 * Fetches the user with the given RFID-key, the String gets converted into an RFID-key
+	 *
+	 * @param id the RFID-key
+	 * @return the user
+	 **/
+
+	public ResponseEntity<User> getUser(String id) {
+//		System.out.println("looking for RFID " + id);
+//		User wantedUser = listRepository.getUserMap().get(new RfidKey(id));
+//		System.out.println("found user: " + wantedUser);
+//		if (wantedUser != null) {
+//			return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
+//		} else {
+//			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+//		}
+
+		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+	}
+
+	public ResponseEntity<User> loginUser(Map<String, Object> getSpecificUserJSON) {
+//		System.out.println(getSpecificUserJSON.get("firstName").toString());
+//		System.out.println(getSpecificUserJSON.get("lastName").toString());
+//		ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
+//		for (int i = 0; i < userList.size(); i++) {
+//			if (userList.get(i).getFirstName().equals(getSpecificUserJSON.get("firstName").toString()) &&
+//					userList.get(i).getLastName().equals(getSpecificUserJSON.get("lastName").toString())) {
+//				User wantedUser = userList.get(i);
+//				System.out.println(wantedUser.toString());
+//				return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
+//			}
+//		}
+//
+//
+//		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+	}
 
 
-        return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-    }
+	/**
+	 * Fetches all times associated with the given user
+	 *
+	 * @param rfidKey The user with RFID sent in a JSON
+	 * @return all the times
+	 **/
+	public ResponseEntity<List<AndroidStamp>> getAll(RfidKey rfidKey) {
+
+		// TODO: 2016-04-21 :21:22 Just for logging
+		log.info("Get all is called");
+		log.info("get all stamps for id " + rfidKey);
+
+		List<TimeStamp> userStamps = timeRepository.getByRfid(rfidKey);
+
+		// TODO: 2016-04-21 :21:06 How to create new lists
+		List<AndroidStamp> alist = userStamps.stream()
+				.map(AndroidStamp::new)
+				.collect(Collectors.toList());
 
 
-    /**
-     * Fetches all times associated with the given user
-     * @param rfidkeyJSON The user with RFID sent in a JSON
-     * @return all the times
-     **/
-    public ResponseEntity<ArrayList<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON) {
-        rfidkeyJSON.forEach((s, o) -> {
-            System.out.println("[KEY]"+s+" [VALUE]"+o);
-        });
+		// TODO: 2016-04-21 :21:22 Just for logging
+		log.info("sending to client");
+		alist.forEach(item -> log.info(item.toString()));
 
-        RfidKey rfidKey = new RfidKey(rfidkeyJSON.get("id").toString());
-        System.out.println("get all stamps for id "+rfidKey);
 
-        ArrayList<AndroidStamp> allTimes = new ArrayList<>();
-//        User currentUser = userMap.get(rfidKey);
-        ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
-        userStamps.forEach(timeStamp -> {
-            allTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
+		if (alist != null) {
+			return new ResponseEntity<>(alist, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
-        });
+	/**
+	 * Fetches the times between the given times/dates
+	 *
+	 * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
+	 * @return the times in the interval
+	 **/
+	public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
+		// TODO: 2016-04-21 :21:22 Just for logging
+		log.info("Calling get between");
 
-        System.out.println("sending to client");
-        allTimes.forEach(item -> System.out.println(item));
+		log.info("got "+androidBetweenQuery.toString());
 
-        if(allTimes != null) {
-            return new ResponseEntity<ArrayList<AndroidStamp>>(allTimes, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<ArrayList<AndroidStamp>>(HttpStatus.NOT_FOUND);
-        }
-    }
+		Calendar fromDate = new GregorianCalendar();
+		fromDate.setTimeInMillis(androidBetweenQuery.getFrom());
+		Calendar toDate = new GregorianCalendar();
+		toDate.setTimeInMillis(androidBetweenQuery.getTo());
 
-    /**
-     * Fetches the times between the given times/dates
-     * @param betweenJSON JSON containing the RFID of the user, the "from" date and the "to" date
-     * @return the times in the interval
-     **/
-    public ResponseEntity<ArrayList<AndroidStamp>> getBetween(@RequestBody Map<String, Object> betweenJSON) {
-        betweenJSON.forEach((s, o) -> {
-            System.out.println("[KEY]"+s+" [VALUE]"+o);
-        });
+		List<TimeStamp> userStamps = timeRepository.getByRfid(androidBetweenQuery.getId());
 
-        String key = betweenJSON.get("id").toString();
+		// TODO: 2016-04-21 :21:06 How to create a filtered new lists
+		List<AndroidStamp> betweenTimes = userStamps.stream()
+				.filter(timeStamp ->
+						timeStamp.getDate().after(fromDate) &&
+						timeStamp.getDate().before(toDate))
+				.map(AndroidStamp::new)
+				.collect(Collectors.toList());
 
-//	    Date dt = new Date(betweenJSON.get("from").toString());
-
-        Calendar fromDate = new GregorianCalendar();
-        fromDate.setTimeInMillis(Long.parseLong(betweenJSON.get("from").toString()));
-        Calendar toDate = new GregorianCalendar();
-        toDate.setTimeInMillis(Long.parseLong(betweenJSON.get("to").toString()));
-
-        RfidKey rfidKey = new RfidKey(key);
-
-        ArrayList<TimeStamp> userStamps = listRepository.getTimeStampMap().get(rfidKey);
-        ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
-
-        //1460384544658 -----1460384551260  &&(timeStamp.getDate().before(toDate))==true
-        userStamps.forEach(timeStamp -> {
-            System.out.println(timeStamp.getDate().getTimeInMillis());
-            //System.out.println("From: " + fromDate + " To: " + toDate);
-            // TODO Fix missing timestamp date check
-            if((timeStamp.getDate().after(fromDate))==true &&(timeStamp.getDate().before(toDate))==true) {
-                System.out.println("1");
-                betweenTimes.add(new AndroidStamp(timeStamp.getDate(), timeStamp.getCheckIn()));
-            }
-        });
-
-        if(betweenTimes != null) {
-            return new ResponseEntity<ArrayList<AndroidStamp>>(betweenTimes, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<ArrayList<AndroidStamp>>(HttpStatus.NOT_FOUND);
-        }
-    }
+		if (betweenTimes != null) {
+			return new ResponseEntity<>(betweenTimes, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }

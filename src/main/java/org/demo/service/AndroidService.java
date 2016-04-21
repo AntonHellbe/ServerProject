@@ -1,10 +1,11 @@
 package org.demo.service;
+import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.AndroidStamp;
+import org.demo.model.RfidKey;
 import org.demo.model.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,22 +22,22 @@ public interface AndroidService {
      * @param id the RFID-key
      * @return the user
      **/
-    public ResponseEntity<User> getUser(@PathVariable("id") String id);
+    public ResponseEntity<User> getUser( String id);
 
     /**
      * Fetches all times associated with the given user
-     * @param rfidkeyJSON The user with RFID sent in a JSON
+     * @param rfidKey The user with RFID sent in a JSON
      * @return all the times
      **/
-    public ResponseEntity<ArrayList<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON);
+    public ResponseEntity<List<AndroidStamp>> getAll(RfidKey rfidKey);
 
     /**
      * Fetches the times between the given times/dates
-     * @param betweenJSON JSON containing the RFID of the user, the "from" date and the "to" date
+     * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
      * @return the times in the interval
      **/
-    public ResponseEntity<ArrayList<AndroidStamp>> getBetween(@RequestBody Map<String, Object> betweenJSON);
+    public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery);
 
-    public ResponseEntity<User> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON);
+    public ResponseEntity<User> loginUser( Map<String, Object> getSpecificUserJSON);
 
 }

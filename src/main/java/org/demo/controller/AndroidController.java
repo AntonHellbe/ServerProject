@@ -1,13 +1,18 @@
 package org.demo.controller;
 
-import org.demo.model.*;
-import org.demo.repository.ListRepository;
+import org.demo.model.AndroidBetweenQuery;
+import org.demo.model.AndroidStamp;
+import org.demo.model.RfidKey;
+import org.demo.model.User;
 import org.demo.service.AndroidService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Anton on 2016-04-07.
@@ -20,6 +25,11 @@ import java.util.*;
 @RestController
 @RequestMapping("/android")
 public class AndroidController {
+
+	/**
+	 * Logger
+	 */
+	private static final Logger log = LoggerFactory.getLogger(AndroidController.class);
 
 	@Autowired
 	AndroidService androidService;
@@ -41,7 +51,9 @@ public class AndroidController {
      * @return all the times associated with the rfid-key
      **/
 	@RequestMapping(value = "/all",method = RequestMethod.POST)
-	public ResponseEntity<ArrayList<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON){
+//	public ResponseEntity<List<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON){
+	public ResponseEntity<List<AndroidStamp>> getAll(@RequestBody RfidKey rfidkeyJSON){
+		log.info("Calling get all");
 		return androidService.getAll(rfidkeyJSON);
 	}
 
@@ -57,7 +69,8 @@ public class AndroidController {
      * @return the times associated with the RFID-key in the periods given
      **/
     @RequestMapping(value = "/between", method = RequestMethod.POST)
-    public ResponseEntity<ArrayList<AndroidStamp>> getBetween(@RequestBody Map<String, Object> betweenJSON){
+    public ResponseEntity<List<AndroidStamp>> getBetween(@RequestBody AndroidBetweenQuery betweenJSON){
+	    log.info("Calling get between");
 		return androidService.getBetween(betweenJSON);
 
     }

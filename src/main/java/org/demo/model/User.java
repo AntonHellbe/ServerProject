@@ -1,5 +1,6 @@
 package org.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 /**
  * User class that contains the information about the users
  **/
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection = "Users")
 public class User implements Serializable{
 

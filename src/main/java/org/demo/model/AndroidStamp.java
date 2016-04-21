@@ -20,7 +20,13 @@ public class AndroidStamp extends Stamp implements Serializable{
         super(date, checkIn);
     }
 
-    /**
+	public AndroidStamp(TimeStamp timeStamp) {
+		this.date = timeStamp.getDate();
+		this.checkIn = timeStamp.getCheckIn();
+	}
+
+
+	/**
      * Sets the date of the Stamp
      * @param date the date to be set to the stamp
      **/

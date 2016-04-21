@@ -4,9 +4,8 @@ import org.demo.model.PiStamp;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.User;
-import org.demo.repository.ListRepository;
 import org.demo.repository.TimeRepository;
-import org.demo.repository.UserRepositoryImpl;
+import org.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +26,10 @@ public class PiServiceImpl implements PiService {
 	 * Get the repository
 	 */
 	@Autowired
-	ListRepository listRepository;
-
-
-	@Autowired
 	TimeRepository timeRepository;
 
 	@Autowired
-	UserRepositoryImpl userRepository;
+	UserRepository userRepository;
 
 	/**
 	 * Handle the request from the controller
