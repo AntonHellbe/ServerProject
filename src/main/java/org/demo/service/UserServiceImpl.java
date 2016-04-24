@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,9 +28,9 @@ public class UserServiceImpl implements UserService {
 
 
 
-    public ResponseEntity<ArrayList<User>> getAllUser() {
+    public ResponseEntity<List<User>> getAllUser() {
         Map<String, Object> response = new LinkedHashMap<>();
-        ArrayList<User> userList = new ArrayList<>(userRepository.findAll());
+        List<User> userList =userRepository.findAll();
 //        userRepository.deleteAll();
 //        userList.forEach(user -> {
 //            userRepository.save(user);
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         response.put("AllUsers", userList.size());
         response.put("Users", userList);
         if(userList != null) {
-            return new ResponseEntity<ArrayList<User>>(userList, HttpStatus.OK);
+            return new ResponseEntity<>(userList, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

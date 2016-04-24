@@ -1,0 +1,60 @@
+@startuml
+
+
+
+class User{
+-String id;
+-String firstName;
+-String lastName;
+-RfidKey rfidKey;
+
+}
+
+class Stamp{
+    #Calendar date;
+    #boolean checkIn;
+}
+
+class PiStamp extends Stamp{
+    -String lastName;
+    -String lastName;
+    -String firstName;
+}
+
+interface PiService {
+
+	public ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey);
+}
+
+class PiServiceImpl implements PiService {
+
+	TimeRepository timeRepository;
+
+	UserRepository userRepository;
+
+    public ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey)
+
+}
+
+class TimeRepository{
+}
+
+class UserRepository{
+}
+
+class TimeStamp{
+}
+
+class RfidKey{
+}
+
+PiServiceImpl -- TimeRepository
+PiServiceImpl -- UserRepository
+PiServiceImpl -- User
+PiServiceImpl -- Timestamp
+PiServiceImpl -- RfidKey
+PiServiceImpl -- PiStamp
+PiServiceImpl -- TimeStamp
+
+
+@enduml

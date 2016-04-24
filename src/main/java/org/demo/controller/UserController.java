@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +29,7 @@ public class UserController {
      * @return all users in the list
      **/
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<User>> getAllUser() {
+    public ResponseEntity<List<User>> getAllUser() {
         return userService.getAllUser();
     }
 

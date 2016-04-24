@@ -1,12 +1,11 @@
 package org.demo.service;
+
 import org.demo.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +21,7 @@ public interface UserService {
      *Fetches all the users in the list
      * @return all users in the list
      **/
-    public ResponseEntity<ArrayList<User>> getAllUser();
+    public ResponseEntity<List<User>> getAllUser();
 
     /**
      *Fetches the specified user from the list
