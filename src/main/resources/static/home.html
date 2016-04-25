@@ -1,0 +1,16 @@
+<h1>Greeting</h1>
+<div ng-show="authenticated">
+    <p>The ID is: {{controller.greeting.id}}</p>
+    <p>The content is: {{controller.greeting.content}}</p>
+    <div>
+        login got> {{controller.loginResp}}
+    </div>
+</div>
+<div  ng-show="!authenticated">
+    <p>Login to see your greeting</p>
+</div>
+
+<div>
+    <div>User get all data</div>
+    <div>{{controller.users}}</div>
+</div>

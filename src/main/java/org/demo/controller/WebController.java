@@ -28,6 +28,7 @@ public class WebController {
 		return "index.html";
 	}
 
+
 	/**
 	 * Connecting Android web interface to
 	 * localhost:8080/andw

@@ -1,10 +1,100 @@
-/**
- * Created by sebadmin on 2016-04-08.
- */
-//Init the hole Angular project connects the controller, services, and injects
-//needed libs.
-(function(angular) {
-    angular.module("myApp.controllers", []);
-    angular.module("myApp.services", []);
-    angular.module("myApp", ["ngResource", "myApp.controllers", "myApp.services"]);
-}(angular));
+angular.module('hello', ['ngRoute']).config(function ($routeProvider, $httpProvider) {
+
+    $routeProvider.when('/', {
+        templateUrl: 'home.html',
+        controller: 'home',
+        controllerAs: 'controller'
+    }).when('/login', {
+        templateUrl: 'login.html',
+        controller: 'navigation',
+        controllerAs: 'controller'
+    }).otherwise('/');
+
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+}).controller('navigation',
+
+    function ($rootScope, $http, $location, $route) {
+
+        var self = this;
+
+        self.tab = function (route) {
+            return $route.current && route === $route.current.controller;
+        };
+
+        var authenticate = function (credentials, callback) {
+
+            var headers = credentials ? {
+                authorization: "Basic "
+                + btoa(credentials.username + ":"
+                    + credentials.password)
+            } : {};
+
+            $http.get('api/account', {
+                headers: headers
+            }).then(function (response) {
+                if (response.data.name) {
+                    $rootScope.authenticated = true;
+                } else {
+                    $rootScope.authenticated = false;
+                }
+                callback && callback($rootScope.authenticated);
+            }, function () {
+                $rootScope.authenticated = false;
+                callback && callback(false);
+            });
+
+        }
+
+        authenticate();
+
+        self.credentials = {};
+        self.login = function () {
+            authenticate(self.credentials, function (authenticated) {
+                if (authenticated) {
+                    console.log("Login succeeded")
+                    $location.path("/");
+                    self.error = false;
+                    $rootScope.authenticated = true;
+                } else {
+                    console.log("Login failed")
+                    $location.path("/login");
+                    self.error = true;
+                    $rootScope.authenticated = false;
+                }
+            })
+        };
+
+        self.logout = function () {
+            $http.post('logout', {}).finally(function () {
+                $rootScope.authenticated = false;
+                $location.path("/");
+            });
+        }
+
+    }).controller('home', function ($http) {
+    var self = this;
+
+    $http.get('/resource/').success(function(data) {
+        self.greeting = data;
+    });
+
+    $http.get('/users/').success(function(data) {
+        self.users = data;
+    });
+
+    //$http.get('resource').then(function (response) {
+    //    $http({
+    //        url: '',
+    //        method: "GET",
+    //        headers: {
+    //            'X-Auth-Token' : response.data.token
+    //        }
+    //    }).then(function (response) {
+    //        self.greeting = response.data;
+    //    });
+    //});
+    //$http.get('http://localhost:9000').then(function(response) {
+    //    self.greeting = response.data;
+    //});
+});
