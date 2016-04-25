@@ -33,11 +33,11 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ServerProjectApplication.class)
-@WebIntegrationTest({"server.port=8080"})
+@WebIntegrationTest({"server.port=9090"})
 public class ServerProjectApplicationTests {
 
 	private static final Logger log = LoggerFactory.getLogger(ServerProjectApplication.class);
-	private static  String ip = "http://localhost:8080/users";
+	private static  String ip = "http://localhost:9090/users";
 
 	private MockMvc mockMvc;
 
