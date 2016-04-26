@@ -10,7 +10,7 @@
     var ItemFactory = function($resource) {
         var tempUrl = "http://localhost:8080";
         
-        return $resource(tempUrl+'/users/:id', {
+        return $resource('/users/:id', {
             id: '@id'
         }, {
             update: {
@@ -32,7 +32,7 @@
 (function(angular) {
     var ItemFactory = function($resource) {
         var tempUrl = "http://localhost:8080";
-        return $resource(tempUrl+'/time/:id/:stampId', {
+        return $resource('/time/:id/:stampId', {
             id: '@id',stampId:'@stampId'
         }, {
             update: {
@@ -52,7 +52,7 @@
     var ItemFactory = function($resource) {
         var tempUrl = "http://localhost:8080";
         
-        return $resource(tempUrl+'/pi/:id', {
+        return $resource('/pi/:id', {
             id: '@id'
         }, {
 
@@ -74,7 +74,7 @@
     var ItemFactory = function($resource) {
         var tempUrl = "http://localhost:8080";
         
-        return $resource(tempUrl+'/android/:id',{id:""}, {
+        return $resource('/android/:id',{id:""}, {
 
             'getAll':{
                 method: "POST"

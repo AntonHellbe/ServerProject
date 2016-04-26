@@ -2,8 +2,11 @@ package org.demo;
 
 
 import org.demo.config.AuthoritiesConstants;
+import org.demo.model.RfidKey;
+import org.demo.model.User;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
+import org.demo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ public class ServerProjectApplication implements CommandLineRunner{
 
 	@Autowired
 	AccountRepository accountRepository;
+
+	@Autowired
+	UserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServerProjectApplication.class, args);
@@ -58,5 +64,13 @@ public class ServerProjectApplication implements CommandLineRunner{
 		else {
 			System.out.println("USER ALLREADY in DB");
 		}
+
+//		//add some dummy users
+//		userRepository.save(new User("john", "smith", new RfidKey("123")));
+//		userRepository.save(new User("lisa", "smith", new RfidKey("234")));
+//		userRepository.save(new User("clark", "smith", new RfidKey("4")));
+//		userRepository.save(new User("erik", "smith", new RfidKey("5")));
+
+
 	}
 }

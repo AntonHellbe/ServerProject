@@ -19,6 +19,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http
+				// TODO: 2016-04-26 httpBasic ska inte vara med. behovs losas po annat vis.
 				.httpBasic()
 				.and()
 				.authorizeRequests()
@@ -36,7 +37,8 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 				).permitAll()
 				.antMatchers("/admin_r").hasAuthority(AuthoritiesConstants.ADMIN)
 //				.antMatchers("/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
-				.antMatchers("/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
+				//.antMatchers("/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
+				// TODO: 2016-04-26 har behover vi dela upp vilka roller som far lov att accessa REST
 				.anyRequest()
 				.authenticated()
 				.and()

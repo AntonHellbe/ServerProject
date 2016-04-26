@@ -1,32 +1,41 @@
 package org.demo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.demo.model.User;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.OutputCapture;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.codec.Base64;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 //@WebAppConfiguration
@@ -54,16 +63,34 @@ public class ServerProjectApplicationTests {
 	@Test
 	public void testGetAllUsers() {
 
-		RestTemplate restTemplate = new RestTemplate();
-		User[] got = restTemplate.getForObject(ip, User[].class);
-		log.info(Arrays.toString(got));
+		RestTemplate template = new TestRestTemplate("user", "pass");
+		ResponseEntity<User[]> response = template.getForEntity("http://localhost:" + port
+				+ "/users", User[].class);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		User[] users = response.getBody();
+		System.out.println("USERS ");
+		System.out.println(Arrays.toString(users));
 
-		assertThat(got, notNullValue());
-		log.info("first item in list is a User");
-		assertThat(got[0],instanceOf(User.class) );
-		log.info("User info: \n"+
-				got[0].toString());
+//		RestTemplate restTemplate = new RestTemplate();
+//		User[] got = restTemplate.getForObject(ip, User[].class);
+//		log.info(Arrays.toString(got));
+//
+//		assertThat(got, notNullValue());
+//		log.info("first item in list is a User");
+//		assertThat(got[0],instanceOf(User.class) );
+//		log.info("User info: \n"+
+//				got[0].toString());
 	}
+
+	@Value("${local.server.port}")
+	private int port;
+
+	@Test
+	public void homePageProtected() {
+		ResponseEntity<String> response = new TestRestTemplate().getForEntity(ip, String.class);
+		assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+	}
+
 
 
 
