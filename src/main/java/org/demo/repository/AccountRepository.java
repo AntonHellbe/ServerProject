@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
  * Created by Sebastian Börebäck on 2016-04-22.
  */
 @Repository
-public interface AccountRepository extends MongoRepository<Account, String> {
+public interface AccountRepository extends MongoRepository<Account, String>, AccountRepositoryCustom {
 
-	public Account findByUsername(String username);
 
 }

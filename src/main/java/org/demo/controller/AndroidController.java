@@ -3,7 +3,7 @@ package org.demo.controller;
 import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.AndroidStamp;
 import org.demo.model.RfidKey;
-import org.demo.model.User;
+import org.demo.model.security.Account;
 import org.demo.service.AndroidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/android")
+@RequestMapping("/api/android")
 public class AndroidController {
 
 	/**
@@ -40,7 +40,7 @@ public class AndroidController {
      * @return The user we searched for
      **/
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable("id") String id){
+    public ResponseEntity<Account> getUser(@PathVariable("id") String id){
 		return androidService.getUser(id);
 
     }
@@ -58,7 +58,7 @@ public class AndroidController {
 	}
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<User> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
+    public ResponseEntity<Account> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
         return androidService.loginUser(getSpecificUserJSON);
     }
 

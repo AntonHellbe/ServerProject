@@ -1,6 +1,7 @@
 package org.demo.service.databaseservice;
 
-import org.demo.model.User;
+import org.demo.model.security.Account;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface IMemberService {
      * Returns a list of all registered members
      * @return List of members
      **/
-    List<User> getMembers();
+    List<Account> getMembers();
 
     /**
      * Sets the current user to the input
@@ -37,6 +38,6 @@ public interface IMemberService {
     /**
      * Fetches a specified member through the use of CurrentUserID
      **/
-    public User getCurrentUser();
+    public Account getCurrentUser();
 
 }

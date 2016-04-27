@@ -1,13 +1,12 @@
 package org.demo.controller;
 
-import org.demo.model.User;
-import org.demo.service.UserService;
+import org.demo.model.security.Account;
+import org.demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Anton on 2016-04-07.
@@ -17,11 +16,11 @@ import java.util.Map;
  **/
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/api/users")
+public class AccountController {
 
     @Autowired
-    UserService userService;
+    AccountService userService;
 
 
     /**
@@ -29,7 +28,7 @@ public class UserController {
      * @return all users in the list
      **/
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUser() {
+    public ResponseEntity<List<Account>> getAllUser() {
         return userService.getAllUser();
     }
 
@@ -39,7 +38,7 @@ public class UserController {
      * @return The sought after user
      **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") String id) {
+    public ResponseEntity<Account> getUser(@PathVariable("id") String id) {
         return userService.getUser(id);
     }
 
@@ -49,10 +48,9 @@ public class UserController {
      * @param updatedUserJSON the updated information
      * @return the updated user
      **/
-    @RequestMapping(method = RequestMethod.PUT, value = "{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") String id,
-                                           @RequestBody Map<String, Object> updatedUserJSON) {
-        return userService.updateUser(id, updatedUserJSON);
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) {
+        return userService.updateUser(updatedAccount);
     }
 
     /**
@@ -61,7 +59,7 @@ public class UserController {
      * @return the deleted user
      **/
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public ResponseEntity<User> removeUser(@PathVariable("id") String id) {
+    public ResponseEntity<Account> removeUser(@PathVariable("id") String id) {
         return userService.removeUser(id);
 
     }
@@ -72,8 +70,8 @@ public class UserController {
      * @return the newly added user
      **/
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> addUser(@RequestBody Map<String, Object> newUserJSON) {
-        return userService.addUser(newUserJSON);
+    public ResponseEntity<Account> addUser(@RequestBody Account newAccount) {
+        return userService.addUser(newAccount);
 
     }
 }

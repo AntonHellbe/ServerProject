@@ -18,7 +18,7 @@ import java.util.Map;
  **/
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/time")
+@RequestMapping("/api/time")
 public class TimeController {
 
     @Autowired
@@ -29,7 +29,6 @@ public class TimeController {
      **/
     public TimeController() {
     }
-
     /**
      * Removes the given time of a specific user
      *

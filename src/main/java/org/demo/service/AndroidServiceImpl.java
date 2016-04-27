@@ -1,8 +1,9 @@
 package org.demo.service;
 
 import org.demo.model.*;
+import org.demo.model.security.Account;
+import org.demo.repository.AccountRepository;
 import org.demo.repository.TimeRepository;
-import org.demo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class AndroidServiceImpl implements AndroidService {
 	TimeRepository timeRepository;
 
 	@Autowired
-	UserRepository userRepository;
+	AccountRepository accountRepository;
 
 	/**
 	 * Fetches the user with the given RFID-key, the String gets converted into an RFID-key
@@ -40,38 +41,29 @@ public class AndroidServiceImpl implements AndroidService {
 	 * @return the user
 	 **/
 
-	public ResponseEntity<User> getUser(String id) {
-//		System.out.println("looking for RFID " + id);
-//		User wantedUser = listRepository.getUserMap().get(new RfidKey(id));
-//		System.out.println("found user: " + wantedUser);
-//		if (wantedUser != null) {
-//			return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
-//		} else {
-//			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//		}
+	public ResponseEntity<Account> getUser(String id) {
+		System.out.println("looking for RFID " + id);
+		Account wantedAccount = accountRepository.findOne(id);
+		System.out.println("found user: " + wantedAccount);
+		if (wantedAccount != null) {
+			return new ResponseEntity<Account>(wantedAccount, HttpStatus.OK);
+		}
 
-		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
 	}
 
-	public ResponseEntity<User> loginUser(Map<String, Object> getSpecificUserJSON) {
-//		System.out.println(getSpecificUserJSON.get("firstName").toString());
-//		System.out.println(getSpecificUserJSON.get("lastName").toString());
-//		ArrayList<User> userList = new ArrayList<>(listRepository.getUserMap().values());
-//		for (int i = 0; i < userList.size(); i++) {
-//			if (userList.get(i).getFirstName().equals(getSpecificUserJSON.get("firstName").toString()) &&
-//					userList.get(i).getLastName().equals(getSpecificUserJSON.get("lastName").toString())) {
-//				User wantedUser = userList.get(i);
-//				System.out.println(wantedUser.toString());
-//				return new ResponseEntity<User>(wantedUser, HttpStatus.OK);
-//			}
-//		}
-//
-//
-//		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<Account> loginUser(Map<String, Object> getSpecificUserJSON) {
+		System.out.println(getSpecificUserJSON.get("firstName").toString());
+		System.out.println(getSpecificUserJSON.get("lastName").toString());
+		Account loginUser = accountRepository.findByName(getSpecificUserJSON.get("firstName").toString(), getSpecificUserJSON.get("lastName").toString());
+
+		if(loginUser != null) {
+			return new ResponseEntity<Account>(loginUser, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+
 	}
-
-
 	/**
 	 * Fetches all times associated with the given user
 	 *
@@ -133,8 +125,7 @@ public class AndroidServiceImpl implements AndroidService {
 
 		if (betweenTimes != null) {
 			return new ResponseEntity<>(betweenTimes, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 }

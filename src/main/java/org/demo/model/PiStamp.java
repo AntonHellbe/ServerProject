@@ -1,5 +1,7 @@
 package org.demo.model;
 
+import org.demo.model.security.Account;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -24,7 +26,7 @@ public class PiStamp extends Stamp implements Serializable {
 	 * @param checkIn
 	 * @param user
 	 */
-	public PiStamp(boolean checkIn, User user) {
+	public PiStamp(boolean checkIn, Account user) {
 		this.checkIn = checkIn;
 		this.date = Calendar.getInstance();
 		this.firstName =user.getFirstName();

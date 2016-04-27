@@ -1,7 +1,6 @@
 package org.demo;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.demo.model.User;
+import org.demo.model.security.Account;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,8 +12,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,15 +19,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.codec.Base64;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -64,10 +57,10 @@ public class ServerProjectApplicationTests {
 	public void testGetAllUsers() {
 
 		RestTemplate template = new TestRestTemplate("user", "pass");
-		ResponseEntity<User[]> response = template.getForEntity("http://localhost:" + port
-				+ "/users", User[].class);
+		ResponseEntity<Account[]> response = template.getForEntity("http://localhost:" + port
+				+ "/users", Account[].class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		User[] users = response.getBody();
+		Account[] users = response.getBody();
 		System.out.println("USERS ");
 		System.out.println(Arrays.toString(users));
 
@@ -100,7 +93,7 @@ public class ServerProjectApplicationTests {
 
 		ip = "http://localhost:8081/users";
 		RestTemplate restTemplate = new RestTemplate();
-		ArrayList<User> got = restTemplate.getForObject(ip, ArrayList.class);
+		ArrayList<Account> got = restTemplate.getForObject(ip, ArrayList.class);
 		log.info(got.toString());
 	}
 

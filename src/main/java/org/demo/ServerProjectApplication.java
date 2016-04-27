@@ -3,10 +3,8 @@ package org.demo;
 
 import org.demo.config.AuthoritiesConstants;
 import org.demo.model.RfidKey;
-import org.demo.model.User;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
-import org.demo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @SpringBootApplication
 public class ServerProjectApplication implements CommandLineRunner{
 
@@ -26,8 +26,6 @@ public class ServerProjectApplication implements CommandLineRunner{
 	@Autowired
 	AccountRepository accountRepository;
 
-	@Autowired
-	UserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServerProjectApplication.class, args);
@@ -41,14 +39,15 @@ public class ServerProjectApplication implements CommandLineRunner{
 
 		// TODO: 2016-04-24 :17:24 here you can add new users or run other commands for upstart loadning data
 
-		Account defaultUser = accountRepository.findByUsername("user");
-		Account adminUser = accountRepository.findByUsername("admin");
+		Account defaultUser = accountRepository.findByUserName("user");
+		Account adminUser = accountRepository.findByUserName("admin");
 		if (defaultUser == null) {
 			System.out.println("CREATING DEFAULT USER");
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
-			accountRepository.save(new Account("user", pass,
-					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)));
+			RfidKey test = new RfidKey("C48659EC");
+			Account newAccount = new Account("Anton", "Hellbe",test , "user", pass);
+			accountRepository.save(newAccount);
 		}
 		else {
 			System.out.println("USER ALLREADY in DB");
@@ -57,13 +56,25 @@ public class ServerProjectApplication implements CommandLineRunner{
 			System.out.println("CREATING ADMIN USER");
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
-			accountRepository.save(new Account("admin", pass,
+			accountRepository.save(new Account("Master", "Swaggins", "admin", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER,
 							AuthoritiesConstants.ADMIN)));
 		}
 		else {
 			System.out.println("USER ALLREADY in DB");
 		}
+
+		Account wantedAccount = accountRepository.findByUserName("user");
+		wantedAccount.setEnabled(false);
+		accountRepository.save(wantedAccount);
+		List<Account> disabledUsers = accountRepository.findDisabledUsers("false");
+		for (int i = 0; i < disabledUsers.size(); i++) {
+			System.out.println(disabledUsers.get(i).toString());
+
+		}
+
+		wantedAccount.setEnabled(true);
+		accountRepository.save(wantedAccount);
 
 //		//add some dummy users
 //		userRepository.save(new User("john", "smith", new RfidKey("123")));

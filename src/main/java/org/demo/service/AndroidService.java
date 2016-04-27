@@ -2,7 +2,7 @@ package org.demo.service;
 import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.AndroidStamp;
 import org.demo.model.RfidKey;
-import org.demo.model.User;
+import org.demo.model.security.Account;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public interface AndroidService {
      * @param id the RFID-key
      * @return the user
      **/
-    public ResponseEntity<User> getUser( String id);
+    public ResponseEntity<Account> getUser(String id);
 
     /**
      * Fetches all times associated with the given user
@@ -38,6 +38,6 @@ public interface AndroidService {
      **/
     public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery);
 
-    public ResponseEntity<User> loginUser( Map<String, Object> getSpecificUserJSON);
+    public ResponseEntity<Account> loginUser( Map<String, Object> getSpecificUserJSON);
 
 }

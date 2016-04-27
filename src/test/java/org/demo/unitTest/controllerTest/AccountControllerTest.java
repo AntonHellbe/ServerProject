@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Robin_2 on 13/04/2016.
  */
-public class UserControllerTest {
+public class AccountControllerTest {
 
     @Test
     public void testGetAllUser() throws Exception {

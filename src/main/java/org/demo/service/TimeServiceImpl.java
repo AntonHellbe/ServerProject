@@ -2,9 +2,9 @@ package org.demo.service;
 
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
-import org.demo.model.User;
+import org.demo.model.security.Account;
+import org.demo.repository.AccountRepository;
 import org.demo.repository.TimeRepository;
-import org.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ import java.util.Map;
 public class TimeServiceImpl implements TimeService {
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     private TimeRepository timeRepository;
@@ -36,11 +36,11 @@ public class TimeServiceImpl implements TimeService {
     @Override
     public ResponseEntity<TimeStamp> addTime(String id) {
 
-        User currentUser = userRepository.findOne(id);
+        Account currentAccount = accountRepository.findOne(id);
         ArrayList<TimeStamp> temp = new ArrayList<>(timeRepository.findAll());
         boolean state = temp.size() % 2 == 0;
 
-        TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentUser.getRfid());
+        TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentAccount.getRfidKey());
 
         if(state) {
             timeRepository.save(newStamp);
@@ -53,7 +53,7 @@ public class TimeServiceImpl implements TimeService {
     @Override
     public ResponseEntity<TimeStamp> deleteTime(String id, String stampId) {
 
-        System.out.println("User to remove time from " + userRepository.findOne(id).toString());
+        System.out.println("User to remove time from " + accountRepository.findOne(id).toString());
 
         TimeStamp removedTime = timeRepository.findOne(stampId);
 
@@ -69,8 +69,8 @@ public class TimeServiceImpl implements TimeService {
 
     @Override
     public ResponseEntity<ArrayList<TimeStamp>> getAll(String id) {
-        User currentUser = userRepository.findOne(id);
-        ArrayList<TimeStamp> userStamps = new ArrayList<>(timeRepository.getByRfid(currentUser.getRfid()));
+        Account currentAccount = accountRepository.findOne(id);
+        ArrayList<TimeStamp> userStamps = new ArrayList<>(timeRepository.getByRfid(currentAccount.getRfidKey()));
         if (userStamps == null) {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
         }

@@ -3,9 +3,9 @@ package org.demo.service;
 import org.demo.model.PiStamp;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
-import org.demo.model.User;
+import org.demo.model.security.Account;
+import org.demo.repository.AccountRepository;
 import org.demo.repository.TimeRepository;
-import org.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class PiServiceImpl implements PiService {
 	TimeRepository timeRepository;
 
 	@Autowired
-	UserRepository userRepository;
+	AccountRepository accountRepository;
 
 	/**
 	 * Handle the request from the controller
@@ -40,15 +40,15 @@ public class PiServiceImpl implements PiService {
 	public ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey) {
 		System.out.println("add timestamp from PI, on: " + rfidKey.getId());
 		try {
-			User currentUser = userRepository.findUserByRfid(rfidKey);
+			Account currentAccount = accountRepository.findUserByRfid(rfidKey);
 
-			System.out.println("adding stamp on user> " + currentUser);
+			System.out.println("adding stamp on user> " + currentAccount);
 
 			boolean state = timeRepository.getByRfid(rfidKey).size() % 2 == 0;
-			TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentUser.getRfid());
+			TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentAccount.getRfidKey());
 			timeRepository.save(newStamp);
 
-			return new ResponseEntity<>(new PiStamp(newStamp.getCheckIn(), currentUser), HttpStatus.OK);
+			return new ResponseEntity<>(new PiStamp(newStamp.getCheckIn(), currentAccount), HttpStatus.OK);
 		}
 		catch (Exception e) {
 			//if there was an error!
