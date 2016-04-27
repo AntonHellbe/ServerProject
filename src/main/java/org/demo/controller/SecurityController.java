@@ -26,6 +26,7 @@ public class SecurityController {
 
 	@RequestMapping("/admin_r")
 	public Map<String, Object> admin_r() {
+		System.out.println("you got in");
 		Map<String, Object> model = new HashMap<String, Object>();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		model.put("id", auth.getName());

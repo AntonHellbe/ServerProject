@@ -8,6 +8,7 @@ import org.demo.repository.AccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +23,9 @@ public class ServerProjectApplication implements CommandLineRunner{
 
 	private String ip = "http://localhost:8080/users";
 	private static final Logger log = LoggerFactory.getLogger(ServerProjectApplication.class);
+
+	@Value("${management.security.role}")
+	private String adminRole;
 
 	@Autowired
 	AccountRepository accountRepository;
@@ -58,7 +62,7 @@ public class ServerProjectApplication implements CommandLineRunner{
 			String pass = encoder.encode("pass");
 			accountRepository.save(new Account("Master", "Swaggins", "admin", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER,
-							AuthoritiesConstants.ADMIN)));
+							adminRole)));
 		}
 		else {
 			System.out.println("USER ALLREADY in DB");

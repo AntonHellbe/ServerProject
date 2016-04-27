@@ -198,6 +198,7 @@
                 });
         }
 
+        $scope.loginAndy = function(user){};
 
         $scope.getAndyAll = function (user) {
 

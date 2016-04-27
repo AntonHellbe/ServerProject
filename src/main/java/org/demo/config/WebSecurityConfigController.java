@@ -1,5 +1,6 @@
 package org.demo.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,6 +15,9 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
+
+	@Value ("${management.security.role}")
+	private String adminRole;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -35,9 +39,14 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 
 
 				).permitAll()
-				.antMatchers("/admin_r").hasAuthority(AuthoritiesConstants.ADMIN)
-//				.antMatchers("/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
-				//.antMatchers("/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
+				//Bara någon med ADMIN kan nå denna
+				.antMatchers("/admin_r").hasAuthority(adminRole)
+				//Alla ska nå denna
+				.antMatchers("/api/users/{id}").permitAll()
+				//Bara någon med ADMIN kan nå dessa (Förutom den ovan)
+				.antMatchers("/api/users/**").hasAuthority(adminRole)
+				//Bara någon med ADMIN kan nå dessa
+				.antMatchers("/api/time/{id}/{stampId}").hasAuthority(adminRole)
 				// TODO: 2016-04-26 har behover vi dela upp vilka roller som far lov att accessa REST
 				.anyRequest()
 				.authenticated()
@@ -45,7 +54,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 				.csrf().csrfTokenRepository(csrfTokenRepository())
 		;
-//
+
 	}
 
 	private CsrfTokenRepository csrfTokenRepository() {
