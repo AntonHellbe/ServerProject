@@ -2,6 +2,7 @@ package org.demo.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,12 +15,15 @@ import java.util.Map;
 /**
  * Created by Sebastian Börebäck on 2016-04-25.
  */
+//@CrossOrigin(origins = "*")
 @RestController
 public class SecurityController {
 
+
+	@CrossOrigin(origins = "*")
 	@RequestMapping("/api/account")
 	public Principal user(Principal user) {
-		System.out.println("got user "+user.getName());
+//		System.out.println("got user "+user.getName());
 		return user;
 	}
 
