@@ -88,9 +88,9 @@ angular.module('hello', ['ngRoute']).config(function ($routeProvider, $httpProvi
 
 	    //$http.post('http://localhost:8080/android/all/', {id: user.rfid}).then(function (response) {
 
-	    $http.get('/api/users/5720d73244ae29fb94524203').success(function(data) {
+	    $http.get('/api/users/5720bb7ecbcb3e71d7e6f715').success(function(data) {
 		    data.firstName = "Lolo";
-		    $http.put('/api/users/5720d73244ae29fb94524203',data).success(function(data) {
+		    $http.put('/api/users/5720bb7ecbcb3e71d7e6f715',data).success(function(data) {
 			    self.dataU = data;
 			    console.log("got answear "+JSON.stringify(data));
 

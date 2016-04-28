@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Created by Sebastian Börebäck on 2016-04-22.
@@ -52,7 +54,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 				.authenticated()
 				.and()
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-				.csrf().csrfTokenRepository(csrfTokenRepository())
+				.csrf().csrfTokenRepository(csrfTokenRepository()).disable()
 		;
 
 	}
