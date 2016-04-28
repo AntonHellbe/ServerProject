@@ -1,0 +1,65 @@
+<div class="md-padding" flex layout-sm="column">
+    <md-card>
+        <md-card-content ng-controller="LoginCtrl as vm">
+            <h2 class="md-title">Content from: login page</h2>
+	        <form role="form" ng-submit="vm.login()">
+		        <div class="form-group">
+			        <label for="username">Username:</label>
+			        <input type="text"
+			               class="form-control" id="username" name="username"
+			               ng-model="vm.credentials.username"/>
+		        </div>
+		        <div class="form-group">
+			        <label for="password">Password:</label>
+			        <input type="password"
+			               class="form-control" id="password" name="password"
+			               ng-model="vm.credentials.password"/>
+		        </div>
+		        <button type="submit" class="btn btn-primary" >Submit</button>
+	        </form>
+
+			<div>creds</div>
+			<div>{{vm.credentials}}</div>
+			<br>
+			<br>
+			<div>Login info</div>
+			<ul>
+				<li>details: {{vm.loginData.details}}</li>
+				<li>authorities: {{vm.loginData.authorities}}</li>
+				<li>authenticated: {{vm.loginData.authenticated}}</li>
+				<li>id: {{vm.loginData.principal.id}}</li>
+				<li>username: {{vm.loginData.principal.username}}</li>
+				<li>firstName: {{vm.loginData.principal.firstName}}</li>
+				<li>lastName: {{vm.loginData.principal.lastName}}</li>
+				<li>rfidKey: {{vm.loginData.principal.rfidKey}}</li>
+				<li>authorities: {{vm.loginData.principal.authorities}}</li>
+			</ul>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<button ng-click="vm.getAll()">get all</button>
+			<button ng-click="vm.logout()">logout</button>
+
+			<div>Got users</div>
+            <ul>
+                <li ng-repeat="user in vm.users.data">
+                    <strong>id: {{user.id}}</strong>
+                    <br>
+                    username: {{user.username}}
+                    <br>
+                    Name: {{user.firstName}} {{user.lastName}}
+                    <br>
+                    rfidKey : {{user.rfidKey.id}} , {{user.rfidKey.enabled}}
+                    <br>
+                    authorities: {{user.authorities}}
+                    <br>
+                    <br>
+                </li>
+            </ul>
+
+			<!--<div>{{vm.users.data}}</div>-->
+        </md-card-content>
+    </md-card>
+</div>
