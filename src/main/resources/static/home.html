@@ -9,6 +9,11 @@
 <div  ng-show="!authenticated">
     <p>Login to see your greeting</p>
 </div>
+<button class="btn btn-primary" ng-click="controller.sendData()">send</button>
+
+<div>
+    <div>{{controller.dataU}}</div>
+</div>
 
 <div>
     <div>User get all data</div>

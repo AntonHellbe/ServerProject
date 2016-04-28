@@ -17,10 +17,21 @@ public class RfidKey implements Serializable{
 
     private String id;
 
+    private boolean isEnabled = false;
+
 	public RfidKey() {
 	}
 
-	/**
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    /**
      * Constructor that creates a new RFID-key
      **/
     public RfidKey(String id) {

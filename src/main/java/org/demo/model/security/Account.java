@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection = "Account")
-public class Account implements UserDetails {
+public class Account implements UserDetails ,Serializable{
 
 	@Id
 	private String id;
@@ -28,9 +29,13 @@ public class Account implements UserDetails {
 	private String password;
 	private String firstName;
 	private String lastName;
+
+	// TODO: 2016-04-27 Need to fix Serializeing
 	private RfidKey rfidKey;
 
+	// TODO: 2016-04-27 Need to fix Serializeing
 	private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+
 	private boolean accountNonExpired = true;
 	private boolean isEnabled = true;
 

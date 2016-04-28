@@ -1,12 +1,16 @@
 package org.demo.controller;
 
+import org.demo.model.RfidKey;
 import org.demo.model.security.Account;
 import org.demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Anton on 2016-04-07.
@@ -44,12 +48,30 @@ public class AccountController {
 
     /**
      * Updates a user with new information
-     * @param id the id of the user to be updated
      * @param updatedUserJSON the updated information
      * @return the updated user
      **/
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) {
+//    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) {
+    public ResponseEntity<Account> updateUser(@RequestBody Map<String, Object> updatedUserJSON) {
+//        Map<String, Object> updatedUserJSON
+        Account updatedAccount = new Account();
+//        private String id;
+//        private String username;
+//        private String password;
+//        private String firstName;
+//        private String lastName;
+//        private RfidKey rfidKey;
+//
+//        private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+
+        updatedAccount.setId(updatedUserJSON.get("id").toString());
+        updatedAccount.setUsername(updatedUserJSON.get("username").toString());
+        updatedAccount.setPassword(updatedUserJSON.get("password").toString());
+        updatedAccount.setFirstName(updatedUserJSON.get("firstName").toString());
+        updatedAccount.setLastName(updatedUserJSON.get("lastName").toString());
+        updatedAccount.setRfidKey(new RfidKey(updatedUserJSON.get("rfidKey").toString()));
+        updatedAccount.setAuthorities((List<GrantedAuthority>) updatedUserJSON.get("authorities"));
         return userService.updateUser(updatedAccount);
     }
 
@@ -66,7 +88,6 @@ public class AccountController {
 
     /**
      * Adds a new user
-     * @param newUserJSON Information about the new user
      * @return the newly added user
      **/
     @RequestMapping(method = RequestMethod.POST)

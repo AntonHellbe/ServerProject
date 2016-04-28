@@ -79,9 +79,25 @@ angular.module('hello', ['ngRoute']).config(function ($routeProvider, $httpProvi
         self.greeting = data;
     });
 
-    $http.get('/users/').success(function(data) {
+    $http.get('/api/users/').success(function(data) {
         self.users = data;
     });
+
+    self.sendData= function(){
+	    // $http.delete("localhost:8080/"+userid,stampId);
+
+	    //$http.post('http://localhost:8080/android/all/', {id: user.rfid}).then(function (response) {
+
+	    $http.get('/api/users/5720d73244ae29fb94524203').success(function(data) {
+		    data.firstName = "Lolo";
+		    $http.put('/api/users/5720d73244ae29fb94524203',data).success(function(data) {
+			    self.dataU = data;
+			    console.log("got answear "+JSON.stringify(data));
+
+		    });
+
+	    });
+    };
 
     //$http.get('resource').then(function (response) {
     //    $http({
