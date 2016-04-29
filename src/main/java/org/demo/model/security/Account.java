@@ -1,10 +1,9 @@
 package org.demo.model.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.demo.config.AuthoritiesConstants;
 import org.demo.model.RfidKey;
-import org.demo.repository.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,6 +33,7 @@ public class Account implements UserDetails ,Serializable{
 	private RfidKey rfidKey;
 
 	// TODO: 2016-04-27 Need to fix Serializeing
+
 	private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
 	private boolean accountNonExpired = true;

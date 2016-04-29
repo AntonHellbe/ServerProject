@@ -39,7 +39,7 @@
 
 				console.log("Do login call");
 
-				$http.get('https://localhost/api/account', {
+				$http.get('/api/account', {
 					headers: headers
 				}).then(function (response) {
 					if (response.data.name) {
@@ -142,7 +142,7 @@
 
 			vm.getAll=function(){
 				console.log("get all");
-				$http.get('https://localhost/api/users').then(function(resp){
+				$http.get('/api/users').then(function(resp){
 					vm.users = resp;
 				}, function (errorRes) {
                     console.log("error res "+JSON.stringify(errorRes));
