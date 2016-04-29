@@ -33,6 +33,7 @@ public class AccountController {
      **/
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllUser() {
+        System.out.println("get all users");
         return userService.getAllUser();
     }
 
@@ -70,8 +71,14 @@ public class AccountController {
         updatedAccount.setPassword(updatedUserJSON.get("password").toString());
         updatedAccount.setFirstName(updatedUserJSON.get("firstName").toString());
         updatedAccount.setLastName(updatedUserJSON.get("lastName").toString());
-        updatedAccount.setRfidKey(new RfidKey(updatedUserJSON.get("rfidKey").toString()));
-        updatedAccount.setAuthorities((List<GrantedAuthority>) updatedUserJSON.get("authorities"));
+
+	    if(updatedUserJSON.get("rfidKey") != null)
+            updatedAccount.setRfidKey(new RfidKey(updatedUserJSON.get("rfidKey").toString()));
+//        updatedAccount.setAuthorities((List<GrantedAuthority>) updatedUserJSON.get("authorities"));
+//	    List < GrantedAuthority > aa = (List<GrantedAuthority>) updatedUserJSON.get("authorities");
+	    // TODO Fix so that you can update authroities
+	    List<String> auth = (List<String>) updatedUserJSON.get("authorities");
+        System.out.println(auth);
         return userService.updateUser(updatedAccount);
     }
 

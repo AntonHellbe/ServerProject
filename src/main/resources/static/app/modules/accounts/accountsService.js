@@ -15,10 +15,32 @@
 		// Inject your dependencies as .$inject = ['$http', 'someSevide'];
 		// function Name ($http, someSevide) {...}
 
-		Accounts.$inject = ['$http'];
+		Accounts.$inject = ['$http','$resource'];
 
-		function Accounts ($http) {
+		function Accounts ($http,$resource) {
 
+			var tempUrl = "http://localhost:8080";
+			console.log("tempUrl "+tempUrl);
+
+			return $resource(tempUrl+'/api/users/:id', {
+				id: '@id'
+			}, {
+				update: {
+					method: "PUT"
+				},
+				remove: {
+					method: "DELETE"
+				},
+				save:{
+					method: "POST"
+				},
+				getFeaturesList: getFeaturesList
+			});
+
+
+			function getFeaturesList() {
+				return "hello world";
+			}
 		}
 
 })();

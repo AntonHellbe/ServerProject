@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.demo.config.AuthoritiesConstants;
 import org.demo.config.UserNameGenerator;
 import org.demo.model.RfidKey;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -62,7 +63,8 @@ public class Account implements UserDetails ,Serializable{
 	private boolean isAccountNonLocked = true;
 	private boolean isCredentialsNonExpired = true;
 
-	public Account(){}
+	public Account(){
+	}
 
 
 	public Account(String firstName, String lastName, String username, String password, List<GrantedAuthority> authorities) {

@@ -1,8 +1,143 @@
 <div class="md-padding" flex layout-sm="column">
-    <md-card>
-        <md-card-content>
-            <h2 class="md-title">Content from: accounts page</h2>
-	        <div>hello world</div>
-        </md-card-content>
-    </md-card>
+	<md-card>
+
+		<md-card-content>
+			<h2 class="md-title">Content from: accounts page</h2>
+
+
+			<div>Got users</div>
+			<!--<ul>-->
+			<!--<li ng-repeat="user in vm.allusers">-->
+			<!--<strong>id: {{user.id}}</strong>-->
+			<!--<br>-->
+			<!--username: {{user.username}}-->
+			<!--<br>-->
+			<!--Name: {{user.firstName}} {{user.lastName}}-->
+			<!--<br>-->
+			<!--rfidKey : {{user.rfidKey.id}} , {{user.rfidKey.enabled}}-->
+			<!--<br>-->
+			<!--authorities: {{user.authorities}}-->
+			<!--<br>-->
+			<!--<br>-->
+			<!--</li>-->
+			<!--</ul>-->
+
+
+			<md-card ng-repeat="user in vm.allusers">
+				<md-card-content>
+					<form>
+
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Username</label>
+								<input ng-model="user.username">
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>First name</label>
+								<input ng-model="user.firstName">
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Last Name</label>
+								<input ng-model="user.lastName">
+							</md-input-container>
+
+						</div>
+						<div layout-gt-sm="row">
+
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Password</label>
+								<input ng-model="user.password">
+							</md-input-container>
+						</div>
+
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block">
+								<label>Rfid</label>
+								<input ng-model="user.rfid.id">
+							</md-input-container>
+
+
+							<md-input-container>
+								<label>authorities</label>
+								<md-select ng-model="user.authorities">
+									<md-option ng-repeat="authority in user.authorities"
+									           value="{{authority.authority}}">
+										{{authority.authority}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+
+						<md-checkbox ng-model="user.credentialsNonExpired" aria-label="Checkbox 1">
+							credentialsNonExpired
+						</md-checkbox>
+						<md-checkbox ng-model="user.enabled" aria-label="Checkbox 1">
+							enabled
+						</md-checkbox>
+						<md-checkbox ng-model="user.accountNonLocked" aria-label="Checkbox 1">
+							accountNonLocked
+						</md-checkbox>
+						<md-checkbox ng-model="user.accountNonExpired" aria-label="Checkbox 1">
+							accountNonExpired
+						</md-checkbox>
+						<md-button class="md-raised" ng-click="vm.updateUser(user)">Updater</md-button>
+						<md-button class="md-raised md-warn" ng-click="vm.deleteUser(user)">delete</md-button>
+					</form>
+				</md-card-content>
+			</md-card>
+
+
+			<br>
+			<br>
+
+			<md-content layout-padding>
+				<div>
+					<md-button class="md-raised" ng-hide="showAddUser" ng-click="showAddUser=!showAddUser">To add a new
+						user
+					</md-button>
+
+
+					<form name="userForm" ng-show="showAddUser">
+
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>First name</label>
+								<input ng-model="newUser.firstName">
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Last Name</label>
+								<input ng-model="newUser.lastName">
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Username</label>
+								<input ng-model="newUser.username">
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Password</label>
+								<input ng-model="newUser.password">
+							</md-input-container>
+						</div>
+
+						<md-input-container class="md-block">
+							<label>Rfid</label>
+							<input ng-model="newUser.rfid.id">
+						</md-input-container>
+
+						<!--<md-input-container>-->
+						<!--<label>authorities</label>-->
+						<!--<md-select ng-model="newUser.authorities.authority">-->
+						<!--<md-option ng-repeat="authority in vm.authorities" value="{{authority.authority}}">-->
+						<!--{{authority.authority}}-->
+						<!--</md-option>-->
+						<!--</md-select>-->
+						<!--</md-input-container>-->
+						<md-button class="md-raised" ng-click="vm.addUser(newUser)">Add user</md-button>
+					</form>
+				</div>
+			</md-content>
+			<!--<div>{{vm.allusers}}</div>-->
+		</md-card-content>
+	</md-card>
 </div>

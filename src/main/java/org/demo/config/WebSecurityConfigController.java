@@ -41,6 +41,8 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						,"/app/**"
 						,"/src/**"
 				).permitAll()
+				// TODO For debuging the get all users
+				.antMatchers("/api/users**").permitAll()
 				//.antMatchers("/api/users/**").hasAuthority(AuthoritiesConstants.USER)
 				.anyRequest()
 				.authenticated()

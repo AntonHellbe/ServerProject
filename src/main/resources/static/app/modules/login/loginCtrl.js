@@ -22,6 +22,10 @@
 		*/
 
 		function Login($rootScope, $http, $location,$cookieStore,LoginService) {
+
+			//TODO change to correct ip
+			var ip ="http://localhost:8080";
+
 			/*jshint validthis: true */
 			var vm = this;
 
@@ -39,7 +43,7 @@
 
 				console.log("Do login call");
 
-				$http.get('/api/account', {
+				$http.get(ip+'/api/account', {
 					headers: headers
 				}).then(function (response) {
 					if (response.data.name) {
@@ -142,7 +146,7 @@
 
 			vm.getAll=function(){
 				console.log("get all");
-				$http.get('/api/users').then(function(resp){
+				$http.get(ip+'/api/users').then(function(resp){
 					vm.users = resp;
 				}, function (errorRes) {
                     console.log("error res "+JSON.stringify(errorRes));
@@ -152,7 +156,7 @@
 
 			//logout button
 			vm.logout = function () {
-				$http.post('/logout', {}).finally(function () {
+				$http.post(ip+'/logout', {}).finally(function () {
 					$rootScope.authenticated = false;
 					console.log("LOGED out");
 					//$location.path("/");

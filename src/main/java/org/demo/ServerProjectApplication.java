@@ -50,7 +50,9 @@ public class ServerProjectApplication implements CommandLineRunner{
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
 			RfidKey test = new RfidKey("C48659EC");
-			Account newAccount = new Account("Anton", "Hellbe",test , "user", pass);
+			Account newAccount = new Account("Anton", "Hellbe","user", pass,
+					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
+					);
 			accountRepository.save(newAccount);
 		}
 		else {
@@ -68,17 +70,17 @@ public class ServerProjectApplication implements CommandLineRunner{
 			System.out.println("USER ALLREADY in DB");
 		}
 
-		Account wantedAccount = accountRepository.findByUserName("user");
-		wantedAccount.setEnabled(false);
-		accountRepository.save(wantedAccount);
-		List<Account> disabledUsers = accountRepository.findDisabledUsers("false");
-		for (int i = 0; i < disabledUsers.size(); i++) {
-			System.out.println(disabledUsers.get(i).toString());
+//		Account wantedAccount = accountRepository.findByUserName("user");
+//		wantedAccount.setEnabled(false);
+//		accountRepository.save(wantedAccount);
+//		List<Account> disabledUsers = accountRepository.findDisabledUsers("false");
+//		for (int i = 0; i < disabledUsers.size(); i++) {
+//			System.out.println(disabledUsers.get(i).toString());
+//
+//		}
 
-		}
-
-		wantedAccount.setEnabled(true);
-		accountRepository.save(wantedAccount);
+//		wantedAccount.setEnabled(true);
+//		accountRepository.save(wantedAccount);
 
 //		//add some dummy users
 //		userRepository.save(new User("john", "smith", new RfidKey("123")));

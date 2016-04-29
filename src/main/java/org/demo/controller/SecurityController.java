@@ -24,6 +24,7 @@ public class SecurityController {
 	@RequestMapping("/api/account")
 	public Principal user(Principal user) {
 //		System.out.println("got user "+user.getName());
+		System.out.println("DOING LOGIN");
 		return user;
 	}
 
