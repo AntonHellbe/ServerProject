@@ -2,6 +2,7 @@ package org.demo.model.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.demo.config.AuthoritiesConstants;
+import org.demo.config.UserNameGenerator;
 import org.demo.model.RfidKey;
 import org.demo.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class Account implements UserDetails ,Serializable{
 	private String password;
 	private String firstName;
 	private String lastName;
+
+	@Autowired
+	UserNameGenerator userNameGenerator;
 
 	// TODO: 2016-04-27 Need to fix Serializeing
 	private RfidKey rfidKey;
@@ -61,7 +65,6 @@ public class Account implements UserDetails ,Serializable{
 	public Account(){}
 
 
-
 	public Account(String firstName, String lastName, String username, String password, List<GrantedAuthority> authorities) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -70,12 +73,20 @@ public class Account implements UserDetails ,Serializable{
 		this.authorities = authorities;
 	}
 
-	public Account(String firstName, String lastName, RfidKey rfidKey,  String username, String password) {
+	public Account(String firstName, String lastName, RfidKey rfidKey, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.username = username;
+		this.username = userNameGenerator.userNameGenerator(firstName, lastName);
 		this.password = password;
 		this.rfidKey = rfidKey;
+		this.authorities = AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER);
+	}
+
+	public Account(String firstName, String lastName, String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = userNameGenerator.userNameGenerator(firstName, lastName);
+		this.password = password;
 		this.authorities = AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER);
 	}
 

@@ -3,19 +3,18 @@ package org.demo.config;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Anton on 2016-04-27.
  */
-public final class UserNameGenerator {
+@Component
+public class UserNameGenerator {
 
     @Autowired
     private AccountRepository accountRepository;
 
-    public String userNameGenerator(Account account) {
-
-        String firstName = account.getFirstName();
-        String lastName = account.getLastName();
+    public String userNameGenerator(String firstName, String lastName) {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lastName.length() && i < 3; i++) {
