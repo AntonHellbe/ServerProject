@@ -13,7 +13,7 @@
 		.module('essence')
 		.controller('LayoutCtrl', Layout);
 
-	Layout.$inject = ['$mdSidenav', '$cookies', '$state', '$mdToast', '$mdDialog','$http','$rootScope'];
+	Layout.$inject = ['$mdSidenav', '$cookies', '$state', '$mdToast', '$mdDialog', '$http', '$rootScope'];
 
 	/*
 	 * recommend
@@ -21,7 +21,7 @@
 	 * and bindable members up top.
 	 */
 
-	function Layout($mdSidenav, $cookies, $state, $mdToast, $mdDialog, $http,$rootScope) {
+	function Layout($mdSidenav, $cookies, $state, $mdToast, $mdDialog, $http, $rootScope) {
 		/*jshint validthis: true */
 		var vm = this;
 
@@ -39,14 +39,14 @@
 		};
 
 		vm.changeProfile = function (ev) {
-				$mdDialog.show({
+			$mdDialog.show({
 					controller: DialogController,
 					templateUrl: 'tabDialog.tmpl.html',
 					parent: angular.element(document.body),
 					targetEvent: ev,
-					clickOutsideToClose:true
+					clickOutsideToClose: true
 				})
-				.then(function(answer) {
+				.then(function (answer) {
 					$mdToast.show(
 						$mdToast.simple()
 							.content('You said the information was "' + answer + '".')
@@ -54,7 +54,7 @@
 							.hideDelay(2000)
 					);
 
-				}, function() {
+				}, function () {
 					$mdToast.show(
 						$mdToast.simple()
 							.content('You cancelled the dialog.')
@@ -63,19 +63,19 @@
 					);
 				});
 
-				function DialogController($scope, $mdDialog) {
-					$scope.hide = function() {
-						$mdDialog.hide();
-					};
+			function DialogController($scope, $mdDialog) {
+				$scope.hide = function () {
+					$mdDialog.hide();
+				};
 
-					$scope.cancel = function() {
-						$mdDialog.cancel();
-					};
+				$scope.cancel = function () {
+					$mdDialog.cancel();
+				};
 
-					$scope.answer = function(answer) {
-						$mdDialog.hide(answer);
-					};
-				}
+				$scope.answer = function (answer) {
+					$mdDialog.hide(answer);
+				};
+			}
 		};
 
 
@@ -83,9 +83,10 @@
 
 			//alert('Implement your Function Here');
 			//uncommented
-			 $cookies.put('dev_appserver_login', ' ');
+			$cookies.put('dev_appserver_login', ' ');
 
 			console.log("loggout " + $rootScope.authenticated);
+			console.log("auh> " + $rootScope.authenticated);
 
 			$http.post($rootScope.ip+'/logout', {}).finally(function () {
 				$rootScope.authenticated = false;

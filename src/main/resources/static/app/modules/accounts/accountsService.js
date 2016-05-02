@@ -15,11 +15,12 @@
 		// Inject your dependencies as .$inject = ['$http', 'someSevide'];
 		// function Name ($http, someSevide) {...}
 
-		Accounts.$inject = ['$http','$resource'];
+		Accounts.$inject = ['$http','$resource','$rootScope'];
 
-		function Accounts ($http,$resource) {
+		function Accounts ($http,$resource,$rootScope) {
 
-			var tempUrl = "http://localhost:8080";
+
+			var tempUrl = $rootScope.serverIP;
 			console.log("tempUrl "+tempUrl);
 
 			return $resource(tempUrl+'/api/users/:id', {

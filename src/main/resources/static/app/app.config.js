@@ -59,22 +59,6 @@
 		$httpProvider.defaults.withCredentials = true;
 
 
-        //$stateProvider
-        //    .state('home.login', {
-        //        url:'/login',
-        //        templateUrl: 'app/modules/login/login.html',
-        //        controller: 'LoginCtrl',
-        //        controllerAs: 'vm'
-        //    });
-
-            //$stateProvider
-            //    .state("login", {
-            //        url: "/login",
-            //        templateUrl: "partials/forms.html",
-            //        controller: "FormsListCtrl",
-            //        authenticate: true
-            //    })
-
 
 		$urlRouterProvider
 			.otherwise('/login');

@@ -1,0 +1,48 @@
+{
+  "generator-angm": {
+    "appName": "essence",
+    "angularCookies": true,
+    "angularAnimate": true,
+    "angularSanitize": true,
+    "angularMaterial": true,
+    "modules": [
+      {
+        "name": "accounts"
+      },
+      {
+        "name": "timestamps"
+      },
+      {
+        "name": "login"
+      },
+      {
+        "name": "pi"
+      },
+      {
+        "name": "android"
+      }
+    ],
+    "menu": [
+      {
+        "link": "accounts",
+        "title": "Accounts"
+      },
+      {
+        "link": "timestamps",
+        "title": "Timestamps"
+      },
+      {
+        "link": "login",
+        "title": "Login"
+      },
+      {
+        "link": "pi",
+        "title": "Pi"
+      },
+      {
+        "link": "android",
+        "title": "Android"
+      }
+    ]
+  }
+}

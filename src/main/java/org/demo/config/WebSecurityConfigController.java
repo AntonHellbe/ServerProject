@@ -37,7 +37,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						"/angular-1.5.3/angular.js",
 						"/angular-1.5.3/angular-route.js"
 						,"/api/account"
-						,"/logout**"
+						,"/logout"
 						,"/app/**"
 						,"/src/**"
 				).permitAll()
