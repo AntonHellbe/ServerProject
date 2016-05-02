@@ -6,9 +6,10 @@ import org.demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,13 +73,27 @@ public class AccountController {
         updatedAccount.setFirstName(updatedUserJSON.get("firstName").toString());
         updatedAccount.setLastName(updatedUserJSON.get("lastName").toString());
 
-	    if(updatedUserJSON.get("rfidKey") != null)
-            updatedAccount.setRfidKey(new RfidKey(updatedUserJSON.get("rfidKey").toString()));
+	    // TODO: 2016-05-02 :21:32 Make better!
+	    if(updatedUserJSON.get("rfidKey") != null) {
+		    LinkedHashMap<String, Object>  obj = (LinkedHashMap<String, Object>) updatedUserJSON.get("rfidKey");
+		    RfidKey key = new RfidKey(obj.get("id").toString());
+		    if (obj.get("enabled") != null) {
+			    System.out.println((Boolean) obj.get("enabled"));
+			    key.setEnabled((Boolean) obj.get("enabled"));
+		    }
+		    updatedAccount.setRfidKey(key);
+	    }
 //        updatedAccount.setAuthorities((List<GrantedAuthority>) updatedUserJSON.get("authorities"));
 //	    List < GrantedAuthority > aa = (List<GrantedAuthority>) updatedUserJSON.get("authorities");
 	    // TODO Fix so that you can update authroities
-	    List<String> auth = (List<String>) updatedUserJSON.get("authorities");
-        System.out.println(auth);
+	    List<LinkedHashMap<String,String>> auth = (List<LinkedHashMap<String,String>>) updatedUserJSON.get("authorities");
+	    List<GrantedAuthority> auths = updatedAccount.getAuthorities();
+	    auths.clear();
+	    auth.forEach(stringStringLinkedHashMap -> {
+		    auths.add(new SimpleGrantedAuthority(stringStringLinkedHashMap.get("authority")));
+	    });
+	    updatedAccount.setAuthorities(auths);
+
         return userService.updateUser(updatedAccount);
     }
 

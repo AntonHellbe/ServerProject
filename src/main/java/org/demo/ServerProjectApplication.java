@@ -16,8 +16,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
-
 @SpringBootApplication
 public class ServerProjectApplication implements CommandLineRunner{
 
@@ -53,6 +51,7 @@ public class ServerProjectApplication implements CommandLineRunner{
 			Account newAccount = new Account("Anton", "Hellbe","user", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
 					);
+			newAccount.setRfidKey(test);
 			accountRepository.save(newAccount);
 		}
 		else {

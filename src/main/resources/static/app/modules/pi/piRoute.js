@@ -17,7 +17,8 @@ angular.module('pi')
 				templateUrl: 'app/modules/pi/pi.html',
 				controller: 'PiCtrl',
 				controllerAs: 'vm',
-                authenticate: true
+                authenticate: false
+                //TODO make true
 			});
 
 		

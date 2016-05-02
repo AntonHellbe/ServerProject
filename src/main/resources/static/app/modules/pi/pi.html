@@ -1,7 +1,25 @@
 <div class="md-padding" flex layout-sm="column">
     <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Test the Pi REST</span>
+                <span class="md-subhead">Just for testing the communication between server and Pi</span>
+            </md-card-title-text>
+        </md-card-title>
+
         <md-card-content>
-            <h2 class="md-title">Content from: pi page</h2>
+            <md-input-container class="md-icon-float md-block">
+                <!-- Use floating label instead of placeholder -->
+                <label>Name</label>
+                <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+                <input ng-model="user.name" type="text">
+            </md-input-container>
+            <md-button>Test REST</md-button>
+            <div>data got</div>
         </md-card-content>
+
+        <md-card-actions layout="row" layout-align="end center">
+
+        </md-card-actions>
     </md-card>
 </div>

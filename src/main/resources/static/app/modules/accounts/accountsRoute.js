@@ -17,7 +17,9 @@ angular.module('accounts')
 				templateUrl: 'app/modules/accounts/accounts.html',
 				controller: 'AccountsCtrl',
 				controllerAs: 'vm',
-                authenticate: true
+                authenticate: false
+                //todo turn to false
+                //authenticate: true
 			});
 
 		
