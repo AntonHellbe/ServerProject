@@ -13,7 +13,7 @@
 		.module('login')
 		.controller('LoginCtrl', Login);
 
-		Login.$inject = ['$rootScope', '$http', '$location','$cookieStore','LoginService'];
+		Login.$inject = ['$rootScope', '$http', '$location','$cookieStore','LoginService','$state'];
 
 		/*
 		* recommend
@@ -21,10 +21,10 @@
 		* and bindable members up top.
 		*/
 
-		function Login($rootScope, $http, $location,$cookieStore,LoginService) {
+		function Login($rootScope, $http, $location,$cookieStore,LoginService,$state) {
 
 			//TODO change to correct ip
-			var ip ="http://localhost:8080";
+			var ip =$rootScope.ip;
 
 			/*jshint validthis: true */
 			var vm = this;
@@ -32,6 +32,7 @@
 			vm.credentials = {};
 			vm.loginData={};
 
+            //todo move own service
 			//do auth service
 			var authenticate = function (credentials, callback) {
 
@@ -49,9 +50,11 @@
 					if (response.data.name) {
 						console.log("auth succes");
 						$rootScope.authenticated = true;
+                        $rootScope.authData = response.data;
 					} else {
 						console.log("auth FAIL");
 						$rootScope.authenticated = false;
+                        vm.loginData = {};
 					}
 					console.log("respo "+JSON.stringify(response));
 					vm.loginData = response.data;
@@ -60,6 +63,7 @@
 				}, function (errorRes) {
 					console.log("error res "+JSON.stringify(errorRes));
                     vm.loginData={};
+                    vm.loginData = {};
 					$rootScope.authenticated = false;
 					callback && callback(false);
 				});
@@ -67,13 +71,11 @@
 			};
 
 
-			vm.users ="lalala";
-
-
 			vm.credentials = {"username":"user","password":"pass"};
 
 			//login button
 			vm.login = function () {
+                //TODO use service instead of http
 				console.log("call login");
 				console.log("creds "+JSON.stringify(vm.credentials));
 
@@ -81,8 +83,10 @@
 					if (authenticated) {
 						console.log("Login succeeded")
 						//$location.path("/");
+
 						vm.error = false;
 						$rootScope.authenticated = true;
+                        $state.go("home.dashboard");
 					} else {
 						console.log("Login failed")
 						//$location.path("/login");
@@ -90,79 +94,19 @@
 						$rootScope.authenticated = false;
 					}
 				});
-
-				////FUNKAR
-				//var credentials = vm.credentials;
-                //
-				//	var headers = {
-				//		authorization: "Basic "
-				//		+ btoa(credentials.username + ":"
-				//			+ credentials.password)
-				//	};
-                //
-                //
-				//var resp = $http.get('https://localhost/api/account', {
-				//	headers: headers
-				//}).then(function (resp){
-				//	console.log("resp "+JSON.stringify(resp));
-				//	vm.credentials = resp;
-                //
-				//	$http.get('https://localhost/api/users').then(function(resp){
-				//		vm.users = resp;
-				//	});
-				//});
-
-
-				//var success = function (data) {
-				//	var token = data.token;
-                //
-				//	api.init(token);
-                //
-				//	$cookieStore.put('token', token);
-				//	$location.path('/');
-				//};
-                //
-				//var error = function () {
-				//	// TODO: apply user notification here..
-				//	console.log("Error login in");
-				//};
-                //
-				//LoginService.doLogin(vm.credentials).success(success).error(error);
-
-
-				//	if (authenticated) {
-				//		console.log("Login succeeded")
-				//		//$location.path("/");
-				//		vm.error = false;
-				//		$rootScope.authenticated = true;
-				//	} else {
-				//		console.log("Login failed")
-				//		//$location.path("/login");
-				//		vm.error = true;
-				//		$rootScope.authenticated = false;
-				//	}
-				//})
-			};
-
-			vm.getAll=function(){
-				console.log("get all");
-				$http.get(ip+'/api/users').then(function(resp){
-					vm.users = resp;
-				}, function (errorRes) {
-                    console.log("error res "+JSON.stringify(errorRes));
-                    vm.users={};
-                });
 			};
 
 			//logout button
 			vm.logout = function () {
+                //TODO use service instead of http
 				$http.post(ip+'/logout', {}).finally(function () {
 					$rootScope.authenticated = false;
 					console.log("LOGED out");
-					//$location.path("/");
                     vm.users={};
                     vm.loginData={};
 				});
+
+                $state.go('home.login', {}, {reload: true});
 			}
 
 

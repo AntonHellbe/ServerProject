@@ -87,13 +87,15 @@
 
 			console.log("loggout " + $rootScope.authenticated);
 
-			$http.post('https://localhost/logout', {}).finally(function () {
+			$http.post($rootScope.ip+'/logout', {}).finally(function () {
 				$rootScope.authenticated = false;
+                $rootScope.authData={};
 				console.log("LOGED out");
+
 				//$location.path("/");
 			});
-
-			//$state.go('out', {}, {reload: true});
+            //$state.go('out', {}, {reload: true});
+			$state.go('home.login', {}, {reload: true});
 
 		};
 

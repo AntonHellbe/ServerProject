@@ -21,7 +21,8 @@ angular.module('essence')
 			})
 			.state('home.dashboard', {
 				url:'/dashboard',
-				templateUrl: 'app/modules/home/dashboard.html'
+				templateUrl: 'app/modules/home/dashboard.html',
+                authenticate: true
 			});
 			
 	}]);

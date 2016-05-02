@@ -16,7 +16,8 @@ angular.module('pi')
 				url:'/pi',
 				templateUrl: 'app/modules/pi/pi.html',
 				controller: 'PiCtrl',
-				controllerAs: 'vm'
+				controllerAs: 'vm',
+                authenticate: true
 			});
 
 		

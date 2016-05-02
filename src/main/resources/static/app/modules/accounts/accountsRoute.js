@@ -16,7 +16,8 @@ angular.module('accounts')
 				url:'/accounts',
 				templateUrl: 'app/modules/accounts/accounts.html',
 				controller: 'AccountsCtrl',
-				controllerAs: 'vm'
+				controllerAs: 'vm',
+                authenticate: true
 			});
 
 		

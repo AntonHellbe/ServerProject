@@ -59,19 +59,56 @@
 		$httpProvider.defaults.withCredentials = true;
 
 
+        //$stateProvider
+        //    .state('home.login', {
+        //        url:'/login',
+        //        templateUrl: 'app/modules/login/login.html',
+        //        controller: 'LoginCtrl',
+        //        controllerAs: 'vm'
+        //    });
+
+            //$stateProvider
+            //    .state("login", {
+            //        url: "/login",
+            //        templateUrl: "partials/forms.html",
+            //        controller: "FormsListCtrl",
+            //        authenticate: true
+            //    })
+
 
 		$urlRouterProvider
-			.otherwise('/dashboard');
+			.otherwise('/login');
 
 	}
 
-	runBlock.$inject = ['$rootScope','$http', '$cookies'];
+	runBlock.$inject = ['$rootScope','$http', '$cookies','$state'];
 
-	function runBlock($rootScope,$http, $cookies) {
+	function runBlock($rootScope,$http, $cookies,$state) {
 		'use strict';
 		$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
 
+        //$rootScope.ip ="http://localhost:8080";
+        $rootScope.ip ="";
+        //auth stuff
+        $rootScope.authenticated = false;
+        $rootScope.authData = {};
+
 		console.log('AngularJS run() function...');
+
+        $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+            //if (toState.authenticate && !AuthService.isAuthenticated()){
+            //handle if not auth. send to login
+            if (toState.authenticate && !$rootScope.authenticated){
+                //TODO add a service for auth
+                // User isn’t authenticated
+                console.log("not auth go to login");
+                $state.transitionTo("home.login");
+                event.preventDefault();
+            }
+            else {
+                console.log("Logged in");
+            }
+        });
 
 	}
 

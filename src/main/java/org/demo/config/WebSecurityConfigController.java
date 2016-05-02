@@ -37,12 +37,10 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						"/angular-1.5.3/angular.js",
 						"/angular-1.5.3/angular-route.js"
 						,"/api/account"
-						,"/logout"
+						,"/logout**"
 						,"/app/**"
 						,"/src/**"
 				).permitAll()
-				// TODO For debuging the get all users
-				.antMatchers("/api/users**").permitAll()
 				//.antMatchers("/api/users/**").hasAuthority(AuthoritiesConstants.USER)
 				.anyRequest()
 				.authenticated()

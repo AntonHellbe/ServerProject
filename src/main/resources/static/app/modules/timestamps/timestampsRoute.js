@@ -16,7 +16,8 @@ angular.module('timestamps')
 				url:'/timestamps',
 				templateUrl: 'app/modules/timestamps/timestamps.html',
 				controller: 'TimestampsCtrl',
-				controllerAs: 'vm'
+				controllerAs: 'vm',
+                authenticate: true
 			});
 
 		
