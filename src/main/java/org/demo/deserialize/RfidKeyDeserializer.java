@@ -20,6 +20,11 @@ public class RfidKeyDeserializer extends JsonDeserializer<RfidKey> {
     public RfidKey deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         ObjectCodec codec = jsonParser.getCodec();
         JsonNode node = codec.readTree(jsonParser);
-        return new RfidKey(node.get(0).toString());
+//        return new RfidKey(node.get(0).toString());
+
+	    RfidKey key = new RfidKey();
+	    key.setId(node.get("id").asText());
+	    key.setEnabled(node.get("enabled").asBoolean());
+	    return  key;
     }
 }

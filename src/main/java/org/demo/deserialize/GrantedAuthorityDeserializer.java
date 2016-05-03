@@ -2,20 +2,37 @@ package org.demo.deserialize;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Anton on 2016-05-03.
  */
-public class GrantedAuthorityDeserializer extends JsonDeserializer<GrantedAuthority> {
+public class GrantedAuthorityDeserializer extends JsonDeserializer<List<GrantedAuthority>> {
+
+	private static final Logger log = LoggerFactory.getLogger(GrantedAuthorityDeserializer.class);
 
     @Override
-    public GrantedAuthority deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public List<GrantedAuthority> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+	    List<GrantedAuthority> auths = new ArrayList<>();
 
-        return null;
+	    ObjectCodec oc = jsonParser.getCodec();
+	    JsonNode node = oc.readTree(jsonParser);
+
+	    node.forEach(jsonNode -> {
+		    auths.add(new SimpleGrantedAuthority(jsonNode.get("authority").asText()));
+	    });
+
+	    return auths;
     }
 }

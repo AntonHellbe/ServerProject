@@ -5,7 +5,7 @@
             <h2 class="md-title">Content from: accounts page</h2>
 
 
-            <md-button class="md-raised" ng-click="vm.getAll()">Get All</md-button>
+            <md-button class="md-raised" ng-click="vm.getAll()">update list of users</md-button>
 
             <md-card ng-repeat="user in vm.allusers">
                 <md-card-content>
@@ -39,7 +39,7 @@
                                 RfidKey
                             </legend>
                             <div layout-gt-sm="row">
-                                <md-input-container  flex="50">
+                                <md-input-container flex="50">
                                     <label>RfidKey</label>
                                     <input ng-model="user.rfidKey.id">
                                 </md-input-container>
@@ -104,52 +104,71 @@
 
             <md-content layout-padding>
                 <div>
-                    <md-button class="md-raised" ng-hide="showAddUser" ng-click="showAddUser=!showAddUser">To add a new
+                    <md-button class="md-raised" ng-hide="vm.showAddUser" ng-click="vm.showAddUser=!vm.showAddUser">To
+                        add a new
                         user
                     </md-button>
 
 
-                    <form name="userForm" ng-show="showAddUser">
+                    <form name="userForm" ng-show="vm.showAddUser">
 
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>First name</label>
-                                <input ng-model="newUser.firstName">
+                                <input ng-model="vm.newUser.firstName">
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Last Name</label>
-                                <input ng-model="newUser.lastName">
+                                <input ng-model="vm.newUser.lastName">
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Username</label>
-                                <input ng-model="newUser.username">
+                                <input ng-model="vm.newUser.username">
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Password</label>
-                                <input ng-model="newUser.password">
+                                <input ng-model="vm.newUser.password">
                             </md-input-container>
                         </div>
 
-                        <md-input-container class="md-block">
-                            <label>Rfid</label>
-                            <input ng-model="newUser.rfid.id">
-                        </md-input-container>
+                        <div layout-gt-sm="row">
+                            <md-input-container flex="50">
+                                <label>Rfid</label>
+                                <input ng-model="vm.newUser.rfidKey.id">
+                            </md-input-container>
+                            <md-checkbox ng-model="vm.newUser.rfidKey.enabled">
+                                Enabled
+                            </md-checkbox>
+                        </div>
 
-                        <!--<md-input-container>-->
-                        <!--<label>authorities</label>-->
-                        <!--<md-select ng-model="newUser.authorities.authority">-->
-                        <!--<md-option ng-repeat="authority in vm.authorities" value="{{authority.authority}}">-->
-                        <!--{{authority.authority}}-->
-                        <!--</md-option>-->
-                        <!--</md-select>-->
-                        <!--</md-input-container>-->
-                        <md-button class="md-raised" ng-click="vm.addUser(newUser)">Add user</md-button>
+                        <fieldset>
+                            <legend>
+                                Authorities
+                            </legend>
+                            <div layout="row" layout-wrap flex>
+                                <div flex-xs flex="50">
+                                    <md-checkbox aria-label="Select All"
+                                                 ng-checked="vm.isChecked(vm.newUser.authorities)"
+                                                 md-indeterminate="isIndeterminate()"
+                                                 ng-click="vm.newUser.authorities=vm.toggleAll(vm.newUser.authorities)">
+                                        <span ng-if="vm.isChecked(vm.newUser.authorities)">Un-</span>Select All
+                                    </md-checkbox>
+                                </div>
+                                <div class="demo-select-all-checkboxes" flex="100" ng-repeat="item in vm.items">
+                                    <md-checkbox ng-checked="vm.exists(item, vm.newUser.authorities)"
+                                                 ng-click="vm.newUser.authorities=vm.toggle(item, vm.newUser.authorities)">
+                                        {{ item.authority }}
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <md-button class="md-raised" ng-click="vm.addUser(vm.newUser)">Add user</md-button>
+                        <md-button class="md-raised" ng-click="vm.cancelAdd()">Cancel Add user</md-button>
                     </form>
                 </div>
             </md-content>
-            <!--<div>{{vm.allusers}}</div>-->
         </md-card-content>
     </md-card>
 </div>

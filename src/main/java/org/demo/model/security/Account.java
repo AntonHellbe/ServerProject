@@ -1,10 +1,10 @@
 package org.demo.model.security;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.demo.config.AuthoritiesConstants;
 import org.demo.config.UserNameGenerator;
+import org.demo.deserialize.GrantedAuthorityDeserializer;
 import org.demo.deserialize.RfidKeyDeserializer;
 import org.demo.model.RfidKey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +41,8 @@ public class Account implements UserDetails ,Serializable{
 	private RfidKey rfidKey;
 
 	// TODO: 2016-04-27 Need to fix Serializeing
-
-	private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+	@JsonDeserialize(using = GrantedAuthorityDeserializer.class)
+	private List<GrantedAuthority> authorities = new ArrayList<>();
 
 	private boolean accountNonExpired = true;
 	private boolean isEnabled = true;
@@ -77,6 +77,8 @@ public class Account implements UserDetails ,Serializable{
 		this.password = password;
 		this.authorities = authorities;
 	}
+
+
 
 	public Account(String firstName, String lastName, RfidKey rfidKey, String password) {
 		this.firstName = firstName;
@@ -115,14 +117,13 @@ public class Account implements UserDetails ,Serializable{
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	@Override
 	public List<GrantedAuthority> getAuthorities() {
+
 		return authorities;
 	}
 
-	public void setAuthorities(List<GrantedAuthority> authorities) {
-		this.authorities = authorities;
-	}
 
 	public String getPassword()	 {
 		return password;
@@ -167,15 +168,25 @@ public class Account implements UserDetails ,Serializable{
 		isCredentialsNonExpired = credentialsNonExpired;
 	}
 
+	public void setAuthorities(List<GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
+
 	@Override
 	public String toString() {
 		return "Account{" +
-				"rfidKey=" + rfidKey +
-				", lastName='" + lastName + '\'' +
-				", firstName='" + firstName + '\'' +
-				", password='" + password + '\'' +
+				"id='" + id + '\'' +
 				", username='" + username + '\'' +
-				", id='" + id + '\'' + "status : " + isEnabled +
+				", password='" + password + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", userNameGenerator=" + userNameGenerator +
+				", rfidKey=" + rfidKey +
+				", authorities=" + authorities +
+				", accountNonExpired=" + accountNonExpired +
+				", isEnabled=" + isEnabled +
+				", isAccountNonLocked=" + isAccountNonLocked +
+				", isCredentialsNonExpired=" + isCredentialsNonExpired +
 				'}';
 	}
 }

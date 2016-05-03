@@ -1,46 +1,85 @@
-//package org.demo;
-//
-//import org.demo.model.security.Account;
-//import org.junit.*;
-//import org.junit.runner.RunWith;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.boot.test.OutputCapture;
-//import org.springframework.boot.test.SpringApplicationConfiguration;
-//import org.springframework.boot.test.TestRestTemplate;
-//import org.springframework.boot.test.WebIntegrationTest;
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.BadCredentialsException;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.web.client.ResourceAccessException;
-//import org.springframework.web.client.RestTemplate;
-//
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//
-//import static org.hamcrest.Matchers.*;
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertThat;
-//
-////@WebAppConfiguration
-//
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ServerProjectApplication.class)
-//@WebIntegrationTest({"server.port=9090"})
-//public class ServerProjectApplicationTests {
-//
-//	private static final Logger log = LoggerFactory.getLogger(ServerProjectApplication.class);
-//	private static  String ip = "http://localhost:9090/users";
-//
+package org.demo;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.demo.config.AuthoritiesConstants;
+import org.demo.model.RfidKey;
+import org.demo.model.security.Account;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+
+//@WebAppConfiguration
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = ServerProjectApplication.class)
+@WebIntegrationTest({"server.port=9090"})
+public class ServerProjectApplicationTests {
+
+	private static final Logger log = LoggerFactory.getLogger(ServerProjectApplication.class);
+	private static  String ip = "http://localhost:9090/users";
+
+	@Test
+	public void test1() throws IOException {
+
+//		Account userAccountAuthentication = new Account();
+//		userAccountAuthentication.getAuthorities().add(new SimpleGrantedAuthority("role1"));
+//		userAccountAuthentication.getAuthorities().add(new SimpleGrantedAuthority("role2"));
+
+		System.out.println("CREATING DEFAULT USER");
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		String pass = encoder.encode("pass");
+		RfidKey test = new RfidKey("C48659EC");
+		test.setEnabled(true);
+		Account newAccount = new Account("Doris", "Popo","user", pass,
+				AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
+		);
+		newAccount.setRfidKey(test);
+
+
+
+
+		String json1 = new ObjectMapper().writeValueAsString(newAccount);
+		System.out.println(json1);
+
+
+//      //For undestanding jackson
+//		//http://www.baeldung.com/jackson-json-to-jsonnode
+//		ObjectMapper mapper = new ObjectMapper();
+//		JsonNode actualObj = mapper.readTree(json1);
+//		actualObj.fieldNames().forEachRemaining(s -> {
+//			System.out.println("field: "+s);
+//		});
+//		System.out.println("get auth= "+actualObj.get("authorities"));
+//		actualObj.get("authorities").forEach(jsonNode -> {
+//			System.out.println("role: ["+jsonNode.get("authority").asText()+"]");
+//		});
+
+
+//		RfidKey key = new RfidKey();
+//		key.setId(node.get("id").asText());
+//		key.setEnabled(node.get("enabled").asBoolean());
+//		return  key;
+
+
+		Account readValue = new ObjectMapper().readValue(json1, Account.class);
+		String json2 = new ObjectMapper().writeValueAsString(readValue);
+		System.out.println("SHOD: "+newAccount.getRfidKey());
+		System.out.println("auth: "+readValue.getRfidKey());
+		assertEquals(json1, json2);
+	}
+
+
 //	private MockMvc mockMvc;
 //
 //	@Rule
@@ -184,5 +223,5 @@
 ////		assertThat(123, is("Greetings from Spring Boot!"));
 //
 //	}
-//
-//}
+
+}

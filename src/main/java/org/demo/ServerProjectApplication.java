@@ -48,7 +48,7 @@ public class ServerProjectApplication implements CommandLineRunner{
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
 			RfidKey test = new RfidKey("C48659EC");
-			Account newAccount = new Account("Anton", "Hellbe","user", pass,
+			Account newAccount = new Account("Doris", "Popo","user", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
 					);
 			newAccount.setRfidKey(test);
