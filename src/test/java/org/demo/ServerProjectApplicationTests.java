@@ -66,11 +66,6 @@ public class ServerProjectApplicationTests {
 //		});
 
 
-//		RfidKey key = new RfidKey();
-//		key.setId(node.get("id").asText());
-//		key.setEnabled(node.get("enabled").asBoolean());
-//		return  key;
-
 
 		Account readValue = new ObjectMapper().readValue(json1, Account.class);
 		String json2 = new ObjectMapper().writeValueAsString(readValue);
