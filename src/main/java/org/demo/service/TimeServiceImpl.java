@@ -72,7 +72,7 @@ public class TimeServiceImpl implements TimeService {
         Account currentAccount = accountRepository.findOne(id);
         ArrayList<TimeStamp> userStamps = new ArrayList<>(timeRepository.getByRfid(currentAccount.getRfidKey()));
         if (userStamps == null) {
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(userStamps, HttpStatus.OK);

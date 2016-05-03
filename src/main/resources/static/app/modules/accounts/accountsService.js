@@ -20,7 +20,7 @@
 		function Accounts ($http,$resource,$rootScope) {
 
 
-			var tempUrl = $rootScope.serverIP;
+			var tempUrl = $rootScope.ip;
 			console.log("tempUrl "+tempUrl);
 
 			return $resource(tempUrl+'/api/users/:id', {
