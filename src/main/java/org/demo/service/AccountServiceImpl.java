@@ -43,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    public ResponseEntity<Account> getUser(@PathVariable("id") String id) {
+    public ResponseEntity<Account> getUser(String id) {
         System.out.println("getUser with id" + id);
         Account gotAccount = accountRepository.findOne(id);
         if(gotAccount != null) {
@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
-    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) {
+    public ResponseEntity<Account> updateUser(Account updatedAccount) {
         if(updatedAccount != null) {
             accountRepository.save(updatedAccount);
             return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
@@ -63,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    public ResponseEntity<Account> removeUser(@PathVariable("id") String id) {
+    public ResponseEntity<Account> removeUser(String id) {
         System.out.println("Remove following user" + id);
 
         Account accountToRemove = accountRepository.findOne(id);
@@ -84,7 +84,7 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
-    public ResponseEntity<Account> addUser(@RequestBody Account newAccount) {
+    public ResponseEntity<Account> addUser(Account newAccount) {
 
         accountRepository.save(newAccount);
 

@@ -2,8 +2,10 @@ package org.demo.model.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.demo.config.AuthoritiesConstants;
 import org.demo.config.UserNameGenerator;
+import org.demo.deserialize.RfidKeyDeserializer;
 import org.demo.model.RfidKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -35,6 +37,7 @@ public class Account implements UserDetails ,Serializable{
 	UserNameGenerator userNameGenerator;
 
 	// TODO: 2016-04-27 Need to fix Serializeing
+	@JsonDeserialize(using = RfidKeyDeserializer.class)
 	private RfidKey rfidKey;
 
 	// TODO: 2016-04-27 Need to fix Serializeing

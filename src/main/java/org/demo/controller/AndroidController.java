@@ -65,13 +65,13 @@ public class AndroidController {
 
     /**
      *Method used when the user wants to fetch all logged times between 2 dates
-     * @param betweenJSON JSON object containing th RFID-key of the user, aswell as the from and to date.
      * @return the times associated with the RFID-key in the periods given
      **/
-    @RequestMapping(value = "/between", method = RequestMethod.POST)
-    public ResponseEntity<List<AndroidStamp>> getBetween(@RequestBody AndroidBetweenQuery betweenJSON){
+    @RequestMapping(value = "/between&from={from}&to{to}&id={id}", method = RequestMethod.GET)
+    public ResponseEntity<List<AndroidStamp>> getBetween(@PathVariable ("from") long from, @PathVariable("to") long to, @PathVariable("id") String id){
 	    log.info("Calling get between");
-		return androidService.getBetween(betweenJSON);
+
+		return androidService.getBetween(new AndroidBetweenQuery(from, to, new RfidKey(id)));
 
     }
 }
