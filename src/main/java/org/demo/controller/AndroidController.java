@@ -65,7 +65,7 @@ public class AndroidController {
      *Method used when the user wants to fetch all logged times between 2 dates
      * @return the times associated with the RFID-key in the periods given
      **/
-    @RequestMapping(value = "/between&from={from}&to={to}&rfid={id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/between?from={from}&to={to}&rfid={id}", method = RequestMethod.GET)
     public ResponseEntity<List<AndroidStamp>> getBetween(@PathVariable ("from") long from, @PathVariable("to") long to, @PathVariable("id") String id){
 	    log.info("Calling get between");
 

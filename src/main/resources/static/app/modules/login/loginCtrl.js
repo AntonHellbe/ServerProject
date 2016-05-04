@@ -99,9 +99,9 @@
 			//logout button
 			vm.logout = function () {
                 //TODO use service instead of http
-				$http.post(ip+'/logout', {}).finally(function () {
+				$http.get(ip+'/logout', {}).finally(function () {
 					$rootScope.authenticated = false;
-					console.log("LOGED out");
+					console.log("LOGGED out");
                     vm.users={};
                     vm.loginData={};
 				});

@@ -31,7 +31,6 @@ public class SecurityController {
 
 
 	@RequestMapping("/admin_r")
-	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
 	public Map<String, Object> admin_r() {
 		System.out.println("you got in");
 		Map<String, Object> model = new HashMap<String, Object>();

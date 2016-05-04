@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by seb on 2016-04-07.
  *
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/pi")
 public class PiController {
 
+	private HttpServletRequest request;
+	private HttpSession session;
 
 	@Autowired
 	private PiService piService;
@@ -30,6 +35,7 @@ public class PiController {
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<PiStamp> timeStampUser(@PathVariable("id") RfidKey rfidKey) {
+		System.out.println(session.getId());
 		System.out.println("creating new Pistamp for id "+rfidKey.getId());
 		return piService.addNewStamp(rfidKey);
 
