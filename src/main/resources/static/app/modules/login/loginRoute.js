@@ -17,7 +17,7 @@ angular.module('login')
 				templateUrl: 'app/modules/login/login.html',
 				controller: 'LoginCtrl',
 				controllerAs: 'vm',
-                authenticate: false
+                needAuth: false
 			});
 
 		

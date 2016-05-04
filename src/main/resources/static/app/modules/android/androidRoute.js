@@ -17,7 +17,7 @@ angular.module('android')
 				templateUrl: 'app/modules/android/android.html',
 				controller: 'AndroidCtrl',
 				controllerAs: 'vm',
-                authenticate: true
+                needAuth: true
 			});
 
 		

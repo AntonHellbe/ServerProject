@@ -9,11 +9,15 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
@@ -72,6 +76,29 @@ public class ServerProjectApplicationTests {
 		System.out.println("SHOD: "+newAccount.getRfidKey());
 		System.out.println("auth: "+readValue.getRfidKey());
 		assertEquals(json1, json2);
+	}
+
+	@Test
+	public void loginSucceeds() {
+		RestTemplate template = new TestRestTemplate("user", "pass");
+		ResponseEntity<String> response = template.getForEntity("http://localhost:9090"
+				+ "/api/account", String.class);
+		System.out.println(response.getBody());
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	@Test
+	public void logOUTSucceeds() {
+		RestTemplate template = new TestRestTemplate("user", "pass");
+		ResponseEntity<String> response = template.getForEntity("http://localhost:9090"
+				+ "/api/account", String.class);
+		System.out.println(response.getBody());
+		System.out.println(response.getStatusCode());
+		//assertEquals(HttpStatus.OK, response.getStatusCode());
+		ResponseEntity<String> logoutResponse = template.postForEntity("http://localhost:9090"
+				+ "/logout","", String.class);
+
+		System.out.println(logoutResponse.getBody());
+		System.out.println(logoutResponse.getStatusCode());
 	}
 
 

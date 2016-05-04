@@ -1,15 +1,19 @@
 package org.demo.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,19 +24,35 @@ import java.util.Map;
 @RestController
 public class SecurityController {
 
+	private static final Logger log = LoggerFactory.getLogger(SecurityController.class);
 
 	@CrossOrigin(origins = "*")
 	@RequestMapping("/api/account")
 	public Principal user(Principal user) {
-//		System.out.println("got user "+user.getName());
-		System.out.println("DOING LOGIN");
+		log.info("Doing LOGIN");
+		if (user != null) {
+			log.info("loggin in user: "+user.getName());
+		}
 		return user;
+	}
+
+	/***
+	 * Token RestPoint, for getting the sessionID. instead of logging in
+	 * all the time
+	 * @param session
+	 * @return the session id used to identify you self.
+	 */
+	@RequestMapping("/token")
+	@ResponseBody
+	public Map<String,String> token(HttpSession session) {
+		log.info("Get token for session "+session.getId());
+		return Collections.singletonMap("token", session.getId());
 	}
 
 
 	@RequestMapping("/admin_r")
 	public Map<String, Object> admin_r() {
-		System.out.println("you got in");
+		log.info("you got in");
 		Map<String, Object> model = new HashMap<String, Object>();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		model.put("id", auth.getName());

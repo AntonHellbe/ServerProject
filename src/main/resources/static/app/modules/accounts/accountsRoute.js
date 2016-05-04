@@ -17,9 +17,10 @@ angular.module('accounts')
 				templateUrl: 'app/modules/accounts/accounts.html',
 				controller: 'AccountsCtrl',
 				controllerAs: 'vm',
-                authenticate: false
+                needAuth: true
                 //todo turn to false
                 //authenticate: true
+
 			});
 
 		

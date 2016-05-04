@@ -1,48 +1,83 @@
 <div class="md-padding" flex layout-sm="column">
     <md-card>
+        <md-card-header>
+            <md-card-header-text>
+                <span class="md-title">Login</span>
+                <!--<h3 class="md-headline">Login</h3>-->
+                <span class="md-subhead">Provide username & password</span>
+            </md-card-header-text>
+        </md-card-header>
         <md-card-content ng-controller="LoginCtrl as vm">
-            <h2 class="md-title">Content from: login page</h2>
-	        <form role="form" ng-submit="vm.login()">
-		        <div class="form-group">
-			        <label for="username">Username:</label>
-			        <input type="text"
-			               class="form-control" id="username" name="username"
-			               ng-model="vm.credentials.username"/>
-		        </div>
-		        <div class="form-group">
-			        <label for="password">Password:</label>
-			        <input type="password"
-			               class="form-control" id="password" name="password"
-			               ng-model="vm.credentials.password"/>
-		        </div>
-		        <button type="submit" class="btn btn-primary" >Submit</button>
-	        </form>
 
-			<div>creds</div>
-			<div>{{vm.credentials}}</div>
-			<br>
-			<br>
-			<div>Login info</div>
-			<ul>
-				<li>details: {{vm.loginData.details}}</li>
-				<li>authorities: {{vm.loginData.authorities}}</li>
-				<li>authenticated: {{vm.loginData.authenticated}}</li>
-				<li>id: {{vm.loginData.principal.id}}</li>
-				<li>username: {{vm.loginData.principal.username}}</li>
-				<li>firstName: {{vm.loginData.principal.firstName}}</li>
-				<li>lastName: {{vm.loginData.principal.lastName}}</li>
-				<li>rfidKey: {{vm.loginData.principal.rfidKey}}</li>
-				<li>authorities: {{vm.loginData.principal.authorities}}</li>
-			</ul>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<button ng-click="vm.getAll()">get all</button>
-			<button ng-click="vm.logout()">logout</button>
 
-			<div>Got users</div>
+            <form name="loginForm" ng-submit="vm.login()">
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Username</label>
+                        <input ng-model="vm.credentials.username">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Password</label>
+                        <input type="password" ng-model="vm.credentials.password">
+                    </md-input-container>
+                </div>
+                <md-button class="md-raised" type="submit">Login</md-button>
+            </form>
+
+            <!--<form role="form" ng-submit="vm.login()">-->
+            <!--<div class="form-group">-->
+            <!--<label for="username">Username:</label>-->
+            <!--<input type="text"-->
+            <!--class="form-control" id="username" name="username"-->
+            <!--ng-model="vm.credentials.username"/>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+            <!--<label for="password">Password:</label>-->
+            <!--<input type="password"-->
+            <!--class="form-control" id="password" name="password"-->
+            <!--ng-model="vm.credentials.password"/>-->
+            <!--</div>-->
+            <!--<button type="submit" class="btn btn-primary">Submit</button>-->
+            <!--</form>-->
+            <br>
+            <br>
+            <hr>
+            <div>creds</div>
+            <div>{{vm.credentials}}</div>
+            <br>
+            <br>
+            <div>Login info</div>
+            <ul>
+                <li>details: {{vm.loginData.details}}</li>
+                <li>authorities: {{vm.loginData.authorities}}</li>
+                <li>authenticated: {{vm.loginData.authenticated}}</li>
+                <li>id: {{vm.loginData.principal.id}}</li>
+                <li>username: {{vm.loginData.principal.username}}</li>
+                <li>firstName: {{vm.loginData.principal.firstName}}</li>
+                <li>lastName: {{vm.loginData.principal.lastName}}</li>
+                <li>rfidKey: {{vm.loginData.principal.rfidKey}}</li>
+                <li>authorities: {{vm.loginData.principal.authorities}}</li>
+            </ul>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <md-button class="md-raised" ng-click="vm.getAll()">get all</md-button>
+            <md-button class="md-raised" ng-click="vm.logout()">logout</md-button>
+            <md-button class="md-raised" ng-click="vm.getToken()">get with Token</md-button>
+            <md-button class="md-raised" ng-click="vm.getHack()">Hack</md-button>
+            <md-button class="md-raised" ng-click="vm.clearAll()">Clear lists</md-button>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Old token</label>
+                <input ng-model="vm.oldToken">
+            </md-input-container>
+
+            <div>Token</div>
+            <div>{{vm.myToken}}</div>
+
+            <div>Got users</div>
             <ul>
                 <li ng-repeat="user in vm.users.data">
                     <strong>id: {{user.id}}</strong>
@@ -59,7 +94,7 @@
                 </li>
             </ul>
 
-			<!--<div>{{vm.users.data}}</div>-->
+            <!--<div>{{vm.users.data}}</div>-->
         </md-card-content>
     </md-card>
 </div>

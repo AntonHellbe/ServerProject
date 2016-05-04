@@ -22,7 +22,7 @@ angular.module('essence')
 			.state('home.dashboard', {
 				url:'/dashboard',
 				templateUrl: 'app/modules/home/dashboard.html',
-                authenticate: true
+                needAuth: true
 			});
 			
 	}]);
