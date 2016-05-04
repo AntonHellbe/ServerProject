@@ -41,7 +41,6 @@ public class TimeStamp extends Stamp {
         super(date, checkIn);
         this.rfidKey = rfidKey;
     }
-
     /**
      * Fetches the id of the TimeStamp
      * @return the id of the TimeStamp

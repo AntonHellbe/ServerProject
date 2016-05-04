@@ -79,6 +79,9 @@ public class ServerProjectApplication implements CommandLineRunner{
 		}
 		System.out.println(accountRepository.findUserByRfid(new RfidKey("C48659EC")));
 
+
+
+
 //		Account wantedAccount = accountRepository.findByUserName("user");
 //		wantedAccount.setEnabled(false);
 //		accountRepository.save(wantedAccount);

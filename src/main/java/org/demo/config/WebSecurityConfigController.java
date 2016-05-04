@@ -1,5 +1,6 @@
 package org.demo.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,12 +11,15 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 /**
  * Created by Sebastian Börebäck on 2016-04-22.
  */
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -50,9 +54,13 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
                     ).permitAll()
                     .anyRequest().authenticated()
                     .and()
-                    .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/")
-                    .permitAll()
+                    .logout()
+                        //.addLogoutHandler(new CustomLogoutSuccessHandler(), CustomLogoutSuccessHandler.class)
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/")
+                        .deleteCookies("JSESSIONID")
+                        .deleteCookies("XSRF-TOKEN")
+                        .permitAll()
                 .and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
                 .csrf().csrfTokenRepository(csrfTokenRepository()).disable()

@@ -20,6 +20,7 @@ public class RfidKey implements Serializable{
     private boolean isEnabled = false;
 
 	public RfidKey() {
+
 	}
 
 

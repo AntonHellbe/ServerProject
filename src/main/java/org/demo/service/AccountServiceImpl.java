@@ -35,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
         response.put("AllAccounts", accountList.size());
         response.put("Account", accountList);
         if(accountList != null) {
-            return new ResponseEntity<List<Account>>(accountList, HttpStatus.OK);
+            return new ResponseEntity<>(accountList, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
