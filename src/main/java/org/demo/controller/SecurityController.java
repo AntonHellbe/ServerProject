@@ -1,5 +1,6 @@
 package org.demo.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +31,7 @@ public class SecurityController {
 
 
 	@RequestMapping("/admin_r")
+	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
 	public Map<String, Object> admin_r() {
 		System.out.println("you got in");
 		Map<String, Object> model = new HashMap<String, Object>();

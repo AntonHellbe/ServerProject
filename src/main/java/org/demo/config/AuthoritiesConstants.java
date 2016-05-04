@@ -7,7 +7,9 @@ public final class AuthoritiesConstants {
 
 //    @Value("${management.security.role}")
 
-	public static String ADMIN = "ROLE_ADMIN";
+	public static final String ADMIN = "ROLE_ADMIN";
+
+	public static final String PIUSER="ROLE_PI";
 
 	public static final String USER = "ROLE_USER";
 

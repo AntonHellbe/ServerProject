@@ -10,12 +10,15 @@
         <md-card-content>
             <md-input-container class="md-icon-float md-block">
                 <!-- Use floating label instead of placeholder -->
-                <label>Name</label>
+                <label>RFID</label>
                 <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-                <input ng-model="user.name" type="text">
+                <input ng-model="rfid" type="text">
             </md-input-container>
-            <md-button>Test REST</md-button>
+            <md-button ng-click="vm.doPiStamp(rfid)">Test REST</md-button>
             <div>data got</div>
+            <div>
+                {{vm.piResult}}
+            </div>
         </md-card-content>
 
         <md-card-actions layout="row" layout-align="end center">

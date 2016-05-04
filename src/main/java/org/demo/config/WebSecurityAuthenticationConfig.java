@@ -2,6 +2,8 @@ package org.demo.config;
 
 import org.demo.repository.AccountRepository;
 import org.demo.service.security.MongoUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,10 +23,13 @@ class WebSecurityAuthenticationConfig extends GlobalAuthenticationConfigurerAdap
 	@Autowired
 	MongoUserDetailsService mongoUserDetailsService;
 
+	private static final Logger log = LoggerFactory.getLogger(WebSecurityAuthenticationConfig.class);
+
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 
+		log.info("doing call");
 		auth.userDetailsService(mongoUserDetailsService).passwordEncoder(encoder);
 	}
 

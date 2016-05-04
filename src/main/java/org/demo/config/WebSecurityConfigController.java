@@ -16,60 +16,57 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @Configuration
 class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 
-	@Value ("${management.security.role}")
-	private String adminRole;
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+        http
+                .httpBasic()
+                .and()
+                .authorizeRequests()
+                    //Bara någon med ADMIN kan nå denna
+                    .antMatchers("/admin_r").hasAuthority(AuthoritiesConstants.ADMIN)
+                    //Bara någon med piRole ska nå denna
+                    .antMatchers("/api/pi/{id}").hasAuthority(AuthoritiesConstants.PIUSER)
+                    //Alla ska nå denna
+                    .antMatchers("/api/users/{id}").permitAll()
+                    //Bara någon med ADMIN kan nå dessa (Förutom den ovan)
+                    .antMatchers("/api/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                    //Bara någon med ADMIN kan nå dessa
+                    .antMatchers("/api/time/{id}/{stampId}").hasAuthority(AuthoritiesConstants.ADMIN)
+                    .antMatchers(
+                        "/",
+                        "/index.html",
+                        "/home.html",
+                        "/login.html",
+                        "/app.js",
+                        "/bootstrap-3.3.6-dist/css/*",
+                        "/angular-1.5.3/angular.js",
+                        "/angular-1.5.3/angular-route.js"
+                        , "/api/account"
+                        , "/logout"
+                        , "/app/**"
+                        , "/src/**"
+                    ).permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+                .csrf().csrfTokenRepository(csrfTokenRepository()).disable()
 
-		http
-				// TODO: 2016-04-26 httpBasic ska inte vara med. behovs losas po annat vis.
-				.httpBasic()
-				.and()
-				.authorizeRequests()
-				.antMatchers(
-						"/",
-						"/index.html",
-						"/home.html",
-						"/login.html",
-						"/app.js",
-						"/bootstrap-3.3.6-dist/css/*",
-						"/angular-1.5.3/angular.js",
-						"/angular-1.5.3/angular-route.js"
-						,"/api/account"
-						,"/logout"
-						,"/app/**"
-						,"/src/**"
-				).permitAll()
-				//.antMatchers("/api/users/**").hasAuthority(AuthoritiesConstants.USER)
-				.anyRequest()
-				.authenticated()
-				.and()
-				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-				.csrf().csrfTokenRepository(csrfTokenRepository()).disable()
 
-//				//Bara någon med ADMIN kan nå denna
-//				.antMatchers("/admin_r").hasAuthority(adminRole)
-//				//Alla ska nå denna
-//				.antMatchers("/api/users/{id}").permitAll()
-//				//Bara någon med ADMIN kan nå dessa (Förutom den ovan)
-//				.antMatchers("/api/users/**").hasAuthority(adminRole)
-//				//Bara någon med ADMIN kan nå dessa
-//				.antMatchers("/api/time/{id}/{stampId}").hasAuthority(adminRole)
 //				// TODO: 2016-04-26 har behover vi dela upp vilka roller som far lov att accessa REST
 //				.anyRequest()
 //				.authenticated()
 //				.and()
 //				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 //				.csrf().csrfTokenRepository(csrfTokenRepository()).disable()
-		;
+        ;
 
-	}
+    }
 
-	private CsrfTokenRepository csrfTokenRepository() {
-		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-		repository.setHeaderName("X-XSRF-TOKEN");
-		return repository;
-	}
+    private CsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setHeaderName("X-XSRF-TOKEN");
+        return repository;
+    }
 
 }

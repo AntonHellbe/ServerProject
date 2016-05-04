@@ -27,7 +27,7 @@
 
         //vm.authorities = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}];
         //roles list
-        vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}];
+        vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}, {authority:"ROLE_PI"}];
 
         /**
          * default get all users

@@ -22,8 +22,6 @@ public class ServerProjectApplication implements CommandLineRunner{
 	private String ip = "http://localhost:8080/users";
 	private static final Logger log = LoggerFactory.getLogger(ServerProjectApplication.class);
 
-	@Value("${management.security.role}")
-	private String adminRole;
 
 	@Autowired
 	AccountRepository accountRepository;
@@ -43,6 +41,7 @@ public class ServerProjectApplication implements CommandLineRunner{
 
 		Account defaultUser = accountRepository.findByUserName("user");
 		Account adminUser = accountRepository.findByUserName("admin");
+		Account piUser = accountRepository.findByUserName("piUser");
 		if (defaultUser == null) {
 			System.out.println("CREATING DEFAULT USER");
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -63,11 +62,22 @@ public class ServerProjectApplication implements CommandLineRunner{
 			String pass = encoder.encode("pass");
 			accountRepository.save(new Account("Master", "Swaggins", "admin", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER,
-							adminRole)));
+							AuthoritiesConstants.PIUSER,AuthoritiesConstants.ADMIN)));
 		}
 		else {
 			System.out.println("USER ALLREADY in DB");
 		}
+		if (piUser== null) {
+			System.out.println("CREATING PIUSER USER");
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			String pass = encoder.encode("pass");
+			accountRepository.save(new Account("Pie", "Rubarb", "piUser", pass,
+					AuthorityUtils.createAuthorityList(AuthoritiesConstants.PIUSER)));
+		}
+		else {
+			System.out.println("USER ALLREADY in DB");
+		}
+		System.out.println(accountRepository.findUserByRfid(new RfidKey("C48659EC")));
 
 //		Account wantedAccount = accountRepository.findByUserName("user");
 //		wantedAccount.setEnabled(false);
