@@ -127,21 +127,19 @@ public class ServerProjectApplication implements CommandLineRunner {
 		}else
 			log.info(user4.getFirstName()+" "+user4.getLastName()+ " IS ALLREADY IN DB");
 
-		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
-		timeRepository.save(calsA);
-		timeRepository.save(cals1);
-		timeRepository.save(cals2);
-		timeRepository.save(cals3);
-		timeRepository.save(cals4);
-//		calsA.forEach(ts -> timeRepository.save(ts));
-//		cals1.forEach(ts -> timeRepository.save(ts));
-//		cals2.forEach(ts -> timeRepository.save(ts));
-//		cals3.forEach(ts -> timeRepository.save(ts));
-//		cals4.forEach(ts -> timeRepository.save(ts));
+//		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
+//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+//		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
+//		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
+//		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+//		//clear stamps
+//		timeRepository.deleteAll();
+//		//add stamps
+//		timeRepository.save(calsA);
+//		timeRepository.save(cals1);
+//		timeRepository.save(cals2);
+//		timeRepository.save(cals3);
+//		timeRepository.save(cals4);
 
 
 		//		user;C48659EC;1
