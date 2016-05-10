@@ -76,9 +76,6 @@ public class AccountServiceImpl implements AccountService {
 
 		System.out.println("Removing following user" + accountToRemove.getFirstName());
 
-		// TODO: 2016-04-09 :23:36 fixed so that remove works
-
-
 		accountRepository.delete(accountToRemove.getId());
 
 		if (accountToRemove != null) {

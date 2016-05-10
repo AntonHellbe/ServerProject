@@ -61,36 +61,6 @@ public class AccountController {
      **/
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) {
-//    public ResponseEntity<Account> updateUser(@RequestBody Map<String, Object> updatedUserJSON) {
-//        Map<String, Object> updatedUserJSON
-//        Account updatedAccount = new Account();
-
-//        updatedAccount.setId(updatedUserJSON.get("id").toString());
-//        updatedAccount.setUsername(updatedUserJSON.get("username").toString());
-//        updatedAccount.setPassword(updatedUserJSON.get("password").toString());
-//        updatedAccount.setFirstName(updatedUserJSON.get("firstName").toString());
-//        updatedAccount.setLastName(updatedUserJSON.get("lastName").toString());
-//
-//	    // TODO: 2016-05-02 :21:32 Make better!
-//	    if(updatedUserJSON.get("rfidKey") != null) {
-//		    LinkedHashMap<String, Object>  obj = (LinkedHashMap<String, Object>) updatedUserJSON.get("rfidKey");
-//		    RfidKey key = new RfidKey(obj.get("id").toString());
-//		    if (obj.get("enabled") != null) {
-//			    log.info((Boolean) obj.get("enabled"));
-//			    key.setEnabled((Boolean) obj.get("enabled"));
-//		    }
-//		    updatedAccount.setRfidKey(key);
-//	    }
-////        updatedAccount.setAuthorities((List<GrantedAuthority>) updatedUserJSON.get("authorities"));
-////	    List < GrantedAuthority > aa = (List<GrantedAuthority>) updatedUserJSON.get("authorities");
-//	    // TODO Fix so that you can update authroities
-//	    List<LinkedHashMap<String,String>> auth = (List<LinkedHashMap<String,String>>) updatedUserJSON.get("authorities");
-//	    List<GrantedAuthority> auths = updatedAccount.getAuthorities();
-//	    auths.clear();
-//	    auth.forEach(stringStringLinkedHashMap -> {
-//		    auths.add(new SimpleGrantedAuthority(stringStringLinkedHashMap.get("authority")));
-//	    });
-//	    updatedAccount.setAuthorities(auths);
 	    log.info("updateing user "+updatedAccount);
 
         return userService.updateUser(updatedAccount);

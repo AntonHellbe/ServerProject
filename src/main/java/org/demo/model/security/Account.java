@@ -36,11 +36,9 @@ public class Account implements UserDetails ,Serializable{
 //	@Autowired
 //	UserNameGenerator userNameGenerator;
 
-	// TODO: 2016-04-27 Need to fix Serializeing
 	@JsonDeserialize(using = RfidKeyDeserializer.class)
 	private RfidKey rfidKey;
 
-	// TODO: 2016-04-27 Need to fix Serializeing
 	@JsonDeserialize(using = GrantedAuthorityDeserializer.class)
 	private List<GrantedAuthority> authorities = new ArrayList<>();
 

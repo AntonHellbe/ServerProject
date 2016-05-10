@@ -18,7 +18,6 @@ angular.module('pi')
 				controller: 'PiCtrl',
 				controllerAs: 'vm',
                 needAuth: true
-                //TODO make true
 			});
 
 		
