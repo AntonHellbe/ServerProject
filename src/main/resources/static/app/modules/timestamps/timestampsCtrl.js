@@ -114,15 +114,19 @@
                 });
 
 
-            //$mdDialog.show(
-            //    $mdDialog.alert()
-            //        .title('Primary Action')
-            //        .textContent('Primary actions can be used for one click actions')
-            //        .ariaLabel('Primary click demo')
-            //        .ok('Awesome!')
-            //        .targetEvent(event)
-            //);
+
         };
+
+	    vm.addStamp= function(ev,user){
+		    $mdDialog.show(
+		        $mdDialog.alert()
+		            .title('Primary Action')
+		            .textContent(JSON.stringify(user))
+		            .ariaLabel('Primary click demo')
+		            .ok('Awesome!')
+		            .targetEvent(ev)
+		    );
+	    }
     }
 
     function DialogController($scope, $mdDialog, user,stamp) {

@@ -1,6 +1,5 @@
 package org.demo.service;
 
-import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.springframework.http.ResponseEntity;
 
@@ -81,6 +80,8 @@ public interface TimeService {
      * @return updated time
      **/
     public ResponseEntity<TimeStamp> updateTime(String id, String stampId, Map<String, Object> updatedTimeJSON);
+
+//    ResponseEntity<ArrayList<UserWithTimes>> getAllUsersTimes();
     /**
      * Updates the given time of a specific user
      *

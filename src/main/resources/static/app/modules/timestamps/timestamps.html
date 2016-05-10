@@ -22,7 +22,7 @@
                 <b layout="row" layout-align="center center" class="md-padding">
                     answear {{vm.status}}
                 </b>
-                <md-button>+ Add new timestamp</md-button>
+                <md-button ng-click="vm.addStamp(ev,user)">+ Add new timestamp</md-button>
                 <md-list ng-cloak="user.stamps">
                     <md-list-item ng-repeat="stamp in user.stamps"
                                   ng-click="vm.doPrimaryAction(ev,user,stamp)">
@@ -32,7 +32,7 @@
                 </md-list>
             </md-card-content>
             <md-card-footer>
-                <md-button>+ Add new timestamp</md-button>
+                <md-button ng-click="vm.addStamp(ev,user)">+ Add new timestamp</md-button>
             </md-card-footer>
         </div>
         <!--<md-card-content>-->

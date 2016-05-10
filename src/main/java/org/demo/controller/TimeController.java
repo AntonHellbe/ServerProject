@@ -67,6 +67,11 @@ public class TimeController {
 	    return timeService.getAll(id);
     }
 
+//	@RequestMapping(method = RequestMethod.GET)
+//	public ResponseEntity<ArrayList<TimeStamp>> getAllUsersTimes() {
+//		return timeService.getAllUsersTimes();
+//	}
+
     /**
      *Adds a new TimeStamp to the user
      * @param id the id of the user
