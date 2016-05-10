@@ -5,10 +5,10 @@ import org.demo.config.AuthoritiesConstants;
 import org.demo.model.RfidKey;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
+import org.demo.repository.TimeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-public class ServerProjectApplication implements CommandLineRunner{
+public class ServerProjectApplication implements CommandLineRunner {
 
 	private String ip = "http://localhost:8080/users";
 	private static final Logger log = LoggerFactory.getLogger(ServerProjectApplication.class);
@@ -27,11 +27,12 @@ public class ServerProjectApplication implements CommandLineRunner{
 	AccountRepository accountRepository;
 
 
+	@Autowired
+	private TimeRepository timeRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ServerProjectApplication.class, args);
 	}
-
-
 
 
 	@Override
@@ -42,64 +43,44 @@ public class ServerProjectApplication implements CommandLineRunner{
 		Account defaultUser = accountRepository.findByUserName("user");
 		Account adminUser = accountRepository.findByUserName("admin");
 		Account piUser = accountRepository.findByUserName("piUser");
+
 		if (defaultUser == null) {
 			System.out.println("CREATING DEFAULT USER");
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
 			RfidKey test = new RfidKey("C48659EC");
-			Account newAccount = new Account("Doris", "Popo","user", pass,
+			defaultUser = new Account("Doris", "Popo", "user", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
-					);
-			newAccount.setRfidKey(test);
-			accountRepository.save(newAccount);
-		}
-		else {
+			);
+			defaultUser.setRfidKey(test);
+			accountRepository.save(defaultUser);
+		} else {
 			System.out.println("USER ALLREADY in DB");
 		}
-		if (adminUser== null) {
+		if (adminUser == null) {
 			System.out.println("CREATING ADMIN USER");
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
-			accountRepository.save(new Account("Master", "Swaggins", "admin", pass,
+			adminUser = new Account("Master", "Swaggins", "admin", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER,
-							AuthoritiesConstants.PIUSER,AuthoritiesConstants.ADMIN)));
-		}
-		else {
+							AuthoritiesConstants.PIUSER, AuthoritiesConstants.ADMIN));
+			adminUser.setRfidKey(new RfidKey("34915AEC"));
+
+			accountRepository.save(adminUser);
+		} else {
 			System.out.println("USER ALLREADY in DB");
 		}
-		if (piUser== null) {
+		if (piUser == null) {
 			System.out.println("CREATING PIUSER USER");
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
 			accountRepository.save(new Account("Pie", "Rubarb", "piUser", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.PIUSER)));
-		}
-		else {
+		} else {
 			System.out.println("USER ALLREADY in DB");
 		}
-		System.out.println(accountRepository.findUserByRfid(new RfidKey("C48659EC")));
-
-
-
-
-//		Account wantedAccount = accountRepository.findByUserName("user");
-//		wantedAccount.setEnabled(false);
-//		accountRepository.save(wantedAccount);
-//		List<Account> disabledUsers = accountRepository.findDisabledUsers("false");
-//		for (int i = 0; i < disabledUsers.size(); i++) {
-//			System.out.println(disabledUsers.get(i).toString());
-//
-//		}
-
-//		wantedAccount.setEnabled(true);
-//		accountRepository.save(wantedAccount);
-
-//		//add some dummy users
-//		userRepository.save(new User("john", "smith", new RfidKey("123")));
-//		userRepository.save(new User("lisa", "smith", new RfidKey("234")));
-//		userRepository.save(new User("clark", "smith", new RfidKey("4")));
-//		userRepository.save(new User("erik", "smith", new RfidKey("5")));
 
 
 	}
+
 }

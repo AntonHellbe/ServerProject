@@ -18,8 +18,6 @@ angular.module('accounts')
 				controller: 'AccountsCtrl',
 				controllerAs: 'vm',
                 needAuth: true
-                //todo turn to false
-                //authenticate: true
 
 			});
 

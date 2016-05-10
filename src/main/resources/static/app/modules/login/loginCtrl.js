@@ -73,7 +73,8 @@
         };
 
 
-        vm.credentials = {"username": "user", "password": "pass"};
+        //vm.credentials = {"username": "user", "password": "pass"};
+        vm.credentials = {};
 
         //login button
         vm.login = function () {

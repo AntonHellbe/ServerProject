@@ -1,0 +1,40 @@
+<md-dialog aria-label="Mango (Fruit)" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{user.firstName}} {{user.lastName}}</h2>
+                <span flex></span>
+                <md-button class="md-button" ng-click="cancel()">
+                    cancel
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2>Update a timestamp</h2>
+                <div>{{stamp.date}}</div>
+
+                <div layout="column">
+                    <md-checkbox ng-model="stamp.checkIn">{{stamp.date | date: 'yyyy-MM-dd HH:mm:ss'}}</md-checkbox>
+                    <md-datepicker ng-model="userDate" md-placeholder="Enter date"
+                                   ng-change="updateDate('date')"></md-datepicker>
+                    <md-input-container flex="40">
+                        <label>Time</label>
+                        <input ng-model="userTime" type="time" md-placeholder="Enter time"
+                               ng-change="updateDate('time')">
+                    </md-input-container>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="answer()">
+                delete
+            </md-button>
+            <md-button ng-click="answer(stamp)" style="margin-right:20px;">
+                update
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+

@@ -63,7 +63,8 @@ public class TimeController {
      **/
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<ArrayList<TimeStamp>> getAll(@PathVariable("id") String id) {
-        return timeService.getAll(id);
+	    System.out.println("Calling get all!!");
+	    return timeService.getAll(id);
     }
 
     /**

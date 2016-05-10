@@ -23,6 +23,7 @@
 			var tempUrl = $rootScope.ip;
 			console.log("tempUrl "+tempUrl);
 
+
 			return $resource(tempUrl+'/api/users/:id', {
 				id: '@id'
 			}, {
@@ -34,14 +35,11 @@
 				},
 				save:{
 					method: "POST"
-				},
-				getFeaturesList: getFeaturesList
-			});
+				}
+            });
 
 
-			function getFeaturesList() {
-				return "hello world";
-			}
+
 		}
 
 })();

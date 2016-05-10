@@ -1,7 +1,53 @@
 <div class="md-padding" flex layout-sm="column">
-    <md-card>
-        <md-card-content>
-            <h2 class="md-title">Content from: timestamps page</h2>
-        </md-card-content>
+    <md-card ng-repeat="user in vm.users">
+        <md-card-header>
+            <!--<md-card-header-text ng-click="showBody=!showBody">-->
+            <md-card-header-text ng-click="user.showBody=vm.getStamps(user)">
+                <span class="md-title">{{user.firstName}} {{user.lastName}}</span>
+                <div class="md-subhead">id: {{user.id}}</div>
+            </md-card-header-text>
+        </md-card-header>
+        <div ng-show="user.showBody">
+            <!--<md-card-title>-->
+                <!--<md-card-title-text>-->
+                    <!--<span class="md-headline">Card headline</span>-->
+                    <!--<span class="md-subhead">Card subheader</span>-->
+                <!--</md-card-title-text>-->
+            <!--</md-card-title>-->
+            <!--<md-card-actions layout="row" layout-align="start center">-->
+                <!--<md-button>Action 1</md-button>-->
+                <!--<md-button>Action 2</md-button>-->
+            <!--</md-card-actions>-->
+            <md-card-content>
+                <b layout="row" layout-align="center center" class="md-padding">
+                    answear {{vm.status}}
+                </b>
+                <md-button>+ Add new timestamp</md-button>
+                <md-list ng-cloak="user.stamps">
+                    <md-list-item ng-repeat="stamp in user.stamps"
+                                  ng-click="vm.doPrimaryAction(ev,user,stamp)">
+                        <md-checkbox ng-disabled="true" ng-model="stamp.checkIn"></md-checkbox>
+                        <p>{{stamp.date | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+            <md-card-footer>
+                <md-button>+ Add new timestamp</md-button>
+            </md-card-footer>
+        </div>
+        <!--<md-card-content>-->
+        <!--<h2 class="md-title">Content from: timestamps page</h2>-->
+
+        <!--<md-list>-->
+        <!--<md-subheader class="md-no-sticky">Users with times</md-subheader>-->
+        <!--<md-list-item ng-repeat="user in vm.users" ng-click="vm.getUserTimes(user)">-->
+        <!--<p>{{user.id }} {{ user.firstName }} {{user.lastName}} </p>-->
+        <!--</md-list-item>-->
+        <!--</md-list>-->
+
+        <!--<div>{{vm.test}}</div>-->
+
+        <!--</md-card-content>-->
+
     </md-card>
 </div>
