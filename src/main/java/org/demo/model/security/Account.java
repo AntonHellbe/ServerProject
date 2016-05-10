@@ -33,8 +33,8 @@ public class Account implements UserDetails ,Serializable{
 	private String firstName;
 	private String lastName;
 
-	@Autowired
-	UserNameGenerator userNameGenerator;
+//	@Autowired
+//	UserNameGenerator userNameGenerator;
 
 	// TODO: 2016-04-27 Need to fix Serializeing
 	@JsonDeserialize(using = RfidKeyDeserializer.class)
@@ -84,7 +84,7 @@ public class Account implements UserDetails ,Serializable{
 	public Account(String firstName, String lastName, RfidKey rfidKey, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.username = userNameGenerator.userNameGenerator(firstName, lastName);
+//		this.username = userNameGenerator.userNameGenerator(firstName, lastName);
 		this.password = password;
 		this.rfidKey = rfidKey;
 		this.authorities = AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER);
@@ -94,7 +94,6 @@ public class Account implements UserDetails ,Serializable{
 	public Account(String firstName, String lastName, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.username = userNameGenerator.userNameGenerator(firstName, lastName);
 		this.password = password;
 		this.authorities = AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER);
 		System.out.println("3");
@@ -184,7 +183,6 @@ public class Account implements UserDetails ,Serializable{
 				", password='" + password + '\'' +
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
-				", userNameGenerator=" + userNameGenerator +
 				", rfidKey=" + rfidKey +
 				", authorities=" + authorities +
 				", accountNonExpired=" + accountNonExpired +

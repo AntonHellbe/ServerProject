@@ -1,10 +1,13 @@
 package org.demo.service;
 
+import org.demo.config.UserNameGenerator;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -14,82 +17,100 @@ import java.util.Map;
 /**
  * Created by Anton on 2016-04-11.
  */
+
 /**
  * Contains methods that enables the use and handling of users in the server
  **/
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+	@Autowired
+	private AccountRepository accountRepository;
+
+	@Autowired
+	UserNameGenerator userNameGenerator;
+
+	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-
-    public ResponseEntity<List<Account>> getAllUser() {
-        Map<String, Object> response = new LinkedHashMap<>();
-        List<Account> accountList = accountRepository.findAll();
+	public ResponseEntity<List<Account>> getAllUser() {
+		Map<String, Object> response = new LinkedHashMap<>();
+		List<Account> accountList = accountRepository.findAll();
 //        userRepository.deleteAll();
 //        userList.forEach(user -> {
 //            userRepository.save(user);
 //        });
-        response.put("AllAccounts", accountList.size());
-        response.put("Account", accountList);
-        if(accountList != null) {
-            return new ResponseEntity<>(accountList, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+		response.put("AllAccounts", accountList.size());
+		response.put("Account", accountList);
+		if (accountList != null) {
+			return new ResponseEntity<>(accountList, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
-    public ResponseEntity<Account> getUser(String id) {
-        System.out.println("getUser with id" + id);
-        Account gotAccount = accountRepository.findOne(id);
-        if(gotAccount != null) {
-            return new ResponseEntity<Account>(gotAccount, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+	public ResponseEntity<Account> getUser(String id) {
+		System.out.println("getUser with id" + id);
+		Account gotAccount = accountRepository.findOne(id);
+		if (gotAccount != null) {
+			return new ResponseEntity<Account>(gotAccount, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
-    }
+	}
 
-    public ResponseEntity<Account> updateUser(Account updatedAccount) {
-        if(updatedAccount != null) {
-            accountRepository.save(updatedAccount);
-            return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
-        }
-    }
+	public ResponseEntity<Account> updateUser(Account updatedAccount) {
+		if (updatedAccount != null) {
+			accountRepository.save(updatedAccount);
+			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+		}
+	}
 
-    public ResponseEntity<Account> removeUser(String id) {
-        System.out.println("Remove following user" + id);
+	public ResponseEntity<Account> removeUser(String id) {
+		System.out.println("Remove following user" + id);
 
-        Account accountToRemove = accountRepository.findOne(id);
+		Account accountToRemove = accountRepository.findOne(id);
 
-        System.out.println("Removing following user" + accountToRemove.getFirstName());
+		System.out.println("Removing following user" + accountToRemove.getFirstName());
 
-        // TODO: 2016-04-09 :23:36 fixed so that remove works
-
-
-        accountRepository.delete(accountToRemove.getId());
-
-        if(accountToRemove != null) {
-            return new ResponseEntity<Account>(accountToRemove, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
-        }
+		// TODO: 2016-04-09 :23:36 fixed so that remove works
 
 
-    }
+		accountRepository.delete(accountToRemove.getId());
 
-    public ResponseEntity<Account> addUser(Account newAccount) {
+		if (accountToRemove != null) {
+			return new ResponseEntity<Account>(accountToRemove, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+		}
 
 
-	    accountRepository.save(newAccount);
+	}
 
-	    System.out.println("saving to db "+newAccount);
-        return new ResponseEntity<Account>(newAccount, HttpStatus.OK);
-    }
+	public ResponseEntity<Account> addUser(Account newAccount) {
+
+		/**
+		 * Create username
+		 */
+		if (newAccount.getUsername() == null) {
+			newAccount.setUsername(userNameGenerator.userNameGenerator(newAccount));
+		}
+
+		/**
+		 * Encode password
+		 */
+		if (newAccount.getPassword() != null) {
+			newAccount.setPassword(passwordEncoder.encode(newAccount.getPassword()));
+		}
+
+		accountRepository.save(newAccount);
+
+		System.out.println("saving to db " + newAccount);
+		return new ResponseEntity<Account>(newAccount, HttpStatus.OK);
+	}
 
 
 }

@@ -20,7 +20,7 @@ public interface TimeService {
      * @param id the id of the user
      * @return the added TimeStamp
      **/
-    public ResponseEntity<TimeStamp> addTime(String id);
+    public ResponseEntity<TimeStamp> addNowTime(String id);
     /**
      *Adds a new TimeStamp to the user
      * @param rfidKey the id of the user
@@ -80,6 +80,8 @@ public interface TimeService {
      * @return updated time
      **/
     public ResponseEntity<TimeStamp> updateTime(String id, String stampId, Map<String, Object> updatedTimeJSON);
+
+	ResponseEntity<TimeStamp> addTime(String id, TimeStamp newStamp);
 
 //    ResponseEntity<ArrayList<UserWithTimes>> getAllUsersTimes();
     /**

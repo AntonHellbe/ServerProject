@@ -3,6 +3,7 @@ package org.demo.controller;
 import org.demo.model.TimeStamp;
 import org.demo.service.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,8 +79,16 @@ public class TimeController {
      * @return the added TimeStamp
      **/
 	@RequestMapping(method = RequestMethod.POST, value = "/{id}")
-	public ResponseEntity<TimeStamp> addTime(@PathVariable("id") String id) {
-		return timeService.addTime(id);
+	public ResponseEntity<TimeStamp> addNowTime(@PathVariable("id") String id) {
+		return timeService.addNowTime(id);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/{id}/{isCustom}")
+	public ResponseEntity<TimeStamp> addTime(@PathVariable("id") String id, @RequestBody TimeStamp newStamp, @PathVariable("isCustom") boolean isCustom) {
+		if (isCustom) {
+			return timeService.addTime(id,newStamp);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 	}
 
     /**

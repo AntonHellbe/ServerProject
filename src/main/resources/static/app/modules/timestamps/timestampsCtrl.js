@@ -13,7 +13,7 @@
         .module('timestamps')
         .controller('TimestampsCtrl', Timestamps);
 
-    Timestamps.$inject = ['AccountsService', 'TimestampsService', '$mdDialog', '$mdMedia'];
+    Timestamps.$inject = ['AccountsService', 'TimestampsService', '$mdDialog', '$log'];
 
     /*
      * recommend
@@ -21,7 +21,7 @@
      * and bindable members up top.
      */
 
-    function Timestamps(AccountsService, TimestampsService, $mdDialog, $mdMedia) {
+    function Timestamps(AccountsService, TimestampsService, $mdDialog,$log) {
         /*jshint validthis: true */
         var vm = this;
 
@@ -35,7 +35,7 @@
                     console.log("Success");
                     vm.users = success ? success : [];
                     //todo get all users stamps
-                    vm.users.forEach(vm.getStamps)
+                    //vm.users.forEach(vm.getStamps)
 
 
                 },
@@ -51,24 +51,33 @@
         //vm.users = [];
         vm.getAll();
 
-        vm.getStamps = function (user) {
-            if (user.rfidKey != null) {
+        vm.getStamps = function (user, shouldUpdate) {
 
-                TimestampsService.get({id: user.id}).$promise.then(
-                    function (success) {
-                        console.log("Success getting times");
-                        //stamplist.push(success);
-                        user.stamps = success;
-                    },
-                    function (error) {
-                        alert("Failed " + JSON.stringify(error));
-                    }
-                );
+            if (user.showBody == undefined) {
+                user.showBody = false;
+            }
+            if (user.stamps == undefined || shouldUpdate == true) {
+
+                if (user.rfidKey != null) {
+
+                    TimestampsService.get({id: user.id}).$promise.then(
+                        function (success) {
+                            console.log("Success getting times");
+                            //stamplist.push(success);
+                            user.stamps = success;
+                        },
+                        function (error) {
+                            alert("Failed " + JSON.stringify(error));
+                        }
+                    );
+                }
+                if (shouldUpdate == true)
+                    return user.showBody;
             }
             return !user.showBody;
         };
 
-        vm.doPrimaryAction = function (ev, user,stamp) {
+        vm.doPrimaryAction = function (ev, user, stamp) {
             console.log("calling event");
 
             $mdDialog.show({
@@ -77,77 +86,143 @@
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose: true,
-                    locals: {user: user,stamp :stamp}
+                    locals: {user: user, stamp: stamp}
                 })
                 .then(function (updateStamp) {
-                    console.log("answeard " + updateStamp);
-                    vm.status = 'You said the information was "' + updateStamp + '".';
-                    if(updateStamp == undefined) {
-                        console.log("del " + stamp.id);
-                        //del
-                        TimestampsService.remove({id: user.id,stampId:stamp.id}).$promise.then(
-                            function (success) {
-                                console.log("Success delete");
-                                vm.status = "delete " + JSON.stringify(success);
-                            },
-                            function (error) {
-                                alert("Failed " + JSON.stringify(error));
-                            }
-                        );
+                        console.log("answeard " + updateStamp);
+                        if (updateStamp == undefined) {
+                            console.log("del " + stamp.id);
+                            //del
+                            TimestampsService.remove({id: user.id, stampId: stamp.id}).$promise.then(
+                                function (success) {
+                                    console.log("Success delete");
+
+                                },
+                                function (error) {
+                                    alert("Failed " + JSON.stringify(error));
+                                }
+                            );
+                        }
+                        else {
+                            //update
+                            console.log("updated " + updateStamp.date);
+                            TimestampsService.update({id: user.id, stampId: stamp.id}, updateStamp).$promise.then(
+                                function (success) {
+                                    console.log("Success getting times");
+                                    $log.info("success " + JSON.stringify(success));
+                                    //stamp = success;
+                                    var idx =user.stamps.indexOf(stamp);
+                                    user.stamps[idx] = success;
+                                },
+                                function (error) {
+                                    alert("Failed " + JSON.stringify(error));
+                                }
+                            );
+                        }
+                    }, function () {
+                        vm.status = 'You cancelled the dialog.';
+                        console.log("You cancelled the dialog.");
                     }
-                    else {
-                        //update
-                        TimestampsService.update({id: user.id,stampId:stamp.id},updateStamp).$promise.then(
-                            function (success) {
-                                console.log("Success getting times");
-                                vm.status = "update" + JSON.stringify(success);
-                                stamp = success;
-                            },
-                            function (error) {
-                                alert("Failed " + JSON.stringify(error));
-                            }
-                        );
-                    }
-                }, function () {
-                    vm.status = 'You cancelled the dialog.';
-                    console.log("You cancelled the dialog.");
-                });
-
-
-
+                );
         };
 
-	    vm.addStamp= function(ev,user){
-		    $mdDialog.show(
-		        $mdDialog.alert()
-		            .title('Primary Action')
-		            .textContent(JSON.stringify(user))
-		            .ariaLabel('Primary click demo')
-		            .ok('Awesome!')
-		            .targetEvent(ev)
-		    );
-	    }
+        vm.addNowStamp = function (user) {
+            console.log("add NOW timestamp");
+            TimestampsService.save({id: user.id}).$promise.then(
+                function (success) {
+                    console.log("Success update time");
+                    vm.status = "update" + JSON.stringify(success);
+                    user.stamps.push(success);
+                },
+                function (error) {
+                    alert("Failed " + JSON.stringify(error));
+                }
+            );
+        };
+
+        vm.addStamp = function (ev, user) {
+            $mdDialog.show({
+                    controller: AddTimeController,
+                    templateUrl: '/app/modules/timestamps/addTime.tmpl.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {user: user}
+                })
+                .then(function (newStamp) {
+                        console.log("ADDSTAMP IN CTRL " + JSON.stringify(newStamp));
+                        vm.status = 'You said the information was "' + newStamp + '".';
+                        //update
+                        console.log("ADDSTAMP " + newStamp.date);
+                        TimestampsService.save({id: user.id, stampId: true}, newStamp).$promise.then(
+                            function (success) {
+                                $log.info("Success Adding time");
+                                vm.status = "ADD" + JSON.stringify(success);
+                                user.stamps.push(success);
+                            },
+                            function (error) {
+                                alert("Failed " + JSON.stringify(error));
+                            }
+                        );
+                    }, function () {
+                        vm.status = 'You cancelled the dialog.';
+                        console.log("You cancelled the dialog.");
+                    }
+                );
+        }
     }
 
-    function DialogController($scope, $mdDialog, user,stamp) {
+
+    function AddTimeController($scope, $mdDialog, user, $log) {
         $scope.user = user;
-        $scope.stamp= angular.copy(stamp);
-        $scope.userDate= new Date(stamp.date);
-        $scope.userTime= new Date(stamp.date);
+        $scope.newStamp = {};
+        $scope.newStamp.date = new Date();
+        $scope.newStamp.checkIn = false;
+        $scope.newStamp.rfidkey= $scope.user.rfidKey;
+        $scope.dpDate = new Date();
+
+        ////console.log(JSON.stringify(user));
+        //$scope.hide = function () {
+        //    console.log("calling hide");
+        //    $mdDialog.hide();
+        //};
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
+        $scope.addStamp = function (newStamp) {
+            $log.info("ADDSTAMP called with " + JSON.stringify($scope.newStamp));
+            $mdDialog.hide($scope.newStamp);
+        };
+
+        $scope.updateDate = function (datep) {
+            var dp = $scope.dpDate;
+            var current = $scope.newStamp.date;
+            current.setMonth(dp.getMonth());
+            current.setDate(dp.getDate());
+        };
+
+    }
+
+    function DialogController($scope, $mdDialog, user, stamp) {
+        $scope.user = user;
+        $scope.stamp = angular.copy(stamp);
+        $scope.userDate = new Date(stamp.date);
+        $scope.userTime = new Date(stamp.date);
 
         $scope.updateDate = function (type) {
-            if(type == 'time'){
-                if($scope.userTime != undefined) {
+            if (type == 'time') {
+                if ($scope.userTime != undefined) {
                     $scope.stamp.date = $scope.userTime;
                 }
             }
-            if(type == 'date'){
-                if($scope.userDate!= undefined) {
+            if (type == 'date') {
+                if ($scope.userDate != undefined) {
                     var tempDate = new Date($scope.stamp.date);
-                    tempDate.setDate($scope.userDate.getDate());
-                    tempDate.setYear($scope.userDate.getYear());
-                    tempDate.setMonth($scope.userDate.getMonth());
-                    $scope.stamp.date = tempDate.getTime();
+                    $scope.userDate.setHours(tempDate.getHours());
+                    $scope.userDate.setMinutes(tempDate.getMinutes());
+                    $scope.userDate.setSeconds(tempDate.getSeconds());
+                    $scope.userDate.setMilliseconds(tempDate.getMilliseconds());
+                    $scope.stamp.date = $scope.userDate;
                 }
             }
         };
@@ -162,7 +237,7 @@
         $scope.answer = function (updateStamp) {
             var temp = new Date(updateStamp.date);
             updateStamp.date = temp.getTime();
-            console.log("answer called with "+JSON.stringify(updateStamp));
+            console.log("answer called with " + JSON.stringify(updateStamp));
             stamp = updateStamp;
             $mdDialog.hide(updateStamp);
         };

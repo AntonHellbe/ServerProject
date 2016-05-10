@@ -3,6 +3,8 @@ package org.demo.controller;
 import org.demo.model.RfidKey;
 import org.demo.model.security.Account;
 import org.demo.service.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +31,8 @@ public class AccountController {
     @Autowired
     AccountService userService;
 
+	private static final Logger log = LoggerFactory.getLogger(AccountController.class);
+
 
     /**
      * Fetches all the users from our list
@@ -36,7 +40,7 @@ public class AccountController {
      **/
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllUser() {
-        System.out.println("get all users");
+        log.info("get all users");
         return userService.getAllUser();
     }
 
@@ -72,7 +76,7 @@ public class AccountController {
 //		    LinkedHashMap<String, Object>  obj = (LinkedHashMap<String, Object>) updatedUserJSON.get("rfidKey");
 //		    RfidKey key = new RfidKey(obj.get("id").toString());
 //		    if (obj.get("enabled") != null) {
-//			    System.out.println((Boolean) obj.get("enabled"));
+//			    log.info((Boolean) obj.get("enabled"));
 //			    key.setEnabled((Boolean) obj.get("enabled"));
 //		    }
 //		    updatedAccount.setRfidKey(key);
@@ -87,7 +91,7 @@ public class AccountController {
 //		    auths.add(new SimpleGrantedAuthority(stringStringLinkedHashMap.get("authority")));
 //	    });
 //	    updatedAccount.setAuthorities(auths);
-	    System.out.println("updateing user "+updatedAccount);
+	    log.info("updateing user "+updatedAccount);
 
         return userService.updateUser(updatedAccount);
     }
@@ -109,7 +113,7 @@ public class AccountController {
      **/
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Account> addUser(@RequestBody Account newAccount) {
-	    System.out.println("add user "+newAccount);
+	    log.info("add user "+newAccount);
 	    return userService.addUser(newAccount);
 
     }

@@ -46,15 +46,15 @@
 
         console.log('AngularJS run() function...');
 
-        $rootScope.$on("$stateChangeStart",
-            function(event, toState, toParams, fromState, fromParams) {
-                if (toState.needAuth && !$rootScope.authenticated) {
-                    event.preventDefault();
-                    $state.transitionTo("home.login");
-                    //$location.path('/login');
-
-                }
-            });
+        //$rootScope.$on("$stateChangeStart",
+        //    function(event, toState, toParams, fromState, fromParams) {
+        //        if (toState.needAuth && !$rootScope.authenticated) {
+        //            event.preventDefault();
+        //            $state.transitionTo("home.login");
+        //            //$location.path('/login');
+        //
+        //        }
+        //    });
 
     }
 

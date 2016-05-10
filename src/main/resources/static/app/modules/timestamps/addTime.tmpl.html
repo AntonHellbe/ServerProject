@@ -11,24 +11,23 @@
         </md-toolbar>
         <md-dialog-content>
             <div class="md-dialog-content">
-                <h2>Update a timestamp</h2>
-                <div>{{stamp.date}}</div>
-
+                <h2>Add a timestamp</h2>
                 <div layout="column">
-                    <md-checkbox ng-model="stamp.checkIn">{{stamp.date | date: 'yyyy-MM-dd HH:mm:ss'}}</md-checkbox>
-                    <md-datepicker ng-model="userDate" md-placeholder="Enter date"
-                                   ng-change="updateDate('date')"></md-datepicker>
+
+                    <md-checkbox ng-model="newStamp.checkIn">Checked In</md-checkbox>
+                    <md-datepicker ng-model="dpDate" md-placeholder="Enter date"
+                                   ng-change="updateDate()"></md-datepicker>
                     <md-input-container flex="40">
                         <label>Time</label>
-                        <input ng-model="userTime" type="time" md-placeholder="Enter time"
-                               ng-change="updateDate('time')">
+                        <input ng-model="newStamp.date" type="time" md-placeholder="Enter time">
                     </md-input-container>
                 </div>
+                <div>result {{newStamp.date | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button ng-click="add(stamp)" style="margin-right:20px;">
+            <md-button ng-click="addStamp()" style="margin-right:20px;">
                 add
             </md-button>
         </md-dialog-actions>

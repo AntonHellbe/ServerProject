@@ -14,7 +14,10 @@ public class UserNameGenerator {
     @Autowired
     private AccountRepository accountRepository;
 
-    public String userNameGenerator(String firstName, String lastName) {
+	public UserNameGenerator() {
+	}
+
+	public String userNameGenerator(String firstName, String lastName) {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lastName.length() && i < 3; i++) {
@@ -34,4 +37,8 @@ public class UserNameGenerator {
         }
         return userName;
     }
+
+	public String userNameGenerator(Account account) {
+		return userNameGenerator(account.getFirstName(), account.getLastName());
+	}
 }
