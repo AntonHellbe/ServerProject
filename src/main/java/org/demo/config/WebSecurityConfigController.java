@@ -22,6 +22,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 				.and()
 				.authorizeRequests()
 				//Bara någon med ADMIN kan nå denna
+				.antMatchers("/api/account").permitAll()
 				.antMatchers("/admin_r").hasAuthority(AuthoritiesConstants.ADMIN)
 				//Bara någon med piRole ska nå denna
 				.antMatchers("/api/pi/{id}").hasAuthority(AuthoritiesConstants.PIUSER)
@@ -40,7 +41,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						"/bootstrap-3.3.6-dist/css/*",
 						"/angular-1.5.3/angular.js",
 						"/angular-1.5.3/angular-route.js"
-						, "/api/account"
+						//, "/api/account"
 						, "/app/**"
 						, "/src/**"
 				).permitAll()

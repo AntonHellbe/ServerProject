@@ -76,6 +76,7 @@ public class Account implements UserDetails ,Serializable{
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
+		System.out.println("1");
 	}
 
 
@@ -87,6 +88,7 @@ public class Account implements UserDetails ,Serializable{
 		this.password = password;
 		this.rfidKey = rfidKey;
 		this.authorities = AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER);
+		System.out.println("2");
 	}
 
 	public Account(String firstName, String lastName, String password) {
@@ -95,6 +97,7 @@ public class Account implements UserDetails ,Serializable{
 		this.username = userNameGenerator.userNameGenerator(firstName, lastName);
 		this.password = password;
 		this.authorities = AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER);
+		System.out.println("3");
 	}
 
 	public RfidKey getRfidKey() {
@@ -116,6 +119,7 @@ public class Account implements UserDetails ,Serializable{
 	}
 	public void setUsername(String username) {
 		this.username = username;
+		System.out.println("4");
 	}
 
 	@Override
