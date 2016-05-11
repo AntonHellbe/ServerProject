@@ -78,13 +78,14 @@ public class Stamp implements Serializable{
      * Formats the information of the Stamp to a String
      * @return the formatted information
      **/
-	@Override
-	public String toString() {
-		SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-		return "Stamp{" +
-				"date=" + date_format.format(date.getTime()) +
-				", checkIn=" + checkIn +
-				'}';
-	}
+    @Override
+    public String toString() {
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        return "Stamp{" +
+                "date=" + date_format.format(date.getTime()) +
+                ", checkIn=" + checkIn +
+                '}';
+    }
 }

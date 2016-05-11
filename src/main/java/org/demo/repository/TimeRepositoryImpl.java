@@ -2,6 +2,7 @@ package org.demo.repository;
 
 import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.RfidKey;
+import org.demo.model.ScheduleStamp;
 import org.demo.model.TimeStamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -28,12 +29,7 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
 
     @Override
     public List<TimeStamp> getBetween(AndroidBetweenQuery androidBetweenQuery){
-        Calendar fromDate = new GregorianCalendar();
-        Calendar toDate = new GregorianCalendar();
-        fromDate.setTimeInMillis(androidBetweenQuery.getFrom());
-        toDate.setTimeInMillis(androidBetweenQuery.getTo());
-
-        return mongoOperations.find(query(where("RfidKey").is(androidBetweenQuery.getId()).and(String.valueOf(fromDate.after(fromDate))).and(String.valueOf(fromDate.before(toDate)))), TimeStamp.class);
+        return mongoOperations.find(query(where("from").gte(androidBetweenQuery.getFrom()).and("to").lte(androidBetweenQuery.getTo()).and("rfidKey").is(androidBetweenQuery.getId())), TimeStamp.class);
 
     }
 }

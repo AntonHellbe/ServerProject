@@ -108,18 +108,16 @@ public class AndroidServiceImpl implements AndroidService {
 
 		log.info("got "+androidBetweenQuery.toString());
 
-		Calendar fromDate = new GregorianCalendar();
-		fromDate.setTimeInMillis(androidBetweenQuery.getFrom());
-		Calendar toDate = new GregorianCalendar();
-		toDate.setTimeInMillis(androidBetweenQuery.getTo());
+//		Calendar fromDate = new GregorianCalendar();
+//		fromDate.setTimeInMillis(androidBetweenQuery.getFrom());
+//		Calendar toDate = new GregorianCalendar();
+//		toDate.setTimeInMillis(androidBetweenQuery.getTo());
 
-		List<TimeStamp> userStamps = timeRepository.getByRfid(androidBetweenQuery.getId());
+		List<TimeStamp> userStamps = timeRepository.getBetween(androidBetweenQuery);
 
-		// TODO: 2016-04-21 :21:06 How to create a filtered new lists
+
+//		// TODO: 2016-04-21 :21:06 How to create a filtered new lists
 		List<AndroidStamp> betweenTimes = userStamps.stream()
-				.filter(timeStamp ->
-						timeStamp.getDate().after(fromDate) &&
-						timeStamp.getDate().before(toDate))
 				.map(AndroidStamp::new)
 				.collect(Collectors.toList());
 
