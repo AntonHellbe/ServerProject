@@ -71,6 +71,10 @@
                 console.log("add user" + JSON.stringify(newUser));
             }
 
+            if(newUser.rfidkey.enabled == undefined) {
+	            newUser.rfidkey.enabled = false;
+            }
+
             AccountsService.save(newUser)
                 .$promise.then(
                 function (success) {
