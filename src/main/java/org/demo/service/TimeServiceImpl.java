@@ -112,7 +112,7 @@ public class TimeServiceImpl implements TimeService {
 		TimeStamp timeToUpdate = timeRepository.findOne(stampId);
 		Calendar cal = new GregorianCalendar();
 		if (updateStamp.getDate()!= null) {
-			long date = Long.parseLong(updateStamp.getDate().toString());
+			long date = updateStamp.getDate().getTimeInMillis();
 			cal.setTimeInMillis(date);
 			timeToUpdate.setDate(cal);
 		}
