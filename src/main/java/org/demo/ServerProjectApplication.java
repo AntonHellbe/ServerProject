@@ -92,6 +92,14 @@ public class ServerProjectApplication implements CommandLineRunner {
 		} else {
 			log.info("USER ALLREADY in DB");
 		}
+//		PasswordEncoder encoder = new BCryptPasswordEncoder();
+//		String pass = encoder.encode("pass");
+//		Account test = new Account("Robin", "Johnsson", pass);
+//		accountRepository.save(test);
+//
+//		test.setUsername(userNameGenerator.userNameGenerator("Robin", "Johnsson"));
+//		accountRepository.save(test);
+
 
 		////////////////////////////////////////////////////////////////////////
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -127,19 +135,19 @@ public class ServerProjectApplication implements CommandLineRunner {
 		}else
 			log.info(user4.getFirstName()+" "+user4.getLastName()+ " IS ALLREADY IN DB");
 
-//		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-//		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-//		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-//		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
-//		//clear stamps
-//		timeRepository.deleteAll();
-//		//add stamps
-//		timeRepository.save(calsA);
-//		timeRepository.save(cals1);
-//		timeRepository.save(cals2);
-//		timeRepository.save(cals3);
-//		timeRepository.save(cals4);
+		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
+		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
+		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
+		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+		//clear stamps
+		timeRepository.deleteAll();
+		//add stamps
+		timeRepository.save(calsA);
+		timeRepository.save(cals1);
+		timeRepository.save(cals2);
+		timeRepository.save(cals3);
+		timeRepository.save(cals4);
 
 
 		//		user;C48659EC;1
