@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Anton on 2016-04-27.
  */
+@Component
 public class UserNameGenerator {
 
-//    @Autowired
-//    private AccountRepository accountRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
 	public UserNameGenerator() {
 	}
@@ -31,7 +32,7 @@ public class UserNameGenerator {
 
         int n = 2;
         while (exists) {
-//            exists = accountRepository.findByUserName(userName) != null;
+            exists = accountRepository.findByUserName(userName) != null;
             if(exists)
                 userName = userName.substring(0, userName.length() - 2) + n++; //Ifall det går över 10 fucker det
         }
