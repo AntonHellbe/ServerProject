@@ -20,7 +20,6 @@ import java.util.Map;
 /**
  * Created by Sebastian Börebäck on 2016-04-25.
  */
-//@CrossOrigin(origins = "*")
 @RestController
 public class SecurityController {
 

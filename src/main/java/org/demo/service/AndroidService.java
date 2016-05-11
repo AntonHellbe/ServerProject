@@ -22,22 +22,22 @@ public interface AndroidService {
      * @param id the RFID-key
      * @return the user
      **/
-    public ResponseEntity<Account> getUser(String id);
+    ResponseEntity<Account> getUser(String id);
 
     /**
      * Fetches all times associated with the given user
      * @param rfidKey The user with RFID sent in a JSON
      * @return all the times
      **/
-    public ResponseEntity<List<AndroidStamp>> getAll(RfidKey rfidKey);
+    ResponseEntity<List<AndroidStamp>> getAll(RfidKey rfidKey);
 
     /**
      * Fetches the times between the given times/dates
      * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
      * @return the times in the interval
      **/
-    public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery);
+    ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery);
 
-    public ResponseEntity<Account> loginUser( Map<String, Object> getSpecificUserJSON);
+    ResponseEntity<Account> loginUser( Map<String, Object> getSpecificUserJSON);
 
 }

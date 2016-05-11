@@ -20,7 +20,7 @@ public interface TimeService {
      * @param id the id of the user
      * @return the added TimeStamp
      **/
-    public ResponseEntity<TimeStamp> addNowTime(String id);
+    ResponseEntity<TimeStamp> addNowTime(String id);
     /**
      *Adds a new TimeStamp to the user
      * @param rfidKey the id of the user
@@ -33,7 +33,7 @@ public interface TimeService {
      * @param stampId the TimeStamp to be deleted
      * @return the deleted time
      **/
-    public ResponseEntity<TimeStamp> deleteTime(String id, String stampId);
+    ResponseEntity<TimeStamp> deleteTime(String id, String stampId);
     /**
      * Deletes the specified TimeStamp from the given user
      * @param rfidKey id of the user
@@ -47,7 +47,7 @@ public interface TimeService {
      * @param id the user
      * @return all the times for the user
      **/
-    public ResponseEntity<ArrayList<TimeStamp>> getAll(String id);
+    ResponseEntity<ArrayList<TimeStamp>> getAll(String id);
     /**
      * Fetches all the times assigned to the user
      *
@@ -62,7 +62,7 @@ public interface TimeService {
      * @param stampId the id of the time to be fetched
      * @return the time we searched for
      **/
-    public ResponseEntity<TimeStamp> getTime(String id, String stampId);
+    ResponseEntity<TimeStamp> getTime(String id, String stampId);
     /**
      * Fetches the given time of a specific user
      *
@@ -76,14 +76,13 @@ public interface TimeService {
      *
      * @param id              the user
      * @param stampId         the id of the time to be changed
-     * @param updatedTimeJSON JSON of the updated object
+     * @param updateStamp JSON of the updated object
      * @return updated time
      **/
-    public ResponseEntity<TimeStamp> updateTime(String id, String stampId, Map<String, Object> updatedTimeJSON);
+    ResponseEntity<TimeStamp> updateTime(String id, String stampId, TimeStamp updateStamp);
 
 	ResponseEntity<TimeStamp> addTime(String id, TimeStamp newStamp);
 
-//    ResponseEntity<ArrayList<UserWithTimes>> getAllUsersTimes();
     /**
      * Updates the given time of a specific user
      *

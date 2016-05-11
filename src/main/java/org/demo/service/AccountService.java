@@ -21,33 +21,33 @@ public interface AccountService {
      *Fetches all the users in the list
      * @return all users in the list
      **/
-    public ResponseEntity<List<Account>> getAllUser();
+    ResponseEntity<List<Account>> getAllUser();
 
     /**
      *Fetches the specified user from the list
      * @param id  id of the user we are after
      * @return the sought after user
      **/
-    public ResponseEntity<Account> getUser(@PathVariable("id") String id);
+    ResponseEntity<Account> getUser(@PathVariable("id") String id);
 
     /**
      * Updates an existing user with new information
      * @return the Updated user
      **/
-    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount);
+    ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount);
 
     /**
      * Removes the givien user from the list
      * @param id the id of the user to be removed
      * @return the deleted user
      **/
-    public ResponseEntity<Account> removeUser(@PathVariable("id") String id);
+    ResponseEntity<Account> removeUser(@PathVariable("id") String id);
 
     /**
      * Adds a new user to the list
      * @return the new User
      **/
-    public ResponseEntity<Account> addUser(@RequestBody Account newAccount);
+    ResponseEntity<Account> addUser(@RequestBody Account newAccount);
 
 
 

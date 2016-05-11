@@ -18,6 +18,6 @@ public interface PiService {
 	 * @param rfidKey the new RFID of the user
 	 * @return a ResponseEntity of PiStamp with with userinfo and timestamp-info
 	 */
-	public ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey);
+	ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey);
 
 }

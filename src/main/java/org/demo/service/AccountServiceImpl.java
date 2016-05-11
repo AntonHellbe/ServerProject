@@ -36,10 +36,6 @@ public class AccountServiceImpl implements AccountService {
 	public ResponseEntity<List<Account>> getAllUser() {
 		Map<String, Object> response = new LinkedHashMap<>();
 		List<Account> accountList = accountRepository.findAll();
-//        userRepository.deleteAll();
-//        userList.forEach(user -> {
-//            userRepository.save(user);
-//        });
 		response.put("AllAccounts", accountList.size());
 		response.put("Account", accountList);
 		if (accountList != null) {
@@ -61,9 +57,6 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public ResponseEntity<Account> updateUser(Account updatedAccount) {
-//		if (updatedAccount.getPassword() != null) {
-//			updatedAccount.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
-//		}
 		if (updatedAccount != null) {
 			accountRepository.save(updatedAccount);
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);

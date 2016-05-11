@@ -108,11 +108,6 @@ public class AndroidServiceImpl implements AndroidService {
 
 		log.info("got "+androidBetweenQuery.toString());
 
-//		Calendar fromDate = new GregorianCalendar();
-//		fromDate.setTimeInMillis(androidBetweenQuery.getFrom());
-//		Calendar toDate = new GregorianCalendar();
-//		toDate.setTimeInMillis(androidBetweenQuery.getTo());
-
 		List<TimeStamp> userStamps = timeRepository.getBetween(androidBetweenQuery);
 
 

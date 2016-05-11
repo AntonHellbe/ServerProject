@@ -56,7 +56,7 @@ public class AccountController {
 
     /**
      * Updates a user with new information
-     * @param updatedUserJSON the updated information
+     * @param updatedAccount the updated information
      * @return the updated user
      **/
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")

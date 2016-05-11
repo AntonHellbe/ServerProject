@@ -108,19 +108,18 @@ public class TimeServiceImpl implements TimeService {
 
 
 	@Override
-	public ResponseEntity<TimeStamp> updateTime(String id, String stampId, Map<String, Object> updatedTimeJSON) {
+	public ResponseEntity<TimeStamp> updateTime(String id, String stampId, TimeStamp updateStamp) {
 		TimeStamp timeToUpdate = timeRepository.findOne(stampId);
 		Calendar cal = new GregorianCalendar();
-		if (updatedTimeJSON.get("date") != null) {
-			long date = Long.parseLong(updatedTimeJSON.get("date").toString());
+		if (updateStamp.getDate()!= null) {
+			long date = Long.parseLong(updateStamp.getDate().toString());
 			cal.setTimeInMillis(date);
 			timeToUpdate.setDate(cal);
 		}
-		if (updatedTimeJSON.get("checkIn") != null) {
-			timeToUpdate.setCheckIn(updatedTimeJSON.get("checkIn").toString() == "true");
-		}
-		if (updatedTimeJSON.get("rfid") != null) {
-			timeToUpdate.setRfidkey(new RfidKey(updatedTimeJSON.get("rfid").toString()));
+			timeToUpdate.setCheckIn(updateStamp.getCheckIn());
+
+		if (updateStamp.getRfidkey()!= null) {
+			timeToUpdate.setRfidkey(new RfidKey(updateStamp.getRfidkey().toString()));
 		}
 		timeRepository.save(timeToUpdate);
 		System.out.println("Updated time: " + timeToUpdate);

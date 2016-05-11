@@ -32,35 +32,6 @@ public class AndroidController {
 	@Autowired
 	AndroidService androidService;
 
-//    /**
-//     *Method that recives an id/username and returns the user it belongs too
-//     * @param id the id/username of the sought after user
-//     * @return The user we searched for
-//     **/
-//    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-//    public ResponseEntity<Account> getUser(@PathVariable("id") String id){
-//		return androidService.getUser(id);
-//
-//    }
-
-//    /**
-//     * Used when you want to get all the times of a given user
-//     * @param rfidkeyJSON JSON object containing the RFID-key of the user
-//     * @return all the times associated with the rfid-key
-//     **/
-//	@RequestMapping(value = "/all",method = RequestMethod.POST)
-////	public ResponseEntity<List<AndroidStamp>> getAll(@RequestBody Map<String, Object> rfidkeyJSON){
-//	public ResponseEntity<List<AndroidStamp>> getAll(@RequestBody RfidKey rfidkeyJSON){
-//		log.info("Calling get all");
-//		return androidService.getAll(rfidkeyJSON);
-//	}
-
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public ResponseEntity<Account> loginUser(@RequestBody Map<String, Object> getSpecificUserJSON) {
-//        return androidService.loginUser(getSpecificUserJSON);
-//    }
-
-
     /**
      *Method used when the user wants to fetch all logged times between 2 dates
      * @return the times associated with the RFID-key in the periods given

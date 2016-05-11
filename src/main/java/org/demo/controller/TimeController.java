@@ -35,13 +35,13 @@ public class TimeController {
      *
      * @param id              the user
      * @param stampId         the id of the time to be changed
-     * @param updatedTimeJSON JSON of the updated object
+     * @param updateStamp     JSON of the updated object
      * @return updated time
      **/
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}/{stampId}")
     public ResponseEntity<TimeStamp> updateTime(@PathVariable("id") String id, @PathVariable("stampId") String stampId,
-                                                @RequestBody Map<String, Object> updatedTimeJSON) {
-        return timeService.updateTime(id, stampId, updatedTimeJSON);
+                                                @RequestBody TimeStamp updateStamp) {
+        return timeService.updateTime(id, stampId, updateStamp);
     }
 
     /**
@@ -67,11 +67,6 @@ public class TimeController {
 	    System.out.println("Calling get all!!");
 	    return timeService.getAll(id);
     }
-
-//	@RequestMapping(method = RequestMethod.GET)
-//	public ResponseEntity<ArrayList<TimeStamp>> getAllUsersTimes() {
-//		return timeService.getAllUsersTimes();
-//	}
 
     /**
      *Adds a new TimeStamp to the user
