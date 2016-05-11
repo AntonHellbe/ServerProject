@@ -27,7 +27,7 @@
 
         //vm.authorities = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}];
         //roles list
-        vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}, {authority:"ROLE_PI"}];
+        vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}, {authority: "ROLE_PI"}];
 
         /**
          * default get all users
@@ -57,7 +57,15 @@
 
         //add a new user
         vm.addUser = function (newUser) {
-            console.log("add user" + JSON.stringify(newUser));
+            console.log("add user " + JSON.stringify(newUser));
+
+            //TODO check that rfid exists
+            if (newUser.rfidKey != undefined) {
+                if (newUser.rfidKey.enabled == undefined) {
+                    newUser.rfidKey.enabled = false;
+                }
+            }
+
 
             if (newUser.authorities != undefined) {
                 var size = newUser.authorities.length;
@@ -70,10 +78,11 @@
                 newUser.authorities = templist;
                 console.log("add user" + JSON.stringify(newUser));
             }
-
-            if(newUser.rfidkey.enabled == undefined) {
-	            newUser.rfidkey.enabled = false;
-            }
+            /*
+             if(newUser.rfidkey.enabled.equals(undefined)) {
+             newUser.rfidkey.enabled = false;
+             }
+             */
 
             AccountsService.save(newUser)
                 .$promise.then(
@@ -87,12 +96,18 @@
                 function (update) {
                     alert("Got notification" + JSON.stringify(update));
                 });
+
         };
 
 
         //update user
         vm.updateUser = function (user) {
 
+            if (user.rfidKey != undefined) {
+                if (user.rfidKey.enabled == undefined) {
+                    user.rfidKey.enabled = false;
+                }
+            }
             AccountsService.update(user)
                 .$promise.then(
                 function (success) {
