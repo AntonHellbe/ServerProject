@@ -41,7 +41,6 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						"/bootstrap-3.3.6-dist/css/*",
 						"/angular-1.5.3/angular.js",
 						"/angular-1.5.3/angular-route.js"
-						//, "/api/account"
 						, "/app/**"
 						, "/src/**"
 				).permitAll()
@@ -53,26 +52,14 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/#!/login")
 				//custom logouthandler with cookies
 				.addLogoutHandler(new MyLogoutHandler("JSESSIONID"))
-//					.addLogoutHandler(new MyCsrfLogoutHandler(csrfTokenRepository()))
 
 				.and()
-//				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 				// TODO: 2016-05-04 :22:21 CSRF fungerare inte med olika enheter...
 					.csrf()
-//						.csrfTokenRepository(csrfTokenRepository())
 						.disable() //sa att man far lova att logga ut
 
 		;
 
 	}
-
-
-
-//	private CsrfTokenRepository csrfTokenRepository() {
-//		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-////		repository.setHeaderName("X-XSRF-TOKEN");
-//		repository.setHeaderName("CSRF-TOKEN");
-//		return repository;
-//	}
 
 }
