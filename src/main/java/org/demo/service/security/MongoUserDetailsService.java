@@ -19,7 +19,7 @@ public class MongoUserDetailsService implements UserDetailsService {
 	private static final Logger log = LoggerFactory.getLogger(MongoUserDetailsService.class);
 
 	@Autowired
-	private AccountRepository accountRepository;
+	AccountRepository accountRepository;
 
 
 	@Override

@@ -6,8 +6,10 @@ import org.demo.model.ScheduleStamp;
 import org.demo.model.TimeStamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.security.Timestamp;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -29,7 +31,12 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
 
     @Override
     public List<TimeStamp> getBetween(AndroidBetweenQuery androidBetweenQuery){
-        return mongoOperations.find(query(where("from").gte(androidBetweenQuery.getFrom()).and("to").lte(androidBetweenQuery.getTo()).and("rfidKey").is(androidBetweenQuery.getId())), TimeStamp.class);
+        long from = androidBetweenQuery.getFrom();
+        long to = androidBetweenQuery.getTo();
+        RfidKey key = androidBetweenQuery.getId();
+//      Query query = new Query().addCriteria(Criteria.where("time").gte(from).lte(to).and("rfidKey").is(key));
+//      return mongoOperations.find(query, TimeStamp.class);
+        return mongoOperations.find(query(where("date.time").gte(androidBetweenQuery.getFrom()).lte(androidBetweenQuery.getTo()).and("rfidKey").is(androidBetweenQuery.getId())), TimeStamp.class);
 
     }
 }

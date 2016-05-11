@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -102,19 +103,23 @@ public class AndroidServiceImpl implements AndroidService {
 	 * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
 	 * @return the times in the interval
 	 **/
-	public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
+	public ResponseEntity<ArrayList<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
 		// TODO: 2016-04-21 :21:22 Just for logging
 		log.info("Calling get between");
 
 		log.info("got "+androidBetweenQuery.toString());
 
 		List<TimeStamp> userStamps = timeRepository.getBetween(androidBetweenQuery);
+		System.out.println(userStamps.size());
+		ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
 
 
 //		// TODO: 2016-04-21 :21:06 How to create a filtered new lists
-		List<AndroidStamp> betweenTimes = userStamps.stream()
-				.map(AndroidStamp::new)
-				.collect(Collectors.toList());
+		for (int i = 0; i < userStamps.size() ; i++) {
+
+			betweenTimes.add(new AndroidStamp(userStamps.get(i).getDate(),
+					userStamps.get(i).getCheckIn()));
+		}
 
 		if (betweenTimes != null) {
 			return new ResponseEntity<>(betweenTimes, HttpStatus.OK);

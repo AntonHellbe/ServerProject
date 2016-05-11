@@ -1,6 +1,8 @@
 package org.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.demo.deserialize.RfidKeyDeserializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,6 +22,7 @@ public class TimeStamp extends Stamp {
 	@Id
 	private String id;
 
+    @JsonDeserialize(using = RfidKeyDeserializer.class)
     private RfidKey rfidKey;
 
 
