@@ -2,8 +2,6 @@ package org.demo;
 
 
 import org.demo.config.AuthoritiesConstants;
-import org.demo.config.UserNameGenerator;
-import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
@@ -15,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
@@ -30,6 +31,11 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 	private String ip = "http://localhost:8080/users";
 	private static final Logger log = LoggerFactory.getLogger(ServerProjectApplication.class);
+
+
+	//TODO remove only test
+	@Autowired
+	private MongoOperations mongoOperations;
 
 
 	@Autowired
@@ -138,11 +144,25 @@ public class ServerProjectApplication implements CommandLineRunner {
 		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
 //
 //		//add stamps
+
 		timeRepository.save(calsA);
 		timeRepository.save(cals1);
 		timeRepository.save(cals2);
 		timeRepository.save(cals3);
 		timeRepository.save(cals4);
+
+
+		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
+		Query query = new Query();
+		query.limit(1);
+		query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
+
+		TimeStamp got = mongoOperations.findOne(query, TimeStamp.class);
+
+
+
+		log.info("Lucifer Morningstars last timestamp: "+got);
+
 
 
 		//		user;C48659EC;1
