@@ -103,7 +103,7 @@ public class AndroidServiceImpl implements AndroidService {
 	 * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
 	 * @return the times in the interval
 	 **/
-	public ResponseEntity<ArrayList<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
+	public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
 		// TODO: 2016-04-21 :21:22 Just for logging
 		log.info("Calling get between");
 
@@ -111,15 +111,11 @@ public class AndroidServiceImpl implements AndroidService {
 
 		List<TimeStamp> userStamps = timeRepository.getBetween(androidBetweenQuery);
 		System.out.println(userStamps.size());
-		ArrayList<AndroidStamp> betweenTimes = new ArrayList<>();
 
+		List<AndroidStamp> betweenTimes = userStamps.stream()
+				.map(AndroidStamp::new)
+				.collect(Collectors.toList());
 
-//		// TODO: 2016-04-21 :21:06 How to create a filtered new lists
-		for (int i = 0; i < userStamps.size() ; i++) {
-
-			betweenTimes.add(new AndroidStamp(userStamps.get(i).getDate(),
-					userStamps.get(i).getCheckIn()));
-		}
 
 		if (betweenTimes != null) {
 			return new ResponseEntity<>(betweenTimes, HttpStatus.OK);

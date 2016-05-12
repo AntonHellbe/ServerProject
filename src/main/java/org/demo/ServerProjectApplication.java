@@ -3,6 +3,7 @@ package org.demo;
 
 import org.demo.config.AuthoritiesConstants;
 import org.demo.config.UserNameGenerator;
+import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
@@ -32,7 +34,6 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 	@Autowired
 	AccountRepository accountRepository;
-
 
 
 	@Autowired
@@ -48,6 +49,11 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 		// TODO: 2016-04-24 :17:24 here you can add new users or run other commands for upstart loadning data
 
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		accountRepository.deleteAll();
+		timeRepository.deleteAll();
+
 		Account defaultUser = accountRepository.findByUserName("user");
 		Account adminUser = accountRepository.findByUserName("admin");
 		Account piUser = accountRepository.findByUserName("piUser");
@@ -55,9 +61,10 @@ public class ServerProjectApplication implements CommandLineRunner {
 		Account user3 = accountRepository.findByUserName("user3");
 		Account user4 = accountRepository.findByUserName("user4");
 
+		//create users
+
 		if (defaultUser == null) {
 			log.info("CREATING DEFAULT USER");
-			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
 			RfidKey test = new RfidKey("C48659EC");
 			defaultUser = new Account("Doris", "Popo", "user", pass,
@@ -70,9 +77,8 @@ public class ServerProjectApplication implements CommandLineRunner {
 		}
 		if (adminUser == null) {
 			log.info("CREATING ADMIN USER");
-			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
-			adminUser = new Account("Darth", "Vader", "admin", pass,
+			adminUser = new Account("Lucifer", "Morningstar", "admin", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER,
 							AuthoritiesConstants.PIUSER, AuthoritiesConstants.ADMIN));
 			adminUser.setRfidKey(new RfidKey("34915AEC"));
@@ -83,69 +89,60 @@ public class ServerProjectApplication implements CommandLineRunner {
 		}
 		if (piUser == null) {
 			log.info("CREATING PIUSER USER");
-			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			String pass = encoder.encode("pass");
 			accountRepository.save(new Account("Pie", "Rubarb", "piUser", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.PIUSER)));
 		} else {
 			log.info("USER ALLREADY in DB");
 		}
-//		PasswordEncoder encoder = new BCryptPasswordEncoder();
-//		String pass = encoder.encode("pass");
-//		Account test = new Account("Robin", "Johnsson", pass);
-//		accountRepository.save(test);
-//
-//		test.setUsername(userNameGenerator.userNameGenerator("Robin", "Johnsson"));
-//		accountRepository.save(test);
 
 
-//		////////////////////////////////////////////////////////////////////////
-//		PasswordEncoder encoder = new BCryptPasswordEncoder();
-//		if (user2 == null) {
-//			user2 = new Account("Matt", "Murdock", "user2",
-//					encoder.encode("pass"),
-//					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
-//			);
-//			user2.setRfidKey(new RfidKey("A448182B"));
-//			accountRepository.save(user2);
-//
-//		}else
-//			log.info(user2.getFirstName()+" "+user2.getLastName()+ " IS ALLREADY IN DB");
-//		////////////////////////////////////////////////////////////////////////
-//		if (user3 == null) {
-//			user3 = new Account("John", "Snow", "user3",
-//					encoder.encode("pass"),
-//					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
-//			);
-//			user3.setRfidKey(new RfidKey("4B79295"));
-//			accountRepository.save(user3);
-//		}else
-//			log.info(user3.getFirstName()+" "+user3.getLastName()+ " IS ALLREADY IN DB");
-//		////////////////////////////////////////////////////////////////////////
-//		if (user4 == null) {
-//			user4 = new Account("Lucas", "Hood", "user4",
-//					encoder.encode("pass"),
-//					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
-//			);
-//			user4.setRfidKey(new RfidKey("247615E"));
-//
-//			accountRepository.save(user4);
-//		}else
-//			log.info(user4.getFirstName()+" "+user4.getLastName()+ " IS ALLREADY IN DB");
+		////////////////////////////////////////////////////////////////////////
+		if (user2 == null) {
+			user2 = new Account("Matt", "Murdock", "user2",
+					encoder.encode("pass"),
+					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
+			);
+			user2.setRfidKey(new RfidKey("A448182B"));
+			accountRepository.save(user2);
 
-//		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-//		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-//		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-//		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
-//		//clear stamps
-//		timeRepository.deleteAll();
+		} else
+			log.info(user2.getFirstName() + " " + user2.getLastName() + " IS ALLREADY IN DB");
+		////////////////////////////////////////////////////////////////////////
+		if (user3 == null) {
+			user3 = new Account("John", "Snow", "user3",
+					encoder.encode("pass"),
+					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
+			);
+			user3.setRfidKey(new RfidKey("4B79295"));
+			accountRepository.save(user3);
+		} else
+			log.info(user3.getFirstName() + " " + user3.getLastName() + " IS ALLREADY IN DB");
+		////////////////////////////////////////////////////////////////////////
+		if (user4 == null) {
+			user4 = new Account("Lucas", "Hood", "user4",
+					encoder.encode("pass"),
+					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
+			);
+			user4.setRfidKey(new RfidKey("247615E"));
+
+			accountRepository.save(user4);
+		} else
+			log.info(user4.getFirstName() + " " + user4.getLastName() + " IS ALLREADY IN DB");
+//
+//		//generate timestamps for usersers
+		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
+		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
+		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
+		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+//
 //		//add stamps
-//		timeRepository.save(calsA);
-//		timeRepository.save(cals1);
-//		timeRepository.save(cals2);
-//		timeRepository.save(cals3);
-//		timeRepository.save(cals4);
+		timeRepository.save(calsA);
+		timeRepository.save(cals1);
+		timeRepository.save(cals2);
+		timeRepository.save(cals3);
+		timeRepository.save(cals4);
 
 
 		//		user;C48659EC;1
@@ -156,33 +153,49 @@ public class ServerProjectApplication implements CommandLineRunner {
 		//		Anna;Ek;1C699EB6;6
 		//		Carsten;Panduro;8BA8A996;7
 
+//
+//		long from = Long.parseLong("1462280400000");
+//		long to = Long.parseLong("1463547600000");
+//
+//		AndroidBetweenQuery bw = new AndroidBetweenQuery(from,to,new RfidKey("C48659EC"));
+//		List<TimeStamp> got = timeRepository.getBetween(bw);
+//
+//
+//		log.info("Get between");
+//		got.forEach(timeStamp -> {
+//			log.info("tes "+timeStamp.toString());
+//		});
+
 
 		//end of runner
-//	}
+	}
 
-//	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
-//		Random rnd = new Random();
-//		ArrayList<TimeStamp> cals = new ArrayList<>();
-//		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//
-//		int rand = rnd.nextInt(3);
-//
-//		for (int i = 0; i < 30; i++) {
-//
-//			rand = rnd.nextInt(3);
-//			inCal = new GregorianCalendar(2016, 5, (1 + i), (6 + rand), 0);
-//
-////			log.info("cal " + sdf.format(inCal.getTime()));
-//			cals.add(new TimeStamp(inCal, true, rfidKey));
-//
-//			rand = rnd.nextInt(3);
-////			log.info("rand22 " + rand);
-//			outCal = new GregorianCalendar(2016, 05, (1 + i), (13 + rand), 0);
-//			cals.add(new TimeStamp(outCal, false, rfidKey));
-//		}
-//		log.info("rfid " + rfidKey);
-//		return cals;
+	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
+		Random rnd = new Random();
+		ArrayList<TimeStamp> cals = new ArrayList<>();
+		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+		int rand = rnd.nextInt(3);
+
+		for (int i = 0; i < 30; i++) {
+
+			rand = rnd.nextInt(3);
+			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
+
+//			log.info("cal " + sdf.format(inCal.getTime()));
+			cals.add(new TimeStamp(inCal, true, rfidKey));
+			log.info("inCAl "+inCal.getTime());
+
+			rand = rnd.nextInt(3);
+//			log.info("rand22 " + rand);
+			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
+			cals.add(new TimeStamp(outCal, false, rfidKey));
+
+			log.info("inCAl "+outCal.getTime());
+		}
+		log.info("rfid " + rfidKey);
+		return cals;
 	}
 
 }

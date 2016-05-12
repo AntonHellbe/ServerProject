@@ -104,7 +104,7 @@
 
                     vm.error = false;
                     $rootScope.authenticated = true;
-                    //$state.go("home.dashboard");
+                    $state.go("home.dashboard");
                 } else {
                     console.log("Login failed")
                     //$location.path("/login");
