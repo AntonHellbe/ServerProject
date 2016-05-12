@@ -153,6 +153,7 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 
 		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
+		//db.getCollection('TimeStamps').find({"rfidKey._id":"34915AEC"}).sort({date:-1}).limit(1)
 		Query query = new Query();
 		query.limit(1);
 		query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
