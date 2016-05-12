@@ -39,7 +39,7 @@ public class TimeServiceImpl implements TimeService {
 	public ResponseEntity<TimeStamp> addNowTime(String id) {
 
 		Account currentAccount = accountRepository.findOne(id);
-		ArrayList<TimeStamp> temp = new ArrayList<>(timeRepository.findAll());
+		ArrayList<TimeStamp> temp = new ArrayList<>(timeRepository.getByRfid(currentAccount.getRfidKey()));
 		boolean state = temp.size() % 2 == 0;
 
 		TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentAccount.getRfidKey());
