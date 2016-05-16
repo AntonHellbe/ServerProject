@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -58,6 +60,17 @@ public class AccountServiceImpl implements AccountService {
 
 	public ResponseEntity<Account> updateUser(Account updatedAccount) {
 		if (updatedAccount != null) {
+			accountRepository.save(updatedAccount);
+			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	public ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id) {
+		if (newPass != null) {
+			Account updatedAccount = accountRepository.findOne(id);
+			updatedAccount.setPassword(passwordEncoder.encode(newPass));
 			accountRepository.save(updatedAccount);
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 		} else {

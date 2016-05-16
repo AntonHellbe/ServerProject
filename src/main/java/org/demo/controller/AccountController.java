@@ -67,6 +67,17 @@ public class AccountController {
     }
 
     /**
+     * Updates the password of an existing user, and encrypts it.
+     * @param newPass the new Password
+     * @param id id of the person to be updated
+     * @return The updated user information
+     **/
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/pass")
+    public ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id){
+        return userService.updatePassword(newPass, id);
+    }
+
+    /**
      * Deletes the user associated with the given id
      * @param id the id of the user to be deleted
      * @return the deleted user

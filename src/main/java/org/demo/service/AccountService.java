@@ -2,6 +2,7 @@ package org.demo.service;
 
 import org.demo.model.security.Account;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -35,6 +36,13 @@ public interface AccountService {
      * @return the Updated user
      **/
     ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount);
+
+
+    /**
+     * Updates the password of an existing user, and encrypts it.
+     * @return The updated user information
+     **/
+    ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id);
 
     /**
      * Removes the givien user from the list
