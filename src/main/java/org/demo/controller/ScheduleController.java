@@ -30,18 +30,17 @@ public class ScheduleController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ScheduleStamp> addSchedule(@RequestBody ScheduleStamp scheduleStamp) {
         return scheduleService.addSchedule(scheduleStamp);
-
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ScheduleStamp>> getAll() {
         return scheduleService.getAll();
     }
+
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<List<ScheduleStamp>> updateSchedule(@RequestBody List<ScheduleStamp> updatedStamps) {
         return scheduleService.updateSchedule(updatedStamps);
     }
-
 
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<List<ScheduleStamp>> removeSchedule(@RequestBody List<ScheduleStamp> stampsToRemove) {

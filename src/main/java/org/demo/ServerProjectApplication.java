@@ -3,9 +3,11 @@ package org.demo;
 
 import org.demo.config.AuthoritiesConstants;
 import org.demo.model.RfidKey;
+import org.demo.model.ScheduleStamp;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
+import org.demo.repository.ScheduleRepository;
 import org.demo.repository.TimeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
@@ -41,6 +44,9 @@ public class ServerProjectApplication implements CommandLineRunner {
 	@Autowired
 	AccountRepository accountRepository;
 
+	@Autowired
+	ScheduleRepository scheduleRepository;
+
 
 	@Autowired
 	private TimeRepository timeRepository;
@@ -57,8 +63,8 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		accountRepository.deleteAll();
-		timeRepository.deleteAll();
+//		accountRepository.deleteAll();
+//		timeRepository.deleteAll();
 
 		Account defaultUser = accountRepository.findByUserName("user");
 		Account adminUser = accountRepository.findByUserName("admin");
@@ -66,6 +72,7 @@ public class ServerProjectApplication implements CommandLineRunner {
 		Account user2 = accountRepository.findByUserName("user2");
 		Account user3 = accountRepository.findByUserName("user3");
 		Account user4 = accountRepository.findByUserName("user4");
+
 
 		//create users
 
@@ -136,33 +143,39 @@ public class ServerProjectApplication implements CommandLineRunner {
 		} else
 			log.info(user4.getFirstName() + " " + user4.getLastName() + " IS ALLREADY IN DB");
 //
+		Calendar day1 = Calendar.getInstance();
+		day1.set(2016, 4, 16, 18, 0, 0);
+		String[] ids = new String[1];
+		ids[0] = user2.getId();
+		ScheduleStamp newStamp = new ScheduleStamp(Calendar.getInstance().getTimeInMillis(), day1.getTimeInMillis(), ids);
+		scheduleRepository.save(newStamp);
 //		//generate timestamps for usersers
-		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+//		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
+//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+//		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
+//		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
+//		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+////
+////		//add stamps
 //
-//		//add stamps
-
-		timeRepository.save(calsA);
-		timeRepository.save(cals1);
-		timeRepository.save(cals2);
-		timeRepository.save(cals3);
-		timeRepository.save(cals4);
-
-
-		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
-		//db.getCollection('TimeStamps').find({"rfidKey._id":"34915AEC"}).sort({date:-1}).limit(1)
-		Query query = new Query();
-		query.limit(1);
-		query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
-
-		TimeStamp got = mongoOperations.findOne(query, TimeStamp.class);
-
-
-
-		log.info("Lucifer Morningstars last timestamp: "+got);
+//		timeRepository.save(calsA);
+//		timeRepository.save(cals1);
+//		timeRepository.save(cals2);
+//		timeRepository.save(cals3);
+//		timeRepository.save(cals4);
+//
+//
+//		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
+//		//db.getCollection('TimeStamps').find({"rfidKey._id":"34915AEC"}).sort({date:-1}).limit(1)
+//		Query query = new Query();
+//		query.limit(1);
+//		query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
+//
+//		TimeStamp got = mongoOperations.findOne(query, TimeStamp.class);
+//
+//
+//
+//		log.info("Lucifer Morningstars last timestamp: "+got);
 
 
 
@@ -191,32 +204,32 @@ public class ServerProjectApplication implements CommandLineRunner {
 		//end of runner
 	}
 
-	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
-		Random rnd = new Random();
-		ArrayList<TimeStamp> cals = new ArrayList<>();
-		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-		int rand = rnd.nextInt(3);
-
-		for (int i = 0; i < 30; i++) {
-
-			rand = rnd.nextInt(3);
-			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
-
-//			log.info("cal " + sdf.format(inCal.getTime()));
-			cals.add(new TimeStamp(inCal, true, rfidKey));
-			log.info("inCAl "+inCal.getTime());
-
-			rand = rnd.nextInt(3);
-//			log.info("rand22 " + rand);
-			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
-			cals.add(new TimeStamp(outCal, false, rfidKey));
-
-			log.info("inCAl "+outCal.getTime());
-		}
-		log.info("rfid " + rfidKey);
-		return cals;
-	}
+//	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
+//		Random rnd = new Random();
+//		ArrayList<TimeStamp> cals = new ArrayList<>();
+//		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//
+//		int rand = rnd.nextInt(3);
+//
+//		for (int i = 0; i < 30; i++) {
+//
+//			rand = rnd.nextInt(3);
+//			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
+//
+////			log.info("cal " + sdf.format(inCal.getTime()));
+//			cals.add(new TimeStamp(inCal, true, rfidKey));
+//			log.info("inCAl "+inCal.getTime());
+//
+//			rand = rnd.nextInt(3);
+////			log.info("rand22 " + rand);
+//			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
+//			cals.add(new TimeStamp(outCal, false, rfidKey));
+//
+//			log.info("inCAl "+outCal.getTime());
+//		}
+//		log.info("rfid " + rfidKey);
+//		return cals;
+//	}
 
 }

@@ -13,14 +13,16 @@ import java.util.List;
  */
 public interface AccountRepositoryCustom {
 
-    public Account findUserByRfid(RfidKey rfidKey);
+    Account findUserByRfid(RfidKey rfidKey);
 
-    public List<Account> findByRole(List<GrantedAuthority> authorityList);
+    List<Account> findByRole(List<GrantedAuthority> authorityList);
 
-    public Account findByUserName(String userName);
+    Account findByUserName(String userName);
 
-    public Account findByName(String firstName, String lastName);
+    Account findByName(String firstName, String lastName);
 
-    public List<Account> findDisabledUsers(String status);
+    List<Account> findDisabledUsers(String status);
+
+//    boolean existingUser(String userName);
 
 }

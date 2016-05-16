@@ -26,11 +26,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ResponseEntity<List<ScheduleStamp>> getBetweenSchedule(long from, long to, String id) {
         List<ScheduleStamp> userList = scheduleRepository.getBetweenQuery(from, to, id);
         if(userList != null) {
-
-        return new ResponseEntity<List<ScheduleStamp>>(userList, HttpStatus.OK);
-
+            return new ResponseEntity<List<ScheduleStamp>>(userList, HttpStatus.OK);
         }
-
         return new ResponseEntity<List<ScheduleStamp>>(HttpStatus.NOT_FOUND);
     }
 

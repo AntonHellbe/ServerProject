@@ -1,5 +1,9 @@
 package org.demo.repository;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import org.bson.types.ObjectId;
 import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.RfidKey;
 import org.demo.model.ScheduleStamp;
@@ -7,6 +11,7 @@ import org.demo.model.TimeStamp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -46,5 +51,26 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
 //	    return  got;
 	    return mongoOperations.find(query(where("date.time").gte(androidBetweenQuery.getFrom()).lte(androidBetweenQuery.getTo()).and("rfidKey").is(androidBetweenQuery.getId())), TimeStamp.class);
 
+    }
+
+    @Override
+    public List<TimeStamp> stateCheck(TimeStamp timeStamp) {
+//      BasicDBObject query = new BasicDBObject();
+//      return mongoOperations.find(query.)
+//        BasicDBObject query = new BasicDBObject();
+        Query query = new Query();
+//         query.with("date.time", -1).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
+        query.limit(1);
+        query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
+
+        List<TimeStamp> got = mongoOperations.find(query, TimeStamp.class);
+//        query.put("date.time", -1);
+//        DBCursor dbCursor = mongoOperations.getCollection("timestamps").find().limit(1).sort(query);
+//
+//        query(Criteria.where("rfidKey").is(new RfidKey("34915AEC")));
+//      while(dbCursor.hasNext()) {
+//          System.out.println(dbCursor.next().);
+//      }
+        return got;
     }
 }

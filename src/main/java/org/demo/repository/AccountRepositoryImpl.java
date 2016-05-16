@@ -20,7 +20,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     private MongoOperations mongoOperations;
 
     public Account findUserByRfid(RfidKey rfidKey) {
-        return mongoOperations.findOne(query(where("rfidKey").is(rfidKey)), Account.class);
+        return mongoOperations.findOne(query(where("rfidKey._id").is(rfidKey.getId())), Account.class);
     }
 
     public List<Account> findByRole(List<GrantedAuthority> authorityList){
@@ -41,6 +41,11 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         return mongoOperations.find(query(where("isEnabled").is(false)), Account.class);
 
     }
+
+//    @Override
+//    public boolean existingUser(String userName) {
+//        return mongoOperations.findOne(query(where("userName").equals(userName)), boolean.class);
+//    }
 
 
 }
