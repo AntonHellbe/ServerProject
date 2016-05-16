@@ -1,20 +1,14 @@
 package org.demo.controller;
 
-import org.demo.model.RfidKey;
 import org.demo.model.security.Account;
 import org.demo.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Anton on 2016-04-07.
@@ -30,6 +24,7 @@ public class AccountController {
 
     @Autowired
     AccountService userService;
+
 
 	private static final Logger log = LoggerFactory.getLogger(AccountController.class);
 
@@ -60,10 +55,11 @@ public class AccountController {
      * @return the updated user
      **/
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) {
+    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) throws InterruptedException {
 	    log.info("updateing user "+updatedAccount);
 
-        return userService.updateUser(updatedAccount);
+
+	    return userService.updateUser(updatedAccount);
     }
 
     /**

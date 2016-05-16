@@ -1,7 +1,11 @@
 package org.demo.service;
 
 import org.demo.config.UserNameGenerator;
+import org.demo.controller.ws.WsController;
 import org.demo.model.security.Account;
+import org.demo.model.ws.AffectedArea;
+import org.demo.model.ws.CrudType;
+import org.demo.model.ws.WsAnswer;
 import org.demo.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +32,10 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private AccountRepository accountRepository;
+
+	@Autowired
+	WsController wsCtrl;
+
 
 	@Autowired
 	UserNameGenerator userNameGenerator;
@@ -61,6 +69,12 @@ public class AccountServiceImpl implements AccountService {
 	public ResponseEntity<Account> updateUser(Account updatedAccount) {
 		if (updatedAccount != null) {
 			accountRepository.save(updatedAccount);
+
+			//do ws update
+			WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
+			wsanswer.setPayload(updatedAccount);
+			wsCtrl.serverInformClients(wsanswer);
+
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);

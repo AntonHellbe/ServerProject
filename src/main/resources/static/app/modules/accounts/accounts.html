@@ -1,9 +1,10 @@
 <div class="md-padding" flex layout-sm="column">
+
+
     <md-card>
 
         <md-card-content>
             <h2 class="md-title">Content from: accounts page</h2>
-
 
             <md-button class="md-raised" ng-click="vm.getAll()">update list of users</md-button>
 
@@ -92,7 +93,7 @@
                                 </md-checkbox>
                             </div>
                         </fieldset>
-                        <md-button class="md-raised" ng-click="vm.updateUser(user)">Updater</md-button>
+                        <md-button class="md-raised" ng-click="vm.updateUser(user, $index)">Updater</md-button>
                         <md-button class="md-raised md-warn" ng-click="vm.deleteUser(user)">delete</md-button>
                     </form>
                 </md-card-content>

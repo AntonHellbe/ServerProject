@@ -1,0 +1,16 @@
+.fixedMenu{
+    position:fixed !important
+}
+
+.floatingToast{
+    position:fixed !important;
+    width: 50%;
+    height: 50pt;
+    right: 30px;
+    background-color: red;
+}
+
+/*._md-center {*/
+    /*left: 50%;*/
+    /*transform: translate3d(-50%, 0, 0);*/
+/*}*/

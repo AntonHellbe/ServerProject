@@ -13,7 +13,7 @@
         .module('accounts')
         .controller('AccountsCtrl', Accounts);
 
-    Accounts.$inject = ['AccountsService', '$q'];
+    Accounts.$inject = ['AccountsService', '$q','WebsocketService','$log','$filter'];
 
     /*
      * recommend
@@ -21,13 +21,41 @@
      * and bindable members up top.
      */
 
-    function Accounts(AccountsService, $q) {
+    function Accounts(AccountsService,$q,WebsocketService,$log,$filter) {
         /*jshint validthis: true */
         var vm = this;
 
         //vm.authorities = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}];
         //roles list
         vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}, {authority: "ROLE_PI"}];
+	    vm.allusers=[];
+
+	    vm.updateUserId="";
+	    vm.updateUserIdx=-1;
+
+	    WebsocketService.receive().then(null, null, function(wsUpdate) {
+		    $log.info("current updateUserId: "+vm.updateUserId);
+		    $log.info("ws updated id: "+wsUpdate.affectedId);
+		    $log.info("ws got "+JSON.stringify(wsUpdate));
+
+		    if(vm.updateUserId == wsUpdate.affectedId) {
+			    $log.info("I updated this user");
+			    $log.info("idx "+vm.updateUserIdx);
+
+		    }
+		    else {
+			    $log.info("Got update from ws, NOT me");
+			    $log.info("updated user " +wsUpdate.payload.firstName );
+			    var found =$filter('filter')(vm.allusers, {id: wsUpdate.affectedId})[0];
+			    $log.info("found user " +found.firstName);
+			    var idx = vm.allusers.indexOf(found);
+			    vm.allusers.splice(idx, 1);
+			    vm.allusers.splice(idx, 0, wsUpdate.payload);
+		    }
+
+		    vm.updateUserId="";
+		    vm.updateUserIdx=-1;
+	    });
 
         /**
          * default get all users
@@ -101,17 +129,26 @@
 
 
         //update user
-        vm.updateUser = function (user) {
+        vm.updateUser = function (user,index) {
+	        $log.info("updateing " + JSON.stringify(user));
+	        //$log.info("updateing idx: " + index);
+
+	        vm.updateUserId =user.id;
+	        vm.updateUserIdx =index;
 
             if (user.rfidKey != undefined) {
                 if (user.rfidKey.enabled == undefined) {
-                    user.rfidKey.enabled = true;
+                    user.rfidKey.enabled = false;
                 }
             }
             AccountsService.update(user)
                 .$promise.then(
                 function (success) {
-                    console.log("Successfuly updated");
+	                $log.info("update success");
+	                $log.info("answer "+JSON.stringify(success));
+
+	                $log.info("updateing idx: " + index);
+
                 },
                 function (error) {
                     alert("Failed " + JSON.stringify(error));

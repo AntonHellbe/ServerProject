@@ -31,7 +31,7 @@
 
     }
 
-    runBlock.$inject = ['$state','$rootScope', '$http'];
+    runBlock.$inject = ['$state','$rootScope', '$http','$document'];
 
     //You have to have $state before $rootScope otherwise $on wont work!!!
     function runBlock($state,$rootScope) {

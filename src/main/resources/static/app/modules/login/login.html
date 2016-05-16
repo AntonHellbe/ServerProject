@@ -22,26 +22,20 @@
 				</div>
 				<md-button class="md-raised" type="submit">Login</md-button>
 			</form>
-
-			<!--<form role="form" ng-submit="vm.login()">-->
-			<!--<div class="form-group">-->
-			<!--<label for="username">Username:</label>-->
-			<!--<input type="text"-->
-			<!--class="form-control" id="username" name="username"-->
-			<!--ng-model="vm.credentials.username"/>-->
-			<!--</div>-->
-			<!--<div class="form-group">-->
-			<!--<label for="password">Password:</label>-->
-			<!--<input type="password"-->
-			<!--class="form-control" id="password" name="password"-->
-			<!--ng-model="vm.credentials.password"/>-->
-			<!--</div>-->
-			<!--<button type="submit" class="btn btn-primary">Submit</button>-->
-			<!--</form>-->
 			<br>
 			<br>
 			<hr>
-			<div ng-hide="true">
+			<div ng-hide="false">
+                <md-input-container>
+                    <label>ws text</label>
+                    <input ng-model="vm.wstext.name">
+                </md-input-container>
+                <md-button class="md-raised" ng-click="vm.wsSend()">test ws</md-button>
+                <md-button class="md-raised" ng-click="vm.wsdis()">disconnect ws</md-button>
+                <md-button class="md-raised" ng-click="vm.wscon()">connect ws</md-button>
+
+                <div>{{vm.wsGot}}</div>
+
 				<div>creds</div>
 				<div>{{vm.credentials}}</div>
 				<br>

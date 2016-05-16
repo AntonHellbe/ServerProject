@@ -43,6 +43,8 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						"/angular-1.5.3/angular-route.js"
 						, "/app/**"
 						, "/src/**"
+						//websocket
+						, "/wsservice/**"
 				).permitAll()
 					.anyRequest()
 					.authenticated()

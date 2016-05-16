@@ -13,7 +13,7 @@
         .module('login')
         .controller('LoginCtrl', Login);
 
-    Login.$inject = ['$rootScope', '$http', '$cookies', 'LoginService', '$state'];
+    Login.$inject = ['$rootScope', '$http', '$cookies', 'LoginService', '$state','WebsocketService','$log'];
 
     /*
      * recommend
@@ -21,16 +21,36 @@
      * and bindable members up top.
      */
 
-    function Login($rootScope, $http, $cookies, LoginService, $state) {
+    function Login($rootScope, $http, $cookies, LoginService, $state,WebsocketService,$log) {
+
+	    /*jshint validthis: true */
+	    var vm = this;
 
         //TODO change to correct ip
         var ip = $rootScope.ip;
 
-        /*jshint validthis: true */
-        var vm = this;
 
         vm.credentials = {};
         vm.loginData = {};
+
+	    vm.wsGot=[];
+
+	    vm.wsSend=function() {
+		    WebsocketService.send(vm.wstext);
+		    vm.wstext = "";
+	    };
+
+	    vm.wsdis = function () {
+		    WebsocketService.disconnect();
+	    };
+
+	    vm.wscon = function () {
+		    WebsocketService.connect();
+	    };
+
+	    WebsocketService.receive().then(null, null, function(message) {
+		    vm.wsGot.push(message);
+	    });
 
         //todo move own service
         //do auth service
