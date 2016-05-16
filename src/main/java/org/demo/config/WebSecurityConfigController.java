@@ -29,7 +29,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 				//Alla ska nå denna
 				.antMatchers("/api/users/{id}").permitAll()
 				//Bara någon med ADMIN kan nå dessa (Förutom den ovan)
-				.antMatchers("/api/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
+				.antMatchers("/api/users","/api/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
 				//Bara någon med ADMIN kan nå dessa
 				.antMatchers("/api/time/{id}/{stampId}").hasAuthority(AuthoritiesConstants.ADMIN)
 				.antMatchers(

@@ -18,7 +18,8 @@ public class UserNameGenerator {
 	}
 
 	public String userNameGenerator(String firstName, String lastName) {
-
+        System.out.println(firstName);
+        System.out.println(lastName);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lastName.length() && i < 3; i++) {
             sb.append(lastName.charAt(i));

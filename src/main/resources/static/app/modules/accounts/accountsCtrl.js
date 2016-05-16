@@ -105,7 +105,7 @@
 
             if (user.rfidKey != undefined) {
                 if (user.rfidKey.enabled == undefined) {
-                    user.rfidKey.enabled = false;
+                    user.rfidKey.enabled = true;
                 }
             }
             AccountsService.update(user)
