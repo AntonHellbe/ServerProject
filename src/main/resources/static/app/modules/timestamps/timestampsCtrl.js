@@ -82,12 +82,7 @@
 								vm.selectedUser.stamps.splice(idx, 0, wsUpdate.payload);
 							}
 							else {
-								TODO
-								show
-								error
-								msg
-								about
-								update
+								// TODO show error message
 								//$log.info("didnt find user " + wsUpdate.affectedId);
 							}
 							break;
