@@ -1,7 +1,7 @@
 package org.demo.controller.ws;
 
 import org.demo.model.ws.WsAnswer;
-import org.demo.model.ws.WsMessage;
+import org.demo.model.ws.WsMessage1;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class WsController {
 
 	@MessageMapping("/wsservice")
 	@SendTo("/ws/wsanswer")
-	public WsAnswer webHandleMessage(WsMessage message) throws InterruptedException {
+	public WsAnswer webHandleMessage(WsMessage1 message) throws InterruptedException {
 		log.info("Got Ws message " + message.toString());
 		return new WsAnswer("Hello, " + message.getName() + "!");
 	}
