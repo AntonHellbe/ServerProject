@@ -44,7 +44,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						, "/app/**"
 						, "/src/**"
 						//websocket
-						, "/wsservice/**"
+//						, "/wsservice/**"
 				).permitAll()
 					.anyRequest()
 					.authenticated()

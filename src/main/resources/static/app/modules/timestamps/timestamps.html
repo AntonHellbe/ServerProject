@@ -1,5 +1,10 @@
 <div class="md-padding" flex layout-sm="column">
-    <md-card ng-repeat="user in vm.users">
+
+    <md-input-container class="md-block" flex-gt-sm>
+        <label>Search</label>
+        <input ng-model="searchText">
+    </md-input-container>
+    <md-card ng-repeat="user in vm.users | filter:searchText">
         <md-card-header>
             <md-card-header-text ng-click="user.showBody=vm.getStamps(user,false)">
                 <span class="md-title">{{user.firstName}} {{user.lastName}}</span>
