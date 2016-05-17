@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Map;
 
 /**
  * Created by Robin_2 on 11/04/2016.
@@ -118,10 +117,10 @@ public class TimeServiceImpl implements TimeService {
 	public ResponseEntity<TimeStamp> updateTime(String id, String stampId, TimeStamp updateStamp) {
 		TimeStamp timeToUpdate = timeRepository.findOne(stampId);
 		Calendar cal = new GregorianCalendar();
-		if (updateStamp.getTime() != 0) {
-			long date = updateStamp.getTime();
+		if (updateStamp.getDate() != 0) {
+			long date = updateStamp.getDate();
 			cal.setTimeInMillis(date);
-			timeToUpdate.setTime(date);
+			timeToUpdate.setDate(date);
 		}
 			timeToUpdate.setCheckIn(updateStamp.getCheckIn());
 

@@ -4,11 +4,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
-import com.fasterxml.jackson.databind.ser.std.DateSerializer;
-import org.springframework.data.annotation.Id;
-
 /**
  * Created by Anton on 2016-04-07.
  */
@@ -23,7 +18,7 @@ public class Stamp implements Serializable{
 //	protected Calendar date;
 
 
-    protected long time;
+    protected long date;
 
     //True = inCheckning
     //False = utCheckning
@@ -41,7 +36,7 @@ public class Stamp implements Serializable{
 
      **/
     public Stamp(long time, boolean checkIn) {
-        this.time = time;
+        this.date = time;
         this.checkIn = checkIn;
     }
     /**
@@ -60,15 +55,15 @@ public class Stamp implements Serializable{
         this.checkIn = checkIn;
     }
 
-    public long getTime() {
-        return time;
-    }
+	public long getDate() {
+		return date;
+	}
 
-    public void setTime(long time) {
-        this.time = time;
-    }
+	public void setDate(long date) {
+		this.date = date;
+	}
 
-    /**
+	/**
      * Formats the information of the Stamp to a String
      * @return the formatted information
      **/
@@ -79,7 +74,7 @@ public class Stamp implements Serializable{
     public String toString() {
         SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(this.time);
+        cal.setTimeInMillis(this.date);
 
         return "Stamp{" +
                 "Time=" + date_format.format(cal.getTime()) +

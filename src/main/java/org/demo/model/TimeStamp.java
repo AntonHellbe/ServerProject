@@ -6,8 +6,6 @@ import org.demo.deserialize.RfidKeyDeserializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Calendar;
-
 /**
  * Created by Anton on 2016-04-07.
  */
@@ -101,13 +99,13 @@ public class TimeStamp extends Stamp {
         super.setCheckIn(checkIn);
     }
 
-    public void setTime(long time) {
-        super.setTime(time);
-    }
-
-    public long getTime() {
-        return super.getTime();
-    }
+//    public void setTime(long time) {
+//        super.setTime(time);
+//    }
+//
+//    public long getTime() {
+//        return super.getTime();
+//    }
 	/**
 	 * Formats the information in the TimeStamp to a String
 	 * @return the formatted information

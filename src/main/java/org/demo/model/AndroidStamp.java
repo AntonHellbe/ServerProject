@@ -1,7 +1,6 @@
 package org.demo.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 /**
  * Created by Anton on 2016-04-07.
@@ -17,12 +16,12 @@ public class AndroidStamp extends Stamp implements Serializable{
      * Constructor which creates a new androidStamp
      **/
     public AndroidStamp(long time, boolean checkIn) {
-        this.time = time;
+        this.date = time;
         this.checkIn = checkIn;
     }
 
 	public AndroidStamp(TimeStamp timeStamp) {
-		this.time = timeStamp.getTime();
+		this.date = timeStamp.getDate();
 		this.checkIn = timeStamp.getCheckIn();
 	}
 
@@ -31,7 +30,7 @@ public class AndroidStamp extends Stamp implements Serializable{
 
      **/
     public void setTime(Long time) {
-        this.time = time;
+        this.date = time;
     }
 
     /**
@@ -39,7 +38,7 @@ public class AndroidStamp extends Stamp implements Serializable{
      * @return the date of the stamp
      **/
     public long getTime() {
-        return this.time;
+        return this.date;
     }
 
     /**

@@ -4,7 +4,6 @@ import org.demo.model.security.Account;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Created by seb on 2016-04-11.
@@ -19,6 +18,7 @@ public class PiStamp extends Stamp implements Serializable {
 
 	private final String lastName;
 	private final String firstName;
+	private final long time;
 
 
 	/**
@@ -27,6 +27,7 @@ public class PiStamp extends Stamp implements Serializable {
 	 * @param user
 	 */
 	public PiStamp(boolean checkIn, Account user) {
+		this.date = Calendar.getInstance().getTimeInMillis();
 		this.time = Calendar.getInstance().getTimeInMillis();
 		this.checkIn = checkIn;
 		this.firstName =user.getFirstName();
