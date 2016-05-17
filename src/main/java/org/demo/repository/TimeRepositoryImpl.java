@@ -54,16 +54,16 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
     }
 
     @Override
-    public List<TimeStamp> stateCheck(TimeStamp timeStamp) {
+    public boolean stateCheck(RfidKey rfidKey) {
 //      BasicDBObject query = new BasicDBObject();
 //      return mongoOperations.find(query.)
 //        BasicDBObject query = new BasicDBObject();
         Query query = new Query();
 //         query.with("date.time", -1).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
         query.limit(1);
-        query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
+        query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is(rfidKey.getId()));
 
-        List<TimeStamp> got = mongoOperations.find(query, TimeStamp.class);
+        TimeStamp got = mongoOperations.findOne(query, TimeStamp.class);
 //        query.put("date.time", -1);
 //        DBCursor dbCursor = mongoOperations.getCollection("timestamps").find().limit(1).sort(query);
 //
@@ -71,6 +71,6 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
 //      while(dbCursor.hasNext()) {
 //          System.out.println(dbCursor.next().);
 //      }
-        return got;
+        return got.getCheckIn();
     }
 }

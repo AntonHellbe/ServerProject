@@ -68,7 +68,17 @@ public class AccountServiceImpl implements AccountService {
 
 	public ResponseEntity<Account> updateUser(Account updatedAccount) {
 		if (updatedAccount != null) {
+			if(accountRepository.findUserByRfid(updatedAccount.getRfidKey())!=null){
+				System.out.println("here");
+				System.out.println(accountRepository.findOne(updatedAccount.getId()));
+				System.out.println(accountRepository.findUserByRfid(updatedAccount.getRfidKey()).getId());
+			if(!accountRepository.findOne(updatedAccount.getId()).equals(accountRepository.findUserByRfid(updatedAccount.getRfidKey()).getId())){
+				System.out.println("you got here!");
+				return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+			}
+			}
 			accountRepository.save(updatedAccount);
+			System.out.println("better");
 
 			//do ws update
 			WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
@@ -129,6 +139,7 @@ public class AccountServiceImpl implements AccountService {
 		accountRepository.save(newAccount);
 
 		System.out.println("saving to db " + newAccount);
+		System.out.println("RFID: " + newAccount.getRfidKey().isEnabled());
 		return new ResponseEntity<Account>(newAccount, HttpStatus.OK);
 	}
 

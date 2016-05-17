@@ -43,7 +43,7 @@ public class PiServiceImpl implements PiService {
 	@Override
 	public ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey) {
 		System.out.println("add timestamp from PI, on: " + rfidKey.getId());
-		System.out.println("Rfidkey" + rfidKey.toString());
+		System.out.println("Rfidkey " + rfidKey);
 		try {
 			log.info("getting account" + accountRepository.findUserByRfid(rfidKey));
 			Account currentAccount = accountRepository.findUserByRfid(rfidKey);
@@ -61,8 +61,7 @@ public class PiServiceImpl implements PiService {
 			}
 
 			log.info("adding stamp on user> " + currentAccount);
-
-			boolean state = timeRepository.getByRfid(rfidKey).size() % 2 == 0;
+			boolean state = !timeRepository.stateCheck(rfidKey) ;
 			TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentAccount.getRfidKey());
 			timeRepository.save(newStamp);
 			log.info("Right before the return(good one)");
