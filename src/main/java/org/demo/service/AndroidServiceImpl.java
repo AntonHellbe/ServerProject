@@ -3,6 +3,7 @@ package org.demo.service;
 import org.demo.model.*;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
+import org.demo.repository.ScheduleRepository;
 import org.demo.repository.TimeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,9 @@ public class AndroidServiceImpl implements AndroidService {
 
 	@Autowired
 	AccountRepository accountRepository;
+
+	@Autowired
+	ScheduleRepository scheduleRepository;
 
 	/**
 	 * Fetches the user with the given RFID-key, the String gets converted into an RFID-key
@@ -89,7 +93,6 @@ public class AndroidServiceImpl implements AndroidService {
 		log.info("sending to client");
 		alist.forEach(item -> log.info(item.toString()));
 
-
 		if (alist != null) {
 			return new ResponseEntity<>(alist, HttpStatus.OK);
 		} else {
@@ -103,7 +106,7 @@ public class AndroidServiceImpl implements AndroidService {
 	 * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
 	 * @return the times in the interval
 	 **/
-	public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
+	public ResponseEntity<HashMap<String, List>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
 		// TODO: 2016-04-21 :21:22 Just for logging
 		log.info("Calling get between");
 
@@ -115,11 +118,16 @@ public class AndroidServiceImpl implements AndroidService {
 		List<AndroidStamp> betweenTimes = userStamps.stream()
 				.map(AndroidStamp::new)
 				.collect(Collectors.toList());
-
-
-		if (betweenTimes != null) {
-			return new ResponseEntity<>(betweenTimes, HttpStatus.OK);
-		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		Account tempAccount = accountRepository.findUserByRfid(androidBetweenQuery.getId());
+		List<ScheduleStamp> temp = scheduleRepository.getBetweenQuery(androidBetweenQuery.getFrom(), androidBetweenQuery.getTo(), tempAccount.getId() );
+		HashMap<String, List> allTimes = new HashMap<>();
+		allTimes.put("androidstamps", betweenTimes);
+		allTimes.put("schedulestamps", temp );
+		return new ResponseEntity<HashMap<String, List>>(allTimes, HttpStatus.OK);
+//		if (betweenTimes != null) {
+//			return new ResponseEntity<>(betweenTimes, HttpStatus.OK);
+//		}
+//		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
+
 }

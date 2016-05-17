@@ -23,7 +23,7 @@ public class ScheduleController {
     ScheduleService scheduleService;
 
     @RequestMapping(value = "/between?from={from}&to={to}&id={id}", method = RequestMethod.GET)
-    public ResponseEntity<List<ScheduleStamp>> getSchedule(@PathVariable("from") long from, @PathVariable ("to") long to, @PathVariable("id") String id) {
+    public List<ScheduleStamp> getSchedule(@PathVariable("from") long from, @PathVariable ("to") long to, @PathVariable("id") String id) {
         return scheduleService.getBetweenSchedule(from, to, id);
     }
 

@@ -54,7 +54,7 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
     }
 
     @Override
-    public boolean stateCheck(RfidKey rfidKey) {
+    public TimeStamp stateCheck(RfidKey rfidKey) {
 //      BasicDBObject query = new BasicDBObject();
 //      return mongoOperations.find(query.)
 //        BasicDBObject query = new BasicDBObject();
@@ -71,6 +71,6 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
 //      while(dbCursor.hasNext()) {
 //          System.out.println(dbCursor.next().);
 //      }
-        return got.getCheckIn();
+        return got;
     }
 }

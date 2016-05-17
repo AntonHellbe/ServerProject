@@ -61,8 +61,14 @@ public class PiServiceImpl implements PiService {
 			}
 
 			log.info("adding stamp on user> " + currentAccount);
-			boolean state = !timeRepository.stateCheck(rfidKey) ;
-			TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentAccount.getRfidKey());
+			boolean state;
+			TimeStamp got = timeRepository.stateCheck(rfidKey) ;
+			if(got == null) {
+				state = true;
+			}else {
+				state = !(got.getCheckIn());
+			}
+			TimeStamp newStamp = new TimeStamp(Calendar.getInstance().getTimeInMillis(), state, currentAccount.getRfidKey());
 			timeRepository.save(newStamp);
 			log.info("Right before the return(good one)");
 			return new ResponseEntity<>(new PiStamp(newStamp.getCheckIn(), currentAccount), HttpStatus.OK);

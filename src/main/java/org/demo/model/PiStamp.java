@@ -27,8 +27,8 @@ public class PiStamp extends Stamp implements Serializable {
 	 * @param user
 	 */
 	public PiStamp(boolean checkIn, Account user) {
+		this.time = Calendar.getInstance().getTimeInMillis();
 		this.checkIn = checkIn;
-		this.date = Calendar.getInstance();
 		this.firstName =user.getFirstName();
 		this.lastName =user.getLastName();
 	}
@@ -58,7 +58,7 @@ public class PiStamp extends Stamp implements Serializable {
 		return "PiStamp{" +
 				"lastName='" + lastName + '\'' +
 				", firstName='" + firstName + '\'' +
-				", Time='" + this.getDate()+ '\'' +
+				", Time='" + this.time + '\'' +
 				", CheckIn='" + this.isCheckIn()    + '\'' +
 				'}';
 	}

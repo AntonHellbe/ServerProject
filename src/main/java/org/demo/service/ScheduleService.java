@@ -1,12 +1,8 @@
 package org.demo.service;
 
-import org.demo.model.AndroidBetweenQuery;
-import org.demo.model.RfidKey;
-import org.demo.model.ScheduleStamp;
-import org.demo.model.security.Account;
-import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
+import org.demo.model.ScheduleStamp;
+import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 /**
@@ -14,7 +10,7 @@ import java.util.List;
  */
 public interface ScheduleService {
 
-    ResponseEntity<List<ScheduleStamp>> getBetweenSchedule(long from, long to, String id);
+    List<ScheduleStamp> getBetweenSchedule(long from, long to, String id);
 
     ResponseEntity<List<ScheduleStamp>> getAll();
 

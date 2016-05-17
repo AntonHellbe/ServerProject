@@ -19,8 +19,11 @@ import org.springframework.data.annotation.Id;
  **/
 public class Stamp implements Serializable{
 
-	@JsonSerialize(using = CalendarSerializer.class)
-	protected Calendar date;
+//	@JsonSerialize(using = CalendarSerializer.class)
+//	protected Calendar date;
+
+
+    protected long time;
 
     //True = inCheckning
     //False = utCheckning
@@ -35,29 +38,12 @@ public class Stamp implements Serializable{
     /**
      *Constructor that creates a new stamp
      * @param checkIn sets the checkIn status to true/false
-     * @param date sets the date
+
      **/
-    public Stamp(Calendar date, boolean checkIn) {
-        this.date = date;
+    public Stamp(long time, boolean checkIn) {
+        this.time = time;
         this.checkIn = checkIn;
     }
-
-    /**
-     *get the date of the Stamp
-     * @return the date
-     **/
-    public Calendar getDate() {
-        return date;
-    }
-
-    /**
-     *Sets the date of the Stamp
-     * @param date the new date
-     **/
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
-
     /**
      * checks if the Stamp is true/fasle
      * @return true/false
@@ -74,17 +60,29 @@ public class Stamp implements Serializable{
         this.checkIn = checkIn;
     }
 
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     /**
      * Formats the information of the Stamp to a String
      * @return the formatted information
      **/
 
+
+
     @Override
     public String toString() {
         SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(this.time);
 
         return "Stamp{" +
-                "date=" + date_format.format(date.getTime()) +
+                "Time=" + date_format.format(cal.getTime()) +
                 ", checkIn=" + checkIn +
                 '}';
     }

@@ -24,10 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Random;
+import java.util.*;
 
 @SpringBootApplication
 public class ServerProjectApplication implements CommandLineRunner {
@@ -63,8 +60,9 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-//		accountRepository.deleteAll();
-//		timeRepository.deleteAll();
+		accountRepository.deleteAll();
+		timeRepository.deleteAll();
+		scheduleRepository.deleteAll();
 
 		Account defaultUser = accountRepository.findByUserName("user");
 		Account adminUser = accountRepository.findByUserName("admin");
@@ -142,9 +140,24 @@ public class ServerProjectApplication implements CommandLineRunner {
 			accountRepository.save(user4);
 		} else
 			log.info(user4.getFirstName() + " " + user4.getLastName() + " IS ALLREADY IN DB");
+
+
+//		TimeStamp newStamp = new TimeStamp(Long.parseLong("1462878000000"), true, new RfidKey("4B79295") );
+//		TimeStamp newStamp1 = new TimeStamp(Long.parseLong("1462856400000"), true, new RfidKey("4B79295") );
+//		TimeStamp newStamp2 = new TimeStamp(Long.parseLong("1462770000000"), true, new RfidKey("4B79295") );
+//		TimeStamp newStamp3 = new TimeStamp(Long.parseLong("1462856400000"), true, new RfidKey("4B79295") );
+//		timeRepository.save(newStamp);
+//		timeRepository.save(newStamp1);
+//		timeRepository.save(newStamp2);
+//		timeRepository.save(newStamp3);
+//		List<TimeStamp> gotAll = timeRepository.findAll();
+//		for (int i = 0; i < gotAll.size() ; i++) {
+//			gotAll.get(i).setTime(gotAll.get(i).getDate().getTimeInMillis());
+//			timeRepository.save(gotAll.get(i));
+//		}
 //
 		Calendar day1 = Calendar.getInstance();
-		day1.set(2016, 4, 16, 18, 0, 0);
+		day1.set(2016, 4, 17, 18, 0, 0);
 		String[] ids = new String[1];
 		ids[0] = user2.getId();
 		ScheduleStamp newStamp = new ScheduleStamp(Calendar.getInstance().getTimeInMillis(), day1.getTimeInMillis(), ids);

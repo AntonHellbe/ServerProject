@@ -36,12 +36,11 @@ public class TimeStamp extends Stamp {
 
     /**
      *Constructor that creates a new TimeStamp with given data
-     * @param date the date and time of the timeStamp
      * @param checkIn the state of the TimeStamp(true/false)
      * @param rfidKey The Rfid key that the Timestamp is associated with
      **/
-    public TimeStamp(Calendar date, boolean checkIn, RfidKey rfidKey) {
-        super(date, checkIn);
+    public TimeStamp(long time, boolean checkIn, RfidKey rfidKey) {
+        super(time, checkIn);
         this.rfidKey = rfidKey;
     }
     /**
@@ -80,17 +79,11 @@ public class TimeStamp extends Stamp {
      * Fetches the date of the TimeStamp
      * @return the date
      **/
-    public Calendar getDate() {
-        return super.getDate();
-    }
 
     /**
      * Sets a new date to the TimeStamp
      * @param date the new date
      **/
-    public void setDate(Calendar date) {
-        super.setDate(date);
-    }
 
     /**
      * Fetches the checkIn status of the TimeStamp
@@ -108,6 +101,13 @@ public class TimeStamp extends Stamp {
         super.setCheckIn(checkIn);
     }
 
+    public void setTime(long time) {
+        super.setTime(time);
+    }
+
+    public long getTime() {
+        return super.getTime();
+    }
 	/**
 	 * Formats the information in the TimeStamp to a String
 	 * @return the formatted information

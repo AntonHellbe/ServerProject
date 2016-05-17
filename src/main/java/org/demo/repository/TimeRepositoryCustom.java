@@ -16,5 +16,5 @@ public interface TimeRepositoryCustom {
 
     public List<TimeStamp> getBetween(AndroidBetweenQuery androidBetweenQuery);
 
-    public boolean stateCheck(RfidKey rfidKey);
+    public TimeStamp stateCheck(RfidKey rfidKey);
 }

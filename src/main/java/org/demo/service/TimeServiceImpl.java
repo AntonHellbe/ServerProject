@@ -42,7 +42,7 @@ public class TimeServiceImpl implements TimeService {
 		ArrayList<TimeStamp> temp = new ArrayList<>(timeRepository.getByRfid(currentAccount.getRfidKey()));
 		boolean state = temp.size() % 2 == 0;
 
-		TimeStamp newStamp = new TimeStamp(Calendar.getInstance(), state, currentAccount.getRfidKey());
+		TimeStamp newStamp = new TimeStamp(Calendar.getInstance().getTimeInMillis(), state, currentAccount.getRfidKey());
 
 		// TODO: 2016-05-10 :21:05 WAT!!!
 //        if(state) {
@@ -114,10 +114,10 @@ public class TimeServiceImpl implements TimeService {
 	public ResponseEntity<TimeStamp> updateTime(String id, String stampId, TimeStamp updateStamp) {
 		TimeStamp timeToUpdate = timeRepository.findOne(stampId);
 		Calendar cal = new GregorianCalendar();
-		if (updateStamp.getDate()!= null) {
-			long date = updateStamp.getDate().getTimeInMillis();
+		if (updateStamp.getTime() != 0) {
+			long date = updateStamp.getTime();
 			cal.setTimeInMillis(date);
-			timeToUpdate.setDate(cal);
+			timeToUpdate.setTime(date);
 		}
 			timeToUpdate.setCheckIn(updateStamp.getCheckIn());
 

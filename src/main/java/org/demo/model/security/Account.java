@@ -28,6 +28,7 @@ public class Account implements UserDetails ,Serializable{
 
 	@Id
 	private String id;
+
 	private String username;
 	private String password;
 	private String firstName;
@@ -116,7 +117,6 @@ public class Account implements UserDetails ,Serializable{
 
 		return authorities;
 	}
-
 
 	public String getPassword()	 {
 		return password;
