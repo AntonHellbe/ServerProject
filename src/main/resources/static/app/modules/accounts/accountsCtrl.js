@@ -13,7 +13,8 @@
 		.module('accounts')
 		.controller('AccountsCtrl', Accounts);
 
-	Accounts.$inject = ['AccountsService', 'WebsocketService', '$log', '$filter', '$rootScope'];
+	//Accounts.$inject = ['AccountsService', 'WebsocketService', '$log', '$filter', '$rootScope'];
+	Accounts.$inject = ['WebsocketService', '$log', '$filter', '$rootScope'];
 
 	/*
 	 * recommend
@@ -21,7 +22,8 @@
 	 * and bindable members up top.
 	 */
 
-	function Accounts(AccountsService, WebsocketService, $log, $filter, $rootScope) {
+	//function Accounts(AccountsService, WebsocketService, $log, $filter, $rootScope) {
+	function Accounts( WebsocketService, $log, $filter, $rootScope) {
 		/*jshint validthis: true */
 		var vm = this;
 
@@ -35,6 +37,13 @@
 
 		WebsocketService.receive().then(null, null, function (wsUpdate) {
 
+			if(wsUpdate.error != undefined) {
+				$log.info("Error " + wsUpdate.error);
+				return;
+			}
+			else {
+				$log.info("NO Error " + wsUpdate.error);
+			}
 			//$log.info("got update from server: " + JSON.stringify(wsUpdate));
 
 			//Check that is account answer
@@ -84,27 +93,7 @@
 
 				}
 			}
-			//$log.info("current updateUserId: "+vm.updateUserId);
-			//$log.info("ws updated id: "+wsUpdate.affectedId);
-			//$log.info("ws got "+JSON.stringify(wsUpdate));
-			//
-			//if(vm.updateUserId == wsUpdate.affectedId) {
-			//   $log.info("I updated this user");
-			//   $log.info("idx "+vm.updateUserIdx);
-			//
-			//}
-			//else {
-			//   $log.info("Got update from ws, NOT me");
-			//   $log.info("updated user " +wsUpdate.payload.firstName );
-			//   var found =$filter('filter')(vm.allusers, {id: wsUpdate.affectedId})[0];
-			//   $log.info("found user " +found.firstName);
-			//   var idx = vm.allusers.indexOf(found);
-			//   vm.allusers.splice(idx, 1);
-			//   vm.allusers.splice(idx, 0, wsUpdate.payload);
-			//}
-			//
-			//vm.updateUserId="";
-			//vm.updateUserIdx=-1;
+
 		});
 
 		/**

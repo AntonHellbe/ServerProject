@@ -164,19 +164,19 @@ public class ServerProjectApplication implements CommandLineRunner {
 //		ScheduleStamp newStamp = new ScheduleStamp(Calendar.getInstance().getTimeInMillis(), day1.getTimeInMillis(), ids);
 //		scheduleRepository.save(newStamp);
 //		//generate timestamps for usersers
-//		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-//		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-//		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-//		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
+		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
+		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
+		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
 //
 //		//add stamps
 
-//		timeRepository.save(calsA);
-//		timeRepository.save(cals1);
-//		timeRepository.save(cals2);
-//		timeRepository.save(cals3);
-//		timeRepository.save(cals4);
+		timeRepository.save(calsA);
+		timeRepository.save(cals1);
+		timeRepository.save(cals2);
+		timeRepository.save(cals3);
+		timeRepository.save(cals4);
 
 
 		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests

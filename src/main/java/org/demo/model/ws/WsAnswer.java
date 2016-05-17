@@ -18,6 +18,7 @@ public class WsAnswer {
 
 	Object payload;
 	Object[] payloadList;
+	private String error;
 
 	public WsAnswer() {
 	}
@@ -101,5 +102,9 @@ public class WsAnswer {
 				", area=" + area +
 				", token='" + token + '\'' +
 				'}';
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 }

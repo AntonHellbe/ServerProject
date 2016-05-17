@@ -1,6 +1,8 @@
 package org.demo.controller.ws;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.demo.model.ScheduleStamp;
+import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
 import org.demo.model.ws.WsAnswer;
 import org.demo.model.ws.WsMessage;
@@ -16,6 +18,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,11 +77,68 @@ public class WsController {
 	}
 
 	private WsAnswer doScheduleAction(ScheduleService service, WsMessage message, WsAnswer answer) {
-		return null;
+		if (message.getCrudType() != null) {
+			switch (message.getCrudType()) {
+
+				case ADD:
+					break;
+				case UPDATE:
+					break;
+				case DELETE:
+					break;
+				case GET:
+					break;
+				case ALL:
+					ResponseEntity<List<ScheduleStamp>> list = this.scheduleService.getAll();
+					answer.setPayloadList(list.getBody().toArray());
+					break;
+			}
+		} else {
+			answer.setError("Missing CrudType!");
+		}
+		return answer;
 	}
 
 	private WsAnswer doTimeAction(TimeService service, WsMessage message, WsAnswer answer) {
-		return null;
+		TimeStamp stamp;
+		if (message.getCrudType() != null) {
+			switch (message.getCrudType()) {
+
+				case ADD:
+					log.info("Add timestamp for " + message.getAffectedId());
+					stamp = mapper.convertValue(message.getPayload(), TimeStamp.class);
+					ResponseEntity<TimeStamp> addedStamp = service.addTime(message.getAffectedId(), stamp);
+					answer.setPayload(addedStamp.getBody());
+					break;
+				case UPDATE:
+					log.info("Update timestamp for " + message.getAffectedId());
+					stamp = mapper.convertValue(message.getPayload(), TimeStamp.class);
+					ResponseEntity<TimeStamp> updateStamp = service.updateTime(message.getAffectedId(), stamp.getId(), stamp);
+					answer.setPayload(updateStamp.getBody());
+
+					break;
+				case DELETE:
+					log.info("delete timestamp for " + message.getAffectedId());
+					stamp = mapper.convertValue(message.getPayload(), TimeStamp.class);
+					ResponseEntity<TimeStamp> deletedStamp = service.deleteTime(message.getAffectedId(), stamp.getId());
+					answer.setPayload(deletedStamp.getBody());
+
+					break;
+				case GET:
+					break;
+				case ALL:
+					ResponseEntity<ArrayList<TimeStamp>> list = this.timeService.getAll(message.getAffectedId());
+					if (list == null) {
+						answer.setError("List is empty!");
+						return answer;
+					}
+					answer.setPayloadList(list.getBody().toArray());
+					break;
+			}
+		} else {
+			answer.setError("Missing CrudType!");
+		}
+		return answer;
 	}
 
 	private WsAnswer doAccountAction(AccountService service, WsMessage message, WsAnswer answer) {
@@ -91,20 +151,19 @@ public class WsController {
 					Account addAccount = null;
 					addAccount = mapper.convertValue(message.getPayload(), Account.class);
 					if (addAccount != null) {
-						log.info("adding account " + addAccount );
+						log.info("adding account " + addAccount);
 						ResponseEntity<Account> serviceUser = service.addUser(addAccount);
 
 						answer.setPayload(serviceUser.getBody());
 					} else {
 						// TODO: 2016-05-17 :21:02 Fix error management
 						log.info("Failed to save " + message);
+						answer.setError("Failed to save " + message);
 					}
-
 					break;
 				case UPDATE:
 
-					Account updatedAccount = null;
-					updatedAccount = mapper.convertValue(message.getPayload(), Account.class);
+					Account updatedAccount = mapper.convertValue(message.getPayload(), Account.class);
 
 					if (updatedAccount != null) {
 						log.info("saving updated account " + updatedAccount);
@@ -119,7 +178,7 @@ public class WsController {
 					break;
 				case DELETE:
 					log.info("delete user " + message.getAffectedId());
-					ResponseEntity<Account> serviceUser = service.removeUser(message.getAffectedId());
+					service.removeUser(message.getAffectedId());
 					break;
 				case GET:
 					break;
@@ -128,10 +187,18 @@ public class WsController {
 					answer.setPayloadList(list.getBody().toArray());
 					break;
 			}
+		} else {
+			answer.setError("Missing CrudType!");
 		}
 		return answer;
 	}
 
+	/**
+	 * Send updates from server with out client.
+	 * Can be used to inform about server restarts etc.
+	 *
+	 * @param update the update message.
+	 */
 	public void serverInformClients(WsAnswer update) {
 		this.template.convertAndSend("/ws/wsanswer", update);
 	}
