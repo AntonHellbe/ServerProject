@@ -76,6 +76,10 @@ public class AccountServiceImpl implements AccountService {
 			if (temp.getRfidKey().equals(updatedAccount.getRfidKey())) {
 				accountRepository.save(updatedAccount);
 				System.out.println("Account updated");
+				//do ws update
+				WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
+				wsanswer.setPayload(updatedAccount);
+				wsCtrl.serverInformClients(wsanswer);
 				return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 			}
 			if (accountRepository.findUserByRfid(updatedAccount.getRfidKey()) != null) {
@@ -84,6 +88,13 @@ public class AccountServiceImpl implements AccountService {
 			}
 			System.out.println("account UPDATED!");
 			accountRepository.save(updatedAccount);
+			System.out.println("better");
+
+			//do ws update
+			WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
+			wsanswer.setPayload(updatedAccount);
+			wsCtrl.serverInformClients(wsanswer);
+
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 		}
 			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
