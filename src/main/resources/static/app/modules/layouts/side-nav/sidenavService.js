@@ -46,6 +46,11 @@
 							name: 'Android'
 					},
 			    
+					{
+						link: 'chat',
+							name: 'Chat'
+					},
+			    
 		  	];
 
 			return {

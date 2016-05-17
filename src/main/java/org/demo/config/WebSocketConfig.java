@@ -53,6 +53,7 @@ public class WebSocketConfig extends WebSocketMessageBrokerConfigurationSupport 
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		System.out.println("Register " + registry.toString());
 		registry.addEndpoint("/wsservice").withSockJS();
+		registry.addEndpoint("/wschat").withSockJS();
 	}
 
 	@Override

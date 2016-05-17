@@ -55,6 +55,11 @@ module.exports = function (config) {
 			'app/modules/android/androidRoute.js',
 			'app/modules/android/androidService.js',
 			'app/modules/android/android-test.js',
+			'app/modules/chat/chatModule.js',
+			'app/modules/chat/chatCtrl.js',
+			'app/modules/chat/chatRoute.js',
+			'app/modules/chat/chatService.js',
+			'app/modules/chat/chat-test.js',
 		],
 
 		// Test results reporter to use

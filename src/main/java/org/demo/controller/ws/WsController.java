@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.demo.model.ScheduleStamp;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
+import org.demo.model.ws.ChatAnswer;
+import org.demo.model.ws.ChatMessage;
 import org.demo.model.ws.WsAnswer;
 import org.demo.model.ws.WsMessage;
 import org.demo.service.AccountService;
@@ -40,6 +42,15 @@ public class WsController {
 	ObjectMapper mapper = new ObjectMapper();
 	@Autowired
 	private SimpMessagingTemplate template;
+
+	@MessageMapping("/wschat")
+	@SendTo("/ws/wschatanswer")
+	public ChatAnswer webChatMessage(ChatMessage message) throws InterruptedException {
+
+		log.info("got chat message "+message);
+		return new ChatAnswer(message);
+	}
+
 
 	@MessageMapping("/wsservice")
 	@SendTo("/ws/wsanswer")

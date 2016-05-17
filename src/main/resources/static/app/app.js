@@ -13,7 +13,7 @@
 	angular.module('essence', [
 		'ngResource',
 		'ngAria',
-		 'ngMaterial',
+		'ngMaterial',
 		'ngMdIcons',
 		'ngCookies',
 		'ngAnimate',
@@ -25,6 +25,7 @@
 		'login',
 		'pi',
 		'android',
+		'chat',
 	]);
 
 })();

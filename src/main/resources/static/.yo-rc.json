@@ -20,6 +20,9 @@
       },
       {
         "name": "android"
+      },
+      {
+        "name": "chat"
       }
     ],
     "menu": [
@@ -42,6 +45,10 @@
       {
         "link": "android",
         "title": "Android"
+      },
+      {
+        "link": "chat",
+        "title": "Chat"
       }
     ]
   }

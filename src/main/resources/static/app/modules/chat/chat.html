@@ -1,0 +1,27 @@
+<div class="md-padding" flex layout-sm="column">
+    <md-card>
+        <md-card-content>
+            <h2 class="md-title">Chat page</h2>
+
+            <div>Current user: {{vm.currentUser}}</div>
+            <form ng-submit="vm.sendMsg()">
+
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Message</label>
+                    <input ng-model="vm.message">
+                </md-input-container>
+                <md-button class="md-raised" ng-click="vm.sendMsg()">Send</md-button>
+            </form>
+            <br>
+            <br>
+            <div>Messages:</div>
+            <br>
+            <md-content>
+
+                <div ng-repeat="msg in vm.messages | orderBy :'stamp':true ">
+                    {{msg.stamp | date: 'HH:mm:ss' }} : [{{msg.sender}}] : {{msg.message}}
+                </div>
+            </md-content>
+        </md-card-content>
+    </md-card>
+</div>
