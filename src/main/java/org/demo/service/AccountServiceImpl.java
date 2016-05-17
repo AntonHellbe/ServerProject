@@ -1,11 +1,7 @@
 package org.demo.service;
 
 import org.demo.config.UserNameGenerator;
-import org.demo.controller.ws.WsController;
 import org.demo.model.security.Account;
-import org.demo.model.ws.AffectedArea;
-import org.demo.model.ws.CrudType;
-import org.demo.model.ws.WsAnswer;
 import org.demo.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,10 +28,6 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private AccountRepository accountRepository;
-
-	@Autowired
-	WsController wsCtrl;
-
 
 	@Autowired
 	UserNameGenerator userNameGenerator;
@@ -76,10 +68,6 @@ public class AccountServiceImpl implements AccountService {
 			if (temp.getRfidKey().equals(updatedAccount.getRfidKey())) {
 				accountRepository.save(updatedAccount);
 				System.out.println("Account updated");
-				//do ws update
-				WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
-				wsanswer.setPayload(updatedAccount);
-				wsCtrl.serverInformClients(wsanswer);
 				return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 			}
 			if (accountRepository.findUserByRfid(updatedAccount.getRfidKey()) != null) {
@@ -90,10 +78,10 @@ public class AccountServiceImpl implements AccountService {
 			accountRepository.save(updatedAccount);
 			System.out.println("better");
 
-			//do ws update
-			WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
-			wsanswer.setPayload(updatedAccount);
-			wsCtrl.serverInformClients(wsanswer);
+//			//do ws update
+//			WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
+//			wsanswer.setPayload(updatedAccount);
+//			wsCtrl.serverInformClients(wsanswer);
 
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 		}
@@ -149,7 +137,7 @@ public class AccountServiceImpl implements AccountService {
 		accountRepository.save(newAccount);
 
 		System.out.println("saving to db " + newAccount);
-		System.out.println("RFID: " + newAccount.getRfidKey().isEnabled());
+//		System.out.println("RFID: " + newAccount.getRfidKey().isEnabled());
 		return new ResponseEntity<Account>(newAccount, HttpStatus.OK);
 	}
 

@@ -2,11 +2,14 @@ package org.demo.model.ws;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Arrays;
+
 /**
  * Created by Sebastian Börebäck on 2016-05-16.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WsAnswer {
+	private String token;
 	private String content;
 
 	AffectedArea area;
@@ -14,6 +17,7 @@ public class WsAnswer {
 	String affectedId;
 
 	Object payload;
+	Object[] payloadList;
 
 	public WsAnswer() {
 	}
@@ -26,6 +30,13 @@ public class WsAnswer {
 		this.area = area;
 		this.crudType = crudType;
 		this.affectedId = affectedId;
+	}
+
+	public WsAnswer(WsMessage message) {
+		this.crudType = message.getCrudType();
+		this.area = message.getArea();
+		this.affectedId = message.getAffectedId();
+		this.token = message.getToken();
 	}
 
 	public AffectedArea getArea() {
@@ -64,14 +75,31 @@ public class WsAnswer {
 		this.payload = payload;
 	}
 
+	public Object[] getPayloadList() {
+		return payloadList;
+	}
+
+	public void setPayloadList(Object[] payloadList) {
+		this.payloadList = payloadList;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	@Override
 	public String toString() {
 		return "WsAnswer{" +
-				"content='" + content + '\'' +
-				", area=" + area +
-				", crudType=" + crudType +
-				", affectedId='" + affectedId + '\'' +
+				"payloadList=" + Arrays.toString(payloadList) +
 				", payload=" + payload +
+				", affectedId='" + affectedId + '\'' +
+				", crudType=" + crudType +
+				", area=" + area +
+				", token='" + token + '\'' +
 				'}';
 	}
 }

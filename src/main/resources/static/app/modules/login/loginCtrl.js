@@ -30,15 +30,27 @@
         var ip = $rootScope.ip;
 
 
-        vm.credentials = {};
+        //vm.credentials = {};
+	    //todo remove
+        vm.credentials = {"username":"admin","password":"pass"};
+
         vm.loginData = {};
 
 	    vm.wsGot=[];
+
+
+
 
 	    vm.wsSend=function() {
 		    WebsocketService.send(vm.wstext);
 		    vm.wstext = "";
 	    };
+
+	    vm.wsSendAll =function(){
+		    var allstr = {"area":"ACCOUNT","crudType":"ALL","token":$rootScope.authToken};
+		    $log.info("sending > " + JSON.stringify(allstr));
+		    WebsocketService.send(allstr);
+	    }
 
 	    vm.wsdis = function () {
 		    WebsocketService.disconnect();
@@ -93,9 +105,6 @@
         };
 
 
-        //vm.credentials = {"username": "user", "password": "pass"};
-        vm.credentials = {};
-
         //login button
         vm.login = function () {
             //TODO use service instead of http
@@ -107,8 +116,9 @@
                     console.log("Login succeeded")
 
                     $http.get('token').then(function (response) {
-                        console.log("token> " + response.data.token);
+                        console.log("old token> " + response.data.token);
                         $rootScope.authToken = response.data.token;
+	                    $log.info("new token> " + $rootScope.authToken);
                         //todo for testing
                         vm.oldToken =$rootScope.authToken;
                         //$http({
@@ -122,9 +132,13 @@
                         //});
                     });
 
+	                //connect to websocket.
+	                WebsocketService.connect();
+
                     vm.error = false;
                     $rootScope.authenticated = true;
-                    $state.go("home.dashboard");
+	                //todo uncomment
+	                //$state.go("home.dashboard");
                 } else {
                     console.log("Login failed")
                     //$location.path("/login");
@@ -145,10 +159,12 @@
                 console.log("LOGGED out");
                 vm.users = {};
                 vm.loginData = {};
+	            WebsocketService.disconnect();
+	            $rootScope.authToken = {};
             });
 
             $state.go('home.login', {}, {reload: true});
-        }
+        };
 
         vm.getAll = function () {
             $http.get("/api/users/").then(function (response) {

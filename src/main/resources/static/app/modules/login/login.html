@@ -30,7 +30,17 @@
                     <label>ws text</label>
                     <input ng-model="vm.wstext.name">
                 </md-input-container>
+                <md-input-container>
+                    <label>ws area</label>
+                    <input ng-model="vm.wstext.area">
+                </md-input-container>
+                <md-input-container>
+                    <label>ws crudType</label>
+                    <input ng-model="vm.wstext.crudType">
+                </md-input-container>
+
                 <md-button class="md-raised" ng-click="vm.wsSend()">test ws</md-button>
+                <md-button class="md-raised" ng-click="vm.wsSendAll()">test ws ALL</md-button>
                 <md-button class="md-raised" ng-click="vm.wsdis()">disconnect ws</md-button>
                 <md-button class="md-raised" ng-click="vm.wscon()">connect ws</md-button>
 

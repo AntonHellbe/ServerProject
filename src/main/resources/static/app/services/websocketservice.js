@@ -72,9 +72,12 @@
 			//	messageIds = _.remove(messageIds, message.id);
 			//}
 			//return out;
+
+			//[{"token":null,"content":null,"area":"ACCOUNT","crudType":"ALL","affectedId":null
+
 			$mdToast.show(
 				$mdToast.simple()
-					.content("Server got: "+JSON.stringify(message))
+					.content("Area: "+message.area+" - Change: "+message.crudType)
 					.position('top right')
 					.hideDelay(9000)
 					.parent("#parent")
@@ -102,7 +105,7 @@
 			socket.client = new SockJS(service.SOCKET_URL);
 			socket.stomp = Stomp.over(socket.client);
 			socket.stomp.connect({}, startListener);
-			//socket.stomp.onclose = reconnect;
+			socket.stomp.onclose = reconnect;
 			console.log("connected");
 		};
 
@@ -116,28 +119,7 @@
 			console.log("Disconnected");
 		};
 
-
-		//function connect() {
-		//	var socket = new SockJS('/hello');
-		//	stompClient = Stomp.over(socket);
-		//	stompClient.connect({}, function(frame) {
-		//		setConnected(true);
-		//		console.log('Connected: ' + frame);
-		//		stompClient.subscribe('/topic/greetings', function(greeting){
-		//			showGreeting(JSON.parse(greeting.body).content);
-		//		});
-		//	});
-		//}
-		//
-		//function disconnect() {
-		//	if (stompClient != null) {
-		//		stompClient.disconnect();
-		//	}
-		//	setConnected(false);
-		//	console.log("Disconnected");
-		//}
-
-		initialize();
+		//initialize();
 		return service;
 	}
 

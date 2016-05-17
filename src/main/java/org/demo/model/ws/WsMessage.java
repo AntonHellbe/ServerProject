@@ -11,6 +11,9 @@ public class WsMessage {
 	AffectedArea area;
 	CrudType crudType;
 	String affectedId;
+	String token;
+
+	Object payload;
 
 	private String name;
 
@@ -43,12 +46,30 @@ public class WsMessage {
 		return affectedId;
 	}
 
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Object getPayload() {
+		return payload;
+	}
+
+	public void setPayload(Object payload) {
+		this.payload = payload;
+	}
+
 	@Override
 	public String toString() {
 		return "WsMessage{" +
 				"area=" + area +
 				", crudType=" + crudType +
 				", affectedId='" + affectedId + '\'' +
+				", token='" + token + '\'' +
+				", payload=" + payload +
 				", name='" + name + '\'' +
 				'}';
 	}

@@ -3,7 +3,6 @@ package org.demo;
 
 import org.demo.config.AuthoritiesConstants;
 import org.demo.model.RfidKey;
-import org.demo.model.ScheduleStamp;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
@@ -24,7 +23,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Random;
 
 @SpringBootApplication
 public class ServerProjectApplication implements CommandLineRunner {
@@ -156,26 +157,26 @@ public class ServerProjectApplication implements CommandLineRunner {
 //			timeRepository.save(gotAll.get(i));
 //		}
 //
-		Calendar day1 = Calendar.getInstance();
-		day1.set(2016, 4, 17, 18, 0, 0);
-		String[] ids = new String[1];
-		ids[0] = user2.getId();
-		ScheduleStamp newStamp = new ScheduleStamp(Calendar.getInstance().getTimeInMillis(), day1.getTimeInMillis(), ids);
-		scheduleRepository.save(newStamp);
-		//generate timestamps for usersers
-		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+//		Calendar day1 = Calendar.getInstance();
+//		day1.set(2016, 4, 17, 18, 0, 0);
+//		String[] ids = new String[1];
+//		ids[0] = user2.getId();
+//		ScheduleStamp newStamp = new ScheduleStamp(Calendar.getInstance().getTimeInMillis(), day1.getTimeInMillis(), ids);
+//		scheduleRepository.save(newStamp);
+//		//generate timestamps for usersers
+//		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
+//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+//		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
+//		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
+//		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
 //
 //		//add stamps
 
-		timeRepository.save(calsA);
-		timeRepository.save(cals1);
-		timeRepository.save(cals2);
-		timeRepository.save(cals3);
-		timeRepository.save(cals4);
+//		timeRepository.save(calsA);
+//		timeRepository.save(cals1);
+//		timeRepository.save(cals2);
+//		timeRepository.save(cals3);
+//		timeRepository.save(cals4);
 
 
 		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
@@ -188,7 +189,7 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 
 
-		log.info("Lucifer Morningstars last timestamp: "+got);
+//		log.info("Lucifer Morningstars last timestamp: "+got);
 
 
 
