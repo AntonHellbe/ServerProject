@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Created by Sebastian Börebäck on 2016-05-16.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WsMessage1 {
+public class WsMessage {
 
 	AffectedArea area;
 	CrudType crudType;
@@ -14,10 +14,10 @@ public class WsMessage1 {
 
 	private String name;
 
-	public WsMessage1() {
+	public WsMessage() {
 	}
 
-	public WsMessage1(String name) {
+	public WsMessage(String name) {
 		this.name = name;
 	}
 
@@ -25,7 +25,7 @@ public class WsMessage1 {
 		return name;
 	}
 
-	public WsMessage1(AffectedArea area, CrudType crudType, String affectedId) {
+	public WsMessage(AffectedArea area, CrudType crudType, String affectedId) {
 		this.area = area;
 		this.crudType = crudType;
 		this.affectedId = affectedId;
@@ -45,7 +45,7 @@ public class WsMessage1 {
 
 	@Override
 	public String toString() {
-		return "WsMessage1{" +
+		return "WsMessage{" +
 				"area=" + area +
 				", crudType=" + crudType +
 				", affectedId='" + affectedId + '\'' +
