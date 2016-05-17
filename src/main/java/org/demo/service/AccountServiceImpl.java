@@ -67,28 +67,27 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public ResponseEntity<Account> updateUser(Account updatedAccount) {
-		if (updatedAccount != null) {
-			if(accountRepository.findUserByRfid(updatedAccount.getRfidKey())!=null){
-				System.out.println("here");
-				System.out.println(accountRepository.findOne(updatedAccount.getId()));
-				System.out.println(accountRepository.findUserByRfid(updatedAccount.getRfidKey()).getId());
-			if(!accountRepository.findOne(updatedAccount.getId()).equals(accountRepository.findUserByRfid(updatedAccount.getRfidKey()).getId())){
-				System.out.println("you got here!");
-				return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+
+		if(updatedAccount != null) {
+			Account temp = accountRepository.findOne(updatedAccount.getId());
+//		if (temp.getRfidKey().equals(updatedAccount.getRfidKey()) ) {
+//				accountRepository.save(updatedAccount);
+//			}
+			if (temp.getRfidKey().equals(updatedAccount.getRfidKey())) {
+				accountRepository.save(updatedAccount);
+				System.out.println("Account updated");
+				return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 			}
+			if (accountRepository.findUserByRfid(updatedAccount.getRfidKey()) != null) {
+				System.out.println("Account NOT updated");
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
 			}
+			System.out.println("account UPDATED!");
 			accountRepository.save(updatedAccount);
-			System.out.println("better");
-
-			//do ws update
-			WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
-			wsanswer.setPayload(updatedAccount);
-			wsCtrl.serverInformClients(wsanswer);
-
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
 		}
+			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+
 	}
 
 	public ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id) {
