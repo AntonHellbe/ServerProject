@@ -11,6 +11,7 @@
 	 */
 
 	angular.module('essence', [
+
 		'ngResource',
 		'ngAria',
 		'ngMaterial',

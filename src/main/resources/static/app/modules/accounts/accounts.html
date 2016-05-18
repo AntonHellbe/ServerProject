@@ -1,8 +1,6 @@
 <div class="md-padding" flex layout-sm="column">
 
-
     <md-card>
-
         <md-card-content>
             <h2 class="md-title">Content from: accounts page</h2>
 
@@ -31,13 +29,39 @@
                             </md-input-container>
 
                         </div>
-                        <div layout-gt-sm="row">
-
+                        <fieldset>
+                            <legend>
+                                Change password
+                            </legend>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Password</label>
                                 <input ng-model="user.password" disabled>
                             </md-input-container>
-                        </div>
+
+                            <md-button class="md-raised" ng-hide="vm.showChangePassword"
+                                       ng-click="vm.showChangePassword=!vm.showChangePassword">ChangePassword
+                            </md-button>
+                            <div ng-show="vm.showChangePassword">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>New password</label>
+                                    <input ng-model="vm.newPassword" required minlength="4">
+                                    <div ng-messages="vm.newPassword.$error" role="alert" ng-hide="vm.newPassword.length >=4 || vm.newPassword.length <=1"
+                                    >
+                                        <div ng-message="minlength" >
+                                            Password length is minimum 4
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-button class="md-raised md-primary" ng-show="vm.newPassword.length >= 4 "
+                                           ng-click="vm.changePassword(user,vm.newPassword)">
+                                    Change Password
+                                </md-button>
+                                <md-button class="md-raised md-warn"
+                                           ng-click="vm.showChangePassword=!vm.showChangePassword; vm.newPassword='';">
+                                    Cancel Change Password
+                                </md-button>
+                            </div>
+                        </fieldset>
 
                         <fieldset>
                             <legend>

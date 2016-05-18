@@ -1,8 +1,6 @@
 package org.demo.service;
 
-import com.mongodb.DBPortPool;
 import org.demo.config.UserNameGenerator;
-import org.demo.model.RfidKey;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
 import org.slf4j.Logger;
@@ -93,9 +91,10 @@ public class AccountServiceImpl implements AccountService {
 
 				if(accountRepository.findByUserName(updatedAccount.getUsername()) !=null){
 					log.info("Username is somewhere else in the database!!!");
-					System.out.println("Account NOT updated");
+					log.info("Account NOT updated");
 					return new ResponseEntity<>(HttpStatus.IM_USED);
 				}
+
 
 				log.info("The RFID is the same as before, but there is a new username that isn't anywhere else!");
 				return updateThisShit(updatedAccount);
@@ -126,17 +125,24 @@ public class AccountServiceImpl implements AccountService {
 			System.out.println("account UPDATED!");
 			accountRepository.save(updatedAccount);
 
-//			//do ws update
-//			WsAnswer wsanswer = new WsAnswer(AffectedArea.ACCOUNT, CrudType.UPDATE, updatedAccount.getId());
-//			wsanswer.setPayload(updatedAccount);
-//			wsCtrl.serverInformClients(wsanswer);
-
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 		}
 		log.info("You really messed something up here you know...");
 		return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
 
 	}
+
+	public Account passwordUpdater(String newPassword, String userId) throws Exception {
+		if (newPassword != null) {
+			Account updatedAccount = accountRepository.findOne(userId);
+			updatedAccount.setPassword(passwordEncoder.encode(newPassword));
+			Account returnAccount=accountRepository.save(updatedAccount);
+			return returnAccount;
+		} else {
+			throw new Exception("Failed to update password, due to new password is not set!");
+		}
+	}
+
 
 	public ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id) {
 		if (newPass != null) {

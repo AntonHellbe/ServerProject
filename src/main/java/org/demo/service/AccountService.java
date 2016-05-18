@@ -2,12 +2,10 @@ package org.demo.service;
 
 import org.demo.model.security.Account;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Anton on 2016-04-11.
@@ -43,6 +41,8 @@ public interface AccountService {
      * @return The updated user information
      **/
     ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id);
+
+	Account passwordUpdater(String newPassword, String userId) throws Exception;
 
     /**
      * Removes the givien user from the list

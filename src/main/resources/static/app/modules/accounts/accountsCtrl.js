@@ -23,7 +23,7 @@
 	 */
 
 	//function Accounts(AccountsService, WebsocketService, $log, $filter, $rootScope) {
-	function Accounts( WebsocketService, $log, $filter, $rootScope) {
+	function Accounts(WebsocketService, $log, $filter, $rootScope) {
 		/*jshint validthis: true */
 		var vm = this;
 
@@ -37,7 +37,7 @@
 
 		WebsocketService.receive().then(null, null, function (wsUpdate) {
 
-			if(wsUpdate.error != undefined) {
+			if (wsUpdate.error != undefined) {
 				$log.info("Error " + wsUpdate.error);
 				return;
 			}
@@ -88,6 +88,22 @@
 								vm.allusers = vm.allusers ? wsUpdate.payloadList : [];
 							}
 							break;
+
+						case "PASSWORD":
+							$log.info("Got Changepassword from ws");
+							//$log.info("updated user " + wsUpdate.payload.firstName);
+							var found = $filter('filter')(vm.allusers, {id: wsUpdate.affectedId})[0];
+							if (found != undefined) {
+								$log.info("found user " + found);
+								var idx = vm.allusers.indexOf(found);
+								vm.allusers.splice(idx, 1);
+								vm.allusers.splice(idx, 0, wsUpdate.payload);
+							}
+							else {
+								//TODO show error msg about update
+								$log.info("didnt find user " + wsUpdate.affectedId);
+							}
+							break
 
 					}
 
@@ -151,9 +167,8 @@
 			}
 
 
-
 			var sendMsg = {"area": "ACCOUNT", "crudType": "ADD", "token": $rootScope.authToken};
-			sendMsg.payload= newUser;
+			sendMsg.payload = newUser;
 
 			$log.info("sending > " + JSON.stringify(sendMsg));
 			WebsocketService.send(sendMsg);
@@ -295,6 +310,24 @@
 				console.log('add all');
 			}
 			return userList;
+		};
+
+		vm.changePassword = function (user, newPassword) {
+			$log.info("change password");
+			$log.info("user " + user.username + " newpass " + newPassword);
+
+			if (newPassword != undefined) {
+
+
+				var sendMsg = {"area": "ACCOUNT", "crudType": "PASSWORD", "token": $rootScope.authToken};
+				sendMsg.payload = newPassword;
+				sendMsg.affectedId = user.id;
+
+				$log.info("sending > " + JSON.stringify(sendMsg));
+				WebsocketService.send(sendMsg);
+				vm.showChangePassword = !vm.showChangePassword;
+				vm.newPassword = "";
+			}
 		};
 	}
 })();

@@ -145,6 +145,7 @@ public class WsController {
 					}
 					answer.setPayloadList(list.getBody().toArray());
 					break;
+
 			}
 		} else {
 			answer.setError("Missing CrudType!");
@@ -196,6 +197,15 @@ public class WsController {
 				case ALL:
 					ResponseEntity<List<Account>> list = service.getAllUser();
 					answer.setPayloadList(list.getBody().toArray());
+					break;
+				case PASSWORD:
+					String newPassword = mapper.convertValue(message.getPayload(),String.class);
+					log.info("new password " + newPassword);
+					try {
+						answer.setPayload(service.passwordUpdater(newPassword, message.getAffectedId()));
+					} catch (Exception e) {
+						answer.setError(e.getMessage());
+					}
 					break;
 			}
 		} else {
