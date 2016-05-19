@@ -92,15 +92,18 @@ public class WsAnswer {
 		this.token = token;
 	}
 
+
 	@Override
 	public String toString() {
 		return "WsAnswer{" +
-				"payloadList=" + Arrays.toString(payloadList) +
-				", payload=" + payload +
-				", affectedId='" + affectedId + '\'' +
-				", crudType=" + crudType +
+				"token='" + token + '\'' +
+				", content='" + content + '\'' +
 				", area=" + area +
-				", token='" + token + '\'' +
+				", crudType=" + crudType +
+				", affectedId='" + affectedId + '\'' +
+				", payload=" + payload +
+				", payloadList=" + Arrays.toString(payloadList) +
+				", error='" + error + '\'' +
 				'}';
 	}
 

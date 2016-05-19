@@ -1,6 +1,7 @@
 package org.demo.service;
 
 import org.demo.config.UserNameGenerator;
+import org.demo.errorHandler.accountErrorHandler;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.method.annotation.ErrorsMethodArgumentResolver;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,6 +29,9 @@ import java.util.Map;
  **/
 @Service
 public class AccountServiceImpl implements AccountService {
+
+	@Autowired
+	private accountErrorHandler errorHandler;
 
 	private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
 
@@ -44,92 +49,36 @@ public class AccountServiceImpl implements AccountService {
 		List<Account> accountList = accountRepository.findAll();
 		response.put("AllAccounts", accountList.size());
 		response.put("Account", accountList);
-		if (accountList != null) {
-			return new ResponseEntity<>(accountList, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+
+		//Calls our ErrorHandler and gets a response, either OK or something bad
+		HttpStatus status = errorHandler.getAllHandler(accountList);
+		if (status!=HttpStatus.OK){
+			return new ResponseEntity<>(status);
+		}else return new ResponseEntity<>(accountList, status);
 	}
 
 	public ResponseEntity<Account> getUser(String id) {
-		System.out.println("getUser with id" + id);
 		Account gotAccount = accountRepository.findOne(id);
-		if (gotAccount != null) {
-			return new ResponseEntity<Account>(gotAccount, HttpStatus.OK);
+		HttpStatus status = errorHandler.getUserHandler(gotAccount);
+		if (status == HttpStatus.OK) {
+			return new ResponseEntity<Account>(gotAccount, status);
 		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(status);
 		}
 
-	}
-
-	private ResponseEntity<Account> updateThisShit(Account updatedAccount){
-		if (updatedAccount.getUsername().length()<4){
-			log.info("username to short");
-			return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-		}
-		accountRepository.save(updatedAccount);
-		System.out.println("Account updated");
-		return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 	}
 
 	public ResponseEntity<Account> updateUser(Account updatedAccount) {
-
-		//Checks that there are things sent in
-		if(updatedAccount != null) {
-			Account temp = accountRepository.findOne(updatedAccount.getId());
-			log.info("There is something sent in.");
-
-			//Checks if the RFID of the update account is the same as the account we are trying to update
-			if (temp.getRfidKey().equals(updatedAccount.getRfidKey())) {
-				log.info("The RFID of the update is the same as the user to be updated (not changed).");
-
-				//checks if the username is the same as before
-				if(temp.getUsername().equals(updatedAccount.getUsername())){
-					log.info("The username isnt changed from before.");
-					return updateThisShit(updatedAccount);
-				}
-
-				if(accountRepository.findByUserName(updatedAccount.getUsername()) !=null){
-					log.info("Username is somewhere else in the database!!!");
-					log.info("Account NOT updated");
-					return new ResponseEntity<>(HttpStatus.IM_USED);
-				}
-
-
-				log.info("The RFID is the same as before, but there is a new username that isn't anywhere else!");
-				return updateThisShit(updatedAccount);
-
+		Account temp = accountRepository.findOne(updatedAccount.getId());
+		HttpStatus status = errorHandler.updateHandler(updatedAccount);
+		if(status!=HttpStatus.OK){
+			return new ResponseEntity<Account>(status);
+		}else {
+			if (!temp.getPassword().equals(updatedAccount.getPassword())) {
+				updatedAccount.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
 			}
-			if (updatedAccount.getRfidKey().toString().length() != 0 && accountRepository.findUserByRfid(updatedAccount.getRfidKey()) != null) {
-				log.info("RFID is somewhere in the database, already in use!!!");
-				System.out.println("Account NOT updated");
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-
-			//annat rfid
-
-			//checks if the username is the same as before
-			if(temp.getUsername().equals(updatedAccount.getUsername())){
-				log.info("The RFID is new, but username the same.");
-				return updateThisShit(updatedAccount);
-			}
-
-			System.out.println(accountRepository.findByUserName(updatedAccount.getUsername()));
-			if(accountRepository.findByUserName(updatedAccount.getUsername()) !=null){
-				log.info("The RFID is changed, but the new username is already taken!");
-				System.out.println("Account NOT updated");
-				return new ResponseEntity<>(HttpStatus.IM_USED);
-			}
-
-			log.info("The RFID is new but not taken, and the username is new but not taken!");
-			System.out.println("account UPDATED!");
-			accountRepository.save(updatedAccount);
-
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 		}
-		log.info("You really messed something up here you know...");
-		return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
-
 	}
 
 	public Account passwordUpdater(String newPassword, String userId) throws Exception {
@@ -143,7 +92,6 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
-
 	public ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id) {
 		if (newPass != null) {
 			Account updatedAccount = accountRepository.findOne(id);
@@ -156,45 +104,27 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public ResponseEntity<Account> removeUser(String id) {
-		System.out.println("Remove following user" + id);
-
 		Account accountToRemove = accountRepository.findOne(id);
-
-		System.out.println("Removing following user" + accountToRemove.getFirstName());
-
-		accountRepository.delete(accountToRemove.getId());
-
-		if (accountToRemove != null) {
-			return new ResponseEntity<Account>(accountToRemove, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
-		}
-
-
+		HttpStatus status = errorHandler.deleteHandler(accountToRemove);
+		if(status!=HttpStatus.OK){
+			return new ResponseEntity<Account>(status);
+		}else
+			accountRepository.delete(accountRepository.findOne(id));
+		return new ResponseEntity<Account>(accountToRemove,status);
 	}
 
 	public ResponseEntity<Account> addUser(Account newAccount) {
-
-		/**
-		 * Create username
-		 */
+		HttpStatus status = errorHandler.addHandler(newAccount);
+		if(status != HttpStatus.OK) {
+			return new ResponseEntity<Account>(status);
+		}
 		if (newAccount.getUsername() == null) {
 			newAccount.setUsername(userNameGenerator.userNameGenerator(newAccount));
 		}
-
-		/**
-		 * Encode password
-		 */
 		if (newAccount.getPassword() != null) {
 			newAccount.setPassword(passwordEncoder.encode(newAccount.getPassword()));
 		}
-
 		accountRepository.save(newAccount);
-
-		System.out.println("saving to db " + newAccount);
-//		System.out.println("RFID: " + newAccount.getRfidKey().isEnabled());
 		return new ResponseEntity<Account>(newAccount, HttpStatus.OK);
 	}
-
-
 }

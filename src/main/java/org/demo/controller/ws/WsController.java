@@ -14,6 +14,7 @@ import org.demo.service.TimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -66,6 +67,7 @@ public class WsController {
 
 				case ACCOUNT:
 					answer = doAccountAction(userService, message, answer);
+					log.info("account answer "+answer.toString());
 					break;
 				case TIMESTAMP:
 					answer = doTimeAction(timeService, message, answer);
@@ -165,7 +167,16 @@ public class WsController {
 					if (addAccount != null) {
 						log.info("adding account " + addAccount);
 						ResponseEntity<Account> serviceUser = service.addUser(addAccount);
-
+						log.info(serviceUser.getStatusCode().toString());
+						if (!serviceUser.getStatusCode().equals(HttpStatus.OK)) {
+							log.info("in the wrong spot bro");
+							answer.setError("Status code: " + serviceUser.getStatusCode()
+									+ "no username, firstname and lastname!");
+							log.info("from add "+answer.toString());
+							return answer;
+						} else {
+							log.info("Det gick ju bra Sture!");
+						}
 						answer.setPayload(serviceUser.getBody());
 					} else {
 						// TODO: 2016-05-17 :21:02 Fix error management

@@ -37,12 +37,15 @@
 
 		WebsocketService.receive().then(null, null, function (wsUpdate) {
 
+			$log.info("Got Account: " + wsUpdate);
+
 			if (wsUpdate.error != undefined) {
 				$log.info("Error " + wsUpdate.error);
 				return;
 			}
 			else {
 				$log.info("NO Error " + wsUpdate.error);
+
 			}
 			//$log.info("got update from server: " + JSON.stringify(wsUpdate));
 
@@ -147,6 +150,9 @@
 			$log.info("add user " + JSON.stringify(newUser));
 
 			//TODO check that rfid exists
+			if(newUser ==undefined) {
+				return;
+			}
 			if (newUser.rfidKey != undefined) {
 				if (newUser.rfidKey.enabled == undefined) {
 					newUser.rfidKey.enabled = false;
