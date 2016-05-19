@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 // BLYAT
 
 @Component
-public class TimeErrorHandler1 {
+public class TimeErrorHandler {
 
     @Autowired
     TimeRepository timeRepository;
@@ -24,7 +24,7 @@ public class TimeErrorHandler1 {
     @Autowired
     AccountRepository accountRepository;
 
-    public TimeErrorHandler1() {
+    public TimeErrorHandler() {
 
     }
 

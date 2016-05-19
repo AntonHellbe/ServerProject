@@ -1,6 +1,6 @@
 package org.demo.service;
 
-import org.demo.errorHandler.TimeErrorHandler1;
+import org.demo.errorHandler.TimeErrorHandler;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
@@ -32,7 +32,7 @@ public class TimeServiceImpl implements TimeService {
 	private TimeRepository timeRepository;
 
 	@Autowired
-	TimeErrorHandler1 timeErrorHandler;
+	TimeErrorHandler timeErrorHandler;
 
 
 	public TimeServiceImpl() {
