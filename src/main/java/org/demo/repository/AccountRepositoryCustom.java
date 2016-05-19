@@ -23,6 +23,8 @@ public interface AccountRepositoryCustom {
 
     List<Account> findDisabledUsers(String status);
 
+    List<Account> findAllRfidUsers();
+
 //    boolean existingUser(String userName);
 
 }

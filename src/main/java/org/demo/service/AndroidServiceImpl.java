@@ -106,7 +106,7 @@ public class AndroidServiceImpl implements AndroidService {
 	 * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
 	 * @return the times in the interval
 	 **/
-	public ResponseEntity<HashMap<String, List>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
+	public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
 		// TODO: 2016-04-21 :21:22 Just for logging
 		log.info("Calling get between");
 
@@ -118,12 +118,15 @@ public class AndroidServiceImpl implements AndroidService {
 		List<AndroidStamp> betweenTimes = userStamps.stream()
 				.map(AndroidStamp::new)
 				.collect(Collectors.toList());
-		Account tempAccount = accountRepository.findUserByRfid(androidBetweenQuery.getId());
-		List<ScheduleStamp> temp = scheduleRepository.getBetweenQuery(androidBetweenQuery.getFrom(), androidBetweenQuery.getTo(), tempAccount.getId() );
-		HashMap<String, List> allTimes = new HashMap<>();
-		allTimes.put("androidstamps", betweenTimes);
-		allTimes.put("schedulestamps", temp );
-		return new ResponseEntity<HashMap<String, List>>(allTimes, HttpStatus.OK);
+
+//		Account tempAccount = accountRepository.findUserByRfid(androidBetweenQuery.getId());
+//		List<ScheduleStamp> temp = scheduleRepository.getBetweenQuery(androidBetweenQuery.getFrom(), androidBetweenQuery.getTo(), tempAccount.getId() );
+//		LinkedHashMap<String, Object> gotTimes = new LinkedHashMap<>();
+//		gotTimes.put("androidstamps", betweenTimes);
+//		gotTimes.put("schedulestamps", temp);
+//		allTimes.put("androidstamps", betweenTimes);
+//		allTimes.put("schedulestamps", temp );
+		return new ResponseEntity<List<AndroidStamp>>(betweenTimes, HttpStatus.OK);
 //		if (betweenTimes != null) {
 //			return new ResponseEntity<>(betweenTimes, HttpStatus.OK);
 //		}

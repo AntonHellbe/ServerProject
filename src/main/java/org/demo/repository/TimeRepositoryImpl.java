@@ -49,7 +49,7 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
 
 //	    List<TimeStamp> got = mongoOperations.find(query(where("rfidKey").is(key)), TimeStamp.class);
 //	    return  got;
-	    return mongoOperations.find(query(where("date.time").gte(androidBetweenQuery.getFrom()).lte(androidBetweenQuery.getTo()).and("rfidKey").is(androidBetweenQuery.getId())), TimeStamp.class);
+	    return mongoOperations.find(query(where("date").gte(androidBetweenQuery.getFrom()).lte(androidBetweenQuery.getTo()).and("rfidKey").is(androidBetweenQuery.getId())), TimeStamp.class);
 
     }
 
@@ -61,7 +61,7 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
         Query query = new Query();
 //         query.with("date.time", -1).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
         query.limit(1);
-        query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is(rfidKey.getId()));
+        query.with(new Sort(Sort.Direction.DESC, "date")).addCriteria(Criteria.where("rfidKey._id").is(rfidKey.getId()));
 
         TimeStamp got = mongoOperations.findOne(query, TimeStamp.class);
 //        query.put("date.time", -1);
@@ -72,5 +72,9 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
 //          System.out.println(dbCursor.next().);
 //      }
         return got;
+    }
+
+    public TimeStamp findCertainTime(TimeStamp timeStamp) {
+        return mongoOperations.findOne(query(where("time").is(timeStamp.getDate()).and("rfidKey._id").is(timeStamp.getRfidkey().getId())), TimeStamp.class);
     }
 }

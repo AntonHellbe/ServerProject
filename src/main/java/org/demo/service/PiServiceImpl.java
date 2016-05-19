@@ -78,4 +78,13 @@ public class PiServiceImpl implements PiService {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@Override
+	public ResponseEntity<PiStamp> getTime() {
+		PiStamp currentTime = new PiStamp();
+
+		currentTime.setDate(Calendar.getInstance().getTimeInMillis());
+
+		return new ResponseEntity<PiStamp>(currentTime, HttpStatus.OK);
+	}
 }

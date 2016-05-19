@@ -1,5 +1,6 @@
 package org.demo.service;
 
+import org.demo.errorHandler.TimeErrorHandler;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
@@ -29,6 +30,9 @@ public class TimeServiceImpl implements TimeService {
 
 	@Autowired
 	private TimeRepository timeRepository;
+
+	@Autowired
+	TimeErrorHandler timeErrorHandler;
 
 
 	public TimeServiceImpl() {
@@ -72,44 +76,44 @@ public class TimeServiceImpl implements TimeService {
 	@Override
 	public ResponseEntity<TimeStamp> deleteTime(String id, String stampId) {
 
+		HttpStatus statusOnRequest = timeErrorHandler.deleteTimeHandler(id, stampId);
 		System.out.println("User to remove time from " + accountRepository.findOne(id).toString());
 
-		TimeStamp removedTime = timeRepository.findOne(stampId);
-
-		if (removedTime != null) {
+		if(statusOnRequest == HttpStatus.OK) {
+			TimeStamp removedTime = timeRepository.findOne(stampId);
 			timeRepository.delete(stampId);
-		} else {
-			return new ResponseEntity<TimeStamp>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<TimeStamp>(removedTime, statusOnRequest);
 		}
 
-		System.out.println("Deleted time: " + removedTime);
-		return new ResponseEntity<TimeStamp>(removedTime, HttpStatus.OK);
+		return new ResponseEntity<>(statusOnRequest);
+
 	}
 
 	@Override
 	public ResponseEntity<ArrayList<TimeStamp>> getAll(String id) {
+		HttpStatus statusOnRequest = timeErrorHandler.getAllHandler(id);
+		if(statusOnRequest == HttpStatus.OK) {
 		Account currentAccount = accountRepository.findOne(id);
 		ArrayList<TimeStamp> userStamps = new ArrayList<>(timeRepository.getByRfid(currentAccount.getRfidKey()));
 		for (int i = 0; i < userStamps.size() ; i++) {
 			System.out.println(userStamps.get(i).toString());
 		}
-		if (userStamps == null) {
-			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(userStamps, statusOnRequest);
 		}
 
-		return new ResponseEntity<>(userStamps, HttpStatus.OK);
+		return new ResponseEntity<>(statusOnRequest);
 	}
 
 	@Override
 	public ResponseEntity<TimeStamp> getTime(String id, String stampId) {
-
+		HttpStatus statusOnRequest = timeErrorHandler.getHandler(id,stampId);
+		if(statusOnRequest == HttpStatus.OK) {
 		TimeStamp timeToGet = timeRepository.findOne(stampId);
-		if (timeToGet != null) {
 			System.out.println("Got following time " + timeToGet.toString());
-			return new ResponseEntity<>(timeToGet, HttpStatus.OK);
+			return new ResponseEntity<>(timeToGet, statusOnRequest);
 		}
 
-		return new ResponseEntity<TimeStamp>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<TimeStamp>(statusOnRequest);
 	}
 
 

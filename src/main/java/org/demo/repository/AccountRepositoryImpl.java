@@ -1,9 +1,12 @@
 package org.demo.repository;
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import org.demo.model.RfidKey;
 import org.demo.model.security.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
@@ -41,6 +44,13 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         return mongoOperations.find(query(where("isEnabled").is(false)), Account.class);
 
     }
+
+    @Override
+    public List<Account> findAllRfidUsers() {
+        return mongoOperations.find(query(where("rfidKey").exists(true)), Account.class);
+    }
+
+
 
 
 //    @Override

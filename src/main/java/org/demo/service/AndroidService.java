@@ -6,6 +6,7 @@ import org.demo.model.security.Account;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public interface AndroidService {
      * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
      * @return the times in the interval
      **/
-    ResponseEntity <HashMap<String, List>> getBetween(AndroidBetweenQuery androidBetweenQuery);
+    ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery);
 
     ResponseEntity<Account> loginUser( Map<String, Object> getSpecificUserJSON);
 

@@ -20,4 +20,6 @@ public interface PiService {
 	 */
 	ResponseEntity<PiStamp> addNewStamp(RfidKey rfidKey);
 
+	ResponseEntity<PiStamp> getTime();
+
 }

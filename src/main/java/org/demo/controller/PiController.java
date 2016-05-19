@@ -40,4 +40,10 @@ public class PiController {
 
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/time")
+	public ResponseEntity<PiStamp> getTime() {
+		System.out.println("Giving out current time");
+		return piService.getTime();
+	}
+
 }

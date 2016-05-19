@@ -16,9 +16,10 @@ import java.util.Calendar;
 
 public class PiStamp extends Stamp implements Serializable {
 
-	private final String lastName;
-	private final String firstName;
-	private final long time;
+
+
+	private String lastName;
+	private String firstName;
 
 
 	/**
@@ -26,13 +27,21 @@ public class PiStamp extends Stamp implements Serializable {
 	 * @param checkIn
 	 * @param user
 	 */
+
+
+
 	public PiStamp(boolean checkIn, Account user) {
 		this.date = Calendar.getInstance().getTimeInMillis();
-		this.time = Calendar.getInstance().getTimeInMillis();
 		this.checkIn = checkIn;
 		this.firstName =user.getFirstName();
 		this.lastName =user.getLastName();
 	}
+
+	public PiStamp() {
+
+	}
+
+
 
 	/**
 	 * Fetches the last name of the user
@@ -59,7 +68,7 @@ public class PiStamp extends Stamp implements Serializable {
 		return "PiStamp{" +
 				"lastName='" + lastName + '\'' +
 				", firstName='" + firstName + '\'' +
-				", Time='" + this.time + '\'' +
+				", Time='" + this.date + '\'' +
 				", CheckIn='" + this.isCheckIn()    + '\'' +
 				'}';
 	}

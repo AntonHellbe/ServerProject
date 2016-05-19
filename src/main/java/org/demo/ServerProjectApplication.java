@@ -61,9 +61,9 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		accountRepository.deleteAll();
-		timeRepository.deleteAll();
-		scheduleRepository.deleteAll();
+//		accountRepository.deleteAll();
+//		timeRepository.deleteAll();
+//		scheduleRepository.deleteAll();
 
 		Account defaultUser = accountRepository.findByUserName("user");
 		Account adminUser = accountRepository.findByUserName("admin");
@@ -164,28 +164,28 @@ public class ServerProjectApplication implements CommandLineRunner {
 //		ScheduleStamp newStamp = new ScheduleStamp(Calendar.getInstance().getTimeInMillis(), day1.getTimeInMillis(), ids);
 //		scheduleRepository.save(newStamp);
 //		//generate timestamps for usersers
-		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+//		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
+//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+//		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
+//		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
+//		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+////
+////		//add stamps
 //
-//		//add stamps
-
-		timeRepository.save(calsA);
-		timeRepository.save(cals1);
-		timeRepository.save(cals2);
-		timeRepository.save(cals3);
-		timeRepository.save(cals4);
+//		timeRepository.save(calsA);
+//		timeRepository.save(cals1);
+//		timeRepository.save(cals2);
+//		timeRepository.save(cals3);
+//		timeRepository.save(cals4);
 
 
 		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
 		//db.getCollection('TimeStamps').find({"rfidKey._id":"34915AEC"}).sort({date:-1}).limit(1)
-		Query query = new Query();
-		query.limit(1);
-		query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
-
-		TimeStamp got = mongoOperations.findOne(query, TimeStamp.class);
+//		Query query = new Query();
+//		query.limit(1);
+//		query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
+//
+//		TimeStamp got = mongoOperations.findOne(query, TimeStamp.class);
 
 
 
@@ -201,9 +201,9 @@ public class ServerProjectApplication implements CommandLineRunner {
 //				Anna;Ek;1C699EB6;6
 //				Carsten;Panduro;8BA8A996;7
 
-
-		long from = Long.parseLong("1462280400000");
-		long to = Long.parseLong("1463547600000");
+//
+//		long from = Long.parseLong("1462280400000");
+//		long to = Long.parseLong("1463547600000");
 
 //		AndroidBetweenQuery bw = new AndroidBetweenQuery(from,to,new RfidKey("C48659EC"));
 //		List<TimeStamp> got = timeRepository.getBetween(bw);
@@ -218,32 +218,32 @@ public class ServerProjectApplication implements CommandLineRunner {
 //		end of runner
 	}
 
-	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
-		Random rnd = new Random();
-		ArrayList<TimeStamp> cals = new ArrayList<>();
-		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-		int rand = rnd.nextInt(3);
-
-		for (int i = 0; i < 30; i++) {
-
-			rand = rnd.nextInt(3);
-			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
-
-//			log.info("cal " + sdf.format(inCal.getTime()));
-			cals.add(new TimeStamp(inCal.getTimeInMillis(), true, rfidKey));
-			log.info("inCAl "+inCal.getTime());
-
-			rand = rnd.nextInt(3);
-//			log.info("rand22 " + rand);
-			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
-			cals.add(new TimeStamp(outCal.getTimeInMillis(), false, rfidKey));
-
-			log.info("inCAl "+outCal.getTime());
-		}
-		log.info("rfid " + rfidKey);
-		return cals;
-	}
+//	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
+//		Random rnd = new Random();
+//		ArrayList<TimeStamp> cals = new ArrayList<>();
+//		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//
+//		int rand = rnd.nextInt(3);
+//
+//		for (int i = 0; i < 30; i++) {
+//
+//			rand = rnd.nextInt(3);
+//			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
+//
+////			log.info("cal " + sdf.format(inCal.getTime()));
+//			cals.add(new TimeStamp(inCal.getTimeInMillis(), true, rfidKey));
+//			log.info("inCAl "+inCal.getTime());
+//
+//			rand = rnd.nextInt(3);
+////			log.info("rand22 " + rand);
+//			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
+//			cals.add(new TimeStamp(outCal.getTimeInMillis(), false, rfidKey));
+//
+//			log.info("inCAl "+outCal.getTime());
+//		}
+//		log.info("rfid " + rfidKey);
+//		return cals;
+//	}
 
 }

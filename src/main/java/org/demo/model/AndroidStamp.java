@@ -15,8 +15,8 @@ public class AndroidStamp extends Stamp implements Serializable{
     /**
      * Constructor which creates a new androidStamp
      **/
-    public AndroidStamp(long time, boolean checkIn) {
-        this.date = time;
+    public AndroidStamp(long date, boolean checkIn) {
+        this.date = date;
         this.checkIn = checkIn;
     }
 
@@ -29,15 +29,15 @@ public class AndroidStamp extends Stamp implements Serializable{
      * Sets the date of the Stamp
 
      **/
-    public void setTime(Long time) {
-        this.date = time;
+    public void setDate(long date) {
+        this.date = date;
     }
 
     /**
      * Fetches the date of the Stamp
      * @return the date of the stamp
      **/
-    public long getTime() {
+    public long getDate() {
         return this.date;
     }
 

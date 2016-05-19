@@ -1,6 +1,8 @@
 package org.demo.controller;
 
+import com.sun.org.apache.xpath.internal.operations.And;
 import org.demo.model.AndroidBetweenQuery;
+import org.demo.model.AndroidStamp;
 import org.demo.model.RfidKey;
 import org.demo.service.AndroidService;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -37,7 +40,7 @@ public class AndroidController {
      * @return the times associated with the RFID-key in the periods given
      **/
     @RequestMapping(value = "/between&from={from}&to={to}&rfid={id}", method = RequestMethod.GET)
-    public ResponseEntity<HashMap<String, List>> getBetween(@PathVariable ("from") long from, @PathVariable("to") long to, @PathVariable("id") String id){
+    public ResponseEntity<List<AndroidStamp>> getBetween(@PathVariable ("from") long from, @PathVariable("to") long to, @PathVariable("id") String id){
 	    log.info("Calling get between");
 
 		return androidService.getBetween(new AndroidBetweenQuery(from, to, new RfidKey(id)));
