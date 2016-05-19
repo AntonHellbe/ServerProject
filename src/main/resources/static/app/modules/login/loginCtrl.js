@@ -142,7 +142,7 @@
                     $timeout(function () {
                         //$scope.myHeader = "How are you today?";
                         $state.go("home.schedule");
-                    }, 1000);
+                    }, 500);
 
 
                 } else {

@@ -14,6 +14,8 @@
 	<link rel="apple-touch-icon" sizes="72x72" href="app/assets/images/apple-touch-icon-72x72.png" />
 	<link rel="apple-touch-icon" sizes="114x114" href="app/assets/images/apple-touch-icon-114x114.png" />
 	<!-- injector:css -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/src/bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" >
 	<link rel="stylesheet" href="/src/bower_components/angular-material-icons/angular-material-icons.css">
 	<link rel="stylesheet" href="/src/bower_components/angular-material/angular-material.css">
 	<link rel="stylesheet" href="app/mystyle.css">
@@ -155,7 +157,11 @@
 <script src="/src/bower_components/sockjs/sockjs.min.js"></script>
 <script src="/src/bower_components/stomp-websocket/lib/stomp.js"></script>
 
+<!--Calendar-->
+<script src="src/bower_components/moment/min/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.6/interact.min.js"></script>
 
+<!--Angular packages-->
 <script src="/src/bower_components/es5-shim/es5-shim.js"></script>
 <script src="/src/bower_components/json3/lib/json3.min.js"></script>
 <script src="/src/bower_components/angular/angular.js"></script>
@@ -169,6 +175,13 @@
 <script src="/src/bower_components/angular-material-icons/angular-material-icons.min.js"></script>
 <script src="/src/bower_components/angular-messages/angular-messages.js"></script>
 <script src="/src/bower_components/angular-material/angular-material.js"></script>
+
+<!--Calendar-->
+<script src="/src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="/src/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+
+
+<!--moudles-->
 <script src="/app/app.js"></script>
 <script src="/app/app.config.js"></script>
 <script src="/app/modules/accounts/accountsModule.js"></script>
@@ -186,6 +199,7 @@
 <script src="/app/modules/pi/piRoute.js"></script>
 <script src="/app/modules/timestamps/timestampsRoute.js"></script>
 <script src="/app/modules/schedule/scheduleCtrl.js"></script>
+<script src="/app/modules/schedule/helpers.js"></script>
 <script src="/app/modules/accounts/accountsCtrl.js"></script>
 <script src="/app/modules/chat/chatCtrl.js"></script>
 <script src="/app/modules/home/homeCtrl.js"></script>
@@ -204,6 +218,7 @@
 <script src="/app/modules/pi/piService.js"></script>
 <script src="/app/modules/timestamps/timestampsService.js"></script>
 <script src="/app/services/websocketservice.js"></script>
+
 <!-- endinjector -->
 
 

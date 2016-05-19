@@ -41,6 +41,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						"/bootstrap-3.3.6-dist/css/*",
 						"/angular-1.5.3/angular.js",
 						"/angular-1.5.3/angular-route.js"
+						, "/bower_components/**"
 						, "/app/**"
 						, "/src/**"
 				).permitAll()
