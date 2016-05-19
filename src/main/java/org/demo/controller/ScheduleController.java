@@ -5,6 +5,7 @@ import org.demo.model.ScheduleStamp;
 import org.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class ScheduleController {
     public List<ScheduleStamp> getSchedule(@PathVariable("from") long from, @PathVariable ("to") long to, @PathVariable("id") String id) {
         return scheduleService.getBetweenSchedule(from, to, id);
     }
+
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ScheduleStamp> addSchedule(@RequestBody ScheduleStamp scheduleStamp) {

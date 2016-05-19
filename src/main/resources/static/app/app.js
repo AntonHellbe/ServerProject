@@ -24,7 +24,6 @@
 		'timestamps',
 		'login',
 		'pi',
-		'android',
 		'chat',
 		'schedule',
 	]);

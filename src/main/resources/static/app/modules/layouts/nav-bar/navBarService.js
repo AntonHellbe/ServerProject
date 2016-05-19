@@ -42,11 +42,6 @@
 					},
 			    
 					{
-						link: 'android',
-							name: 'Android'
-					},
-			    
-					{
 						link: 'chat',
 							name: 'Chat'
 					},
