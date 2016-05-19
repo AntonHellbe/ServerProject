@@ -1,7 +1,6 @@
 package org.demo.controller;
 
 import org.demo.model.AndroidBetweenQuery;
-import org.demo.model.AndroidStamp;
 import org.demo.model.RfidKey;
 import org.demo.service.AndroidService;
 import org.slf4j.Logger;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +19,7 @@ import java.util.List;
  * the android clients make use of.
  */
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(maxAge = 1)
 @RestController
 @RequestMapping("/api/android")
 public class AndroidController {

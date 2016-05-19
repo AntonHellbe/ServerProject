@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by Robin_2 on 07/04/2016.
@@ -17,7 +16,7 @@ import java.util.Map;
 /**
  * Class that creates and handles the TimeStamps that are assigned to users
  **/
-@CrossOrigin(origins = "*")
+@CrossOrigin(maxAge = 1)
 @RestController
 @RequestMapping("/api/time")
 public class TimeController {

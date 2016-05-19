@@ -1,20 +1,18 @@
 package org.demo.controller;
 
 
-import org.demo.model.AndroidBetweenQuery;
-import org.demo.model.RfidKey;
 import org.demo.model.ScheduleStamp;
 import org.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
  * Created by Anton on 2016-05-09.
  */
-@CrossOrigin(origins = "*")
+@CrossOrigin(maxAge = 1)
 @RestController
 @RequestMapping("/api/schedule")
 public class ScheduleController {

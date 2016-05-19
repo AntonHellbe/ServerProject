@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Class that acts as a controller for methods and Classes associated with Users
  **/
-@CrossOrigin(origins = "*")
+@CrossOrigin(maxAge = 1)
 @RestController
 @RequestMapping("/api/users")
 public class AccountController {
