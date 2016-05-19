@@ -118,10 +118,23 @@
 		/**
 		 * default get all users
 		 */
-		vm.getAll = function () {
+		vm.getAll = function (isManual) {
 
-			var allstr = {"area": "ACCOUNT", "crudType": "ALL", "token": $rootScope.authToken};
-			WebsocketService.send(allstr);
+			if(isManual) {
+				var allstr = {"area": "ACCOUNT", "crudType": "ALL", "token": $rootScope.authToken};
+				WebsocketService.send(allstr);
+
+			}
+			else {
+				var users = WebsocketService.getUsers();
+				if(users.length == 0) {
+					var allstr = {"area": "ACCOUNT", "crudType": "ALL", "token": $rootScope.authToken};
+					WebsocketService.send(allstr);
+				}
+				else {
+					vm.allusers = users;
+				}
+			}
 			//AccountsService.query().$promise.then(
 			//    function (success) {
 			//        console.log("Success");
@@ -136,7 +149,6 @@
 			//);
 		};
 
-		//todo CHANGE TO WEBSOCKETS
 		vm.getAll();
 
 		vm.cancelAdd = function () {

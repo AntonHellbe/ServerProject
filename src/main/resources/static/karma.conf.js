@@ -60,6 +60,11 @@ module.exports = function (config) {
 			'app/modules/chat/chatRoute.js',
 			'app/modules/chat/chatService.js',
 			'app/modules/chat/chat-test.js',
+			'app/modules/schedule/scheduleModule.js',
+			'app/modules/schedule/scheduleCtrl.js',
+			'app/modules/schedule/scheduleRoute.js',
+			'app/modules/schedule/scheduleService.js',
+			'app/modules/schedule/schedule-test.js',
 		],
 
 		// Test results reporter to use

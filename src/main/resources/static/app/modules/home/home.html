@@ -1,4 +1,4 @@
-<div id="parent" class="floatingToast">parent</div>
+
 
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
     <div ng-controller="SidenavCtrl as vm" ng-cloak>
@@ -75,7 +75,7 @@
             </md-menu>
         </div>
     </md-toolbar>
-    <md-toolbar class="md-hue-1" ng-show="showSearch" class="fixedMenu">
+    <md-toolbar class="md-hue-1" ng-show="showSearch">
         <div class="md-toolbar-tools">
             <md-button ng-click="showSearch = !showSearch" aria-label="Back">
                 <ng-md-icon icon="arrow_back"></ng-md-icon>

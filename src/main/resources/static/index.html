@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt" ng-app="essence">
+<html lang="en" ng-app="essence">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,6 +62,7 @@
 </head>
 <body ng-cloak>
 
+<div id="parent" class="floatingToast">parent</div>
 <!--Beginning-->
 <div ui-view layout="row" layout-fill></div>
 <!--End-->
@@ -177,6 +178,8 @@
 <script src="/app/modules/pi/piModule.js"></script>
 <script src="/app/modules/timestamps/timestampsModule.js"></script>
 <script src="/app/modules/chat/chatModule.js"></script>
+<script src="/app/modules/schedule/scheduleModule.js"></script>
+<script src="/app/modules/schedule/scheduleRoute.js"></script>
 <script src="/app/modules/chat/chatRoute.js"></script>
 <script src="/app/modules/accounts/accountsRoute.js"></script>
 <script src="/app/modules/android/androidRoute.js"></script>
@@ -184,6 +187,7 @@
 <script src="/app/modules/login/loginRoute.js"></script>
 <script src="/app/modules/pi/piRoute.js"></script>
 <script src="/app/modules/timestamps/timestampsRoute.js"></script>
+<script src="/app/modules/schedule/scheduleCtrl.js"></script>
 <script src="/app/modules/accounts/accountsCtrl.js"></script>
 <script src="/app/modules/chat/chatCtrl.js"></script>
 <script src="/app/modules/android/androidCtrl.js"></script>
@@ -193,6 +197,7 @@
 <script src="/app/modules/login/loginCtrl.js"></script>
 <script src="/app/modules/pi/piCtrl.js"></script>
 <script src="/app/modules/timestamps/timestampsCtrl.js"></script>
+<script src="/app/modules/schedule/scheduleService.js"></script>
 <script src="/app/modules/chat/chatService.js"></script>
 <script src="/app/modules/accounts/accountsService.js"></script>
 <script src="/app/modules/android/androidService.js"></script>

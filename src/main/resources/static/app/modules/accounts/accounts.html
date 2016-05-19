@@ -4,10 +4,10 @@
         <md-card-content>
             <h2 class="md-title">Content from: accounts page</h2>
 
-            <md-button class="md-raised" ng-click="vm.getAll()">update list of users</md-button>
+            <md-button class="md-raised" ng-click="vm.getAll(true)">update list of users</md-button>
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Search</label>
-                <input ng-model="searchText">
+                <input ng-model="searchText" type="search">
             </md-input-container>
 
             <md-card ng-repeat="user in vm.allusers | filter:searchText">

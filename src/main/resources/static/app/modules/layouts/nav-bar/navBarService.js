@@ -51,6 +51,11 @@
 							name: 'Chat'
 					},
 			    
+					{
+						link: 'schedule',
+							name: 'Schedule'
+					},
+			    
 		  	];
 
 			return {

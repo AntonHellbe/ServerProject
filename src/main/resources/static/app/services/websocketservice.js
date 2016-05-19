@@ -2,7 +2,7 @@
  * Created by sebadmin on 2016-05-13.
  */
 
-(function() {
+(function () {
 	'use strict';
 
 	/**
@@ -12,14 +12,18 @@
 	 * # timestampsService
 	 * Service of the app
 	 */
-	//angular.module("essence").service("ChatService", function ($q, $timeout) {
-		angular
-			.module('essence')
-			.factory('WebsocketService', WebsocketService);
+		//angular.module("essence").service("ChatService", function ($q, $timeout) {
+	angular
+		.module('essence')
+		.factory('WebsocketService', WebsocketService);
 
-	WebsocketService.$inject = ['$q','$timeout','$rootScope','$mdToast'];
+	WebsocketService.$inject = ['$q', '$timeout', '$rootScope', '$mdToast'];
 
-	function WebsocketService ($q, $timeout,$rootScope,$mdToast) {
+	function WebsocketService($q, $timeout, $rootScope, $mdToast) {
+
+		var users = [];
+		var timeStamps = [];
+		var schedules = [];
 
 		var service = {}, listener = $q.defer(), socket = {
 			client: null,
@@ -65,19 +69,17 @@
 
 		var getMessage = function (data) {
 			var message = JSON.parse(data), out = {};
-			//out.message = message.message;
-			//out.time = new Date(message.time);
-			//if (_.contains(messageIds, message.id)) {
-			//	out.self = true;
-			//	messageIds = _.remove(messageIds, message.id);
-			//}
-			//return out;
 
 			//[{"token":null,"content":null,"area":"ACCOUNT","crudType":"ALL","affectedId":null
 
+			//If a all request is called
+			if (message.crudType == 'ALL') {
+				handleAllAnswer(message);
+			}
+
 			$mdToast.show(
 				$mdToast.simple()
-					.content("Area: "+message.area+" - Change: "+message.crudType)
+					.content("Area: " + message.area + " - Change: " + message.crudType)
 					.position('top right')
 					.hideDelay(9000)
 					.parent("#parent")
@@ -85,6 +87,20 @@
 
 			return message;
 		};
+
+		var handleAllAnswer = function (message) {
+			switch (message.area) {
+				case "ACCOUNT":
+					users = message.payloadList;
+					break;
+				case "TIMESTAMP":
+					timeStamps = message.payloadList;
+					break;
+				case "SCHEDULE":
+					schedules = message.payloadList;
+					break;
+			}
+		}
 
 		var startListener = function () {
 			socket.stomp.subscribe(service.CHAT_TOPIC, function (data) {
@@ -109,6 +125,7 @@
 			console.log("connected");
 		};
 
+
 		service.disconnect = function () {
 			if (socket.stomp != null) {
 				socket.stomp.unsubscribe();
@@ -118,6 +135,20 @@
 			//setConnected(false);
 			console.log("Disconnected");
 		};
+
+		service.getSchedules = function() {
+			return schedules;
+		};
+
+		service.getTimestamps = function() {
+			return timeStamps;
+		};
+
+		service.getUsers = function() {
+			return users;
+		};
+
+
 
 		//initialize();
 		return service;

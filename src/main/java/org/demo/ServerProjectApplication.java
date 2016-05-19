@@ -3,6 +3,7 @@ package org.demo;
 
 import org.demo.config.AuthoritiesConstants;
 import org.demo.model.RfidKey;
+import org.demo.model.ScheduleStamp;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
@@ -23,9 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Random;
+import java.util.*;
 
 @SpringBootApplication
 public class ServerProjectApplication implements CommandLineRunner {
@@ -61,9 +60,9 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-//		accountRepository.deleteAll();
-//		timeRepository.deleteAll();
-//		scheduleRepository.deleteAll();
+		accountRepository.deleteAll();
+		timeRepository.deleteAll();
+		scheduleRepository.deleteAll();
 
 		Account defaultUser = accountRepository.findByUserName("user");
 		Account adminUser = accountRepository.findByUserName("admin");
@@ -159,25 +158,38 @@ public class ServerProjectApplication implements CommandLineRunner {
 //
 //		Calendar day1 = Calendar.getInstance();
 //		day1.set(2016, 4, 17, 18, 0, 0);
-//		String[] ids = new String[1];
-//		ids[0] = user2.getId();
+		String[] ids = new String[4];
+		ids[0] = defaultUser.getId();
+		ids[1] = user2.getId();
+		ids[2] = user3.getId();
+		ids[3] = user4.getId();
 //		ScheduleStamp newStamp = new ScheduleStamp(Calendar.getInstance().getTimeInMillis(), day1.getTimeInMillis(), ids);
-//		scheduleRepository.save(newStamp);
-//		//generate timestamps for usersers
-//		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-//		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-//		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-//		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
-////
-////		//add stamps
-//
-//		timeRepository.save(calsA);
-//		timeRepository.save(cals1);
-//		timeRepository.save(cals2);
-//		timeRepository.save(cals3);
-//		timeRepository.save(cals4);
 
+//		scheduleRepository.save(newStamp);
+
+
+
+//		//generate timestamps for usersers
+		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
+		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
+		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
+		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
+
+
+//
+//		//add stamps
+
+		timeRepository.save(calsA);
+		timeRepository.save(cals1);
+		timeRepository.save(cals2);
+		timeRepository.save(cals3);
+		timeRepository.save(cals4);
+
+		//add sched
+		ArrayList<ScheduleStamp> sheds = generateScheds(ids);
+		scheduleRepository.save(sheds);
+//		sheds.forEach(scheduleStamp -> scheduleRepository.save());
 
 		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
 		//db.getCollection('TimeStamps').find({"rfidKey._id":"34915AEC"}).sort({date:-1}).limit(1)
@@ -218,32 +230,57 @@ public class ServerProjectApplication implements CommandLineRunner {
 //		end of runner
 	}
 
-//	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
-//		Random rnd = new Random();
-//		ArrayList<TimeStamp> cals = new ArrayList<>();
-//		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//
-//		int rand = rnd.nextInt(3);
-//
-//		for (int i = 0; i < 30; i++) {
-//
-//			rand = rnd.nextInt(3);
-//			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
-//
-////			log.info("cal " + sdf.format(inCal.getTime()));
-//			cals.add(new TimeStamp(inCal.getTimeInMillis(), true, rfidKey));
-//			log.info("inCAl "+inCal.getTime());
-//
-//			rand = rnd.nextInt(3);
-////			log.info("rand22 " + rand);
-//			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
-//			cals.add(new TimeStamp(outCal.getTimeInMillis(), false, rfidKey));
-//
-//			log.info("inCAl "+outCal.getTime());
-//		}
-//		log.info("rfid " + rfidKey);
-//		return cals;
-//	}
+	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
+		Random rnd = new Random();
+		ArrayList<TimeStamp> cals = new ArrayList<>();
+		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+		int rand = rnd.nextInt(3);
+
+		for (int i = 0; i < 30; i++) {
+
+			rand = rnd.nextInt(3);
+			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
+
+//			log.info("cal " + sdf.format(inCal.getTime()));
+			cals.add(new TimeStamp(inCal.getTimeInMillis(), true, rfidKey));
+			log.info("inCAl "+inCal.getTime());
+
+			rand = rnd.nextInt(3);
+//			log.info("rand22 " + rand);
+			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
+			cals.add(new TimeStamp(outCal.getTimeInMillis(), false, rfidKey));
+
+			log.info("inCAl "+outCal.getTime());
+		}
+		log.info("rfid " + rfidKey);
+		return cals;
+	}
+
+	private ArrayList<ScheduleStamp> generateScheds(String[] ids) {
+		Random rnd = new Random();
+		ArrayList<ScheduleStamp> cals = new ArrayList<>();
+		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+		int rand = rnd.nextInt(3);
+
+		//4st
+
+		for (int i = 0; i < 30; i++) {
+
+			rand = rnd.nextInt(3);
+			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
+			rand = rnd.nextInt(3);
+			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
+			rand = rnd.nextInt(4)+1;
+			String[] tempIds = Arrays.copyOf(ids,rand);
+
+			cals.add(new ScheduleStamp(inCal.getTimeInMillis(), outCal.getTimeInMillis(),tempIds));
+
+		}
+		return cals;
+	}
 
 }

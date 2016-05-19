@@ -13,7 +13,7 @@
         .module('login')
         .controller('LoginCtrl', Login);
 
-    Login.$inject = ['$rootScope', '$http', '$cookies', 'LoginService', '$state','WebsocketService','$log'];
+    Login.$inject = ['$rootScope', '$http', '$cookies', 'LoginService', '$state','WebsocketService','$log','$timeout'];
 
     /*
      * recommend
@@ -21,7 +21,7 @@
      * and bindable members up top.
      */
 
-    function Login($rootScope, $http, $cookies, LoginService, $state,WebsocketService,$log) {
+    function Login($rootScope, $http, $cookies, LoginService, $state,WebsocketService,$log,$timeout) {
 
 	    /*jshint validthis: true */
 	    var vm = this;
@@ -30,9 +30,7 @@
         var ip = $rootScope.ip;
 
 
-        //vm.credentials = {};
-	    //todo remove
-        vm.credentials = {"username":"admin","password":"pass"};
+        vm.credentials = {};
 
         vm.loginData = {};
 
@@ -41,7 +39,10 @@
 
 
 
-	    vm.wsSend=function() {
+
+
+
+        vm.wsSend=function() {
 		    WebsocketService.send(vm.wstext);
 		    vm.wstext = "";
 	    };
@@ -107,7 +108,6 @@
 
         //login button
         vm.login = function () {
-            //TODO use service instead of http
             console.log("call login");
             console.log("creds " + JSON.stringify(vm.credentials));
 
@@ -137,8 +137,14 @@
 
                     vm.error = false;
                     $rootScope.authenticated = true;
-	                //todo uncomment
-	                //$state.go("home.dashboard");
+                    //todo change to dash
+                    //$state.go("home.dashboard");
+                    $timeout(function () {
+                        //$scope.myHeader = "How are you today?";
+                        $state.go("home.schedule");
+                    }, 1000);
+
+
                 } else {
                     console.log("Login failed")
                     //$location.path("/login");
@@ -206,6 +212,11 @@
             vm.myToken ="";
             vm.users={};
         }
+
+	    //todo ONLY FOR TESTING
+	    //todo remove
+	    vm.credentials = {"username":"admin","password":"pass"};
+	    vm.login();
 
 
     }

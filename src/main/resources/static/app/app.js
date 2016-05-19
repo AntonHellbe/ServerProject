@@ -11,10 +11,9 @@
 	 */
 
 	angular.module('essence', [
-
 		'ngResource',
 		'ngAria',
-		'ngMaterial',
+		 'ngMaterial',
 		'ngMdIcons',
 		'ngCookies',
 		'ngAnimate',
@@ -27,6 +26,7 @@
 		'pi',
 		'android',
 		'chat',
+		'schedule',
 	]);
 
 })();
