@@ -33,7 +33,7 @@ public class AndroidErrorHandler {
     public HttpStatus getUserHandler(String id){
         if(accountRepository.findOne(id)==null){
             log.info("No user found");
-            return HttpStatus.NO_CONTENT;
+            return HttpStatus.METHOD_FAILURE;
         }
         return HttpStatus.OK;
     }
@@ -42,6 +42,6 @@ public class AndroidErrorHandler {
         Account loginUser = accountRepository.findByName(getSpecificUserJSON.get("firstName").toString(), getSpecificUserJSON.get("lastName").toString());
         log.info("Logging in from Android with user: " + loginUser);
         if (loginUser!=null)return HttpStatus.OK;
-        return HttpStatus.NO_CONTENT;
+        return HttpStatus.METHOD_FAILURE;
     }
 }

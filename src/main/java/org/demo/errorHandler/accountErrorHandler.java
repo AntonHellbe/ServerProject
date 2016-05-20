@@ -39,7 +39,7 @@ public class AccountErrorHandler {
 
     public HttpStatus updateHandler(Account updatedAccount){
         if (updatedAccount == null){
-            return HttpStatus.NO_CONTENT;
+            return HttpStatus.METHOD_FAILURE;
         }
         //Checks the status of the RFID
         HttpStatus rfidStatus = rfidHandler(updatedAccount);
@@ -50,7 +50,8 @@ public class AccountErrorHandler {
         //Puts them all in an array for easy handling
         HttpStatus[] statuses = {rfidStatus, usernameStatus, passwordStatus};
         //If there are any wrongs in the statuses, return that status!
-        for (int i= 1; i<statuses.length;i++) {
+        for (int i= 0; i<statuses.length-1;i++) {
+            System.out.println("Status for " + i + " " + statuses[i]);
             if (statuses[i]!= HttpStatus.OK)return statuses[i];
         }
         return HttpStatus.OK;
@@ -59,14 +60,19 @@ public class AccountErrorHandler {
     public HttpStatus rfidHandler(Account updatedAccount){
         Account temp = accountRepository.findOne(updatedAccount.getId());
         int rfidLength = updatedAccount.getRfidKey().toString().length();
-        if(accountRepository.findUserByRfid(updatedAccount.getRfidKey())!=null &&
-                rfidLength != 0 &&
-                !temp.getRfidKey().equals(updatedAccount.getRfidKey())){
-            log.info("RFID is already in use!");
-            return HttpStatus.CONFLICT;
-        }if ((rfidLength != 0 && rfidLength <7) || rfidLength >8 ){
+        if(accountRepository.findUserByRfid(updatedAccount.getRfidKey())!=null){
+            System.out.println("rfidlength: " + rfidLength);
+            if (rfidLength>0){
+                System.out.println(!temp.getRfidKey().equals(updatedAccount.getRfidKey()));
+                if (!temp.getRfidKey().equals(updatedAccount.getRfidKey())){
+                    log.info("RFID is already in use!");
+                    return HttpStatus.CONFLICT;
+                }
+            }
+        }
+        if ((rfidLength != 0 && rfidLength <7) || rfidLength >8 ){
             log.info("The rfid is to long/short!");
-            return HttpStatus.LENGTH_REQUIRED;
+            return HttpStatus.I_AM_A_TEAPOT;
         }
         return HttpStatus.OK;
     }
@@ -105,18 +111,29 @@ public class AccountErrorHandler {
     }
 
     public HttpStatus addHandler(Account accountToAdd){
+        System.out.println(accountToAdd);
         if (accountToAdd.getUsername()==null &&accountToAdd.getFirstName()==null && accountToAdd.getLastName()==null){
             log.info("no username, firstname and lastname!");
-            return HttpStatus.NO_CONTENT;
+            return HttpStatus.NOT_ACCEPTABLE;
+        }if (accountToAdd.getUsername()==null &&accountToAdd.getFirstName()=="" && accountToAdd.getLastName()==""){
+            log.info("no username, firstname and lastname!");
+            return HttpStatus.NOT_ACCEPTABLE;
+        }if (accountRepository.findByUserName(accountToAdd.getUsername())!=null){
+            log.info("username taken already");
+            return HttpStatus.IM_USED;
+        }
+        if (accountRepository.findUserByRfid(accountToAdd.getRfidKey())!=null){
+            log.info("RFID is already in use!");
+            return HttpStatus.CONFLICT;
         }
         return passwordAddHandler(accountToAdd);
     }
 
     public HttpStatus passwordAddHandler(Account accountToAdd){
         System.out.println(accountToAdd.getPassword());
-        if (accountToAdd.getPassword()==null){
+        if (accountToAdd.getPassword()==null||accountToAdd.getPassword()==""){
             log.info("No password");
-            return HttpStatus.NO_CONTENT;
+            return HttpStatus.METHOD_FAILURE;
         }
         return HttpStatus.OK;
     }

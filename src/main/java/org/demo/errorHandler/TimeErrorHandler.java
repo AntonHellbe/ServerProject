@@ -52,7 +52,7 @@ public class TimeErrorHandler {
             }
         }
 
-        return HttpStatus.NO_CONTENT;
+        return HttpStatus.METHOD_FAILURE;
 
     }
 
@@ -67,7 +67,7 @@ public class TimeErrorHandler {
             }
         }
 
-        return HttpStatus.NO_CONTENT;
+        return HttpStatus.METHOD_FAILURE;
     }
 
     public HttpStatus getAllHandler(String id) {
@@ -75,7 +75,7 @@ public class TimeErrorHandler {
         if(timeRepository.getByRfid(accountRepository.findOne(id).getRfidKey()) != null ) {
             return HttpStatus.OK;
         }
-        return HttpStatus.NO_CONTENT;
+        return HttpStatus.METHOD_FAILURE;
     }
 
     public HttpStatus getHandler(String id, String stampId) {

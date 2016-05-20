@@ -70,9 +70,12 @@ public class AccountServiceImpl implements AccountService {
 	public ResponseEntity<Account> updateUser(Account updatedAccount) {
 		Account temp = accountRepository.findOne(updatedAccount.getId());
 		HttpStatus status = errorHandler.updateHandler(updatedAccount);
+		System.out.println(status);
 		if(status!=HttpStatus.OK){
+			System.out.println("FEL!");
 			return new ResponseEntity<Account>(status);
 		}else {
+			System.out.println("Here?");
 			if (!temp.getPassword().equals(updatedAccount.getPassword())) {
 				updatedAccount.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
 			}
@@ -115,6 +118,7 @@ public class AccountServiceImpl implements AccountService {
 	public ResponseEntity<Account> addUser(Account newAccount) {
 		HttpStatus status = errorHandler.addHandler(newAccount);
 		if(status != HttpStatus.OK) {
+			System.out.println("error?" + status);
 			return new ResponseEntity<Account>(status);
 		}
 		if (newAccount.getUsername() == null) {
