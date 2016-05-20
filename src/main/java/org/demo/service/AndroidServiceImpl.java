@@ -1,5 +1,6 @@
 package org.demo.service;
 
+import org.demo.errorHandler.AndroidErrorHandler;
 import org.demo.model.*;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
@@ -31,6 +32,9 @@ public class AndroidServiceImpl implements AndroidService {
 	private static final Logger log = LoggerFactory.getLogger(AndroidServiceImpl.class);
 
 	@Autowired
+	private AndroidErrorHandler androidErrorHandler;
+
+	@Autowired
 	TimeRepository timeRepository;
 
 	@Autowired
@@ -47,26 +51,25 @@ public class AndroidServiceImpl implements AndroidService {
 	 **/
 
 	public ResponseEntity<Account> getUser(String id) {
-		System.out.println("looking for RFID " + id);
-		Account wantedAccount = accountRepository.findOne(id);
-		System.out.println("found user: " + wantedAccount);
-		if (wantedAccount != null) {
-			return new ResponseEntity<Account>(wantedAccount, HttpStatus.OK);
+		HttpStatus status = androidErrorHandler.getUserHandler(id);
+		if (status!=HttpStatus.OK) {
+			return new ResponseEntity<Account>(status);
 		}
-
-		return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+		Account wantedAccount = accountRepository.findOne(id);
+		return new ResponseEntity<Account>(status);
 	}
 
 	public ResponseEntity<Account> loginUser(Map<String, Object> getSpecificUserJSON) {
+		HttpStatus status = androidErrorHandler.logInUserHandler(getSpecificUserJSON);
 		System.out.println(getSpecificUserJSON.get("firstName").toString());
 		System.out.println(getSpecificUserJSON.get("lastName").toString());
 		Account loginUser = accountRepository.findByName(getSpecificUserJSON.get("firstName").toString(), getSpecificUserJSON.get("lastName").toString());
 
-		if(loginUser != null) {
-			return new ResponseEntity<Account>(loginUser, HttpStatus.OK);
+		if(status == HttpStatus.OK) {
+			return new ResponseEntity<Account>(loginUser, status);
 		}
 
-		return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Account>(status);
 
 	}
 	/**
@@ -119,18 +122,7 @@ public class AndroidServiceImpl implements AndroidService {
 				.map(AndroidStamp::new)
 				.collect(Collectors.toList());
 
-//		Account tempAccount = accountRepository.findUserByRfid(androidBetweenQuery.getId());
-//		List<ScheduleStamp> temp = scheduleRepository.getBetweenQuery(androidBetweenQuery.getFrom(), androidBetweenQuery.getTo(), tempAccount.getId() );
-//		LinkedHashMap<String, Object> gotTimes = new LinkedHashMap<>();
-//		gotTimes.put("androidstamps", betweenTimes);
-//		gotTimes.put("schedulestamps", temp);
-//		allTimes.put("androidstamps", betweenTimes);
-//		allTimes.put("schedulestamps", temp );
 		return new ResponseEntity<List<AndroidStamp>>(betweenTimes, HttpStatus.OK);
-//		if (betweenTimes != null) {
-//			return new ResponseEntity<>(betweenTimes, HttpStatus.OK);
-//		}
-//		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 }

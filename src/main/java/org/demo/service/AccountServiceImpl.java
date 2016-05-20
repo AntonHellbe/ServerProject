@@ -1,7 +1,7 @@
 package org.demo.service;
 
 import org.demo.config.UserNameGenerator;
-import org.demo.errorHandler.accountErrorHandler;
+import org.demo.errorHandler.AccountErrorHandler;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.method.annotation.ErrorsMethodArgumentResolver;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,7 +30,7 @@ import java.util.Map;
 public class AccountServiceImpl implements AccountService {
 
 	@Autowired
-	private accountErrorHandler errorHandler;
+	private AccountErrorHandler errorHandler;
 
 	private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
 

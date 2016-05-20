@@ -1,5 +1,6 @@
 package org.demo.service;
 
+import org.demo.errorHandler.ScheduleErrorHandler;
 import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.ScheduleStamp;
 import org.demo.repository.ScheduleRepository;
@@ -18,6 +19,9 @@ import java.util.List;
  */
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
+
+    @Autowired
+    private ScheduleErrorHandler errorHandler;
 
     @Autowired
     ScheduleRepository scheduleRepository;
@@ -40,25 +44,25 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ResponseEntity<ScheduleStamp> addSchedule(ScheduleStamp scheduleStamp) {
-        if(scheduleStamp != null) {
-            scheduleRepository.save(scheduleStamp);
-            return new ResponseEntity<ScheduleStamp>(scheduleStamp, HttpStatus.OK);
+        HttpStatus status = errorHandler.addScheduleHandler(scheduleStamp);
+        if(status !=HttpStatus.OK) {
+            return new ResponseEntity<>(status);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        scheduleRepository.save(scheduleStamp);
+        return new ResponseEntity<ScheduleStamp>(scheduleStamp, status);
 
     }
 
     @Override
     public ResponseEntity<List<ScheduleStamp>> updateSchedule(List<ScheduleStamp> scheduleStamps) {
-        if(scheduleStamps != null) {
-            for (int i = 0; i < scheduleStamps.size() ; i++) {
-                scheduleRepository.save(scheduleStamps);
-            }
-            return new ResponseEntity<List<ScheduleStamp>>(scheduleStamps, HttpStatus.OK);
+        HttpStatus status = errorHandler.updateScheduleHandler(scheduleStamps);
+        if(status != HttpStatus.OK) {
+            return new ResponseEntity<>(status);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        for (int i = 0; i < scheduleStamps.size() ; i++) {
+            scheduleRepository.save(scheduleStamps);
+        }
+        return new ResponseEntity<List<ScheduleStamp>>(scheduleStamps, HttpStatus.OK);
     }
 
     @Override
