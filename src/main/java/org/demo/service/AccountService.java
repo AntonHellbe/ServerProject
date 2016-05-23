@@ -40,8 +40,6 @@ public interface AccountService {
      * Updates the password of an existing user, and encrypts it.
      * @return The updated user information
      **/
-    ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id);
-
 	Account passwordUpdater(String newPassword, String userId) throws Exception;
 
     /**

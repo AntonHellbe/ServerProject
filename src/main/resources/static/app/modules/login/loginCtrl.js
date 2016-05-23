@@ -215,8 +215,8 @@
 
 	    //todo ONLY FOR TESTING
 	    //todo remove
-	    vm.credentials = {"username":"admin","password":"pass"};
-	    vm.login();
+	    //vm.credentials = {"username":"admin","password":"pass"};
+	    //vm.login();
 
 
     }

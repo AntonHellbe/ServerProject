@@ -76,9 +76,9 @@ public class AccountServiceImpl implements AccountService {
 			return new ResponseEntity<Account>(status);
 		}else {
 			System.out.println("Here? " + temp.getPassword().equals(updatedAccount.getPassword()));
-			if (updatedAccount.getPassword() != accountRepository.findOne(updatedAccount.getId()).getPassword()) {
+			if (!updatedAccount.getPassword().equals(accountRepository.findOne(updatedAccount.getId()).getPassword())) {
 				System.out.println("We want to update the password to: "+updatedAccount.getPassword());
-				//updatedAccount.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
+				updatedAccount.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
 				System.out.println("Encoded: " + updatedAccount.getPassword());
 			}
 			accountRepository.save(updatedAccount);
@@ -88,6 +88,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public Account passwordUpdater(String newPassword, String userId) throws Exception {
+		HttpStatus status = errorHandler.passwordUpdate(newPassword, userId);
 		if (newPassword != null) {
 			Account updatedAccount = accountRepository.findOne(userId);
 			updatedAccount.setPassword(passwordEncoder.encode(newPassword));
@@ -95,17 +96,6 @@ public class AccountServiceImpl implements AccountService {
 			return returnAccount;
 		} else {
 			throw new Exception("Failed to update password, due to new password is not set!");
-		}
-	}
-
-	public ResponseEntity<Account> updatePassword(@RequestBody String newPass, @PathVariable("id") String id) {
-		if (newPass != null) {
-			Account updatedAccount = accountRepository.findOne(id);
-			updatedAccount.setPassword(passwordEncoder.encode(newPass));
-			accountRepository.save(updatedAccount);
-			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
 		}
 	}
 
