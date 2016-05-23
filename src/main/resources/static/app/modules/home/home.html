@@ -48,7 +48,7 @@ ng-if="vm.isAuth">
             <!--<md-button aria-label="Search" ng-click="showSearch = !showSearch">-->
                 <!--<ng-md-icon icon="search"></ng-md-icon>-->
             <!--</md-button>-->
-            <md-menu>
+            <md-menu ng-if="vm.isAuth">
                 <md-button aria-label="Open Settings" ng-click="layout.openMenu($mdOpenMenu, $event)">
                     <md-icon> more_vert </md-icon>
                 </md-button>
@@ -59,12 +59,12 @@ ng-if="vm.isAuth">
                             Profile
                         </md-button>
                     </md-menu-item>
-                    <md-menu-item>
-                        <md-button ng-click="layout.changePassword()">
-                            <md-icon>lock</md-icon>
-                            Password
-                        </md-button>
-                    </md-menu-item>
+                    <!--<md-menu-item>-->
+                        <!--<md-button ng-click="layout.changePassword()">-->
+                            <!--<md-icon>lock</md-icon>-->
+                            <!--Password-->
+                        <!--</md-button>-->
+                    <!--</md-menu-item>-->
                     <md-menu-divider></md-menu-divider>
                     <md-menu-item>
                         <md-button ng-click="layout.logOut()">
