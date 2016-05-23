@@ -2,6 +2,7 @@ package org.demo.config;
 
 /**
  * Constants for Spring Security authorities.
+ * @author Robin Johnsson
  */
 public final class AuthoritiesConstants {
 

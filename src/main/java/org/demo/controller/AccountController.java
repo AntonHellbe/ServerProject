@@ -15,6 +15,7 @@ import java.util.List;
  */
 /**
  * Class that acts as a controller for methods and Classes associated with Users
+ * @author Robin Johnsson
  **/
 @CrossOrigin(maxAge = 1)
 @RestController

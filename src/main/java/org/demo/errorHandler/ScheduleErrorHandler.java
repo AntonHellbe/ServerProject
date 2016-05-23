@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Created by Robin_2 on 20/05/2016.
+ * @author Robin Johnsson
  */
 @Component
 public class ScheduleErrorHandler {

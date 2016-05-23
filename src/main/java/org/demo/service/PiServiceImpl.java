@@ -18,6 +18,7 @@ import java.util.Calendar;
 
 /**
  * Created by seb on 2016-04-11.
+ * @author Robin Johnsson
  */
 
 /**

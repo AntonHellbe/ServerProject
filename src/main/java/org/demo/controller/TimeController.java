@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * Class that creates and handles the TimeStamps that are assigned to users
+ * @author Robin Johnsson
  **/
 @CrossOrigin(maxAge = 1)
 @RestController

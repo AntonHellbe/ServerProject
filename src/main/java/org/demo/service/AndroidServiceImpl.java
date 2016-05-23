@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Anton on 2016-04-11.
+ * @author Robin Johnsson
  */
 
 /**
