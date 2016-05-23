@@ -4,10 +4,11 @@
 
 .floatingToast{
     position:fixed !important;
+    top:50px;
     width: 50%;
     height: 50pt;
     right: 30px;
-    background-color: red;
+    /*background-color: red;*/
     z-index:99;
 }
 

@@ -46,10 +46,10 @@
 							name: 'Chat'
 					},
 			    
-					{
-						link: 'schedule',
-							name: 'Schedule'
-					},
+					//{
+					//	link: 'schedule',
+					//		name: 'Schedule'
+					//},
 			    
 		  	];
 
