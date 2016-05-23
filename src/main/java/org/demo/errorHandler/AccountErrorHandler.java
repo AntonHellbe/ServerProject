@@ -140,7 +140,7 @@ public class AccountErrorHandler {
     }
 
     public HttpStatus passwordUpdate(String newPassword, String userId){
-        if (newPassword.length() <4){
+        if (newPassword.length() <4 || newPassword==null){
             log.info("To short password");
             return HttpStatus.LENGTH_REQUIRED;
         }
