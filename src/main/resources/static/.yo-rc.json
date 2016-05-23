@@ -26,6 +26,9 @@
       },
       {
         "name": "schedule"
+      },
+      {
+        "name": "splash"
       }
     ],
     "menu": [
@@ -56,6 +59,10 @@
       {
         "link": "schedule",
         "title": "Schedule"
+      },
+      {
+        "link": "splash",
+        "title": "Splash"
       }
     ]
   }

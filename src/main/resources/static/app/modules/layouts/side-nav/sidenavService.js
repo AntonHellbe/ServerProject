@@ -36,10 +36,15 @@
 							name: 'Login'
 					},
 			    
-					{
-						link: 'pi',
-							name: 'Pi'
-					},
+					//{
+					//	link: 'pi',
+					//		name: 'Pi'
+					//},
+			    
+					//{
+					//	link: 'android',
+					//		name: 'Android'
+					//},
 			    
 					{
 						link: 'chat',
@@ -50,6 +55,11 @@
 					//	link: 'schedule',
 					//		name: 'Schedule'
 					//},
+			    
+					{
+						link: 'splash',
+							name: 'Splash'
+					},
 			    
 		  	];
 

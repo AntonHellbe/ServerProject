@@ -65,6 +65,11 @@ module.exports = function (config) {
 			'app/modules/schedule/scheduleRoute.js',
 			'app/modules/schedule/scheduleService.js',
 			'app/modules/schedule/schedule-test.js',
+			'app/modules/splash/splashModule.js',
+			'app/modules/splash/splashCtrl.js',
+			'app/modules/splash/splashRoute.js',
+			'app/modules/splash/splashService.js',
+			'app/modules/splash/splash-test.js',
 		],
 
 		// Test results reporter to use

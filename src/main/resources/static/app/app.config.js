@@ -27,7 +27,7 @@
 
 
         $urlRouterProvider
-            .otherwise('/login');
+            .otherwise('/splash');
 
     }
 
