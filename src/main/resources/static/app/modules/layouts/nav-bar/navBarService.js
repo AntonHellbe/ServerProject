@@ -31,10 +31,10 @@
 							name: 'Timestamps'
 					},
 			    
-					{
-						link: 'login',
-							name: 'Login'
-					},
+					//{
+					//	link: 'login',
+					//		name: 'Login'
+					//},
 			    
 					//{
 					//	link: 'pi',
@@ -56,10 +56,10 @@
 					//		name: 'Schedule'
 					//},
 			    
-					{
-						link: 'splash',
-							name: 'Splash'
-					},
+					//{
+					//	link: 'splash',
+					//		name: 'Splash'
+					//},
 			    
 		  	];
 

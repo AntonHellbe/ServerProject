@@ -13,7 +13,8 @@ angular.module('splash')
 		
 		$stateProvider
 			.state('home.splash', {
-				url:'/splash',
+				url:'/',
+				//url:'/splash',
 				templateUrl: 'app/modules/splash/splash.html',
 				controller: 'SplashCtrl',
 				controllerAs: 'vm'

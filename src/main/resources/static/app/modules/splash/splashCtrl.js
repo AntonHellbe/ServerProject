@@ -13,7 +13,7 @@
 		.module('splash')
 		.controller('SplashCtrl', Splash);
 
-		Splash.$inject = [];
+		Splash.$inject = ['$state'];
 
 		/*
 		* recommend
@@ -21,9 +21,13 @@
 		* and bindable members up top.
 		*/
 
-		function Splash() {
+		function Splash($state) {
 			/*jshint validthis: true */
 			var vm = this;
+
+			vm.gotoLogin =function() {
+				$state.go("home.dashboard");
+			}
 
 		}
 

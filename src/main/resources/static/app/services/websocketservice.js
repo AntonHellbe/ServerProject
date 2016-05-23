@@ -81,7 +81,7 @@
 				$mdToast.simple()
 					.content("Area: " + message.area + " - Change: " + message.crudType)
 					.position('top right')
-					.hideDelay(9000)
+					.hideDelay(2000)
 					.parent("#parent")
 			);
 
@@ -103,6 +103,7 @@
 		}
 
 		var startListener = function () {
+			console.log("Got connection");
 			socket.stomp.subscribe(service.CHAT_TOPIC, function (data) {
 				listener.notify(getMessage(data.body));
 			});
@@ -120,9 +121,11 @@
 		service.connect = function () {
 			socket.client = new SockJS(service.SOCKET_URL);
 			socket.stomp = Stomp.over(socket.client);
-			socket.stomp.connect({}, startListener);
 			socket.stomp.onclose = reconnect;
+			socket.stomp.connect({}, startListener);
+
 			console.log("connected");
+
 		};
 
 

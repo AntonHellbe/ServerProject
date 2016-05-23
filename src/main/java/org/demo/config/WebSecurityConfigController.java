@@ -45,6 +45,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 						, "/bower_components/**"
 						, "/app/**"
 						, "/src/**"
+						,"/wsservice/**"
 				).permitAll()
 					.anyRequest()
 					.authenticated()
