@@ -138,4 +138,12 @@ public class AccountErrorHandler {
         }
         return HttpStatus.OK;
     }
+
+    public HttpStatus passwordUpdate(String newPassword, String userId){
+        if (newPassword.length() <4 || newPassword==null){
+            log.info("To short password");
+            return HttpStatus.LENGTH_REQUIRED;
+        }
+        return HttpStatus.OK;
+    }
 }
