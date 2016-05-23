@@ -27,7 +27,7 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 				//Bara någon med piRole ska nå denna
 				.antMatchers("/api/pi/{id}").hasAuthority(AuthoritiesConstants.PIUSER)
 				//Alla ska nå denna
-				.antMatchers("/api/users/{id}").permitAll()
+				.antMatchers("/api/users/{id}").hasAuthority(AuthoritiesConstants.USER)
 				//Bara någon med ADMIN kan nå dessa (Förutom den ovan)
 				.antMatchers("/api/users","/api/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
 				//Bara någon med ADMIN kan nå dessa

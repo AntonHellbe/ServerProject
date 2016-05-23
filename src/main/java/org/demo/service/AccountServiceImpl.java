@@ -75,10 +75,14 @@ public class AccountServiceImpl implements AccountService {
 			System.out.println("FEL!");
 			return new ResponseEntity<Account>(status);
 		}else {
-			System.out.println("Here?");
-			if (!temp.getPassword().equals(updatedAccount.getPassword())) {
-				updatedAccount.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
+			System.out.println("Here? " + temp.getPassword().equals(updatedAccount.getPassword()));
+			if (updatedAccount.getPassword() != accountRepository.findOne(updatedAccount.getId()).getPassword()) {
+				System.out.println("We want to update the password to: "+updatedAccount.getPassword());
+				//updatedAccount.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
+				System.out.println("Encoded: " + updatedAccount.getPassword());
 			}
+			accountRepository.save(updatedAccount);
+			System.out.println(updatedAccount);
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 		}
 	}

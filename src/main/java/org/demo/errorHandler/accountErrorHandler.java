@@ -94,6 +94,7 @@ public class AccountErrorHandler {
     public HttpStatus passwordUpdateHandler(Account updatedAccount){
         Account temp = accountRepository.findOne(updatedAccount.getId());
         //Checks if the password is uppdated, and if it is, it has to be 4 characters or more
+        System.out.println("pass? " + updatedAccount.getPassword());
         if(!temp.getPassword().equals(updatedAccount.getPassword()) && updatedAccount.getPassword().length()<4){
             log.info("Wrong with the password");
             return HttpStatus.LENGTH_REQUIRED;
