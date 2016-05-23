@@ -12,9 +12,11 @@
 	angular.module('essence')
 		.factory('homeService', homeService);
 
-	homeService.$inject = ['$http'];
+	homeService.$inject = ['$http','$rootScope'];
 
-	function homeService($http) {
+	function homeService($http,$rootScope) {
+
+		var isAuth = false;
 
 		var list = [
 			{"feature": "Implemented Best Practices, following: John Papa's Guide"},
@@ -30,12 +32,42 @@
 		];
 
 		return {
-			getFeaturesList: getFeaturesList
+			getFeaturesList: getFeaturesList,
+			setLoggedIn: setLoggedIn,
+			getLoggedIn: getLoggedIn,
+			subscribe:subscribe,
+			notify:notify
+
 		};
+
+
+
+		function getLoggedIn() {
+			console.log("is auth " + isAuth);
+			return isAuth;
+		}
+
+		function subscribe(scope, callback) {
+			var handler = $rootScope.$on('notifying-service-event', callback);
+			//scope.$on('$destroy', handler);
+		};
+
+		function notify() {
+			console.log("sending notify " + isAuth);
+			$rootScope.$emit('notifying-service-event',isAuth);
+		};
+
+		function setLoggedIn(newAuth) {
+
+			isAuth = newAuth;
+			console.log("is auth " + isAuth);
+			notify();
+		};
+
 
 		function getFeaturesList() {
 			return list
-		}
+		};
 
 	}
 

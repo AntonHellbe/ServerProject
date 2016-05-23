@@ -13,7 +13,7 @@
 		.module('essence')
 		.controller('LayoutCtrl', Layout);
 
-	Layout.$inject = ['$mdSidenav', '$cookies', '$state', '$mdToast', '$mdDialog', '$http', '$rootScope','WebsocketService'];
+	Layout.$inject = ['$mdSidenav', '$cookies', '$state', '$mdToast', '$mdDialog', '$http', '$rootScope','WebsocketService','homeService'];
 
 	/*
 	 * recommend
@@ -21,7 +21,7 @@
 	 * and bindable members up top.
 	 */
 
-	function Layout($mdSidenav, $cookies, $state, $mdToast, $mdDialog, $http, $rootScope,WebsocketService) {
+	function Layout($mdSidenav, $cookies, $state, $mdToast, $mdDialog, $http, $rootScope,WebsocketService,homeService) {
 		/*jshint validthis: true */
 		var vm = this;
 
@@ -92,13 +92,13 @@
 				$rootScope.authenticated = false;
                 $rootScope.authData={};
 				console.log("LOGED out");
-
+				homeService.setLoggedIn($rootScope.authenticated);
 				WebsocketService.disconnect();
 				$rootScope.authToken = {};
 
 				//$location.path("/");
 			});
-            //$state.go('out', {}, {reload: true});
+
 			$state.go('home.login', {}, {reload: true});
 
 		};

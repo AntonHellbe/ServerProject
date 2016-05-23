@@ -27,14 +27,17 @@
 		vm.title = "Essence";
 		vm.version = "1.0.0";
 		vm.listFeatures = homeService.getFeaturesList();
-		vm.isAuth = $rootScope.authenticated;
 
-		vm.isAuth=homeService.getAuth();
+		vm.isAuth=homeService.getLoggedIn();
 
-		vm.setLoggedIn = function(isAuth) {
-			console.log("new Auth "+isAuth);
-			vm.isAuth = isAuth;
-		};
+		homeService.subscribe(vm, function somethingChanged(event, data) {
+			// Handle notification
+			console.log("got update "+data);
+			vm.isAuth = data;
+		});
+
+
+
 
 	}
 

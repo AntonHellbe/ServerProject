@@ -13,7 +13,7 @@
         .module('login')
         .controller('LoginCtrl', Login);
 
-    Login.$inject = ['$rootScope', '$http', '$cookies', 'LoginService', '$state','WebsocketService','$log','$timeout','HomeCtrl'];
+    Login.$inject = ['$rootScope', '$http', '$cookies', 'LoginService', '$state','WebsocketService','$log','$timeout','homeService'];
 
     /*
      * recommend
@@ -21,7 +21,7 @@
      * and bindable members up top.
      */
 
-    function Login($rootScope, $http, $cookies, LoginService, $state,WebsocketService,$log,$timeout,HomeCtrl) {
+    function Login($rootScope, $http, $cookies, LoginService, $state,WebsocketService,$log,$timeout,homeService) {
 
 	    /*jshint validthis: true */
 	    var vm = this;
@@ -51,7 +51,7 @@
 		    var allstr = {"area":"ACCOUNT","crudType":"ALL","token":$rootScope.authToken};
 		    $log.info("sending > " + JSON.stringify(allstr));
 		    WebsocketService.send(allstr);
-	    }
+	    };
 
 	    vm.wsdis = function () {
 		    WebsocketService.disconnect();
@@ -138,7 +138,7 @@
                     vm.error = false;
                     $rootScope.authenticated = true;
                     $log.info("auth: " + $rootScope.authenticated);
-                    HomeCtrl.setLoggedIn($rootScope.authenticated);
+	                homeService.setLoggedIn($rootScope.authenticated);
                     //todo change to dash
                     $state.go("home.dashboard");
                     //$timeout(function () {

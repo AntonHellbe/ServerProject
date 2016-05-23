@@ -187,8 +187,8 @@ public class ServerProjectApplication implements CommandLineRunner {
 		timeRepository.save(cals4);
 
 		//add sched
-		ArrayList<ScheduleStamp> sheds = generateScheds(ids);
-		scheduleRepository.save(sheds);
+//		ArrayList<ScheduleStamp> sheds = generateScheds(ids);
+//		scheduleRepository.save(sheds);
 //		sheds.forEach(scheduleStamp -> scheduleRepository.save());
 
 		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
