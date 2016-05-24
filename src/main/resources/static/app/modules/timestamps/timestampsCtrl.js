@@ -14,7 +14,7 @@
 		.controller('TimestampsCtrl', Timestamps);
 
 	//Timestamps.$inject = [ 'TimestampsService', '$mdDialog', '$log', 'WebsocketService', '$rootScope', '$filter'];
-	Timestamps.$inject = [ '$mdDialog', '$log', 'WebsocketService', '$rootScope', '$filter'];
+	Timestamps.$inject = [ '$mdDialog', '$log', 'WebsocketService', '$rootScope', '$filter','$http'];
 
 	/*
 	 * recommend
@@ -23,7 +23,7 @@
 	 */
 
 	//function Timestamps( TimestampsService, $mdDialog, $log, WebsocketService, $rootScope, $filter) {
-	function Timestamps( $mdDialog, $log, WebsocketService, $rootScope, $filter) {
+	function Timestamps( $mdDialog, $log, WebsocketService, $rootScope, $filter,$http) {
 		/*jshint validthis: true */
 		var vm = this;
 
@@ -240,19 +240,33 @@
 				);
 		};
 
-		//vm.addNowStamp = function (user) {
-		//	console.log("add NOW timestamp");
-		//	TimestampsService.save({id: user.id}).$promise.then(
-		//		function (success) {
-		//			console.log("Success update time");
-		//			vm.status = "update" + JSON.stringify(success);
-		//			user.stamps.push(success);
-		//		},
-		//		function (error) {
-		//			alert("Failed " + JSON.stringify(error));
-		//		}
-		//	);
-		//};
+		vm.addNowStamp = function (user) {
+
+			console.log("add NOW timestamp for "+user.rfidKey.id);
+
+			$http.get('/api/pi/' + user.rfidKey.id).then(function (response) {
+				console.log("pi succes"+response);
+				alert("pi succes" + JSON.stringify(response));
+				//user.stamps.push(success);
+
+			}, function (errorRes) {
+				console.log("error res " + JSON.stringify(errorRes));
+				alert("faild pi stamp "+JSON.stringify(errorRes));
+
+			});
+
+
+			//TimestampsService.save({id: user.id}).$promise.then(
+			//	function (success) {
+			//		console.log("Success update time");
+			//		vm.status = "update" + JSON.stringify(success);
+			//		user.stamps.push(success);
+			//	},
+			//	function (error) {
+			//		alert("Failed " + JSON.stringify(error));
+			//	}
+			//);
+		};
 
 		vm.addStamp = function (ev, user) {
 			//set active user

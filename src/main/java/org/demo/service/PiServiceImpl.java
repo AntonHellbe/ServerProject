@@ -55,20 +55,24 @@ public class PiServiceImpl implements PiService {
         Account currentAccount = accountRepository.findUserByRfid(rfidKey);
 
 
-        if (status!=HttpStatus.OK) {
-            return new ResponseEntity<>(status);
+        if (status==HttpStatus.OK) {
+            boolean state;
+            TimeStamp got = timeRepository.stateCheck(rfidKey);
+            if (got == null) {
+                state = true;
+            } else {
+                state = !(got.getCheckIn());
+            }
+            TimeStamp newStamp = new TimeStamp(Calendar.getInstance().getTimeInMillis(), state, currentAccount.getRfidKey());
+            timeRepository.save(newStamp);
+            log.info(newStamp.toString());
+            return new ResponseEntity<>(new PiStamp(newStamp.getCheckIn(), currentAccount), status);
         }
-        boolean state;
-        TimeStamp got = timeRepository.stateCheck(rfidKey);
-        if (got == null) {
-            state = true;
-        } else {
-            state = !(got.getCheckIn());
-        }
-        TimeStamp newStamp = new TimeStamp(Calendar.getInstance().getTimeInMillis(), state, currentAccount.getRfidKey());
-        timeRepository.save(newStamp);
-        log.info(newStamp.toString());
-        return new ResponseEntity<>(new PiStamp(newStamp.getCheckIn(), currentAccount), status);
+        //if error
+        log.info("Error creating pi stamp status:"+status.toString()+" for rfid: "+rfidKey.getId());
+        return new ResponseEntity<PiStamp>(status);
+
+
     }
 
     @Override
