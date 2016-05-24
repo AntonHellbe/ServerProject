@@ -15,7 +15,6 @@
         <div ng-show="user.showBody">
             <md-card-content>
                 <md-button ng-click="vm.addStamp(ev,user)">+ Add new timestamp</md-button>
-                <md-button ng-click="vm.addNowStamp(user)">Add PI NOW timestamp</md-button>
                 <md-button ng-click="vm.getStamps(user,true)">update timestamp list</md-button>
                 <md-list ng-cloak="user.stamps">
                     <md-list-item ng-repeat="stamp in user.stamps | orderBy:'date'"
