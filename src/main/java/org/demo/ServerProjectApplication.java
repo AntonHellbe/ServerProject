@@ -78,7 +78,6 @@ public class ServerProjectApplication implements CommandLineRunner {
 			log.info("CREATING DEFAULT USER");
 			String pass = encoder.encode("pass");
 			RfidKey test = new RfidKey("C48659EC");
-			test.setEnabled(true);
 			defaultUser = new Account("Doris", "Popo", "user", pass,
 					AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER)
 			);
@@ -172,7 +171,7 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 //		//generate timestamps for usersers
 		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-		//ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
+//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
 		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
 		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
 		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
@@ -182,7 +181,7 @@ public class ServerProjectApplication implements CommandLineRunner {
 //		//add stamps
 
 		timeRepository.save(calsA);
-		//timeRepository.save(cals1);
+//		timeRepository.save(cals1);
 		timeRepository.save(cals2);
 		timeRepository.save(cals3);
 		timeRepository.save(cals4);

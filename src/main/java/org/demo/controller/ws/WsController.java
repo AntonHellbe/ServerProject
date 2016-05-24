@@ -88,7 +88,7 @@ public class WsController {
 			answer = new WsAnswer("Hello, " + message.getName() + "!");
 		}
 
-		log.info("returing " + answer);
+		log.info("returing to client: " + answer);
 
 		//log.info("Got Ws message " + message.toString());
 //		return new WsAnswer("Hello, " + message.getName() + "!");
@@ -139,7 +139,10 @@ public class WsController {
 				case DELETE:
 					log.info("delete timestamp for " + message.getAffectedId());
 					stamp = mapper.convertValue(message.getPayload(), TimeStamp.class);
+					log.info("delete stampid "+stamp.getId());
 					ResponseEntity<TimeStamp> deletedStamp = service.deleteTime(message.getAffectedId(), stamp.getId());
+					log.info("delted: status:"+deletedStamp.getStatusCode());
+					log.info("delted: body:"+deletedStamp.getBody());
 					answer.setPayload(deletedStamp.getBody());
 
 					break;

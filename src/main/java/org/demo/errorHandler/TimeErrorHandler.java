@@ -87,12 +87,12 @@ public class TimeErrorHandler {
     }
 
     public HttpStatus deleteTimeHandler(String id, String stampId) {
-        if(timeRepository.findOne(id) != null) {
+        if(timeRepository.findOne(stampId) != null) {
             return HttpStatus.OK;
         }
         //asdasdasdas
         //asdadasdasd
-        System.out.println("dildo");
+        System.out.println("ANTON!!!!!");
         return HttpStatus.NOT_FOUND;
     }
 

@@ -245,13 +245,16 @@
 			console.log("add NOW timestamp for "+user.rfidKey.id);
 
 			$http.get('/api/pi/' + user.rfidKey.id).then(function (response) {
-				console.log("pi succes"+response);
-				alert("pi succes" + JSON.stringify(response));
-				//user.stamps.push(success);
+				console.log("pi succes"+JSON.stringify(response));
+				//alert("pi succes" + JSON.stringify(response));
+
+				//{"date":1464091175696,"checkIn":true,"id":"5744422744aed70bbe5597a7","rfidkey":{"id":"C48659EC","enabled":true}}
+
+				user.stamps.push(response.data);
 
 			}, function (errorRes) {
 				console.log("error res " + JSON.stringify(errorRes));
-				alert("faild pi stamp "+JSON.stringify(errorRes));
+				alert("Faild pi stamp");
 
 			});
 
