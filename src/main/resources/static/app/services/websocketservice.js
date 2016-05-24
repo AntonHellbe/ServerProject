@@ -82,7 +82,7 @@
 					.content("Area: " + message.area + " - Change: " + message.crudType)
 					.position('top right')
 					.hideDelay(2000)
-					.parent("#parent")
+					//.parent("#parent")
 			);
 
 			return message;

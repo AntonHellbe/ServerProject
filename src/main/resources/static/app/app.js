@@ -23,7 +23,7 @@
 		'accounts',
 		'timestamps',
 		'login',
-		//'pi',
+		'pi',
 		//'android',
 		'chat',
 		//'schedule',

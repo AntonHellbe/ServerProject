@@ -10,6 +10,7 @@
     right: 30px;
     /*background-color: red;*/
     z-index:99;
+    display: block;
 }
 
 /*._md-center {*/
