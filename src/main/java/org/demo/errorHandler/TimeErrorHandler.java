@@ -71,7 +71,7 @@ public class TimeErrorHandler {
     }
 
     public HttpStatus getAllHandler(String id) {
-        ;
+
         if(timeRepository.getByRfid(accountRepository.findOne(id).getRfidKey()) != null ) {
             return HttpStatus.OK;
         }

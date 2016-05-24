@@ -67,6 +67,7 @@ public class PiServiceImpl implements PiService {
         }
         TimeStamp newStamp = new TimeStamp(Calendar.getInstance().getTimeInMillis(), state, currentAccount.getRfidKey());
         timeRepository.save(newStamp);
+        log.info(newStamp.toString());
         return new ResponseEntity<>(new PiStamp(newStamp.getCheckIn(), currentAccount), status);
     }
 

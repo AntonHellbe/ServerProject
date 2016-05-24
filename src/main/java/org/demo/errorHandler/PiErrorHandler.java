@@ -25,9 +25,16 @@ public class PiErrorHandler {
     AccountRepository accountRepository;
 
     public HttpStatus addNewStampHandler(RfidKey rfidKey){
+        log.info("Entering addNewStamphandler");
         Account currentAccount = accountRepository.findUserByRfid(rfidKey);
-        if (currentAccount.isEnabled()==false)return HttpStatus.LOCKED;
-        if (currentAccount.getRfidKey().isEnabled()==false)return HttpStatus.FORBIDDEN;
+        if (currentAccount.isEnabled()==false){
+            log.info("Wrong: " + HttpStatus.LOCKED);
+            return HttpStatus.LOCKED;
+        }
+        if (currentAccount.getRfidKey().isEnabled()==false){
+            log.info("Wrong: " + HttpStatus.FORBIDDEN);
+            return HttpStatus.FORBIDDEN;
+        }
         return HttpStatus.OK;
     }
 }
