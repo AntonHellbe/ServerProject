@@ -37,6 +37,7 @@ ng-if="vm.isAuth">
     </div>
 </md-sidenav>
 
+<!--<div layout="column" class="relative" layout-fill role="main" ng-controller="LayoutCtrl as layout" ng-cloak>-->
 <div layout="column" class="relative" layout-fill role="main" ng-controller="LayoutCtrl as layout" ng-cloak>
     <md-toolbar ng-show="!showSearch">
         <div class="md-toolbar-tools">
@@ -93,5 +94,12 @@ ng-if="vm.isAuth">
 
 
 
-    <div ui-view style="margin-top: 60px;"></div>
+<!--    <div ui-view style="margin-top: 60px;"></div>-->
+<!--    <ui-view  layout-fill></ui-view>-->
+    <ui-view layout="row" ></ui-view>
+<!--
+     <md-content>
+         <ui-view></ui-view>
+	</md-content>
+-->
 </div>

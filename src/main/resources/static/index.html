@@ -64,9 +64,11 @@
 </head>
 <body ng-cloak>
 
-<div id="parent" class="floatingToast"></div>
+<div id="parent" class="floatingToast">parent</div>
 <!--Beginning-->
-<div ui-view layout="row" layout-fill></div>
+<!--<div ui-view layout="row" layout-fill></div>-->
+<!--<div ui-view layout="row" layout-fill></div>-->
+<ui-view layout="row" layout-fill></ui-view>
 <!--End-->
 
 <!--Templates. Remove then to a better location -->
@@ -200,8 +202,8 @@
 <script src="/app/modules/login/loginRoute.js"></script>
 <script src="/app/modules/pi/piRoute.js"></script>
 <script src="/app/modules/timestamps/timestampsRoute.js"></script>
-<script src="/app/modules/splash/splashCtrl.js"></script>
 <script src="/app/modules/schedule/scheduleCtrl.js"></script>
+<script src="/app/modules/splash/splashCtrl.js"></script>
 <script src="/app/modules/schedule/helpers.js"></script>
 <script src="/app/modules/accounts/accountsCtrl.js"></script>
 <script src="/app/modules/chat/chatCtrl.js"></script>

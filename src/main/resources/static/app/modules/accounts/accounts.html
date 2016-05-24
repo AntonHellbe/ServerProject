@@ -1,17 +1,101 @@
-<div class="md-padding" flex layout-sm="column">
 
-    <md-card>
+<!--<div class="md-padding" flex layout-sm="column">-->
+<div layout="column" layout-fill>
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span>Accounts</span>
+            <!-- fill up the space between left and right area -->
+            <span flex></span>
+            <md-input-container md-no-float md-theme="input">
+                <!--<label>Search</label>-->
+                <input placeholder="Search" ng-model="searchText" type="search">
+            </md-input-container >
+            <md-button ng-click="vm.getAll(true)">update list of users</md-button>
+            <md-button ng-hide="vm.showAddUser" ng-click="vm.showAddUser=!vm.showAddUser">
+                add a new user
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <!--<md-content layout-padding>-->
+        <!--<div layout-gt-sm="row">-->
+
+
+
+        <!--</div>-->
+    <!--</md-content>-->
+
+
+    <md-content layout-padding ng-show="vm.showAddUser">
+        <form name="userForm" >
+
+
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>First name</label>
+                    <input ng-model="vm.newUser.firstName">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Last Name</label>
+                    <input ng-model="vm.newUser.lastName">
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Username</label>
+                    <input ng-model="vm.newUser.username">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Password</label>
+                    <input ng-model="vm.newUser.password">
+                </md-input-container>
+            </div>
+
+            <div layout-gt-sm="row">
+                <md-input-container flex="50">
+                    <label>Rfid</label>
+                    <input ng-model="vm.newUser.rfidKey.id">
+                </md-input-container>
+                <md-checkbox ng-model="vm.newUser.rfidKey.enabled">
+                    Enabled
+                </md-checkbox>
+            </div>
+
+            <fieldset>
+                <legend>
+                    Authorities
+                </legend>
+                <div layout="row" layout-wrap flex>
+                    <div flex-xs flex="50">
+                        <md-checkbox aria-label="Select All"
+                                     ng-checked="vm.isChecked(vm.newUser.authorities)"
+                                     md-indeterminate="isIndeterminate()"
+                                     ng-click="vm.newUser.authorities=vm.toggleAll(vm.newUser.authorities)">
+                            <span ng-if="vm.isChecked(vm.newUser.authorities)">Un-</span>Select All
+                        </md-checkbox>
+                    </div>
+                    <div class="demo-select-all-checkboxes" flex="100" ng-repeat="item in vm.items">
+                        <md-checkbox ng-checked="vm.exists(item, vm.newUser.authorities)"
+                                     ng-click="vm.newUser.authorities=vm.toggle(item, vm.newUser.authorities)">
+                            {{ item.authority }}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </fieldset>
+            <md-button class="md-raised" ng-click="vm.addUser(vm.newUser)">Add user</md-button>
+            <md-button class="md-raised" ng-click="vm.cancelAdd()">Cancel Add user</md-button>
+        </form>
+    </md-content>
+
+    <md-card ng-repeat="user in vm.allusers | filter:searchText">
+
         <md-card-content>
-            <h2 class="md-title">Content from: accounts page</h2>
 
-            <md-button class="md-raised" ng-click="vm.getAll(true)">update list of users</md-button>
-            <md-input-container class="md-block" flex-gt-sm>
-                <label>Search</label>
-                <input ng-model="searchText" type="search">
-            </md-input-container>
 
-            <md-card ng-repeat="user in vm.allusers | filter:searchText">
+            <md-card>
                 <md-card-content>
+
                     <form>
 
                         <div layout-gt-sm="row">
@@ -45,9 +129,10 @@
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>New password</label>
                                     <input ng-model="vm.newPassword" required minlength="4">
-                                    <div ng-messages="vm.newPassword.$error" role="alert" ng-hide="vm.newPassword.length >=4 || vm.newPassword.length <=1"
+                                    <div ng-messages="vm.newPassword.$error" role="alert"
+                                         ng-hide="vm.newPassword.length >=4 || vm.newPassword.length <=1"
                                     >
-                                        <div ng-message="minlength" >
+                                        <div ng-message="minlength">
                                             Password length is minimum 4
                                         </div>
                                     </div>
@@ -88,15 +173,15 @@
                                 <div flex-xs flex="50">
                                     <md-checkbox aria-label="Select All"
                                                  ng-checked="vm.isChecked(user.authorities)"
-                                                 md-indeterminate="isIndeterminate()"
-                                                 ng-click="user.authorities=vm.toggleAll(user.authorities)">
+                                                 md-indeterminate="isIndeterminate(user.authorities)"
+                                                 ng-click="vm.toggleAll(user.authorities)">
                                         <span ng-if="vm.isChecked(user.authorities)">Un-</span>Select All
                                     </md-checkbox>
                                 </div>
                                 <div class="demo-select-all-checkboxes" flex="100" ng-repeat="item in vm.items">
                                     <md-checkbox ng-checked="vm.exists(item, user.authorities)"
                                                  ng-click="vm.toggle(item, user.authorities)">
-                                        {{ item.authority }}
+                                        {{ item }}
                                     </md-checkbox>
                                 </div>
                             </div>
@@ -126,78 +211,6 @@
                     </form>
                 </md-card-content>
             </md-card>
-
-
-            <br>
-            <br>
-
-            <md-content layout-padding>
-                <div>
-                    <md-button class="md-raised" ng-hide="vm.showAddUser" ng-click="vm.showAddUser=!vm.showAddUser">To
-                        add a new
-                        user
-                    </md-button>
-
-
-                    <form name="userForm" ng-show="vm.showAddUser">
-
-                        <div layout-gt-sm="row">
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>First name</label>
-                                <input ng-model="vm.newUser.firstName">
-                            </md-input-container>
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Last Name</label>
-                                <input ng-model="vm.newUser.lastName">
-                            </md-input-container>
-                        </div>
-                        <div layout-gt-sm="row">
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Username</label>
-                                <input ng-model="vm.newUser.username">
-                            </md-input-container>
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Password</label>
-                                <input ng-model="vm.newUser.password">
-                            </md-input-container>
-                        </div>
-
-                        <div layout-gt-sm="row">
-                            <md-input-container flex="50">
-                                <label>Rfid</label>
-                                <input ng-model="vm.newUser.rfidKey.id">
-                            </md-input-container>
-                            <md-checkbox ng-model="vm.newUser.rfidKey.enabled">
-                                Enabled
-                            </md-checkbox>
-                        </div>
-
-                        <fieldset>
-                            <legend>
-                                Authorities
-                            </legend>
-                            <div layout="row" layout-wrap flex>
-                                <div flex-xs flex="50">
-                                    <md-checkbox aria-label="Select All"
-                                                 ng-checked="vm.isChecked(vm.newUser.authorities)"
-                                                 md-indeterminate="isIndeterminate()"
-                                                 ng-click="vm.newUser.authorities=vm.toggleAll(vm.newUser.authorities)">
-                                        <span ng-if="vm.isChecked(vm.newUser.authorities)">Un-</span>Select All
-                                    </md-checkbox>
-                                </div>
-                                <div class="demo-select-all-checkboxes" flex="100" ng-repeat="item in vm.items">
-                                    <md-checkbox ng-checked="vm.exists(item, vm.newUser.authorities)"
-                                                 ng-click="vm.newUser.authorities=vm.toggle(item, vm.newUser.authorities)">
-                                        {{ item.authority }}
-                                    </md-checkbox>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <md-button class="md-raised" ng-click="vm.addUser(vm.newUser)">Add user</md-button>
-                        <md-button class="md-raised" ng-click="vm.cancelAdd()">Cancel Add user</md-button>
-                    </form>
-                </div>
-            </md-content>
         </md-card-content>
     </md-card>
 </div>

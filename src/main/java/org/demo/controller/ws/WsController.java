@@ -8,6 +8,7 @@ import org.demo.model.ws.ChatAnswer;
 import org.demo.model.ws.ChatMessage;
 import org.demo.model.ws.WsAnswer;
 import org.demo.model.ws.WsMessage;
+import org.demo.repository.AccountRepository;
 import org.demo.service.AccountService;
 import org.demo.service.ScheduleService;
 import org.demo.service.TimeService;
@@ -39,6 +40,9 @@ public class WsController {
 
 	@Autowired
 	TimeService timeService;
+
+	@Autowired
+	private AccountRepository accountRepository;
 
 	@Autowired
 	ScheduleService scheduleService;
@@ -193,8 +197,13 @@ public class WsController {
 					if (updatedAccount != null) {
 						log.info("saving updated account " + updatedAccount);
 						ResponseEntity<Account> serviceUser = service.updateUser(updatedAccount);
+						if (serviceUser.getStatusCode() == HttpStatus.OK) {
+							answer.setPayload(serviceUser.getBody());
+						} else {
+							answer.setError("Couldnt update user "+serviceUser.getStatusCode());
+						}
 
-						answer.setPayload(serviceUser.getBody());
+
 					} else {
 						// TODO: 2016-05-17 :21:02 Fix error management
 						log.info("Failed to save " + message);

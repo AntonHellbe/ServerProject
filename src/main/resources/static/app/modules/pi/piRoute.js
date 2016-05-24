@@ -17,7 +17,7 @@ angular.module('pi')
 				templateUrl: 'app/modules/pi/pi.html',
 				controller: 'PiCtrl',
 				controllerAs: 'vm',
-                needAuth: true
+                //needAuth: true
 			});
 
 		

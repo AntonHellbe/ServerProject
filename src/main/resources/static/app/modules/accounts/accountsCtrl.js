@@ -14,7 +14,7 @@
 		.controller('AccountsCtrl', Accounts);
 
 	//Accounts.$inject = ['AccountsService', 'WebsocketService', '$log', '$filter', '$rootScope'];
-	Accounts.$inject = ['WebsocketService', '$log', '$filter', '$rootScope'];
+	Accounts.$inject = ['WebsocketService', '$log', '$rootScope', '$filter'];
 
 	/*
 	 * recommend
@@ -22,15 +22,16 @@
 	 * and bindable members up top.
 	 */
 
-	//function Accounts(AccountsService, WebsocketService, $log, $filter, $rootScope) {
-	function Accounts(WebsocketService, $log, $filter, $rootScope) {
+	function Accounts(WebsocketService, $log, $rootScope, $filter) {
 		/*jshint validthis: true */
 		var vm = this;
 
 		//vm.authorities = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}];
 		//roles list
-		vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}, {authority: "ROLE_PI"}];
+		//vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}, {authority: "ROLE_PI"}];
+		vm.items = ["ROLE_USER", "ROLE_ADMIN", "ROLE_PI"];
 		vm.allusers = [];
+		vm.cats = [];
 
 		vm.updateUserId = "";
 		vm.updateUserIdx = -1;
@@ -120,14 +121,14 @@
 		 */
 		vm.getAll = function (isManual) {
 
-			if(isManual) {
+			if (isManual) {
 				var allstr = {"area": "ACCOUNT", "crudType": "ALL", "token": $rootScope.authToken};
 				WebsocketService.send(allstr);
 
 			}
 			else {
 				var users = WebsocketService.getUsers();
-				if(users.length == 0) {
+				if (users.length == 0) {
 					var allstr = {"area": "ACCOUNT", "crudType": "ALL", "token": $rootScope.authToken};
 					WebsocketService.send(allstr);
 				}
@@ -162,7 +163,7 @@
 			$log.info("add user " + JSON.stringify(newUser));
 
 			//TODO check that rfid exists
-			if(newUser ==undefined) {
+			if (newUser == undefined) {
 				return;
 			}
 			if (newUser.rfidKey != undefined) {
@@ -274,60 +275,75 @@
 			//	});
 		};
 
-		vm.toggle = function (item, userList) {
-			if (userList == undefined) {
-				userList = [];
+		vm.toggle = function (item, selected) {
+			$log.info("select item " + item + " add to list: " + selected);
+
+			var res = undefined;
+			if (selected != undefined) {
+				res = $filter('filter')(selected, item)[0];
 			}
-			var idx = userList.indexOf(item);
-			if (idx > -1) {
-				userList.splice(idx, 1);
+
+
+			if (res == undefined) {
+				$log.info("not in list");
+				$log.info("ADD");
+				selected.push({authority: item});
+
 			}
 			else {
-				userList.push(item);
+				var idx = selected.indexOf(res);
+				$log.info("Remove" + JSON.stringify(res) + " at: " + idx);
+				selected.splice(idx, 1);
 			}
-			return userList;
 
 		};
-		vm.exists = function (item, userList) {
-			if (userList == undefined) {
-				userList = [];
+		vm.exists = function (item, selected) {
+
+			var res = undefined;
+			if (selected != undefined) {
+				//$log.info("selected is " + JSON.stringify(selected));
+
+				res = $filter('filter')(selected, item)[0];
+				//$log.info("res:" + JSON.stringify(res));
 			}
-			var size = userList.length;
-			for (var i = 0; i < size; i++) {
-				if (item.authority == userList[i].authority) {
-					return true;
-				}
+			else {
+				//$log.info("selected is undefined " + JSON.stringify(selected));
 			}
-			return false;
-			//return list.indexOf(item) > -1;
+			return (res != undefined);
 		};
-		vm.isIndeterminate = function (userList) {
-			if (userList == undefined) {
-				userList = [];
-			}
-			return (userList.length !== 0 &&
-			userList.length !== vm.items.length);
+		vm.isIndeterminate = function (selected) {
+			//$log.info("is indeterminate: " + +((selected.length !== 0 &&
+			//	selected.length !== vm.items.length)));
+			return (selected.length !== 0 &&
+			selected.length !== vm.items.length);
 		};
-		vm.isChecked = function (userList) {
-			if (userList == undefined) {
-				userList = [];
+		vm.isChecked = function (selected) {
+			if (selected == undefined) {
+				$log.info("user has no Auths");
+				return false;
 			}
-			return userList.length === vm.items.length;
+			else {
+				//$log.info("is selcted: " + (selected.length === vm.items.length));
+				return selected.length === vm.items.length;
+			}
 		};
-		vm.toggleAll = function (userList) {
-			if (userList == undefined) {
-				userList = [];
+		vm.toggleAll = function (selected) {
+			if (selected.length === vm.items.length) {
+				$log.info("all is selected, deselect all!");
+				selected.length = 0;
+				selected = [];
+			} else if (selected.length === 0 || selected.length > 0) {
+				$log.info("None is selected, select all");
+				//selected = vm.items.slice(0);
+				selected.length = 0;
+
+				angular.forEach(vm.items, function (item) {
+					selected.push({authority: item});
+				});
+
+				$log.info("selected " + JSON.stringify(selected));
+				$log.info("vm selected " + JSON.stringify(vm.selected));
 			}
-			console.log('toogle all');
-			if (userList.length === vm.items.length) {
-				console.log('clear list');
-				userList = [];
-			} else if (userList.length === 0 || userList.length > 0) {
-				userList = vm.items.slice(0);
-				//userList = vm.items;
-				console.log('add all');
-			}
-			return userList;
 		};
 
 		vm.changePassword = function (user, newPassword) {
