@@ -51,7 +51,7 @@ public class AccountErrorHandler {
         //Puts them all in an array for easy handling
         HttpStatus[] statuses = {rfidStatus, usernameStatus, passwordStatus};
         //If there are any wrongs in the statuses, return that status!
-        for (int i= 0; i<statuses.length-1;i++) {
+        for (int i= 0; i<statuses.length;i++) {
             System.out.println("Status for " + i + " " + statuses[i]);
             if (statuses[i]!= HttpStatus.OK)return statuses[i];
         }
@@ -62,7 +62,6 @@ public class AccountErrorHandler {
         Account temp = accountRepository.findOne(updatedAccount.getId());
         int rfidLength = updatedAccount.getRfidKey().toString().length();
         if(accountRepository.findUserByRfid(updatedAccount.getRfidKey())!=null){
-            System.out.println("rfidlength: " + rfidLength);
             if (rfidLength>0){
                 System.out.println(!temp.getRfidKey().equals(updatedAccount.getRfidKey()));
                 if (!temp.getRfidKey().equals(updatedAccount.getRfidKey())){
@@ -95,7 +94,6 @@ public class AccountErrorHandler {
     public HttpStatus passwordUpdateHandler(Account updatedAccount){
         Account temp = accountRepository.findOne(updatedAccount.getId());
         //Checks if the password is uppdated, and if it is, it has to be 4 characters or more
-        System.out.println("pass? " + updatedAccount.getPassword());
         if(!temp.getPassword().equals(updatedAccount.getPassword()) && updatedAccount.getPassword().length()<4){
             log.info("Wrong with the password");
             return HttpStatus.LENGTH_REQUIRED;
@@ -107,6 +105,7 @@ public class AccountErrorHandler {
         if (accountToRemove != null) {
             return HttpStatus.OK;
         } else {
+            log.info("No user found");
             return HttpStatus.NOT_FOUND;
         }
 

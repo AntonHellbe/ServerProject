@@ -46,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
 
 
 	public ResponseEntity<List<Account>> getAllUser() {
+		log.info("Entering getAllUser");
 		Map<String, Object> response = new LinkedHashMap<>();
 		List<Account> accountList = accountRepository.findAll();
 		response.put("AllAccounts", accountList.size());
@@ -59,6 +60,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public ResponseEntity<Account> getUser(String id) {
+		log.info("Entering getUser");
 		Account gotAccount = accountRepository.findOne(id);
 		HttpStatus status = errorHandler.getUserHandler(gotAccount);
 		if (status == HttpStatus.OK) {
@@ -70,27 +72,22 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public ResponseEntity<Account> updateUser(Account updatedAccount) {
-		Account temp = accountRepository.findOne(updatedAccount.getId());
+		log.info("Entering updateUser");
+		//Account temp = accountRepository.findOne(updatedAccount.getId());
 		HttpStatus status = errorHandler.updateHandler(updatedAccount);
-		System.out.println(status);
 		if(status!=HttpStatus.OK){
-			System.out.println("FEL!");
 			return new ResponseEntity<Account>(status);
 		}else {
-			System.out.println("Here? " + temp.getPassword().equals(updatedAccount.getPassword()));
-
 			if (!updatedAccount.getPassword().equals(accountRepository.findOne(updatedAccount.getId()).getPassword())) {
-				System.out.println("We want to update the password to: "+updatedAccount.getPassword());
 				updatedAccount.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
-				System.out.println("Encoded: " + updatedAccount.getPassword());
 			}
 			accountRepository.save(updatedAccount);
-			System.out.println(updatedAccount);
 			return new ResponseEntity<Account>(updatedAccount, HttpStatus.OK);
 		}
 	}
 
 	public Account passwordUpdater(String newPassword, String userId) throws Exception {
+		log.info("Entering passwordUpdater");
 		HttpStatus status = errorHandler.passwordUpdate(newPassword, userId);
 		if (status != HttpStatus.OK) {
 			Account updatedAccount = accountRepository.findOne(userId);
@@ -103,6 +100,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public ResponseEntity<Account> removeUser(String id) {
+		log.info("Entering removeUser");
 		Account accountToRemove = accountRepository.findOne(id);
 		HttpStatus status = errorHandler.deleteHandler(accountToRemove);
 		if(status!=HttpStatus.OK){
@@ -113,6 +111,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public ResponseEntity<Account> addUser(Account newAccount) {
+		log.info("Entering addUser");
 		HttpStatus status = errorHandler.addHandler(newAccount);
 		if(status != HttpStatus.OK) {
 			System.out.println("error?" + status);
