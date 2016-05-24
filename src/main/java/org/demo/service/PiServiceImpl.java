@@ -55,13 +55,18 @@ public class PiServiceImpl implements PiService {
         Account currentAccount = accountRepository.findUserByRfid(rfidKey);
 
 
+        System.out.println("hello here?");
         if (status==HttpStatus.OK) {
             boolean state;
             TimeStamp got = timeRepository.stateCheck(rfidKey);
+            System.out.println("got= "+got);
             if (got == null) {
                 state = true;
+                System.out.println("default: "+state);
             } else {
-                state = !(got.getCheckIn());
+                System.out.println("state before change: " + got.getCheckIn());
+                state = ((got.getCheckIn() !=true));
+                System.out.println("changed state= " +!(got.getCheckIn()));
             }
             TimeStamp newStamp = new TimeStamp(Calendar.getInstance().getTimeInMillis(), state, currentAccount.getRfidKey());
             timeRepository.save(newStamp);
