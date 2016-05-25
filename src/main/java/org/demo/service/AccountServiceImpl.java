@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,7 +23,7 @@ import java.util.Map;
 
 /**
  * Contains methods that enables the use and handling of users in the server
- * @author Robin Johnsson
+ * @author Robin Johnsson, Sebastian Börebäck
  *
  **/
 @Service

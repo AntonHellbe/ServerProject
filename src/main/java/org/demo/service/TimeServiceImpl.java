@@ -52,12 +52,6 @@ public class TimeServiceImpl implements TimeService {
 		}
 		TimeStamp newStamp = new TimeStamp(Calendar.getInstance().getTimeInMillis(), state, currentAccount.getRfidKey());
 
-		// TODO: 2016-05-10 :21:05 WAT!!!
-//        if(state) {
-//            timeRepository.save(newStamp);
-//        }else {
-//            timeRepository.save(newStamp);
-//        }
 		timeRepository.save(newStamp);
 		return new ResponseEntity<>(newStamp, HttpStatus.OK);
 	}
@@ -71,7 +65,6 @@ public class TimeServiceImpl implements TimeService {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-//		return new ResponseEntity<>(newStamp, HttpStatus.OK);
 	}
 
 	@Override
