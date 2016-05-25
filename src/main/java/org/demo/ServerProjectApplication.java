@@ -15,16 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
+import java.util.Random;
 
 @SpringBootApplication
 public class ServerProjectApplication implements CommandLineRunner {
@@ -57,13 +57,31 @@ public class ServerProjectApplication implements CommandLineRunner {
 	public void run(String... strings) throws Exception {
 
 		// TODO: 2016-04-24 :17:24 here you can add new users or run other commands for upstart loadning data
+		//Clear DB
+		clearDB();
+
+		//Check and create accounts
+		ArrayList<Account> accounts = createUsers();
+		//create timestamps and add to db
+//		createTimestamps(accounts);
+
+
+//		end of runner
+	}
+
+	private void createTimestamps(ArrayList<Account> accounts) {
+
+//		//generate timestamps for usersers
+		accounts.forEach(account -> {
+			ArrayList<TimeStamp> cals = generateStamps(account.getRfidKey());
+			timeRepository.save(cals);
+		});
+
+	}
+
+	private ArrayList<Account> createUsers() {
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-
-		accountRepository.deleteAll();
-		timeRepository.deleteAll();
-		scheduleRepository.deleteAll();
-
 		Account defaultUser = accountRepository.findByUserName("user");
 		Account adminUser = accountRepository.findByUserName("admin");
 		Account piUser = accountRepository.findByUserName("piUser");
@@ -142,92 +160,19 @@ public class ServerProjectApplication implements CommandLineRunner {
 			log.info(user4.getFirstName() + " " + user4.getLastName() + " IS ALLREADY IN DB");
 
 
-//		TimeStamp newStamp = new TimeStamp(Long.parseLong("1462878000000"), true, new RfidKey("4B79295") );
-//		TimeStamp newStamp1 = new TimeStamp(Long.parseLong("1462856400000"), true, new RfidKey("4B79295") );
-//		TimeStamp newStamp2 = new TimeStamp(Long.parseLong("1462770000000"), true, new RfidKey("4B79295") );
-//		TimeStamp newStamp3 = new TimeStamp(Long.parseLong("1462856400000"), true, new RfidKey("4B79295") );
-//		timeRepository.save(newStamp);
-//		timeRepository.save(newStamp1);
-//		timeRepository.save(newStamp2);
-//		timeRepository.save(newStamp3);
-//		List<TimeStamp> gotAll = timeRepository.findAll();
-//		for (int i = 0; i < gotAll.size() ; i++) {
-//			gotAll.get(i).setTime(gotAll.get(i).getDate().getTimeInMillis());
-//			timeRepository.save(gotAll.get(i));
-//		}
-//
-//		Calendar day1 = Calendar.getInstance();
-//		day1.set(2016, 4, 17, 18, 0, 0);
-		String[] ids = new String[4];
-		ids[0] = defaultUser.getId();
-		ids[1] = user2.getId();
-		ids[2] = user3.getId();
-		ids[3] = user4.getId();
-//		ScheduleStamp newStamp = new ScheduleStamp(Calendar.getInstance().getTimeInMillis(), day1.getTimeInMillis(), ids);
+		ArrayList<Account> accounts = new ArrayList<>();
+		accounts.add(adminUser);
+		accounts.add(defaultUser);
+		accounts.add(user2);
+		accounts.add(user3);
+		accounts.add(user4);
+		return accounts;
+	}
 
-//		scheduleRepository.save(newStamp);
-
-
-
-//		//generate timestamps for usersers
-		ArrayList<TimeStamp> calsA = generateStamps(adminUser.getRfidKey());
-//		ArrayList<TimeStamp> cals1 = generateStamps(defaultUser.getRfidKey());
-		ArrayList<TimeStamp> cals2 = generateStamps(user2.getRfidKey());
-		ArrayList<TimeStamp> cals3 = generateStamps(user3.getRfidKey());
-		ArrayList<TimeStamp> cals4 = generateStamps(user4.getRfidKey());
-
-
-//
-//		//add stamps
-
-		timeRepository.save(calsA);
-//		timeRepository.save(cals1);
-		timeRepository.save(cals2);
-		timeRepository.save(cals3);
-		timeRepository.save(cals4);
-
-		//add sched
-//		ArrayList<ScheduleStamp> sheds = generateScheds(ids);
-//		scheduleRepository.save(sheds);
-//		sheds.forEach(scheduleStamp -> scheduleRepository.save());
-
-		//TODO SEE unit test: testDBQueryFindLatest in ServerProjectApplicationTests
-		//db.getCollection('TimeStamps').find({"rfidKey._id":"34915AEC"}).sort({date:-1}).limit(1)
-//		Query query = new Query();
-//		query.limit(1);
-//		query.with(new Sort(Sort.Direction.DESC, "date.time")).addCriteria(Criteria.where("rfidKey._id").is("34915AEC"));
-//
-//		TimeStamp got = mongoOperations.findOne(query, TimeStamp.class);
-
-
-
-//		log.info("Lucifer Morningstars last timestamp: "+got);
-
-
-
-//				user;C48659EC;1
-//				admin;34915AEC;2
-//				user2;A448182B;3
-//				user3;4B79295;4
-//				user4;247615E;5
-//				Anna;Ek;1C699EB6;6
-//				Carsten;Panduro;8BA8A996;7
-
-//
-//		long from = Long.parseLong("1462280400000");
-//		long to = Long.parseLong("1463547600000");
-
-//		AndroidBetweenQuery bw = new AndroidBetweenQuery(from,to,new RfidKey("C48659EC"));
-//		List<TimeStamp> got = timeRepository.getBetween(bw);
-//
-//
-//		log.info("Get between");
-//		got.forEach(timeStamp -> {
-//			log.info("tes "+timeStamp.toString());
-//		});
-
-
-//		end of runner
+	private void clearDB() {
+		accountRepository.deleteAll();
+		timeRepository.deleteAll();
+		scheduleRepository.deleteAll();
 	}
 
 	private ArrayList<TimeStamp> generateStamps(RfidKey rfidKey) {
