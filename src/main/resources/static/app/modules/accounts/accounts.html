@@ -10,12 +10,13 @@
                     <!--<label>Search</label>-->
                     <input placeholder="Search" ng-model="searchText" type="search">
                 </md-input-container>
-                <md-button ng-click="vm.getAll(true)">update list of users</md-button>
-                <md-button ng-click="vm.showAddUser($event)">Add user</md-button>
+                <md-button ng-click="vm.getAll(true)">get list</md-button>
+                <md-button ng-click="vm.showAddUser($event)">Add</md-button>
             </div>
         </div>
     </md-toolbar>
 
+    <div style="margin-bottom: 100px;"></div>
     <md-card ng-repeat="user in vm.allusers | filter:searchText">
 
         <md-card-content>
@@ -27,7 +28,7 @@
                     <form name="currentUserForm">
                         <md-button class="md-raised"
                                    ng-disabled="currentUserForm.$invalid"
-                                   ng-click="vm.updateUser(user, $index)">Updater
+                                   ng-click="vm.updateUser(user, $index)">Update
                         </md-button>
                         <md-button class="md-raised md-warn" ng-click="vm.deleteUser(user)">delete</md-button>
                         <div layout-gt-sm="row">
@@ -168,7 +169,7 @@
                         </fieldset>
                         <md-button class="md-raised"
                                    ng-disabled="currentUserForm.$invalid"
-                                   ng-click="vm.updateUser(user, $index)">Updater
+                                   ng-click="vm.updateUser(user, $index)">Update
                         </md-button>
                         <md-button class="md-raised md-warn" ng-click="vm.deleteUser(user)">delete</md-button>
                     </form>

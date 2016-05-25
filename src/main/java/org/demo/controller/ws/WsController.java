@@ -132,8 +132,12 @@ public class WsController {
 				case UPDATE:
 					log.info("Update timestamp for " + message.getAffectedId());
 					stamp = mapper.convertValue(message.getPayload(), TimeStamp.class);
+					log.info("updated stamp:");
+					log.info(stamp.toString());
 					ResponseEntity<TimeStamp> updateStamp = service.updateTime(message.getAffectedId(), stamp.getId(), stamp);
 					answer.setPayload(updateStamp.getBody());
+					log.info("Answear body");
+					log.info(updateStamp.getBody().toString());
 
 					break;
 				case DELETE:
@@ -154,6 +158,12 @@ public class WsController {
 						answer.setError("List is empty!");
 						return answer;
 					}
+
+					if (list.getStatusCode() != HttpStatus.OK) {
+						answer.setError("Error getting all");
+						return answer;
+					}
+
 					answer.setPayloadList(list.getBody().toArray());
 					break;
 

@@ -45,20 +45,11 @@
 
 		service.send = function (message) {
 			if (socket.stomp != null) {
-				console.log("sending1 " + JSON.stringify(message));
+				//console.log("sending data: " + JSON.stringify(message));
 				var test = JSON.stringify({'name': message.name});
 				var str = JSON.stringify(message);
-				console.log("sending2 " + test);
-				//var name = document.getElementById('name').value;
-				//socket.stomp.send(service.CHAT_BROKER, {}, JSON.stringify({ 'name': message.name }));
-
 				socket.stomp.send(service.CHAT_BROKER, {}, str);
 			}
-
-
-			//socket.stomp.send(service.CHAT_BROKER, {
-			//	priority: 9
-			//},message);
 		};
 
 		var reconnect = function () {
@@ -70,8 +61,6 @@
 		var getMessage = function (data) {
 			var message = JSON.parse(data), out = {};
 
-			//[{"token":null,"content":null,"area":"ACCOUNT","crudType":"ALL","affectedId":null
-
 			//If a all request is called
 			if (message.crudType == 'ALL') {
 				handleAllAnswer(message);
@@ -82,7 +71,6 @@
 					.content("Area: " + message.area + " - Change: " + message.crudType)
 					.position('top right')
 					.hideDelay(2000)
-					//.parent("#parent")
 			);
 
 			return message;
@@ -103,7 +91,7 @@
 		}
 
 		var startListener = function () {
-			console.log("Got connection");
+			//console.log("Got connection");
 			socket.stomp.subscribe(service.CHAT_TOPIC, function (data) {
 				listener.notify(getMessage(data.body));
 			});
@@ -124,7 +112,7 @@
 			socket.stomp.onclose = reconnect;
 			socket.stomp.connect({}, startListener);
 
-			console.log("connected");
+			//console.log("connected");
 
 		};
 
@@ -136,7 +124,7 @@
 
 			}
 			//setConnected(false);
-			console.log("Disconnected");
+			//console.log("Disconnected");
 		};
 
 		service.getSchedules = function() {

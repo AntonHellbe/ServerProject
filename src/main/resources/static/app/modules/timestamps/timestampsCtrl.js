@@ -59,12 +59,22 @@
 				if (wsUpdate.crudType != undefined) {
 					switch (wsUpdate.crudType) {
 						case "ADD":
-							$log.info("ws Add user " + JSON.stringify(wsUpdate.payload));
+							$log.info("ws Add timestamp " + JSON.stringify(wsUpdate.payload));
+							$log.info("updated timestamps for  " + wsUpdate.affectedId);
 							vm.selectedUser = $filter('filter')(vm.users, {id: wsUpdate.affectedId})[0];
-							vm.selectedUser.stamps.push(wsUpdate.payload);
+							if(vm.selectedUser == undefined) {
+								$log.info("didnt find user " + wsUpdate.affectedId);
+							}
+							else
+							{
+								//$log.info("found " + vm.selectedUser.firstName);
+								//$log.info("payload " + JSON.stringify(wsUpdate.payload));
+								vm.selectedUser.stamps.push(wsUpdate.payload);
+							}
+
 							break;
 						case "DELETE":
-							$log.info("got delete user id: " + wsUpdate.affectedId);
+							$log.info("got delete timestamp id: " + wsUpdate.affectedId);
 							vm.selectedUser = $filter('filter')(vm.users, {id: wsUpdate.affectedId})[0];
 							var found = $filter('filter')(vm.selectedUser.stamps, {id: wsUpdate.payload.id})[0];
 							vm.selectedUser.stamps.splice(vm.selectedUser.stamps.indexOf(found), 1);
@@ -72,7 +82,7 @@
 						case "UPDATE":
 
 							$log.info("Got update from ws");
-							$log.info("updated user " + wsUpdate.payload.firstName);
+							$log.info("updated timestamps for  " + wsUpdate.affectedId);
 							vm.selectedUser = $filter('filter')(vm.users, {id: wsUpdate.affectedId})[0];
 							var found = $filter('filter')(vm.selectedUser.stamps, {id: wsUpdate.payload.id})[0];
 							if (found != undefined) {
@@ -92,6 +102,9 @@
 
 							if (wsUpdate.token == $rootScope.authToken) {
 								$log.info("I asked for it " + $rootScope.authToken);
+								if(vm.selectedUser == undefined) {
+									vm.selectedUser = $filter('filter')(vm.users, {id: wsUpdate.affectedId})[0];
+								}
 								vm.selectedUser.stamps = wsUpdate.payloadList ? wsUpdate.payloadList : [];
 							}
 							else {
@@ -106,7 +119,7 @@
 
 				}
 			}
-			vm.selectedUser = null;
+			//vm.selectedUser = null;
 
 		});
 

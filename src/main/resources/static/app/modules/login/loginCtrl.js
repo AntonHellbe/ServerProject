@@ -114,7 +114,7 @@
 							homeService.setLoggedIn($rootScope.authenticated);
 							//todo uncom
 							//$state.go("home.dashboard");
-							$state.go("home.accounts");
+							$state.go("home.timestamps");
 
 						},500);
 					}
