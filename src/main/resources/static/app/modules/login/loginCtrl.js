@@ -28,7 +28,8 @@
 
 		var ip = $rootScope.ip;
 
-		vm.credentials = {};
+		//vm.credentials = {};
+		vm.credentials = {username:"admin",password:"pass"};
 
 
 
@@ -111,7 +112,9 @@
 							vm.error = false;
 							$rootScope.authenticated = true;
 							homeService.setLoggedIn($rootScope.authenticated);
-							$state.go("home.dashboard");
+							//todo uncom
+							//$state.go("home.dashboard");
+							$state.go("home.accounts");
 
 						},500);
 					}
@@ -149,6 +152,8 @@
 		vm.cancelLogin = function () {
 			$state.go("home.splash");
 		};
+
+		vm.login();
 		//end of ctrl
 	}
 

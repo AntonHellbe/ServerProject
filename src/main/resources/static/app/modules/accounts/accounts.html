@@ -1,17 +1,18 @@
 <!--<div class="md-padding" flex layout-sm="column">-->
 <div layout="column" layout-fill>
 
-    <md-toolbar>
+    <md-toolbar class="fixedMenu relative">
         <div class="md-toolbar-tools">
             <span>Accounts</span>
-            <!-- fill up the space between left and right area -->
-            <span flex></span>
-            <md-input-container md-no-float md-theme="input">
-                <!--<label>Search</label>-->
-                <input placeholder="Search" ng-model="searchText" type="search">
-            </md-input-container>
-            <md-button ng-click="vm.getAll(true)">update list of users</md-button>
-            <md-button ng-click="vm.showAddUser($event)">Add user</md-button>
+            <span flex="auto"></span>
+            <div flex="auto"  layout="row" layout-align="center center">
+                <md-input-container md-no-float md-theme="input">
+                    <!--<label>Search</label>-->
+                    <input placeholder="Search" ng-model="searchText" type="search">
+                </md-input-container>
+                <md-button ng-click="vm.getAll(true)">update list of users</md-button>
+                <md-button ng-click="vm.showAddUser($event)">Add user</md-button>
+            </div>
         </div>
     </md-toolbar>
 
@@ -174,5 +175,19 @@
                 </md-card-content>
             </md-card>
         </md-card-content>
+    </md-card>
+
+    <md-card ng-show="!(vm.allusers).length ">
+        <md-card-header>
+            <md-card-header-text>
+                <span class="md-title">No users</span>
+            </md-card-header-text>
+        </md-card-header>
+        <!--<div>-->
+        <!--<md-card-content>-->
+        <!---->
+        <!--</md-card-content>-->
+        <!---->
+        <!--</div>-->
     </md-card>
 </div>
