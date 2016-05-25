@@ -26,6 +26,10 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
+/**
+ * @author Sebastian Börebäck
+ * Main class, create also initiale users etc.
+ */
 @SpringBootApplication
 public class ServerProjectApplication implements CommandLineRunner {
 
@@ -56,7 +60,6 @@ public class ServerProjectApplication implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
 
-		// TODO: 2016-04-24 :17:24 here you can add new users or run other commands for upstart loadning data
 		//Clear DB
 		clearDB();
 
@@ -187,19 +190,12 @@ public class ServerProjectApplication implements CommandLineRunner {
 
 			rand = rnd.nextInt(3);
 			inCal = new GregorianCalendar(2016, 4, (1 + i), (6 + rand), 0);
-
-//			log.info("cal " + sdf.format(inCal.getTime()));
 			cals.add(new TimeStamp(inCal.getTimeInMillis(), true, rfidKey));
-			log.info("inCAl "+inCal.getTime());
-
 			rand = rnd.nextInt(3);
-//			log.info("rand22 " + rand);
 			outCal = new GregorianCalendar(2016, 4, (1 + i), (13 + rand), 0);
 			cals.add(new TimeStamp(outCal.getTimeInMillis(), false, rfidKey));
 
-			log.info("inCAl "+outCal.getTime());
 		}
-		log.info("rfid " + rfidKey);
 		return cals;
 	}
 
@@ -207,8 +203,6 @@ public class ServerProjectApplication implements CommandLineRunner {
 		Random rnd = new Random();
 		ArrayList<ScheduleStamp> cals = new ArrayList<>();
 		GregorianCalendar inCal = new GregorianCalendar(), outCal = new GregorianCalendar();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
 		int rand = rnd.nextInt(3);
 
 		//4st
