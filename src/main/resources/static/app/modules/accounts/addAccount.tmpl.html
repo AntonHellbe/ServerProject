@@ -1,0 +1,88 @@
+<md-dialog aria-label="Add user" ng-cloak>
+    <form name="addUserForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add user</h2>
+                <span flex></span>
+                <md-button class="md-button" ng-click="cancel()">
+                    cancel
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>First name</label>
+                            <input required name="firstname" ng-model="newUser.firstName">
+                            <div ng-messages="addUserForm.firstname.$error" md-auto-hide="false">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Last Name</label>
+                            <input required name="lastname" ng-model="newUser.lastName">
+                            <div ng-messages="addUserForm.lastname.$error" md-auto-hide="false">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Username</label>
+                            <input ng-model="newUser.username">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Password</label>
+                            <input required minlength="4" name="password" type="password" ng-model="newUser.password">
+                            <div ng-messages="addUserForm.password.$error" multiple md-auto-hide="false">
+                                <div ng-message="required">This is required.</div>
+                                <div ng-message="minlength">minimum length is 4</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+                    <div layout-gt-sm="row">
+                        <md-input-container flex="50">
+                            <label>Rfid</label>
+                            <input ng-model="newUser.rfidKey.id">
+                        </md-input-container>
+                        <md-checkbox ng-model="newUser.rfidKey.enabled">
+                            Enabled
+                        </md-checkbox>
+                    </div>
+
+                    <fieldset>
+                        <legend>
+                            Authorities
+                        </legend>
+                        <div layout="row" layout-wrap flex>
+                            <div flex-xs flex="50">
+                                <md-checkbox aria-label="Select All"
+                                             ng-checked="isChecked(newUser.authorities)"
+                                             md-indeterminate="isIndeterminate()"
+                                             ng-click="toggleAll(newUser.authorities)">
+                                    <span ng-if="isChecked(newUser.authorities)">Un-</span>Select All
+                                </md-checkbox>
+                            </div>
+                            <div class="demo-select-all-checkboxes" flex="100" ng-repeat="item in items">
+                                <md-checkbox ng-checked="exists(item, newUser.authorities)"
+                                             ng-click="toggle(item, newUser.authorities)">
+                                    {{ item }}
+                                </md-checkbox>
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised" style="margin-right:20px;"
+                       ng-disabled="addUserForm.$invalid"
+                       ng-click="addUser(newUser)">Add user</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+

@@ -13,7 +13,7 @@
 		.module('login')
 		.controller('LoginCtrl', Login);
 
-	Login.$inject = ['$rootScope', '$http', '$cookies', 'LoginService', '$state', 'WebsocketService', '$log', '$timeout', 'homeService'];
+	Login.$inject = ['$rootScope', '$http', '$state', 'WebsocketService', '$timeout', 'homeService','$mdDialog','$filter'];
 
 	/*
 	 * recommend
@@ -21,48 +21,22 @@
 	 * and bindable members up top.
 	 */
 
-	function Login($rootScope, $http, $cookies, LoginService, $state, WebsocketService, $log, $timeout, homeService) {
+	function Login($rootScope, $http, $state, WebsocketService, $timeout, homeService,$mdDialog,$filter) {
 
 		/*jshint validthis: true */
 		var vm = this;
 
-		//TODO change to correct ip
 		var ip = $rootScope.ip;
-
 
 		vm.credentials = {};
 
-		vm.loginData = {};
-
-		vm.wsGot = [];
 
 
-		//vm.wsSend=function() {
-		//   WebsocketService.send(vm.wstext);
-		//   vm.wstext = "";
-		//};
-
-		//vm.wsSendAll =function(){
-		//   var allstr = {"area":"ACCOUNT","crudType":"ALL","token":$rootScope.authToken};
-		//   $log.info("sending > " + JSON.stringify(allstr));
-		//   WebsocketService.send(allstr);
-		//};
-
-		vm.wsdis = function () {
-			WebsocketService.disconnect();
-		};
-
-		vm.wscon = function () {
-			WebsocketService.connect();
-		};
-
-		WebsocketService.receive().then(null, null, function (message) {
-
-			$log.info("got   message " + message);
-		});
-
-		//todo move own service
-		//do auth service
+		/**
+		 * Do the Authentication
+		 * @param credentials user credentials
+		 * @param callback callbackfunction called when got result from server.
+		 */
 		var authenticate = function (credentials, callback) {
 
 			var headers = credentials ? {
@@ -80,21 +54,15 @@
 					console.log("auth succes");
 					$rootScope.authenticated = true;
 					$rootScope.authData = response.data;
-
-					//vm.oldToken = "new cookie>"+JSON.stringify($cookies.getAll());
 				} else {
 					console.log("auth FAIL");
 					$rootScope.authenticated = false;
-					vm.loginData = {};
 				}
 				console.log("respo " + JSON.stringify(response));
-				vm.loginData = response.data;
 
 				callback && callback($rootScope.authenticated);
 			}, function (errorRes) {
 				console.log("error res " + JSON.stringify(errorRes));
-				vm.loginData = {};
-				vm.loginData = {};
 				$rootScope.authenticated = false;
 				callback && callback(false);
 			});
@@ -102,131 +70,86 @@
 		};
 
 
-		//login button
+		/**
+		 * Error handler
+		 * @param message error message
+		 */
+		vm.showAlert=function(message){
+			$mdDialog.show(
+				$mdDialog.alert()
+					.clickOutsideToClose(true)
+					.title('Error loging in!')
+					.textContent(message)
+					.ariaLabel('Error on login')
+					.ok('OK')
+			);
+		};
+
+		/**
+		 * Login button
+		 */
 		vm.login = function () {
 			console.log("call login");
-			console.log("creds " + JSON.stringify(vm.credentials));
 
 			authenticate(vm.credentials, function (authenticated) {
 				if (authenticated) {
-					console.log("Login succeeded")
+					console.log("Login succeeded");
 
-					$http.get('token').then(function (response) {
-						console.log("old token> " + response.data.token);
-						$rootScope.authToken = response.data.token;
-						$log.info("new token> " + $rootScope.authToken);
-						//todo for testing
-						vm.oldToken = $rootScope.authToken;
-						//$http({
-						//    url: 'http://localhost:44344/api/users',
-						//    method: 'GET',
-						//    headers: {
-						//        'X-Auth-Token': response.data.token
-						//    }
-						//}).then(function (response) {
-						//
-						//});
-					});
+					//check if user is admin
+					var hasAdmin=$filter('filter')($rootScope.authData.authorities, 'ROLE_ADMIN');
 
-					//connect to websocket.
-					WebsocketService.connect();
-					$timeout(function () {
+					if(hasAdmin.length >0) {
+						$http.get('token').then(function (response) {
+							$rootScope.authToken = response.data.token;
+							vm.oldToken = $rootScope.authToken;
+						});
 
-						vm.error = false;
-						$rootScope.authenticated = true;
-						$log.info("auth: " + $rootScope.authenticated);
-						homeService.setLoggedIn($rootScope.authenticated);
-						//todo change to dash
-						$state.go("home.dashboard");
+						//connect to websocket.
+						WebsocketService.connect();
+						$timeout(function () {
 
-					},500);
+							vm.error = false;
+							$rootScope.authenticated = true;
+							homeService.setLoggedIn($rootScope.authenticated);
+							$state.go("home.dashboard");
 
-
-
-					//$timeout(function () {
-					//    //$scope.myHeader = "How are you today?";
-					//    $state.go("home.schedule");
-					//}, 500);
-
+						},500);
+					}
+					else {
+						vm.showAlert("You aren't admin!");
+						vm.logout();
+					}
 
 				} else {
-					console.log("Login failed")
-					//$location.path("/login");
+					console.log("Login failed");
 					vm.error = true;
 					$rootScope.authenticated = false;
+					vm.showAlert("Wrong password or username!");
 				}
 			});
 		};
 
-		//todo remove is just extra
-
-		//logout button
+		/**
+		 *logout handler
+		 */
 		vm.logout = function () {
-			//TODO use service instead of http
 			$http.post(ip + '/logout', {}).finally(function () {
-				//$http.post(ip+'/api/account', {}).finally(function () {
-				$rootScope.authenticated = false;
 				console.log("LOGGED out");
-				vm.users = {};
-				vm.loginData = {};
 				WebsocketService.disconnect();
+				$rootScope.authenticated = false;
 				$rootScope.authToken = {};
-			});
-
-			$state.go('home.login', {}, {reload: true});
-		};
-
-		//vm.getAll = function () {
-		//    $http.get("/api/users/").then(function (response) {
-		//        vm.users = response;
-		//    }, function (errorRes) {
-		//        console.log("error res " + JSON.stringify(errorRes));
-		//
-		//    });
-		//};
-
-		vm.getToken = function () {
-			$http.get('token').then(function (response) {
-				console.log("token> " + response.data.token);
-				$http({
-					url: 'http://localhost:44344/api/users',
-					method: 'GET',
-					headers: {
-						'X-Auth-Token': response.data.token
-					}
-				}).then(function (response) {
-					vm.myToken = response.data;
-				});
+				$rootScope.authData = {};
 			});
 		};
 
-		//vm.getHack = function () {
-		//    $http({
-		//        url: 'http://localhost:44344/api/users',
-		//        method: 'GET',
-		//        headers: {
-		//            'X-Auth-Token': vm.oldToken
-		//        }
-		//    }).then(function (response) {
-		//        vm.myToken = response.data;
-		//    });
-		//};
-		//
-		//vm.clearAll= function(){
-		//    vm.myToken ="";
-		//    vm.users={};
-		//};
 
+		/**
+		 * Cancel loging in.
+		 */
 		vm.cancelLogin = function () {
 			$state.go("home.splash");
 		};
-
-		//todo ONLY FOR TESTING
-		//todo remove
-		//vm.credentials = {"username":"admin","password":"pass"};
-		//vm.login();
-
-
+		//end of ctrl
 	}
 
 })();

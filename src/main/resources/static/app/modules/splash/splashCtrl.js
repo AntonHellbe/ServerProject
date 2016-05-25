@@ -1,34 +1,40 @@
-(function() {
+(function () {
 	'use strict';
 
 	/**
-	* @ngdoc function
-	* @name app.controller:splashCtrl
-	* @description
-	* # splashCtrl
-	* Controller of the app
-	*/
+	 * @ngdoc function
+	 * @name app.controller:splashCtrl
+	 * @description
+	 * # splashCtrl
+	 * Controller of the app
+	 */
 
-  	angular
+	angular
 		.module('splash')
 		.controller('SplashCtrl', Splash);
 
-		Splash.$inject = ['$state'];
+	Splash.$inject = ['$state'];
 
-		/*
-		* recommend
-		* Using function declarations
-		* and bindable members up top.
-		*/
 
-		function Splash($state) {
-			/*jshint validthis: true */
-			var vm = this;
+	/*
+	 * recommend
+	 * Using function declarations
+	 * and bindable members up top.
+	 */
 
-			vm.gotoLogin =function() {
-				$state.go("home.dashboard");
-			}
+	//function Splash($state) {
+	function Splash($state) {
+		/*jshint validthis: true */
+		var vm = this;
 
-		}
+		//go to login screen
+		vm.gotoLogin = function () {
+			$state.go("home.dashboard");
+		};
+
+		//end of splaschCtrl
+	}
+
+
 
 })();

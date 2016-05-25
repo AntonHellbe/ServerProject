@@ -14,7 +14,7 @@
 		.controller('AccountsCtrl', Accounts);
 
 	//Accounts.$inject = ['AccountsService', 'WebsocketService', '$log', '$filter', '$rootScope'];
-	Accounts.$inject = ['WebsocketService', '$log', '$rootScope', '$filter'];
+	Accounts.$inject = ['WebsocketService', '$log', '$rootScope', '$filter','$mdDialog'];
 
 	/*
 	 * recommend
@@ -22,7 +22,7 @@
 	 * and bindable members up top.
 	 */
 
-	function Accounts(WebsocketService, $log, $rootScope, $filter) {
+	function Accounts(WebsocketService, $log, $rootScope, $filter,$mdDialog) {
 		/*jshint validthis: true */
 		var vm = this;
 
@@ -31,7 +31,7 @@
 		//vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}, {authority: "ROLE_PI"}];
 		vm.items = ["ROLE_USER", "ROLE_ADMIN", "ROLE_PI"];
 		vm.allusers = [];
-		vm.cats = [];
+		vm.authToken = $rootScope.authToken;
 
 		vm.updateUserId = "";
 		vm.updateUserIdx = -1;
@@ -158,54 +158,54 @@
 			vm.showAddUser = !vm.showAddUser;
 		};
 
-		//add a new user
-		vm.addUser = function (newUser) {
-			$log.info("add user " + JSON.stringify(newUser));
-
-			//TODO check that rfid exists
-			if (newUser == undefined) {
-				return;
-			}
-			if (newUser.rfidKey != undefined) {
-				if (newUser.rfidKey.enabled == undefined) {
-					newUser.rfidKey.enabled = false;
-				}
-			}
-
-
-			if (newUser.authorities != undefined) {
-				var size = newUser.authorities.length;
-				var auths = newUser.authorities;
-				var templist = [];
-				for (var i = 0; i < size; i++) {
-					console.log("auth " + JSON.stringify(auths[i]));
-					templist.push({authority: auths[i].authority});
-				}
-				newUser.authorities = templist;
-				console.log("add user" + JSON.stringify(newUser));
-			}
-
-
-			var sendMsg = {"area": "ACCOUNT", "crudType": "ADD", "token": $rootScope.authToken};
-			sendMsg.payload = newUser;
-
-			$log.info("sending > " + JSON.stringify(sendMsg));
-			WebsocketService.send(sendMsg);
-
-			//AccountsService.save(newUser)
-			//	.$promise.then(
-			//	function (success) {
-			//		console.log("Successfuly Added");
-			//		vm.allusers.push(success);
-			//	},
-			//	function (error) {
-			//		alert("Failed " + JSON.stringify(error));
-			//	},
-			//	function (update) {
-			//		alert("Got notification" + JSON.stringify(update));
-			//	});
-
-		};
+		////add a new user
+		//vm.addUser = function (newUser) {
+		//	$log.info("add user " + JSON.stringify(newUser));
+		//
+		//	//TODO check that rfid exists
+		//	if (newUser == undefined) {
+		//		return;
+		//	}
+		//	if (newUser.rfidKey != undefined) {
+		//		if (newUser.rfidKey.enabled == undefined) {
+		//			newUser.rfidKey.enabled = false;
+		//		}
+		//	}
+		//
+		//
+		//	if (newUser.authorities != undefined) {
+		//		var size = newUser.authorities.length;
+		//		var auths = newUser.authorities;
+		//		var templist = [];
+		//		for (var i = 0; i < size; i++) {
+		//			console.log("auth " + JSON.stringify(auths[i]));
+		//			templist.push({authority: auths[i].authority});
+		//		}
+		//		newUser.authorities = templist;
+		//		console.log("add user" + JSON.stringify(newUser));
+		//	}
+		//
+		//
+		//	var sendMsg = {"area": "ACCOUNT", "crudType": "ADD", "token": $rootScope.authToken};
+		//	sendMsg.payload = newUser;
+		//
+		//	$log.info("sending > " + JSON.stringify(sendMsg));
+		//	WebsocketService.send(sendMsg);
+		//
+		//	//AccountsService.save(newUser)
+		//	//	.$promise.then(
+		//	//	function (success) {
+		//	//		console.log("Successfuly Added");
+		//	//		vm.allusers.push(success);
+		//	//	},
+		//	//	function (error) {
+		//	//		alert("Failed " + JSON.stringify(error));
+		//	//	},
+		//	//	function (update) {
+		//	//		alert("Got notification" + JSON.stringify(update));
+		//	//	});
+		//
+		//};
 
 
 		//update user
@@ -220,6 +220,14 @@
 			if (user.rfidKey != undefined) {
 				if (user.rfidKey.enabled == undefined) {
 					user.rfidKey.enabled = false;
+				}
+			}
+
+			//check if there is a new password
+			if(user.newPassword != undefined) {
+				//is minlength 4
+				if(user.newPassword.length >=4) {
+					user.password = user.newPassword;
 				}
 			}
 
@@ -363,5 +371,163 @@
 				vm.newPassword = "";
 			}
 		};
+
+		//todo move to accountctrl
+		//show add user dialog
+		vm.showAddUser = function (ev) {
+
+			$mdDialog.show({
+					controller: AddUserCtrl,
+					templateUrl: '/app/modules/accounts/addAccount.tmpl.html',
+					parent: angular.element(document.body),
+					targetEvent: ev,
+					clickOutsideToClose: true,
+					locals: {items: vm.items,
+						authToken:vm.authToken}
+				})
+				.then(function (newUser) {
+						//ADD
+						console.log("Add user: " + JSON.stringify(newUser));
+
+						////websocketstuff
+						//var sendMsg = {"area": "TIMESTAMP", "crudType": "ADD", "token": $rootScope.authToken};
+						//sendMsg.payload = newStamp;
+						//sendMsg.affectedId = user.id;
+
+						//$log.info("sending > " + JSON.stringify(sendMsg));
+						//WebsocketService.send(sendMsg);
+
+					}, function () {
+						console.log("You cancelled the dialog.");
+					}
+				);
+
+			//end of showadduser
+		};
+
+		//end of account
 	}
+
+	function AddUserCtrl($scope, $mdDialog, items,authToken, $log,$filter,WebsocketService) {
+
+		var vm = $scope;
+		//all authorities
+		vm.items = items;
+		vm.authToken = authToken;
+
+		//the new user object
+		vm.newUser =
+		{
+			"firstName":undefined,
+			"lastName":undefined,
+			"username":undefined,
+			"password":undefined,
+			"rfidKey":
+			{   "id":"",
+				"enabled":false},
+			authorities:[]
+		};
+
+
+		/**
+		 * Cancel the add new user dialog
+		 */
+		$scope.cancel = function () {
+			$mdDialog.cancel();
+		};
+
+		/**
+		 * Close dialog and send the added new user to server
+		 * @param newUser the new user
+		 */
+		vm.addUser = function (newUser) {
+			$log.info("Add user: "+ JSON.stringify(newUser));
+			var sendMsg = {"area": "ACCOUNT", "crudType": "ADD", "token": vm.authToken};
+			sendMsg.payload = newUser;
+
+			$log.info("sending > " + JSON.stringify(sendMsg));
+			WebsocketService.send(sendMsg);
+			$mdDialog.hide(newUser);
+		};
+
+
+		/**
+		 * Toggle selected authorities
+		 * @param item all auths
+		 * @param selected users current authorities
+		 */
+		vm.toggle = function (item, selected) {
+			var res = undefined;
+			if (selected != undefined) {
+				res = $filter('filter')(selected, item)[0];
+
+				if (res == undefined) {
+					selected.push({authority: item});
+				}
+				else {
+					var idx = selected.indexOf(res);
+					selected.splice(idx, 1);
+				}
+			}
+		};
+		/**
+		 * Check if user has authorities
+		 * @param item all authorities
+		 * @param selected user current authorities
+		 * @returns {boolean} true if has authority
+		 */
+		vm.exists = function (item, selected) {
+
+			var res = undefined;
+			if (selected != undefined) {
+				res = $filter('filter')(selected, item)[0];
+			}
+			return (res != undefined);
+		};
+
+		/**
+		 * Check if there is anything selected
+		 * @param selected user current authorities
+		 * @returns {boolean} true if there is something selected
+		 */
+		vm.isIndeterminate = function (selected) {
+			return (selected.length !== 0 &&
+			selected.length !== vm.items.length);
+		};
+
+		/**
+		 * Check if there is something selected
+		 * @param selected users authorities
+		 * @returns {boolean} true if all is selected
+		 */
+		vm.isChecked = function (selected) {
+
+			if (selected == undefined) {
+				return false;
+			}
+			else {
+				return selected.length === vm.items.length;
+			}
+		};
+
+		/**
+		 * Toggle select all and unselect all
+		 * @param selected
+		 */
+		vm.toggleAll = function (selected) {
+
+			if (selected.length === vm.items.length) {
+				selected.length = 0;
+				selected = [];
+			} else if (selected.length === 0 || selected.length > 0) {
+				selected.length = 0;
+
+				angular.forEach(vm.items, function (item) {
+					selected.push({authority: item});
+				});
+			}
+		};
+		//end of AddUserCtrl
+	}
+
 })();

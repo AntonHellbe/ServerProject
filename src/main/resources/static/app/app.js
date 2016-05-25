@@ -19,6 +19,7 @@
 		'ngAnimate',
 		'ngSanitize',
 		'ui.router',
+		'ngMessages',
 		'home',
 		'accounts',
 		'timestamps',

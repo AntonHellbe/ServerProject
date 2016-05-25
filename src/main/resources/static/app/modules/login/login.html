@@ -1,106 +1,28 @@
 <div class="md-padding" flex layout-sm="column">
-	<md-card>
-		<md-card-header>
-			<md-card-header-text>
-				<span class="md-title">Login</span>
-				<span class="md-subhead">Provide username & password</span>
-			</md-card-header-text>
-		</md-card-header>
-		<md-card-content>
+    <md-card>
+        <md-card-header>
+            <md-card-header-text>
+                <span class="md-title">Login</span>
+                <span class="md-subhead">Provide username & password</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
 
 
-			<form name="loginForm" ng-submit="vm.login()">
-				<div layout-gt-sm="row">
-					<md-input-container>
-						<label>Username</label>
-						<input ng-model="vm.credentials.username">
-					</md-input-container>
-					<md-input-container>
-						<label>Password</label>
-						<input type="password" ng-model="vm.credentials.password">
-					</md-input-container>
-				</div>
-				<md-button class="md-raised" type="submit">Login</md-button>
-				<md-button class="md-raised" ng-click="vm.cancelLogin()">Cancel</md-button>
-			</form>
-			<!--<br>-->
-			<!--<br>-->
-			<!--<hr>-->
-			<!--<div ng-hide="false">-->
-                <!--<md-input-container>-->
-                    <!--<label>ws text</label>-->
-                    <!--<input ng-model="vm.wstext.name">-->
-                <!--</md-input-container>-->
-                <!--<md-input-container>-->
-                    <!--<label>ws area</label>-->
-                    <!--<input ng-model="vm.wstext.area">-->
-                <!--</md-input-container>-->
-                <!--<md-input-container>-->
-                    <!--<label>ws crudType</label>-->
-                    <!--<input ng-model="vm.wstext.crudType">-->
-                <!--</md-input-container>-->
-
-                <!--<md-button class="md-raised" ng-click="vm.wsSend()">test ws</md-button>-->
-                <!--<md-button class="md-raised" ng-click="vm.wsSendAll()">test ws ALL</md-button>-->
-                <!--<md-button class="md-raised" ng-click="vm.wsdis()">disconnect ws</md-button>-->
-                <!--<md-button class="md-raised" ng-click="vm.wscon()">connect ws</md-button>-->
-
-                <!--<div>{{vm.wsGot}}</div>-->
-
-				<!--<div>creds</div>-->
-				<!--<div>{{vm.credentials}}</div>-->
-				<!--<br>-->
-				<!--<br>-->
-				<!--<div>Login info</div>-->
-				<!--<ul>-->
-					<!--<li>details: {{vm.loginData.details}}</li>-->
-					<!--<li>authorities: {{vm.loginData.authorities}}</li>-->
-					<!--<li>authenticated: {{vm.loginData.authenticated}}</li>-->
-					<!--<li>id: {{vm.loginData.principal.id}}</li>-->
-					<!--<li>username: {{vm.loginData.principal.username}}</li>-->
-					<!--<li>firstName: {{vm.loginData.principal.firstName}}</li>-->
-					<!--<li>lastName: {{vm.loginData.principal.lastName}}</li>-->
-					<!--<li>rfidKey: {{vm.loginData.principal.rfidKey}}</li>-->
-					<!--<li>authorities: {{vm.loginData.principal.authorities}}</li>-->
-				<!--</ul>-->
-				<!--<br>-->
-				<!--<br>-->
-				<!--<br>-->
-				<!--<br>-->
-				<!--<br>-->
-				<!--<md-button class="md-raised" ng-click="vm.getAll()">get all</md-button>-->
-				<!--<md-button class="md-raised" ng-click="vm.logout()">logout</md-button>-->
-				<!--<md-button class="md-raised" ng-click="vm.getToken()">get with Token</md-button>-->
-				<!--<md-button class="md-raised" ng-click="vm.getHack()">Hack</md-button>-->
-				<!--<md-button class="md-raised" ng-click="vm.clearAll()">Clear lists</md-button>-->
-
-				<!--<md-input-container class="md-block" flex-gt-sm>-->
-					<!--<label>Old token</label>-->
-					<!--<input ng-model="vm.oldToken">-->
-				<!--</md-input-container>-->
-
-				<!--<div>Token</div>-->
-				<!--<div>{{vm.myToken}}</div>-->
-
-				<!--<div>Got users</div>-->
-				<!--<ul>-->
-					<!--<li ng-repeat="user in vm.users.data">-->
-						<!--<strong>id: {{user.id}}</strong>-->
-						<!--<br>-->
-						<!--username: {{user.username}}-->
-						<!--<br>-->
-						<!--Name: {{user.firstName}} {{user.lastName}}-->
-						<!--<br>-->
-						<!--rfidKey : {{user.rfidKey.id}} , {{user.rfidKey.enabled}}-->
-						<!--<br>-->
-						<!--authorities: {{user.authorities}}-->
-						<!--<br>-->
-						<!--<br>-->
-					<!--</li>-->
-				<!--</ul>-->
-
-			<!--</div>-->
-			<!--&lt;!&ndash;<div>{{vm.users.data}}</div>&ndash;&gt;-->
-		</md-card-content>
-	</md-card>
+            <form name="loginForm" ng-submit="vm.login()">
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Username</label>
+                        <input ng-model="vm.credentials.username">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Password</label>
+                        <input type="password" ng-model="vm.credentials.password">
+                    </md-input-container>
+                </div>
+                <md-button class="md-raised" type="submit">Login</md-button>
+                <md-button class="md-raised" ng-click="vm.cancelLogin()">Cancel</md-button>
+            </form>
+        </md-card-content>
+    </md-card>
 </div>
