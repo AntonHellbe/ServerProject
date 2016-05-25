@@ -13,7 +13,7 @@
 		.module('accounts')
 		.controller('AccountsCtrl', Accounts);
 
-	Accounts.$inject = ['WebsocketService', '$log', '$rootScope', '$filter', '$mdDialog'];
+	Accounts.$inject = ['WebsocketService', '$log', '$rootScope', '$filter', '$mdDialog','$http'];
 
 
 	/**
@@ -25,7 +25,7 @@
 	 * @param $mdDialog dialogbox handler
 	 * @constructor
 	 */
-	function Accounts(WebsocketService, $log, $rootScope, $filter, $mdDialog) {
+	function Accounts(WebsocketService, $log, $rootScope, $filter, $mdDialog,$http) {
 		/*jshint validthis: true */
 		var vm = this;
 
@@ -35,6 +35,13 @@
 
 		vm.updateUserId = "";
 		vm.updateUserIdx = -1;
+
+		$http.get('/app/modules/accounts/data.json')
+			.then(function(res){
+				vm.links = res.data.cats;
+
+				console.log(JSON.stringify(res));
+			});
 
 		/**
 		 * Websocket handler, handles all responses from websocket

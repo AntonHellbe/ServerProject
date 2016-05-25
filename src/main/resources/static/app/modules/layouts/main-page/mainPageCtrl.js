@@ -13,7 +13,8 @@
 		.module('essence')
 		.controller('LayoutCtrl', Layout);
 
-	Layout.$inject = ['$mdSidenav', '$cookies', '$state', '$mdToast', '$mdDialog', '$http', '$rootScope','WebsocketService','homeService'];
+	//Layout.$inject = ['$mdSidenav', '$state', '$mdToast', '$mdDialog', '$http', '$rootScope','WebsocketService','homeService'];
+	Layout.$inject = ['$mdSidenav', '$state', '$rootScope','WebsocketService','homeService','$http'];
 
 	/*
 	 * recommend
@@ -21,7 +22,7 @@
 	 * and bindable members up top.
 	 */
 
-	function Layout($mdSidenav, $state, $http, $rootScope,WebsocketService,homeService) {
+	function Layout($mdSidenav, $state, $rootScope,WebsocketService,homeService,$http) {
 		/*jshint validthis: true */
 		var vm = this;
 
@@ -33,13 +34,12 @@
 			$mdSidenav(menuId).toggle();
 		};
 
-
 		/**
 		 * Handles logout call
 		 */
 		vm.logOut = function () {
 
-			//console.log("loggout " + $rootScope.authenticated);
+			console.log("loggout " + $rootScope.authenticated);
 
 			$http.post($rootScope.ip+'/logout', {}).finally(function () {
 				$rootScope.authenticated = false;
@@ -50,7 +50,7 @@
 				$rootScope.authToken = {};
 			});
 
-			$state.go('home.login', {}, {reload: true});
+			$state.go('home.splash', {}, {reload: true});
 
 		};
 

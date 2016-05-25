@@ -13,6 +13,12 @@
     display: block;
 }
 
+
+.myimg{
+    width: 100%;
+    height: 350px;
+}
+
 /*._md-center {*/
     /*left: 50%;*/
     /*transform: translate3d(-50%, 0, 0);*/

@@ -12,8 +12,6 @@
 	angular
 		.module('essence')
 		.factory('MenuService', Menu);
-	// Inject your dependencies as .$inject = ['$http', 'someSevide'];
-	// function Name ($http, someSevide) {...}
 
 	Menu.$inject = ['$http'];
 
