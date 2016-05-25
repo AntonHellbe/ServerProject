@@ -1,7 +1,8 @@
 package org.demo.model.ws;
 
 /**
- * Created by Sebastian Börebäck on 2016-05-17.
+ * @author Sebastian Börebäck on 2016-05-17.
+ * Chat message, model used for chating with users
  */
 public class ChatMessage {
 	String sender;

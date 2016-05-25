@@ -15,12 +15,7 @@
       {
         "name": "login"
       },
-      {
-        "name": "pi"
-      },
-      {
-        "name": "android"
-      },
+
       {
         "name": "chat"
       },
@@ -40,29 +35,10 @@
         "link": "timestamps",
         "title": "Timestamps"
       },
-      {
-        "link": "login",
-        "title": "Login"
-      },
-      {
-        "link": "pi",
-        "title": "Pi"
-      },
-      {
-        "link": "android",
-        "title": "Android"
-      },
+
       {
         "link": "chat",
         "title": "Chat"
-      },
-      {
-        "link": "schedule",
-        "title": "Schedule"
-      },
-      {
-        "link": "splash",
-        "title": "Splash"
       }
     ]
   }

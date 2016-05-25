@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by Sebastian Börebäck on 2016-04-22.
+ * @author Sebastian Börebäck
  */
 @Configuration
 class WebSecurityAuthenticationConfig extends GlobalAuthenticationConfigurerAdapter {

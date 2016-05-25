@@ -3,7 +3,8 @@ package org.demo.model.ws;
 import java.util.Date;
 
 /**
- * Created by Sebastian Börebäck on 2016-05-17.
+ * @author Sebastian Börebäck on 2016-05-17.
+ * Chat answer, model used for chating with users
  */
 public class ChatAnswer {
 	String sender;

@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Sebastian Börebäck on 2016-03-30.
+ * @author Sebastian Börebäck on 2016-03-30.
+ * Websocket controller. handles the messages sent between server and client through websocket
  */
 @CrossOrigin(origins = "*")
 @Controller
@@ -46,10 +47,18 @@ public class WsController {
 
 	@Autowired
 	ScheduleService scheduleService;
+
 	ObjectMapper mapper = new ObjectMapper();
+
 	@Autowired
 	private SimpMessagingTemplate template;
 
+	/**
+	 * Handles chat messages sent between client
+	 * @param message the chat message
+	 * @return a chat answear
+	 * @throws InterruptedException
+	 */
 	@MessageMapping("/wschat")
 	@SendTo("/ws/wschatanswer")
 	public ChatAnswer webChatMessage(ChatMessage message) throws InterruptedException {
@@ -59,6 +68,13 @@ public class WsController {
 	}
 
 
+	/**
+	 * Webpage websocket communication handler.
+	 * Handles all request recived from web client.
+	 * @param message the webclient request
+	 * @return WsAnswer request data for web client
+	 * @throws InterruptedException
+	 */
 	@MessageMapping("/wsservice")
 	@SendTo("/ws/wsanswer")
 	public WsAnswer webHandleMessage(WsMessage message) throws InterruptedException {
@@ -88,13 +104,20 @@ public class WsController {
 			answer = new WsAnswer("Hello, " + message.getName() + "!");
 		}
 
-		log.info("returing to client: " + answer);
+		log.info("websocket returns: " + answer);
 
 		//log.info("Got Ws message " + message.toString());
 //		return new WsAnswer("Hello, " + message.getName() + "!");
 		return answer;
 	}
 
+	/**
+	 * Handles schedule request
+	 * @param service using the scheduleservice
+	 * @param message the request from client
+	 * @param answer the return answer from server
+	 * @return the answer
+	 */
 	private WsAnswer doScheduleAction(ScheduleService service, WsMessage message, WsAnswer answer) {
 		if (message.getCrudType() != null) {
 			switch (message.getCrudType()) {
@@ -118,6 +141,13 @@ public class WsController {
 		return answer;
 	}
 
+	/**
+	 * Handles timestamp request
+	 * @param service using the timeservice
+	 * @param message the request from client
+	 * @param answer the return answer from server
+	 * @return the answer
+	 */
 	private WsAnswer doTimeAction(TimeService service, WsMessage message, WsAnswer answer) {
 		TimeStamp stamp;
 		if (message.getCrudType() != null) {
@@ -174,6 +204,13 @@ public class WsController {
 		return answer;
 	}
 
+	/**
+	 * Handles account request
+	 * @param service using the accountservice
+	 * @param message the request from client
+	 * @param answer the return answer from server
+	 * @return the answer
+	 */
 	private WsAnswer doAccountAction(AccountService service, WsMessage message, WsAnswer answer) {
 		if (message.getCrudType() != null) {
 

@@ -5,15 +5,11 @@ import org.demo.model.security.Account;
 import java.io.Serializable;
 import java.util.Calendar;
 
-/**
- * Created by seb on 2016-04-11.
- */
-
 /***
+ * @author Sebastian Börebäck on 2016-04-11.
  * Pistamp is used on the pi for dispalying info when a user stamps in.
  * this is the return model
  */
-
 public class PiStamp extends Stamp implements Serializable {
 
 

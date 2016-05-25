@@ -3,11 +3,9 @@ package org.demo.model.security;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.demo.config.AuthoritiesConstants;
-import org.demo.config.UserNameGenerator;
 import org.demo.deserialize.GrantedAuthorityDeserializer;
 import org.demo.deserialize.RfidKeyDeserializer;
 import org.demo.model.RfidKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,9 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Sebastian Börebäck on 2016-04-22.
+ * @author Sebastian Börebäck on 2016-04-22.
+ * Account model used to define account
  */
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection = "Account")
 public class Account implements UserDetails ,Serializable{

@@ -13,6 +13,11 @@ import org.springframework.web.socket.config.annotation.*;
 
 import java.util.List;
 
+
+/***
+ * Websocket configurations. setting up the STOMPJS websocket configurations.
+ * @author Sebastian Börebäck
+ */
 @Configuration
 @EnableWebSocketMessageBroker
 //public class WebSocketConfig extends WebSocketMessageBrokerConfigurationSupport implements WebSocketMessageBrokerConfigurer {
@@ -49,6 +54,10 @@ public class WebSocketConfig extends WebSocketMessageBrokerConfigurationSupport 
 		super.addReturnValueHandlers(returnValueHandlers);
 	}
 
+	/**
+	 * Registering the websocket endpoints used by STOMP
+	 * @param registry
+	 */
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		System.out.println("Register " + registry.toString());
@@ -56,6 +65,10 @@ public class WebSocketConfig extends WebSocketMessageBrokerConfigurationSupport 
 		registry.addEndpoint("/wschat").setAllowedOrigins("*").withSockJS();
 	}
 
+	/**
+	 * configuering the websocket endpoints, to always user /ws
+	 * @param config
+	 */
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
 		System.out.println("config " + config.toString());

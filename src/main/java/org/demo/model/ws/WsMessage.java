@@ -3,7 +3,8 @@ package org.demo.model.ws;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Created by Sebastian Börebäck on 2016-05-16.
+ * @author Sebastian Börebäck on 2016-05-16.
+ * Websocket request from client model
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WsMessage {

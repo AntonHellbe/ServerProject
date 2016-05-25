@@ -1,7 +1,8 @@
 package org.demo.model.ws;
 
 /**
- * Created by Sebastian Börebäck on 2016-05-16.
+ * @author Sebastian Börebäck on 2016-05-16.
+ * Diffrent Crud types
  */
 public enum CrudType {
 	ADD,UPDATE,DELETE,GET,ALL,PASSWORD

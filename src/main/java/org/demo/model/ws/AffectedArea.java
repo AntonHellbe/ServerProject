@@ -1,7 +1,8 @@
 package org.demo.model.ws;
 
 /**
- * Created by Sebastian Börebäck on 2016-05-16.
+ * @author Sebastian Börebäck on 2016-05-16.
+ * Areas that websocket can affect
  */
 public enum AffectedArea {
 	ACCOUNT,TIMESTAMP,SCHEDULE

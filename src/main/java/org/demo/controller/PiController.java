@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by seb on 2016-04-07.
- *
+ * Created on 2016-04-07.
+ *@author Sebastian Börebäck
  * Controller class for RaspberryPi methods and other classes, contains methods that the Pi-client makes use of.
  */
 
@@ -40,6 +40,10 @@ public class PiController {
 
 	}
 
+	/**
+	 * Get server time
+	 * @return the server time
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/time")
 	public ResponseEntity<PiStamp> getTime() {
 		System.out.println("Giving out current time");

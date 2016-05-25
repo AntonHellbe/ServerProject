@@ -9,8 +9,8 @@
 	 * @ngdoc function
 	 * @name app.service:timestampsService
 	 * @description
-	 * # timestampsService
-	 * Service of the app
+	 * # websocketservice
+	 * Service of the app, handles the websocket communication
 	 */
 		//angular.module("essence").service("ChatService", function ($q, $timeout) {
 	angular
@@ -32,32 +32,42 @@
 
 		service.RECONNECT_TIMEOUT = 30000;
 		service.SOCKET_URL = "/wsservice";
-		service.CHAT_TOPIC = "/ws/wsanswer";
-		service.CHAT_BROKER = "/ws/wsservice";
+		service.SERVICE_TOPIC = "/ws/wsanswer";
+		service.SERVICE_BROKER = "/ws/wsservice";
 
-		//service.SOCKET_URL = "/serviceupdate";
-		//service.CHAT_TOPIC = "/topic/greetings";
-		//service.CHAT_BROKER = "/ws/serviceupdate";
-
+		/**
+		 * when message is recived there is a async promise for it
+		 * @returns {*}
+		 */
 		service.receive = function () {
 			return listener.promise;
 		};
 
+		/**
+		 * Send websocket message
+		 * @param message
+		 */
 		service.send = function (message) {
 			if (socket.stomp != null) {
 				//console.log("sending data: " + JSON.stringify(message));
-				var test = JSON.stringify({'name': message.name});
 				var str = JSON.stringify(message);
-				socket.stomp.send(service.CHAT_BROKER, {}, str);
+				socket.stomp.send(service.SERVICE_BROKER, {}, str);
 			}
 		};
 
+		/**
+		 * Reconnect if lost connection
+		 */
 		var reconnect = function () {
 			$timeout(function () {
 				initialize();
 			}, this.RECONNECT_TIMEOUT);
 		};
 
+		/**
+		 * Handles reciviing message from server
+		 * @param data the new data from server
+		 */
 		var getMessage = function (data) {
 			var message = JSON.parse(data), out = {};
 
@@ -66,6 +76,8 @@
 				handleAllAnswer(message);
 			}
 
+			//show toast for the new date from server
+			//with area, and type of update
 			$mdToast.show(
 				$mdToast.simple()
 					.content("Area: " + message.area + " - Change: " + message.crudType)
@@ -76,6 +88,11 @@
 			return message;
 		};
 
+		/**
+		 * stores the updated data locally in this service
+		 * so that you dont need to do extra roundtrips to server for data
+		 * @param message the data
+		 */
 		var handleAllAnswer = function (message) {
 			switch (message.area) {
 				case "ACCOUNT":
@@ -88,16 +105,22 @@
 					schedules = message.payloadList;
 					break;
 			}
-		}
+		};
 
+		/**
+		 * Start to listen for changes from server through websocket
+		 */
 		var startListener = function () {
 			//console.log("Got connection");
-			socket.stomp.subscribe(service.CHAT_TOPIC, function (data) {
+			socket.stomp.subscribe(service.SERVICE_TOPIC, function (data) {
 				listener.notify(getMessage(data.body));
 			});
 		};
 
 
+		/**
+		 * Initiliaze connection
+		 */
 		var initialize = function () {
 			socket.client = new SockJS(service.SOCKET_URL);
 			socket.stomp = Stomp.over(socket.client);
@@ -106,6 +129,9 @@
 		};
 
 
+		/**
+		 * Connect to server
+		 */
 		service.connect = function () {
 			socket.client = new SockJS(service.SOCKET_URL);
 			socket.stomp = Stomp.over(socket.client);
@@ -117,6 +143,9 @@
 		};
 
 
+		/**
+		 * disconnect to server
+		 */
 		service.disconnect = function () {
 			if (socket.stomp != null) {
 				socket.stomp.unsubscribe();
@@ -127,14 +156,26 @@
 			//console.log("Disconnected");
 		};
 
+		/**
+		 * Get locally stored schedules
+		 * @returns {Array}
+		 */
 		service.getSchedules = function() {
 			return schedules;
 		};
 
+		/**
+		 * Get locally stored timestamps
+		 * @returns {Array}
+		 */
 		service.getTimestamps = function() {
 			return timeStamps;
 		};
 
+		/**
+		 * get locally stored users
+		 * @returns {Array}
+		 */
 		service.getUsers = function() {
 			return users;
 		};

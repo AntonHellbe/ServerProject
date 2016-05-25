@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	'use strict';
 
 	/**
@@ -9,66 +9,40 @@
 	 * Service of the app
 	 */
 
-  	angular
+	angular
 		.module('essence')
 		.factory('MenuService', Menu);
-		// Inject your dependencies as .$inject = ['$http', 'someSevide'];
-		// function Name ($http, someSevide) {...}
+	// Inject your dependencies as .$inject = ['$http', 'someSevide'];
+	// function Name ($http, someSevide) {...}
 
-		Menu.$inject = ['$http'];
+	Menu.$inject = ['$http'];
 
-		function Menu ($http) {
+	function Menu($http) {
 
-			var menu = [
-				
-					{
-						link: 'accounts',
-							name: 'Accounts'
-					},
-			    
-					{
-						link: 'timestamps',
-							name: 'Timestamps'
-					},
-			    
-					//{
-					//	link: 'login',
-					//		name: 'Login'
-					//},
-			    
-					//{
-					//	link: 'pi',
-					//		name: 'Pi'
-					//},
-					//
-					//{
-					//	link: 'android',
-					//		name: 'Android'
-					//},
-			    
-					{
-						link: 'chat',
-							name: 'Chat'
-					},
-			    
-					//{
-					//	link: 'schedule',
-					//		name: 'Schedule'
-					//},
-			    
-					//{
-					//	link: 'splash',
-					//		name: 'Splash'
-					//},
-			    
-		  	];
+		var menu = [
 
-			return {
-				listMenu: function () {
-					return menu;
-				}
-		  	}
+			{
+				link: 'accounts',
+				name: 'Accounts'
+			},
 
+			{
+				link: 'timestamps',
+				name: 'Timestamps'
+			},
+
+			{
+				link: 'chat',
+				name: 'Chat'
+			},
+		];
+
+		return {
+			listMenu: function () {
+				return menu;
+			}
 		}
+
+	}
 
 })();

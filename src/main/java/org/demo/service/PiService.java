@@ -5,10 +5,11 @@ import org.demo.model.RfidKey;
 import org.springframework.http.ResponseEntity;
 
 /**
- * Created by seb on 2016-04-11.
+ *
  */
 
 /**
+ * @autor Sebastian Börebäck on 2016-04-11.
  * Interface for methods used by the RaspberryPi
  **/
 public interface PiService {

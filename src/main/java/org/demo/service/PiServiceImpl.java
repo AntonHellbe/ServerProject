@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 
 /**
- * Created by seb on 2016-04-11.
- * @author Robin Johnsson
+ * Created by Sebastian Börebäck on 2016-04-11.
+ * @author Sebastian Börebäck, Robin Johnsson
  */
 
 /**

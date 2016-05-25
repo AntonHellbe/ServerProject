@@ -24,8 +24,6 @@
 		'accounts',
 		'timestamps',
 		'login',
-		'pi',
-		//'android',
 		'chat',
 		//'schedule',
 		'splash',

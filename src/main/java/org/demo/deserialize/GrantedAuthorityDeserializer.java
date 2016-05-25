@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Anton on 2016-05-03.
+ * @author Sebastian Börebäck, Anton on 2016-05-03.
  */
 public class GrantedAuthorityDeserializer extends JsonDeserializer<List<GrantedAuthority>> {
 

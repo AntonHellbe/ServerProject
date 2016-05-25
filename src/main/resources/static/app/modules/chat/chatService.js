@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	'use strict';
 
 	/**
@@ -9,88 +9,92 @@
 	 * Service of the app
 	 */
 
-  	angular
+	angular
 		.module('chat')
 		.factory('ChatService', Chat);
-		// Inject your dependencies as .$inject = ['$http', 'someSevide'];
-		// function Name ($http, someSevide) {...}
 
-		Chat.$inject = ['$q','$timeout'];
+	Chat.$inject = ['$q', '$timeout'];
 
-		function Chat ($q, $timeout) {
-			var service = {}, listener = $q.defer(), socket = {
-				client: null,
-				stomp: null
-			}, messageIds = [];
+	function Chat($q, $timeout) {
+		var service = {}, listener = $q.defer(), socket = {
+			client: null,
+			stomp: null
+		}, messageIds = [];
 
-			service.RECONNECT_TIMEOUT = 30000;
-			service.SOCKET_URL = "/wschat";
-			service.CHAT_TOPIC = "/ws/wschatanswer";
-			service.CHAT_BROKER = "/ws/wschat";
+		service.RECONNECT_TIMEOUT = 30000;
+		service.SOCKET_URL = "/wschat";
+		service.SERVICE_TOPIC = "/ws/wschatanswer";
+		service.SERVICE_BROKER = "/ws/wschat";
 
-			service.receive = function () {
-				return listener.promise;
-			};
+		service.receive = function () {
+			return listener.promise;
+		};
 
-			service.send = function (message) {
-				if (socket.stomp != null) {
-					console.log("sending1 " + JSON.stringify(message));
-					var str = JSON.stringify(message);
+		/**
+		 * Send chat message
+		 * @param message
+		 */
+		service.send = function (message) {
+			if (socket.stomp != null) {
+				//console.log("sending1 " + JSON.stringify(message));
+				var str = JSON.stringify(message);
+				socket.stomp.send(service.SERVICE_BROKER, {}, str);
+			}
 
-					socket.stomp.send(service.CHAT_BROKER, {}, str);
-				}
+		};
 
+		/**
+		 * Reconnect on lost connection to websocket server
+		 */
+		var reconnect = function () {
+			$timeout(function () {
+				initialize();
+			}, this.RECONNECT_TIMEOUT);
+		};
 
-				//socket.stomp.send(service.CHAT_BROKER, {
-				//	priority: 9
-				//},message);
-			};
+		/**
+		 * Handle messegas got from websocket
+		 * @param data
+		 */
+		var getMessage = function (data) {
+			var message = JSON.parse(data), out = {};
+			return message;
+		};
 
-			var reconnect = function () {
-				$timeout(function () {
-					initialize();
-				}, this.RECONNECT_TIMEOUT);
-			};
+		/**
+		 * Listen for websocket messages
+		 */
+		var startListener = function () {
+			socket.stomp.subscribe(service.SERVICE_TOPIC, function (data) {
+				listener.notify(getMessage(data.body));
+			});
+		};
 
-			var getMessage = function (data) {
-				var message = JSON.parse(data), out = {};
-				return message;
-			};
+		/**
+		 * Connect to websocket
+		 */
+		service.connect = function () {
+			socket.client = new SockJS(service.SOCKET_URL);
+			socket.stomp = Stomp.over(socket.client);
+			socket.stomp.connect({}, startListener);
+			socket.stomp.onclose = reconnect;
+			//console.log("connected");
+		};
 
-			var startListener = function () {
-				socket.stomp.subscribe(service.CHAT_TOPIC, function (data) {
-					listener.notify(getMessage(data.body));
-				});
-			};
+		/**
+		 * disconnect from websocket
+		 */
+		service.disconnect = function () {
+			if (socket.stomp != null) {
+				socket.stomp.unsubscribe();
+				socket.stomp.disconnect();
 
+			}
+			//setConnected(false);
+			//console.log("Disconnected");
+		};
 
-			//var initialize = function () {
-			//	socket.client = new SockJS(service.SOCKET_URL);
-			//	socket.stomp = Stomp.over(socket.client);
-			//	socket.stomp.connect({}, startListener);
-			//	socket.stomp.onclose = reconnect;
-			//};
-
-
-			service.connect = function () {
-				socket.client = new SockJS(service.SOCKET_URL);
-				socket.stomp = Stomp.over(socket.client);
-				socket.stomp.connect({}, startListener);
-				socket.stomp.onclose = reconnect;
-				console.log("connected");
-			};
-
-			service.disconnect = function () {
-				if (socket.stomp != null) {
-					socket.stomp.unsubscribe();
-					socket.stomp.disconnect();
-
-				}
-				//setConnected(false);
-				console.log("Disconnected");
-			};
-
-			return service;
-		}
+		return service;
+	}
 
 })();

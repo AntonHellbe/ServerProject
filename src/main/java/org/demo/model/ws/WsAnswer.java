@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Arrays;
 
 /**
- * Created by Sebastian Börebäck on 2016-05-16.
+ * @author Sebastian Börebäck on 2016-05-16.
+ * Answer model to client for websocket request
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WsAnswer {

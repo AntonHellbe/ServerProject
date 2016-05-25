@@ -25,14 +25,14 @@
 		/*jshint validthis: true */
 		var vm = this;
 		vm.title = "Essence";
-		vm.version = "1.0.0";
-		vm.listFeatures = homeService.getFeaturesList();
+		vm.version = "2.0.0";
+		//vm.listFeatures = homeService.getFeaturesList();
 
-		vm.isAuth=homeService.getLoggedIn();
-
+		/**
+		 * Handles authentication over the hole webpage
+		 */
 		homeService.subscribe(vm, function somethingChanged(event, data) {
 			// Handle notification
-			console.log("got update "+data);
 			vm.isAuth = data;
 		});
 

@@ -7,8 +7,7 @@
             <span flex="auto"></span>
             <div flex="auto"  layout="row" layout-align="center center">
                 <md-input-container md-no-float md-theme="input">
-                    <!--<label>Search</label>-->
-                    <input placeholder="Search" ng-model="searchText" type="search">
+                    <input placeholder="search" ng-model="searchText" type="search">
                 </md-input-container>
                 <md-button ng-click="vm.getAll(true)">get list</md-button>
                 <md-button ng-click="vm.showAddUser($event)">Add</md-button>
@@ -61,10 +60,6 @@
                             </md-input-container>
 
                         </div>
-                        <!--<fieldset>-->
-                        <!--<legend>-->
-                        <!--Change password-->
-                        <!--</legend>-->
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Password</label>
                             <input type="password"
@@ -82,37 +77,6 @@
                                 <div ng-message="minlength">minimum length is 4</div>
                             </div>
                         </md-input-container>
-
-                        <!--<md-button class="md-raised" ng-hide="vm.showChangePassword"-->
-                        <!--ng-click="vm.showChangePassword=!vm.showChangePassword">ChangePassword-->
-                        <!--</md-button>-->
-                        <!--<ng-form name="changePwdForm">-->
-                        <!--<div ng-show="vm.showChangePassword">-->
-                        <!--<md-input-container class="md-block" flex-gt-sm>-->
-                        <!--<label>New password</label>-->
-                        <!--<input type="password"-->
-                        <!--name="newpass"-->
-                        <!--ng-model="vm.newPassword" required minlength="4">-->
-                        <!--<div ng-messages="changePwdForm.newpass.$error"-->
-                        <!--role="alert"-->
-                        <!--ng-hide="vm.newPassword.length >=4 || vm.newPassword.length <=1"-->
-                        <!--&gt;-->
-                        <!--<div ng-message="minlength">-->
-                        <!--Password length is minimum 4-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</md-input-container>-->
-                        <!--<md-button class="md-raised md-primary" ng-show="vm.newPassword.length >= 4 "-->
-                        <!--ng-click="vm.changePassword(user,vm.newPassword)">-->
-                        <!--Change Password-->
-                        <!--</md-button>-->
-                        <!--<md-button class="md-raised md-warn"-->
-                        <!--ng-click="vm.showChangePassword=!vm.showChangePassword; vm.newPassword='';">-->
-                        <!--Cancel Change Password-->
-                        <!--</md-button>-->
-                        <!--</div>-->
-                        <!--</ng-form>-->
-                        <!--</fieldset>-->
 
                         <div layout-gt-sm="row">
                             <md-input-container flex="50">
@@ -184,11 +148,6 @@
                 <span class="md-title">No users</span>
             </md-card-header-text>
         </md-card-header>
-        <!--<div>-->
-        <!--<md-card-content>-->
-        <!---->
-        <!--</md-card-content>-->
-        <!---->
-        <!--</div>-->
+
     </md-card>
 </div>

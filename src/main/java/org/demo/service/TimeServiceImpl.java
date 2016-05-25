@@ -17,7 +17,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Created by Robin_2 on 11/04/2016.
- * @author Robin Johnsson
+ * @author Robin Johnsson, Sebastian Börebäck
  */
 
 /**

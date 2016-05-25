@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Created by Sebastian Börebäck on 2016-04-09.
- */
-
-/**
+ * @author Sebastian Börebäck on 2016-04-09
  * A webcontroller that handles displaying webpages
  * has url mappings for the diffrent web interfaces
  */
@@ -28,35 +25,4 @@ public class WebController {
 		return "index.html";
 	}
 
-
-	/**
-	 * Connecting Android web interface to
-	 * localhost:8080/andw
-	 * @return the android web interface
-	 */
-	@RequestMapping(value="/andw",method = RequestMethod.GET)
-	public String androidWeb(){
-		return "/andweb/index.html";
-	}
-
-
-	/**
-	 * Connecting Item web interface to
-	 * localhost:8080/iweb
-	 * @return the item test web interface
-	 */
-	@RequestMapping(value="/iweb",method = RequestMethod.GET)
-	public String itemWeb(){
-		return "/itemweb/index.html";
-	}
-
-	/**
-	 * Connecting Item web interface to
-	 * localhost:8080/piw
-	 * @return the item test web interface
-	 */
-	@RequestMapping(value="/piw",method = RequestMethod.GET)
-	public String piWeb(){
-		return "/piweb/index.html";
-	}
 }

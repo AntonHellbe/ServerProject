@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * Created by Sebastian Börebäck on 2016-05-04.
+ * @author Sebastian Börebäck
+ * Handles logging out
  */
 public class MyLogoutHandler implements LogoutHandler {
 

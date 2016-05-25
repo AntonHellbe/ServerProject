@@ -6,29 +6,29 @@
 	 * @name app.controller:accountsCtrl
 	 * @description
 	 * # accountsCtrl
-	 * Controller of the app
+	 * Account Controller of the app
 	 */
 
 	angular
 		.module('accounts')
 		.controller('AccountsCtrl', Accounts);
 
-	//Accounts.$inject = ['AccountsService', 'WebsocketService', '$log', '$filter', '$rootScope'];
-	Accounts.$inject = ['WebsocketService', '$log', '$rootScope', '$filter','$mdDialog'];
+	Accounts.$inject = ['WebsocketService', '$log', '$rootScope', '$filter', '$mdDialog'];
 
-	/*
-	 * recommend
-	 * Using function declarations
-	 * and bindable members up top.
+
+	/**
+	 * Account controller, handle all CRUD functions with accounts
+	 * @param WebsocketService websocket service
+	 * @param $log logger
+	 * @param $rootScope the rootscope
+	 * @param $filter filter
+	 * @param $mdDialog dialogbox handler
+	 * @constructor
 	 */
-
-	function Accounts(WebsocketService, $log, $rootScope, $filter,$mdDialog) {
+	function Accounts(WebsocketService, $log, $rootScope, $filter, $mdDialog) {
 		/*jshint validthis: true */
 		var vm = this;
 
-		//vm.authorities = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}];
-		//roles list
-		//vm.items = [{authority: "ROLE_USER"}, {authority: "ROLE_ADMIN"}, {authority: "ROLE_PI"}];
 		vm.items = ["ROLE_USER", "ROLE_ADMIN", "ROLE_PI"];
 		vm.allusers = [];
 		vm.authToken = $rootScope.authToken;
@@ -36,6 +36,9 @@
 		vm.updateUserId = "";
 		vm.updateUserIdx = -1;
 
+		/**
+		 * Websocket handler, handles all responses from websocket
+		 */
 		WebsocketService.receive().then(null, null, function (wsUpdate) {
 
 			$log.info("Got Account: " + wsUpdate);
@@ -48,7 +51,6 @@
 				$log.info("NO Error " + wsUpdate.error);
 
 			}
-			//$log.info("got update from server: " + JSON.stringify(wsUpdate));
 
 			//Check that is account answer
 			if (wsUpdate.area == "ACCOUNT") {
@@ -117,7 +119,7 @@
 		});
 
 		/**
-		 * default get all users
+		 * Get all users
 		 */
 		vm.getAll = function (isManual) {
 
@@ -152,11 +154,6 @@
 
 		vm.getAll();
 
-		vm.cancelAdd = function () {
-			console.log("calling cancel add");
-			vm.newUser = {};
-			vm.showAddUser = !vm.showAddUser;
-		};
 
 		////add a new user
 		//vm.addUser = function (newUser) {
@@ -208,10 +205,13 @@
 		//};
 
 
-		//update user
+		/**
+		 * Update user
+		 * @param user the user object
+		 * @param index index of the user
+		 */
 		vm.updateUser = function (user, index) {
-			$log.info("updateing " + JSON.stringify(user));
-			//$log.info("updateing idx: " + index);
+			//$log.info("updateing " + JSON.stringify(user));
 
 			vm.updateUserId = user.id;
 			vm.updateUserIdx = index;
@@ -224,9 +224,9 @@
 			}
 
 			//check if there is a new password
-			if(user.newPassword != undefined) {
+			if (user.newPassword != undefined) {
 				//is minlength 4
-				if(user.newPassword.length >=4) {
+				if (user.newPassword.length >= 4) {
 					user.password = user.newPassword;
 				}
 			}
@@ -283,6 +283,11 @@
 			//	});
 		};
 
+		/**
+		 * Toggle selected authorities
+		 * @param item all auths
+		 * @param selected users current authorities
+		 */
 		vm.toggle = function (item, selected) {
 			$log.info("select item " + item + " add to list: " + selected);
 
@@ -305,6 +310,13 @@
 			}
 
 		};
+
+		/**
+		 * Check if user has authorities
+		 * @param item all authorities
+		 * @param selected user current authorities
+		 * @returns {boolean} true if has authority
+		 */
 		vm.exists = function (item, selected) {
 
 			var res = undefined;
@@ -319,15 +331,26 @@
 			}
 			return (res != undefined);
 		};
+		/**
+		 * Check if not all is selected
+		 * @param selected users authorities
+		 * @returns {boolean} true if not all is selected
+		 */
 		vm.isIndeterminate = function (selected) {
 			//$log.info("is indeterminate: " + +((selected.length !== 0 &&
 			//	selected.length !== vm.items.length)));
 			return (selected.length !== 0 &&
 			selected.length !== vm.items.length);
 		};
+
+		/**
+		 *
+		 * @param selected users authorities
+		 * @returns {boolean} true if all authorities is selected
+		 */
 		vm.isChecked = function (selected) {
 			if (selected == undefined) {
-				$log.info("user has no Auths");
+				//$log.info("user has no Auths");
 				return false;
 			}
 			else {
@@ -335,6 +358,11 @@
 				return selected.length === vm.items.length;
 			}
 		};
+
+		/**
+		 * Toggle select all and unselect all
+		 * @param selected
+		 */
 		vm.toggleAll = function (selected) {
 			if (selected.length === vm.items.length) {
 				$log.info("all is selected, deselect all!");
@@ -354,26 +382,32 @@
 			}
 		};
 
-		vm.changePassword = function (user, newPassword) {
-			$log.info("change password");
-			$log.info("user " + user.username + " newpass " + newPassword);
+		///**
+		// * Changepassword function
+		// * @param user user that needs new password
+		// * @param newPassword the new password
+		// */
+		//vm.changePassword = function (user, newPassword) {
+		//	$log.info("change password");
+		//	$log.info("user " + user.username + " newpass " + newPassword);
+		//
+		//	if (newPassword != undefined) {
+		//
+		//
+		//		var sendMsg = {"area": "ACCOUNT", "crudType": "PASSWORD", "token": $rootScope.authToken};
+		//		sendMsg.payload = newPassword;
+		//		sendMsg.affectedId = user.id;
+		//
+		//		$log.info("sending > " + JSON.stringify(sendMsg));
+		//		WebsocketService.send(sendMsg);
+		//		vm.showChangePassword = !vm.showChangePassword;
+		//		vm.newPassword = "";
+		//	}
+		//};
 
-			if (newPassword != undefined) {
-
-
-				var sendMsg = {"area": "ACCOUNT", "crudType": "PASSWORD", "token": $rootScope.authToken};
-				sendMsg.payload = newPassword;
-				sendMsg.affectedId = user.id;
-
-				$log.info("sending > " + JSON.stringify(sendMsg));
-				WebsocketService.send(sendMsg);
-				vm.showChangePassword = !vm.showChangePassword;
-				vm.newPassword = "";
-			}
-		};
-
-		//todo move to accountctrl
-		//show add user dialog
+		/**
+		 *show add user dialog
+		 */
 		vm.showAddUser = function (ev) {
 
 			$mdDialog.show({
@@ -382,23 +416,18 @@
 					parent: angular.element(document.body),
 					targetEvent: ev,
 					clickOutsideToClose: true,
-					locals: {items: vm.items,
-						authToken:vm.authToken}
+					locals: {
+						items: vm.items,
+						authToken: vm.authToken
+					}
 				})
 				.then(function (newUser) {
 						//ADD
-						console.log("Add user: " + JSON.stringify(newUser));
-
-						////websocketstuff
-						//var sendMsg = {"area": "TIMESTAMP", "crudType": "ADD", "token": $rootScope.authToken};
-						//sendMsg.payload = newStamp;
-						//sendMsg.affectedId = user.id;
-
-						//$log.info("sending > " + JSON.stringify(sendMsg));
-						//WebsocketService.send(sendMsg);
+						//handles in dialog
+						//console.log("Add user: " + JSON.stringify(newUser));
 
 					}, function () {
-						console.log("You cancelled the dialog.");
+						//console.log("You cancelled the dialog.");
 					}
 				);
 
@@ -408,7 +437,18 @@
 		//end of account
 	}
 
-	function AddUserCtrl($scope, $mdDialog, items,authToken, $log,$filter,WebsocketService) {
+	/**
+	 * Add user dialog controller.
+	 * @param $scope the scope
+	 * @param $mdDialog the dialog
+	 * @param items user roles
+	 * @param authToken session token
+	 * @param $log logger
+	 * @param $filter filter for searching
+	 * @param WebsocketService websocket service for handling websocket calls.
+	 * @constructor
+	 */
+	function AddUserCtrl($scope, $mdDialog, items, authToken, $log, $filter, WebsocketService) {
 
 		var vm = $scope;
 		//all authorities
@@ -418,14 +458,15 @@
 		//the new user object
 		vm.newUser =
 		{
-			"firstName":undefined,
-			"lastName":undefined,
-			"username":undefined,
-			"password":undefined,
-			"rfidKey":
-			{   "id":"",
-				"enabled":false},
-			authorities:[]
+			"firstName": undefined,
+			"lastName": undefined,
+			"username": undefined,
+			"password": undefined,
+			"rfidKey": {
+				"id": "",
+				"enabled": false
+			},
+			authorities: []
 		};
 
 
@@ -441,11 +482,11 @@
 		 * @param newUser the new user
 		 */
 		vm.addUser = function (newUser) {
-			$log.info("Add user: "+ JSON.stringify(newUser));
+			//$log.info("Add user: " + JSON.stringify(newUser));
 			var sendMsg = {"area": "ACCOUNT", "crudType": "ADD", "token": vm.authToken};
 			sendMsg.payload = newUser;
 
-			$log.info("sending > " + JSON.stringify(sendMsg));
+			//$log.info("sending > " + JSON.stringify(sendMsg));
 			WebsocketService.send(sendMsg);
 			$mdDialog.hide(newUser);
 		};

@@ -1,7 +1,10 @@
 package org.demo.service;
 
 import org.demo.errorHandler.AndroidErrorHandler;
-import org.demo.model.*;
+import org.demo.model.AndroidBetweenQuery;
+import org.demo.model.AndroidStamp;
+import org.demo.model.RfidKey;
+import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
 import org.demo.repository.AccountRepository;
 import org.demo.repository.ScheduleRepository;
@@ -13,14 +16,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
 /**
  * Created by Anton on 2016-04-11.
- * @author Robin Johnsson
+ * @author Sebastian Börebäck, Robin Johnsson
  */
 
 /**

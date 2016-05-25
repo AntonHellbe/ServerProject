@@ -21,82 +21,33 @@
 	 * and bindable members up top.
 	 */
 
-	function Layout($mdSidenav, $cookies, $state, $mdToast, $mdDialog, $http, $rootScope,WebsocketService,homeService) {
+	function Layout($mdSidenav, $state, $http, $rootScope,WebsocketService,homeService) {
 		/*jshint validthis: true */
 		var vm = this;
 
+		/**
+		 * Handles sidenavbar
+		 * @param menuId
+		 */
 		vm.toggleSidenav = function (menuId) {
 			$mdSidenav(menuId).toggle();
 		};
 
-		vm.changePassword = function () {
-			$mdToast.show(
-				$mdToast.simple()
-					.content('Password clicked!')
-					.position('top right')
-					.hideDelay(2000)
-			);
-		};
 
-		vm.changeProfile = function (ev) {
-			$mdDialog.show({
-					controller: DialogController,
-					templateUrl: 'tabDialog.tmpl.html',
-					parent: angular.element(document.body),
-					targetEvent: ev,
-					clickOutsideToClose: true
-				})
-				.then(function (answer) {
-					$mdToast.show(
-						$mdToast.simple()
-							.content('You said the information was "' + answer + '".')
-							.position('top right')
-							.hideDelay(2000)
-					);
-
-				}, function () {
-					$mdToast.show(
-						$mdToast.simple()
-							.content('You cancelled the dialog.')
-							.position('top right')
-							.hideDelay(2000)
-					);
-				});
-
-			function DialogController($scope, $mdDialog) {
-				$scope.hide = function () {
-					$mdDialog.hide();
-				};
-
-				$scope.cancel = function () {
-					$mdDialog.cancel();
-				};
-
-				$scope.answer = function (answer) {
-					$mdDialog.hide(answer);
-				};
-			}
-		};
-
-
+		/**
+		 * Handles logout call
+		 */
 		vm.logOut = function () {
 
-			//alert('Implement your Function Here');
-			//uncommented
-			$cookies.put('dev_appserver_login', ' ');
-
-			console.log("loggout " + $rootScope.authenticated);
-			console.log("auh> " + $rootScope.authenticated);
+			//console.log("loggout " + $rootScope.authenticated);
 
 			$http.post($rootScope.ip+'/logout', {}).finally(function () {
 				$rootScope.authenticated = false;
                 $rootScope.authData={};
-				console.log("LOGED out");
+				//console.log("LOGED out");
 				homeService.setLoggedIn($rootScope.authenticated);
 				WebsocketService.disconnect();
 				$rootScope.authToken = {};
-
-				//$location.path("/");
 			});
 
 			$state.go('home.login', {}, {reload: true});
@@ -104,6 +55,11 @@
 		};
 
 		var originatorEv;
+		/**
+		 * Show menu
+		 * @param $mdOpenMenu
+		 * @param ev
+		 */
 		vm.openMenu = function ($mdOpenMenu, ev) {
 			originatorEv = ev;
 			$mdOpenMenu(ev);

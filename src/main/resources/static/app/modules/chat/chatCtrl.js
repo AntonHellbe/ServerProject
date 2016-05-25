@@ -28,8 +28,12 @@
 
 			vm.currentUser = $rootScope.authData.principal.username;
 
+			//connect to chat service
 			ChatService.connect();
 
+			/**
+			 * Send chat message
+			 */
 			vm.sendMsg= function(){
 				//vm.message;
 				var msg={};
@@ -37,22 +41,18 @@
 				msg.sender = vm.currentUser;
 				msg.message = vm.message;
 
-				//var sendMsg = {"sender": "ACCOUNT", "crudType": "DELETE", "token": $rootScope.authToken};
-				//sendMsg.affectedId = user.id;
-
-
-				$log.info("sending > " + JSON.stringify(msg));
+				//$log.info("sending > " + JSON.stringify(msg));
 				ChatService.send(msg);
 
 				//clear field
 				vm.message="";
-
-				//vm.messages.push(msg);
-
 			};
 
+			/**
+			 * Recive chat message handler
+			 */
 			ChatService.receive().then(null, null, function (chatAnswer) {
-				$log.info("got answer " + chatAnswer);
+				//$log.info("got answer " + chatAnswer);
 				vm.messages.push(chatAnswer);
 			});
 

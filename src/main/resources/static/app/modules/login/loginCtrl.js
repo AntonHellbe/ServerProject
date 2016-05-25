@@ -28,8 +28,8 @@
 
 		var ip = $rootScope.ip;
 
-		//vm.credentials = {};
-		vm.credentials = {username:"admin",password:"pass"};
+		vm.credentials = {};
+		//vm.credentials = {username:"admin",password:"pass"};
 
 
 
@@ -46,24 +46,24 @@
 					+ credentials.password)
 			} : {};
 
-			console.log("Do login call");
+			//console.log("Do login call");
 
 			$http.get(ip + '/api/account', {
 				headers: headers
 			}).then(function (response) {
 				if (response.data.name) {
-					console.log("auth succes");
+					//console.log("auth succes");
 					$rootScope.authenticated = true;
 					$rootScope.authData = response.data;
 				} else {
-					console.log("auth FAIL");
+					//console.log("auth FAIL");
 					$rootScope.authenticated = false;
 				}
-				console.log("respo " + JSON.stringify(response));
+				//console.log("respo " + JSON.stringify(response));
 
 				callback && callback($rootScope.authenticated);
 			}, function (errorRes) {
-				console.log("error res " + JSON.stringify(errorRes));
+				//console.log("error res " + JSON.stringify(errorRes));
 				$rootScope.authenticated = false;
 				callback && callback(false);
 			});
@@ -90,11 +90,11 @@
 		 * Login button
 		 */
 		vm.login = function () {
-			console.log("call login");
+			//console.log("call login");
 
 			authenticate(vm.credentials, function (authenticated) {
 				if (authenticated) {
-					console.log("Login succeeded");
+					//console.log("Login succeeded");
 
 					//check if user is admin
 					var hasAdmin=$filter('filter')($rootScope.authData.authorities, 'ROLE_ADMIN');
@@ -112,9 +112,7 @@
 							vm.error = false;
 							$rootScope.authenticated = true;
 							homeService.setLoggedIn($rootScope.authenticated);
-							//todo uncom
-							//$state.go("home.dashboard");
-							$state.go("home.timestamps");
+							$state.go("home.dashboard");
 
 						},500);
 					}
@@ -124,7 +122,7 @@
 					}
 
 				} else {
-					console.log("Login failed");
+					//console.log("Login failed");
 					vm.error = true;
 					$rootScope.authenticated = false;
 					vm.showAlert("Wrong password or username!");
@@ -137,7 +135,7 @@
 		 */
 		vm.logout = function () {
 			$http.post(ip + '/logout', {}).finally(function () {
-				console.log("LOGGED out");
+				//console.log("LOGGED out");
 				WebsocketService.disconnect();
 				$rootScope.authenticated = false;
 				$rootScope.authToken = {};
@@ -153,7 +151,7 @@
 			$state.go("home.splash");
 		};
 
-		vm.login();
+		//vm.login();
 		//end of ctrl
 	}
 

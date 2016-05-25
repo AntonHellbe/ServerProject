@@ -1,10 +1,9 @@
 package org.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.org.apache.xpath.internal.operations.And;
 
 /**
- * Created by Sebastian Börebäck on 2016-04-21.
+ * @author Sebastian Börebäck on 2016-04-21.
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
