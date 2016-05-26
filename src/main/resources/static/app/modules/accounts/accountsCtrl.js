@@ -43,6 +43,22 @@
 				console.log(JSON.stringify(res));
 			});
 
+
+		/**
+		 * Error handler
+		 * @param message error message
+		 */
+		vm.showAlert = function (message) {
+			$mdDialog.show(
+				$mdDialog.alert()
+					.clickOutsideToClose(true)
+					.title('Error with stamps!')
+					.textContent(message)
+					.ariaLabel('Error with stamps')
+					.ok('OK')
+			);
+		};
+
 		/**
 		 * Websocket handler, handles all responses from websocket
 		 */
@@ -52,6 +68,7 @@
 
 			if (wsUpdate.error != undefined) {
 				$log.info("Error " + wsUpdate.error);
+				vm.showAlert(wsUpdate.error);
 				return;
 			}
 			else {
