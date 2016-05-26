@@ -56,21 +56,9 @@ public class AccountController {
         return userService.getUser(id);
     }
 
-    /**
-     * Updates a user with new information
-     * @param updatedAccount the updated information
-     * @return the updated user
-     **/
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) throws InterruptedException {
-	    log.info("updateing user "+updatedAccount);
-
-
-	    return userService.updateUser(updatedAccount);
-    }
 
     //Only admin app uses this
-    @RequestMapping(method = RequestMethod.PUT, value = "/a")
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<Account> updateUserAdmin(@RequestBody Map<String, Object> newAccount){
         log.info("Entering adminUpdateUser");
         System.out.println("sent in data " + newAccount.toString());
@@ -106,20 +94,8 @@ public class AccountController {
 
     }
 
-    /**
-     * Adds a new user
-     * @return the newly added user
-     **/
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Account> addUser(@RequestBody Account newAccount) {
-        System.out.println("sent in data " + newAccount);
-        log.info("add user "+newAccount);
-	    return userService.addUser(newAccount);
-
-    }
-
     //Only admin app uses this
-    @RequestMapping(method = RequestMethod.POST, value = "/a")
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Account> addUserAdmin(@RequestBody Map<String, Object> newAccount){
         log.info("Entering adminAddUser");
         System.out.println("sent in data " + newAccount.toString());
