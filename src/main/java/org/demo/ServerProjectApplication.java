@@ -21,10 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Sebastian Börebäck
@@ -61,13 +58,21 @@ public class ServerProjectApplication implements CommandLineRunner {
 	public void run(String... strings) throws Exception {
 
 		//Clear DB
-		clearDB();
-
-		//Check and create accounts
-		ArrayList<Account> accounts = createUsers();
-		//create timestamps and add to db
+//		clearDB();
+//
+//		//Check and create accounts
+//		ArrayList<Account> accounts = createUsers();
+//		//create timestamps and add to db
 //		createTimestamps(accounts);
+//		String ids[] = new String[1];
+//		ids[0] = "574619afc1185c40bcd28587";
+//
+//		generateScheds(ids);
 
+//		List<ScheduleStamp> stampList = scheduleRepository.getById("574619afc1185c40bcd28587");
+//		for (int i = 0; i < stampList.size(); i++) {
+//			System.out.println(stampList.get(i).toString());
+//		}
 
 //		end of runner
 	}
@@ -219,6 +224,7 @@ public class ServerProjectApplication implements CommandLineRunner {
 			cals.add(new ScheduleStamp(inCal.getTimeInMillis(), outCal.getTimeInMillis(),tempIds));
 
 		}
+		scheduleRepository.save(cals);
 		return cals;
 	}
 

@@ -21,7 +21,7 @@ public interface AccountRepositoryCustom {
 
     Account findByName(String firstName, String lastName);
 
-    List<Account> findDisabledUsers(String status);
+    List<Account> findDisabledUsers(boolean status);
 
     List<Account> findAllRfidUsers();
 

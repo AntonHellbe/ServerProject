@@ -19,4 +19,6 @@ public interface TimeRepositoryCustom {
     public TimeStamp stateCheck(RfidKey rfidKey);
 
     public TimeStamp findCertainTime(TimeStamp timeStamp);
+
+    public TimeStamp newStampCheck(RfidKey rfidKey, TimeStamp newStamp);
 }

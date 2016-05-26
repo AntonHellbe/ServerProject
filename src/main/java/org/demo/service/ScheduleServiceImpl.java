@@ -1,7 +1,6 @@
 package org.demo.service;
 
 import org.demo.errorHandler.ScheduleErrorHandler;
-import org.demo.model.AndroidBetweenQuery;
 import org.demo.model.ScheduleStamp;
 import org.demo.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**

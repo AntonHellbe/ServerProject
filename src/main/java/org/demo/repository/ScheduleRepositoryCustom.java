@@ -10,7 +10,11 @@ import java.util.List;
  */
 public interface ScheduleRepositoryCustom {
 
-    List<ScheduleStamp> getByRfid(RfidKey rfidKey);
+    List<ScheduleStamp> getById(String id);
 
     List<ScheduleStamp> getBetweenQuery(long from, long to, String id);
+
+    List<ScheduleStamp> getAfter(String id, long date);
+
+    List<ScheduleStamp> getByIds(List<String> ids);
 }

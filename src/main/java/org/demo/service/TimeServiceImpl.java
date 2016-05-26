@@ -59,6 +59,12 @@ public class TimeServiceImpl implements TimeService {
 	@Override
 	public ResponseEntity<TimeStamp> addTime(String id, TimeStamp newStamp) {
 		try {
+			TimeStamp dildo = timeRepository.newStampCheck(newStamp.getRfidkey(), newStamp);
+			if(dildo == null) {
+				newStamp.setCheckIn(true);
+			}else {
+			newStamp.setCheckIn(!dildo.getCheckIn());
+			}
 			timeRepository.save(newStamp);
 			return new ResponseEntity<>(newStamp, HttpStatus.OK);
 		} catch (Exception e) {
@@ -113,21 +119,14 @@ public class TimeServiceImpl implements TimeService {
 
 	@Override
 	public ResponseEntity<TimeStamp> updateTime(String id, String stampId, TimeStamp updateStamp) {
-		TimeStamp timeToUpdate = timeRepository.findOne(stampId);
-		Calendar cal = new GregorianCalendar();
-		if (updateStamp.getDate() != 0) {
-			long date = updateStamp.getDate();
-			cal.setTimeInMillis(date);
-			timeToUpdate.setDate(date);
+		HttpStatus statsOnRequest = timeErrorHandler.updateTimeHandler(updateStamp);
+		if(statsOnRequest == HttpStatus.OK) {
+			timeRepository.save(updateStamp);
+			return new ResponseEntity<TimeStamp>(updateStamp, statsOnRequest);
 		}
-			timeToUpdate.setCheckIn(updateStamp.getCheckIn());
 
-		if (updateStamp.getRfidkey()!= null) {
-			timeToUpdate.setRfidkey(new RfidKey(updateStamp.getRfidkey().toString()));
-		}
-		timeRepository.save(timeToUpdate);
-		System.out.println("Updated time: " + timeToUpdate);
-		return new ResponseEntity<>(timeToUpdate, HttpStatus.OK);
+		return new ResponseEntity<>(statsOnRequest);
+
 	}
 
 

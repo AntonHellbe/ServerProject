@@ -40,8 +40,8 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     }
 
     @Override
-    public List<Account> findDisabledUsers(String status) {
-        return mongoOperations.find(query(where("isEnabled").is(false)), Account.class);
+    public List<Account> findDisabledUsers(boolean status) {
+        return mongoOperations.find(query(where("isEnabled").is(status)), Account.class);
 
     }
 
