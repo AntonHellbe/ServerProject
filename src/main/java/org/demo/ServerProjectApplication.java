@@ -58,10 +58,10 @@ public class ServerProjectApplication implements CommandLineRunner {
 	public void run(String... strings) throws Exception {
 
 		//Clear DB
-//		clearDB();
-//
+		clearDB();
+
 //		//Check and create accounts
-//		ArrayList<Account> accounts = createUsers();
+		ArrayList<Account> accounts = createUsers();
 //		//create timestamps and add to db
 //		createTimestamps(accounts);
 //		String ids[] = new String[1];
