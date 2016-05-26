@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,15 +57,32 @@ public class AccountController {
         return userService.getUser(id);
     }
 
+    /**
+     * Updates a user with new information
+     * @param updatedAccount the updated information
+     * @return the updated user
+     **/
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public ResponseEntity<Account> updateUser(@RequestBody Account updatedAccount) throws InterruptedException {
+	    log.info("updateing user "+updatedAccount);
+        log.info("in controller");
+
+
+	    return userService.updateUser(updatedAccount);
+    }
 
     //Only admin app uses this
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, value = "/a")
     public ResponseEntity<Account> updateUserAdmin(@RequestBody Map<String, Object> newAccount){
+        boolean admin = false;
+        boolean user = false;
+        boolean pi = false;
         log.info("Entering adminUpdateUser");
         System.out.println("sent in data " + newAccount.toString());
         ArrayList<LinkedHashMap<String, Object>> accountMapList = (ArrayList<LinkedHashMap<String, Object>>) newAccount.get("Account");
         LinkedHashMap<String, Object> accountMap = accountMapList.get(0);
         LinkedHashMap<String, Object> rfidMap = (LinkedHashMap<String, Object>) accountMap.get("rfidKey");
+        ArrayList<LinkedHashMap<String, Object>> auth = (ArrayList<LinkedHashMap<String,Object>>) accountMap.get("authorities");
         Account newAcc = new Account();
 
         newAcc.setId((String) accountMap.get("id")); //tror denna behövdes!
@@ -77,8 +95,26 @@ public class AccountController {
         RfidKey rfidKey = new RfidKey((String)rfidMap.get("id"));
         rfidKey.setEnabled(true);
         newAcc.setRfidKey(rfidKey);
-        newAcc.setAuthorities(AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER));
 
+        List<GrantedAuthority> list = new ArrayList<>();
+
+        for (int i = 0; i < auth.size(); i++) {
+            if(auth.get(i).get("authority").toString().equals("ROLE_ADMIN")){
+                admin = true;
+            }else if(auth.get(i).get("authority").toString().equals("ROLE_USER")){
+                user = true;
+            }
+            if(user && admin){
+                newAcc.setAuthorities(AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER,
+                        AuthoritiesConstants.ADMIN));
+            }else if(admin){
+                newAcc.setAuthorities(AuthorityUtils.createAuthorityList(AuthoritiesConstants.ADMIN));
+            }else if(user){
+                newAcc.setAuthorities(AuthorityUtils.createAuthorityList(AuthoritiesConstants.USER));
+            }
+        }
+
+        log.info("New list " + list.toString());
         log.info("account to add from adminApp: " + newAcc);
         return userService.updateUser(newAcc);
     }
@@ -94,8 +130,20 @@ public class AccountController {
 
     }
 
-    //Only admin app uses this
+    /**
+     * Adds a new user
+     * @return the newly added user
+     **/
     @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Account> addUser(@RequestBody Account newAccount) {
+        System.out.println("sent in data " + newAccount);
+        log.info("add user "+newAccount);
+	    return userService.addUser(newAccount);
+
+    }
+
+    //Only admin app uses this
+    @RequestMapping(method = RequestMethod.POST, value = "/a")
     public ResponseEntity<Account> addUserAdmin(@RequestBody Map<String, Object> newAccount){
         log.info("Entering adminAddUser");
         System.out.println("sent in data " + newAccount.toString());
