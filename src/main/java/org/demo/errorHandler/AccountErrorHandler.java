@@ -132,7 +132,7 @@ public class AccountErrorHandler {
 
     public HttpStatus passwordAddHandler(Account accountToAdd){
         System.out.println(accountToAdd.getPassword());
-        if (accountToAdd.getPassword()==null||accountToAdd.getPassword()==""){
+        if (accountToAdd.getPassword()==null||accountToAdd.getPassword().length()<4){
             log.info("No password");
             return HttpStatus.METHOD_FAILURE;
         }
