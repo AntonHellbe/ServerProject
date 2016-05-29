@@ -22,13 +22,13 @@ class WebSecurityConfigController extends WebSecurityConfigurerAdapter {
 				.httpBasic()
 				.and()
 				.authorizeRequests()
-				//Bara någon med ADMIN kan nå denna
-				.antMatchers("/api/account").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER, AuthoritiesConstants.PIUSER)
-				.antMatchers("/admin_r").hasAuthority(AuthoritiesConstants.ADMIN)
+				//alla kan nå denna, inloggning
+				.antMatchers("/api/account").permitAll()
+//				.antMatchers("/api/account").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER, AuthoritiesConstants.PIUSER)
 				//Bara någon med piRole ska nå denna
 				.antMatchers("/api/pi/{id}").hasAuthority(AuthoritiesConstants.PIUSER)
-				//Alla ska nå denna
-				.antMatchers("/api/users/{id}").hasAuthority(AuthoritiesConstants.USER)
+				//Admin ska nå denna
+				.antMatchers("/api/users/{id}").hasAuthority(AuthoritiesConstants.ADMIN)
 				//Bara någon med ADMIN kan nå dessa (Förutom den ovan)
 				.antMatchers("/api/users","/api/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
 				//Bara någon med ADMIN kan nå dessa

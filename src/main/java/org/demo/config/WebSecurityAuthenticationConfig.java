@@ -30,7 +30,7 @@ class WebSecurityAuthenticationConfig extends GlobalAuthenticationConfigurerAdap
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		log.info("doing call");
+		log.info("doing Authenticaion call");
 		auth.userDetailsService(mongoUserDetailsService).passwordEncoder(encoder);
 	}
 

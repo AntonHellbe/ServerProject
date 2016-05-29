@@ -12,7 +12,6 @@
 	 * # websocketservice
 	 * Service of the app, handles the websocket communication
 	 */
-		//angular.module("essence").service("ChatService", function ($q, $timeout) {
 	angular
 		.module('essence')
 		.factory('WebsocketService', WebsocketService);

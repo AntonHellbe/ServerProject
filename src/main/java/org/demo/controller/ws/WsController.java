@@ -107,7 +107,6 @@ public class WsController {
 		log.info("websocket returns: " + answer);
 
 		//log.info("Got Ws message " + message.toString());
-//		return new WsAnswer("Hello, " + message.getName() + "!");
 		return answer;
 	}
 
@@ -234,7 +233,6 @@ public class WsController {
 						}
 
 					} else {
-						// TODO: 2016-05-17 :21:02 Fix error management
 						log.info("Failed to save " + message);
 						answer.setError("Failed to save " + message);
 					}
@@ -254,7 +252,6 @@ public class WsController {
 
 
 					} else {
-						// TODO: 2016-05-17 :21:02 Fix error management
 						log.info("Failed to save " + message);
 					}
 
