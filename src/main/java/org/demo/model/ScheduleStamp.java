@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 
 /**
- * Created by Anton on 2016-05-05.
+ * @Author Anton Hellbe
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)

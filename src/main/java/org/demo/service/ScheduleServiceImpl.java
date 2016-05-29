@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by Anton on 2016-05-09.
+ * @Author Anton Hellbe
  */
 @Service
 public class ScheduleServiceImpl implements ScheduleService {

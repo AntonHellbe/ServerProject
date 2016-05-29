@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
 /**
- * Created by Anton on 2016-04-07.
- */
-
-/**
+ * @Author Anton Hellbe
  * A class that creates an RFID-key from input
  **/
 

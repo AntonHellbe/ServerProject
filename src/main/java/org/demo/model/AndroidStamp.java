@@ -3,7 +3,7 @@ package org.demo.model;
 import java.io.Serializable;
 
 /**
- * Created by Anton on 2016-04-07.
+ * @Author Anton Hellbe
  */
 
 /**

@@ -1,5 +1,6 @@
 package org.demo.service;
 
+import com.mongodb.WriteConcern;
 import org.demo.errorHandler.TimeErrorHandler;
 import org.demo.model.RfidKey;
 import org.demo.model.TimeStamp;
@@ -17,7 +18,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Created by Robin_2 on 11/04/2016.
- * @author Robin Johnsson, Sebastian Börebäck
+ * @author Robin Johnsson, Sebastian Börebäck, Anton Hellbe
  */
 
 /**
@@ -76,16 +77,16 @@ public class TimeServiceImpl implements TimeService {
 	@Override
 	public ResponseEntity<TimeStamp> deleteTime(String id, String stampId) {
 
-		HttpStatus statusOnRequest = timeErrorHandler.deleteTimeHandler(id, stampId);
+		//HttpStatus statusOnRequest = timeErrorHandler.deleteTimeHandler(id, stampId);
 		System.out.println("User to remove time from " + accountRepository.findOne(id).toString());
-
-		if(statusOnRequest == HttpStatus.OK) {
+		if (stampId != null && timeRepository.findOne(stampId) != null) {
+		//if(statusOnRequest == HttpStatus.OK) {
 			TimeStamp removedTime = timeRepository.findOne(stampId);
 			timeRepository.delete(stampId);
-			return new ResponseEntity<TimeStamp>(removedTime, statusOnRequest);
+			return new ResponseEntity<TimeStamp>(removedTime, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<>(statusOnRequest);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 	}
 

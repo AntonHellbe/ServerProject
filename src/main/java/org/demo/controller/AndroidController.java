@@ -20,7 +20,7 @@ import java.util.List;
  *
  * Class that acts as the controller for Android methods and other classes, contains the methods that
  * the android clients make use of.
- * @author Robin Johnsson
+ * @author Robin Johnsson, Anton Hellbe
  */
 
 @CrossOrigin(maxAge = 1)

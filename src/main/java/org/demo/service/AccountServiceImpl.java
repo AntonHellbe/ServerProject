@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * Contains methods that enables the use and handling of users in the server
- * @author Robin Johnsson, Sebastian Börebäck
+ * @author Robin Johnsson, Sebastian Börebäck, Anton Hellbe
  *
  **/
 @Service

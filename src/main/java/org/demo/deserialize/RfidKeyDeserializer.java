@@ -11,7 +11,7 @@ import org.demo.model.RfidKey;
 import java.io.IOException;
 
 /**
- * @author Sebastian Börebäck on 2016-05-03.
+ * @author Sebastian Börebäck, Anton Hellbe on 2016-05-03.
  * Deserializes json for RFIDKey
  */
 public class RfidKeyDeserializer extends JsonDeserializer<RfidKey> {

@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by Anton on 2016-04-07.
+ * @Author Anton Hellbe
  */
 
 /**

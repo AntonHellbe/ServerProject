@@ -18,7 +18,7 @@ import java.util.Calendar;
 
 /**
  * Created by Sebastian Börebäck on 2016-04-11.
- * @author Sebastian Börebäck, Robin Johnsson
+ * @author Sebastian Börebäck, Robin Johnsson, Anton Hellbe
  */
 
 /**

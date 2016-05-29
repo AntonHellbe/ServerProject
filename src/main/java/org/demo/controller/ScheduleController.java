@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by Anton on 2016-05-09.
+ * @author Anton Hellbe
  */
 @CrossOrigin(maxAge = 1)
 @RestController

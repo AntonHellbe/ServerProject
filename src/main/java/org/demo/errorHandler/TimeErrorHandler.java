@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Anton on 2016-05-19.
+ * @Author Anton Hellbe
  */
 
 // BLYAT

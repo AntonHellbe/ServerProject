@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Created by Anton on 2016-04-07.
+ * @Author Anton Hellbe
  */
 
 /**

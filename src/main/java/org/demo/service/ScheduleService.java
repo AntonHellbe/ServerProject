@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 /**
- * Created by Anton on 2016-05-09.
+ @Author Anton Hellbe
  */
 public interface ScheduleService {
 

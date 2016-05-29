@@ -22,7 +22,7 @@ import java.util.Map;
  */
 /**
  * Class that acts as a controller for methods and Classes associated with Users
- * @author Robin Johnsson, Sebastian Börebäck
+ * @author Robin Johnsson, Sebastian Börebäck, Anton Hellbe
  **/
 @CrossOrigin(maxAge = 1)
 @RestController

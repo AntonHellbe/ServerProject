@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Anton on 2016-04-11.
- * @author Sebastian Börebäck, Robin Johnsson
+ * @author Sebastian Börebäck, Robin Johnsson, Anton Hellbe
  */
 
 /**
