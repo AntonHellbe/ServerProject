@@ -39,8 +39,6 @@
 		$http.get('/app/modules/accounts/data.json')
 			.then(function(res){
 				vm.links = res.data.cats;
-
-				console.log(JSON.stringify(res));
 			});
 
 

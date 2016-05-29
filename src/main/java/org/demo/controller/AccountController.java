@@ -24,7 +24,7 @@ import java.util.Map;
  * Class that acts as a controller for methods and Classes associated with Users
  * @author Robin Johnsson, Sebastian Börebäck
  **/
-@CrossOrigin(maxAge = 1)
+@CrossOrigin(maxAge = 1, origins = "*")
 @RestController
 @RequestMapping("/api/users")
 public class AccountController {
