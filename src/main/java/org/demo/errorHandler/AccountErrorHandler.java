@@ -123,9 +123,12 @@ public class AccountErrorHandler {
             log.info("username taken already");
             return HttpStatus.IM_USED;
         }
+
         if (accountRepository.findUserByRfid(accountToAdd.getRfidKey())!=null){
-            log.info("RFID is already in use!");
-            return HttpStatus.CONFLICT;
+	        if (accountToAdd.getRfidKey().getId() != "") {
+		        log.info("RFID is already in use!");
+		        return HttpStatus.CONFLICT;
+	        }
         }
         return passwordAddHandler(accountToAdd);
     }

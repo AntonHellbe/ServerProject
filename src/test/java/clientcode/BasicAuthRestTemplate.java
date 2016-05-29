@@ -1,10 +1,7 @@
 package clientcode;
 
 import org.springframework.http.HttpRequest;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.http.client.InterceptingClientHttpRequestFactory;
+import org.springframework.http.client.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
@@ -23,8 +20,25 @@ import java.util.List;
 public class BasicAuthRestTemplate extends RestTemplate {
 
 	public BasicAuthRestTemplate(String username, String password) {
+		super(getClientHttpRequestFactory());
+		addAuthentication(username, password);
+		//this.setRequestFactory(this.clientHttpRequestFactory());
+
+	}
+
+	public BasicAuthRestTemplate(String username, String password, ClientHttpRequestFactory clientHttpRequestFactory) {
+		super(clientHttpRequestFactory);
 		addAuthentication(username, password);
 	}
+
+	private static ClientHttpRequestFactory getClientHttpRequestFactory() {
+		int timeout = 3000;
+		HttpComponentsClientHttpRequestFactory clientHttpRequestFactory =
+				new HttpComponentsClientHttpRequestFactory();
+		clientHttpRequestFactory.setConnectTimeout(timeout);
+		return clientHttpRequestFactory;
+	}
+
 
 	private void addAuthentication(String username, String password) {
 		if (username == null) {

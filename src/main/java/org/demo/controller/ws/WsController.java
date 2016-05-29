@@ -225,15 +225,14 @@ public class WsController {
 						ResponseEntity<Account> serviceUser = service.addUser(addAccount);
 						log.info(serviceUser.getStatusCode().toString());
 						if (!serviceUser.getStatusCode().equals(HttpStatus.OK)) {
-							log.info("in the wrong spot bro");
 							answer.setError("Status code: " + serviceUser.getStatusCode()
-									+ "no username, firstname and lastname!");
+									+ " no username, firstname and lastname!");
 							log.info("from add "+answer.toString());
-							return answer;
+//							return answer;
 						} else {
-							log.info("Det gick ju bra Sture!");
+							answer.setPayload(serviceUser.getBody());
 						}
-						answer.setPayload(serviceUser.getBody());
+
 					} else {
 						// TODO: 2016-05-17 :21:02 Fix error management
 						log.info("Failed to save " + message);
