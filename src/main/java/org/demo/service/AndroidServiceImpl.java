@@ -47,13 +47,7 @@ public class AndroidServiceImpl implements AndroidService {
 	@Autowired
 	ScheduleRepository scheduleRepository;
 
-	/**
-	 * Fetches the user with the given RFID-key, the String gets converted into an RFID-key
-	 *
-	 * @param id the RFID-key
-	 * @return the user
-	 **/
-
+	@Override
 	public ResponseEntity<Account> getUser(String id) {
 		HttpStatus status = androidErrorHandler.getUserHandler(id);
 		if (status!=HttpStatus.OK) {
@@ -63,25 +57,7 @@ public class AndroidServiceImpl implements AndroidService {
 		return new ResponseEntity<Account>(status);
 	}
 
-	public ResponseEntity<Account> loginUser(Map<String, Object> getSpecificUserJSON) {
-		HttpStatus status = androidErrorHandler.logInUserHandler(getSpecificUserJSON);
-		System.out.println(getSpecificUserJSON.get("firstName").toString());
-		System.out.println(getSpecificUserJSON.get("lastName").toString());
-		Account loginUser = accountRepository.findByName(getSpecificUserJSON.get("firstName").toString(), getSpecificUserJSON.get("lastName").toString());
-
-		if(status == HttpStatus.OK) {
-			return new ResponseEntity<Account>(loginUser, status);
-		}
-
-		return new ResponseEntity<Account>(status);
-
-	}
-	/**
-	 * Fetches all times associated with the given user
-	 *
-	 * @param rfidKey The user with RFID sent in a JSON
-	 * @return all the times
-	 **/
+	@Override
 	public ResponseEntity<List<AndroidStamp>> getAll(RfidKey rfidKey) {
 
 		// TODO: 2016-04-21 :21:22 Just for logging
@@ -107,12 +83,7 @@ public class AndroidServiceImpl implements AndroidService {
 		}
 	}
 
-	/**
-	 * Fetches the times between the given times/dates
-	 *
-	 * @param androidBetweenQuery JSON containing the RFID of the user, the "from" date and the "to" date
-	 * @return the times in the interval
-	 **/
+	@Override
 	public ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery) {
 		// TODO: 2016-04-21 :21:22 Just for logging
 		log.info("Calling get between");

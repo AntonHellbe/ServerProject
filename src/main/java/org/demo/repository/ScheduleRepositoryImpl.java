@@ -15,8 +15,10 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
- * Created by Anton on 2016-05-10.
+ * @Author Anton Hellbe
+ * Custom Query class for ScheduleStamp objects in the database collection ScheduleStamps
  */
+
 public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
 
     @Autowired
@@ -28,7 +30,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
     }
 
     public List<ScheduleStamp> getBetweenQuery(long from, long to, String id) {
-        return mongoOperations.find(query(where("from").gte(from).and("to").lte(to).and("userId").is(id)), ScheduleStamp.class);
+        return mongoOperations.find(query(where("from").gte(from).and("to").lte(to).and("userId.").is(id)), ScheduleStamp.class);
     }
 
     public List<ScheduleStamp> getByIds(List<String> ids){

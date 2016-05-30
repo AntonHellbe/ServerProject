@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
  * @Author Anton Hellbe
  */
 
-// BLYAT
-
 @Component
 public class TimeErrorHandler {
 
@@ -27,6 +25,12 @@ public class TimeErrorHandler {
     public TimeErrorHandler() {
 
     }
+
+    /**
+     * Method takes care of any errors when updating a TimeStamp
+     * @param timeStamp that is being updated
+     * @return httpstatus if updated is OK or not
+     */
 
     public HttpStatus updateTimeHandler(TimeStamp timeStamp) {
         TimeStamp tempStamp = timeRepository.findOne(timeStamp.getId());
@@ -56,6 +60,12 @@ public class TimeErrorHandler {
 
     }
 
+    /**
+     * Takes care if there is any conflict when adding a new timeStamp
+     * @param timeStamp to check if there is any errors
+     * @return HttpStatus if request is OK or not
+     */
+
     public HttpStatus newTimeHandler(TimeStamp timeStamp) {
         if(timeStamp != null) {
             if(timeRepository.findCertainTime(timeStamp) != null) {
@@ -70,6 +80,11 @@ public class TimeErrorHandler {
         return HttpStatus.METHOD_FAILURE;
     }
 
+    /**
+     * Method takes care of any errors when getting all timeStamps for a specific userID
+     * @param id of the Account
+     * @return HttpStatus if request is OK or not
+     */
     public HttpStatus getAllHandler(String id) {
 
         if(timeRepository.getByRfid(accountRepository.findOne(id).getRfidKey()) != null ) {
@@ -78,6 +93,12 @@ public class TimeErrorHandler {
         return HttpStatus.METHOD_FAILURE;
     }
 
+    /**
+     * Method checks if there is any errors when getting a specific TimeStamps
+     * @param id of the Account
+     * @param stampId of the specific TimeStamp
+     * @return HttpStatus if request is OK or not
+     */
     public HttpStatus getHandler(String id, String stampId) {
         if(timeRepository.findOne(stampId) != null) {
             return HttpStatus.OK;
@@ -86,16 +107,26 @@ public class TimeErrorHandler {
         return HttpStatus.I_AM_A_TEAPOT;
     }
 
+    /**
+     * Method checks if there is any errors when removing a TimeStamp
+     * @param id of the Account
+     * @param stampId of the Specific TimeStamp
+     * @return HttpStatus if request is OK or not
+     */
+
     public HttpStatus deleteTimeHandler(String id, String stampId) {
         if(timeRepository.findOne(stampId) != null) {
             return HttpStatus.OK;
         }
-        //asdasdasdas
-        //asdadasdasd
-        System.out.println("ANTON!!!!!");
         return HttpStatus.NOT_FOUND;
     }
 
+    /**
+     * Method checks if there is any conflict when adding a new TimeStamp
+     * @param id of the Account
+     * @param newStamp to add into the database
+     * @return HttpStatus if request is OK or not
+     */
     public HttpStatus addTime(String id, TimeStamp newStamp) {
         Account temp = accountRepository.findOne(id);
         if(newStamp != null) {

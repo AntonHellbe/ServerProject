@@ -33,8 +33,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ResponseEntity<List<ScheduleStamp>> getAll() {
-        List<ScheduleStamp> stampList = scheduleRepository.findAll();
+    public ResponseEntity<List<ScheduleStamp>> getAll(String id) {
+        List<ScheduleStamp> stampList = scheduleRepository.getById(id);
         return new ResponseEntity<>(stampList, HttpStatus.OK);
     }
 

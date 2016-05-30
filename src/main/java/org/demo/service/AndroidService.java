@@ -40,6 +40,4 @@ public interface AndroidService {
      **/
     ResponseEntity<List<AndroidStamp>> getBetween(AndroidBetweenQuery androidBetweenQuery);
 
-    ResponseEntity<Account> loginUser( Map<String, Object> getSpecificUserJSON);
-
 }
