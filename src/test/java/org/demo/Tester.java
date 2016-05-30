@@ -22,7 +22,7 @@ public class Tester {
 
 	private static final Logger log = LoggerFactory.getLogger(Tester.class);
 
-	private SimpleClientHttpRequestFactory getFac(){
+	private SimpleClientHttpRequestFactory getReqFactory() {
 		SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
 		requestFactory.setConnectTimeout(12000);
 		requestFactory.setReadTimeout(12000);
@@ -34,20 +34,14 @@ public class Tester {
 	public void testRest() throws Exception {
 
 
-		BasicAuthRestTemplate rest = new BasicAuthRestTemplate("admin", "pass",getFac());
-//		RestTemplate rest = new RestTemplate(getFac());
-
-//		((SimpleClientHttpRequestFactory)rest.getRequestFactory()).setReadTimeout(1000*30);
+		BasicAuthRestTemplate rest = new BasicAuthRestTemplate("admin", "pass", getReqFactory());
 
 		String url = "http://localhost:44344/api/users/";
 //		String url2 = "https://projektessence.se/api/users/";
 
+		//fix the issue with SSL
 		BasicAuthRestTemplate.trustSelfSignedSSL();
 
-//		HttpComponentsClientHttpRequestFactory rf =
-//				(HttpComponentsClientHttpRequestFactory) rest.getRequestFactory();
-//		rf.setReadTimeout(1 * 1000);
-//		rf.setConnectTimeout(1 * 1000);
 
 		try {
 			ResponseEntity<DummyAccount[]> restall = rest.exchange(url, HttpMethod.GET, null, DummyAccount[].class);
@@ -56,7 +50,7 @@ public class Tester {
 
 			DummyAccount[] all = restall.getBody();
 			DummyAccount doris = all[0];
-			log.info("last: "+doris.getLastName());
+			log.info("last: " + doris.getLastName());
 			doris.setLastName("asdf");
 			doris.getAuthorities().add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 			Set<String> auths = AuthorityUtils.authorityListToSet(doris.getAuthorities());
@@ -64,11 +58,11 @@ public class Tester {
 
 			HttpEntity<DummyAccount> entity = new HttpEntity<>(doris);
 
-			ResponseEntity<Account> restup= rest.exchange(url+doris.getId(), HttpMethod.PUT, entity, Account.class);
-			log.info("update "+restup.getStatusCode());
-			log.info("update "+restup.getBody());
+			ResponseEntity<Account> restup = rest.exchange(url + doris.getId(), HttpMethod.PUT, entity, Account.class);
+			log.info("update " + restup.getStatusCode());
 
-			 restall = rest.exchange(url, HttpMethod.GET, null, DummyAccount[].class);
+			log.info("update " + restup.getBody());
+			restall = rest.exchange(url, HttpMethod.GET, null, DummyAccount[].class);
 
 			log.info(Arrays.toString(restall.getBody()));
 
@@ -77,28 +71,5 @@ public class Tester {
 
 		}
 
-
-
-
-
-//		ResponseEntity<Account> restUpdate= rest.exchange(url+doris.getId(), HttpMethod.PUT, doris, Account[].class);
-
-//		restTemplate.exchange("https://abc.com/api/request", HttpMethod.POST,
-//				formEntity, YourPojoThatMapsToJsonResponse.class);
 	}
-
-//	@Bean
-//	@ConfigurationProperties(prefix = "custom.rest.connection")
-//	private ClientHttpRequestFactory clientHttpRequestFactory() {
-//		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-//		factory.setReadTimeout(2000);
-//		factory.setConnectTimeout(2000);
-//		return factory;
-//	}
-
-
-
-
-
-
 }
