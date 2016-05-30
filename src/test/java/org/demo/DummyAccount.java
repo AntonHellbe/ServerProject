@@ -16,15 +16,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-/**
- * Created by Sebastian Börebäck on 2016-05-26.
- */
-
-
-
-
 	/**
-	 * Created by jonatan on 2016-04-28.
+	 * @author Jonatan fridsten
+	 * Windows app Account model. used for testing Rest calls
 	 */
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public class DummyAccount implements UserDetails, Serializable {

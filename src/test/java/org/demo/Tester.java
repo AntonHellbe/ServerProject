@@ -26,10 +26,14 @@ public class Tester {
 		SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
 		requestFactory.setConnectTimeout(12000);
 		requestFactory.setReadTimeout(12000);
-		//restTemplate.setRequestFactory(requestFactory);
 		return requestFactory;
 	}
 
+	/**
+	 * Test Rest connection, with SSL and password
+	 * tests getting all users and updating a user.
+	 * @throws Exception
+	 */
 	@Test
 	public void testRest() throws Exception {
 
