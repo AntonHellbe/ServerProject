@@ -18,14 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Anton on 2016-04-11.
- */
-
-/**
  * Contains methods that enables the use and handling of users in the server
  * @author Robin Johnsson, Sebastian Börebäck, Anton Hellbe
  *
  **/
+
 @Service
 public class AccountServiceImpl implements AccountService {
 

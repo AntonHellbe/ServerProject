@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 /**
- * Created by Anton on 2016-04-11.
+ * @author Anton Hellbe
  */
 
 /**

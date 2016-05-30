@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @Author Anton Hellbe
+ *
+ * Class used to connect to the MongoDB Database
  */
 @Repository
 public interface AccountRepository extends MongoRepository<Account, String>, AccountRepositoryCustom {

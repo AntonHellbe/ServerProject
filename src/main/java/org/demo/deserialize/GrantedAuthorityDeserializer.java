@@ -31,6 +31,7 @@ public class GrantedAuthorityDeserializer extends JsonDeserializer<List<GrantedA
 	 * @throws IOException
 	 * @throws JsonProcessingException
 	 */
+
     @Override
     public List<GrantedAuthority> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
 	    List<GrantedAuthority> auths = new ArrayList<>();

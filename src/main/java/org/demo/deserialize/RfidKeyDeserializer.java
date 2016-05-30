@@ -16,6 +16,16 @@ import java.io.IOException;
  */
 public class RfidKeyDeserializer extends JsonDeserializer<RfidKey> {
 
+    /**
+     * Serliazing for RFID-key, its needed when we receive a new Account-object the program wont know how to map up an RFID-key object
+     * this class tells how to map the RFID-object.
+     * @param jsonParser the JSON data recieved
+     * @param deserializationContext not used
+     * @return an RFID-key object
+     * @throws IOException throws exception if needed
+     * @throws JsonProcessingException throws exception if needed
+     */
+
 
     @Override
     public RfidKey deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {

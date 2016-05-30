@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Sebastian Börebäck on 2016-04-22.
+ * @author Sebastian Börebäck, Anton Hellbe on 2016-04-22.
  * Account model used to define account
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
