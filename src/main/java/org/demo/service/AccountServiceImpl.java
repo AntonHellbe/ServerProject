@@ -83,7 +83,7 @@ public class AccountServiceImpl implements AccountService {
 
 	public Account passwordUpdater(String newPassword, String userId) throws Exception {
 		log.info("Entering passwordUpdater");
-		HttpStatus status = errorHandler.passwordUpdate(newPassword, userId);
+		HttpStatus status = errorHandler.passwordUpdate(newPassword);
 		if (status != HttpStatus.OK) {
 			Account updatedAccount = accountRepository.findOne(userId);
 			updatedAccount.setPassword(passwordEncoder.encode(newPassword));
