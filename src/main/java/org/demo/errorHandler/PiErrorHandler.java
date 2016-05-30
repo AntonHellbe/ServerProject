@@ -24,6 +24,11 @@ public class PiErrorHandler {
     @Autowired
     AccountRepository accountRepository;
 
+    /**
+     * Checks is the rfidKey is enabled and usable
+     * @param rfidKey the rfid to check
+     * @return Status-message
+     **/
     public HttpStatus addNewStampHandler(RfidKey rfidKey){
         log.info("Entering addNewStamphandler");
         Account currentAccount = accountRepository.findUserByRfid(rfidKey);

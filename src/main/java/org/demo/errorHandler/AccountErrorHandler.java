@@ -22,6 +22,11 @@ public class AccountErrorHandler {
     @Autowired
     private AccountRepository accountRepository;
 
+    /**
+     * Checks is the list is null or has Accounts in it
+     * @param accountList the list to check
+     * @return Status-message
+     **/
     public HttpStatus getAllHandler(List<Account> accountList){
         if (accountList != null) {
             return HttpStatus.OK;
@@ -30,6 +35,11 @@ public class AccountErrorHandler {
         }
     }
 
+    /**
+     * Checks is the Account is null or not
+     * @param gotAccount the account to check
+     * @return Status-message
+     **/
     public HttpStatus getUserHandler(Account gotAccount){
         if (gotAccount != null) {
             return HttpStatus.OK;
@@ -38,6 +48,11 @@ public class AccountErrorHandler {
         }
     }
 
+    /**
+     * Checks if the sent in account-data is usable or if it contains errors
+     * @param updatedAccount the account to check
+     * @return Status-message
+     **/
     public HttpStatus updateHandler(Account updatedAccount){
         if (updatedAccount == null){
             return HttpStatus.METHOD_FAILURE;
@@ -58,6 +73,11 @@ public class AccountErrorHandler {
         return HttpStatus.OK;
     }
 
+    /**
+     * Checks is the rfid is null, empty, already in use or to long/short
+     * @param updatedAccount the account to check
+     * @return Status-message
+     **/
     public HttpStatus rfidHandler(Account updatedAccount){
         Account temp = accountRepository.findOne(updatedAccount.getId());
         int rfidLength = updatedAccount.getRfidKey().toString().length();
@@ -77,6 +97,11 @@ public class AccountErrorHandler {
         return HttpStatus.OK;
     }
 
+    /**
+     * Checks is the username is null, empty, already in use or to short
+     * @param updatedAccount the account to check
+     * @return Status-message
+     **/
     public HttpStatus usernameHandler(Account updatedAccount){
         Account temp = accountRepository.findOne(updatedAccount.getId());
         //Checks if the username is already in use. If it is in use, we check if it is the user to be updated who has that username
@@ -91,6 +116,11 @@ public class AccountErrorHandler {
         return HttpStatus.OK;
     }
 
+    /**
+     * Checks is the password is null or below 4 characters
+     * @param updatedAccount the account to check
+     * @return Status-message
+     **/
     public HttpStatus passwordUpdateHandler(Account updatedAccount){
         Account temp = accountRepository.findOne(updatedAccount.getId());
         //Checks if the password is uppdated, and if it is, it has to be 4 characters or more
@@ -101,6 +131,11 @@ public class AccountErrorHandler {
         return HttpStatus.OK;
     }
 
+    /**
+     * Checks is the account to delete is null
+     * @param accountToRemove the account to check
+     * @return Status-message
+     **/
     public HttpStatus deleteHandler(Account accountToRemove){
         if (accountToRemove != null) {
             return HttpStatus.OK;
@@ -111,6 +146,11 @@ public class AccountErrorHandler {
 
     }
 
+    /**
+     * Checks is the account contains usable data or if it contains errors
+     * @param accountToAdd the account to check
+     * @return Status-message
+     **/
     public HttpStatus addHandler(Account accountToAdd){
         System.out.println(accountToAdd);
         if (accountToAdd.getUsername()==null &&accountToAdd.getFirstName()==null && accountToAdd.getLastName()==null){
@@ -133,6 +173,11 @@ public class AccountErrorHandler {
         return passwordAddHandler(accountToAdd);
     }
 
+    /**
+     * Checks is the account-password is null or fewer than 4 characters
+     * @param accountToAdd the account to check
+     * @return Status-message
+     **/
     public HttpStatus passwordAddHandler(Account accountToAdd){
         System.out.println(accountToAdd.getPassword());
         if (accountToAdd.getPassword()==null||accountToAdd.getPassword().length()<4){
@@ -142,7 +187,12 @@ public class AccountErrorHandler {
         return HttpStatus.OK;
     }
 
-    public HttpStatus passwordUpdate(String newPassword, String userId){
+    /**
+     * Checks is the list is null or has Accounts in it
+     * @param newPassword the password to check
+     * @return Status-message
+     **/
+    public HttpStatus passwordUpdate(String newPassword){
         if (newPassword.length() <4 || newPassword==null){
             log.info("To short password");
             return HttpStatus.LENGTH_REQUIRED;

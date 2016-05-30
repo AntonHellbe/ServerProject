@@ -21,11 +21,6 @@ public interface TimeService {
      * @return the added TimeStamp
      **/
     ResponseEntity<TimeStamp> addNowTime(String id);
-    /**
-     *Adds a new TimeStamp to the user
-     * @param rfidKey the id of the user
-     * @return the added TimeStamp
-     **/
 
     /**
      * Deletes the specified TimeStamp from the given user
@@ -35,25 +30,12 @@ public interface TimeService {
      **/
     ResponseEntity<TimeStamp> deleteTime(String id, String stampId);
     /**
-     * Deletes the specified TimeStamp from the given user
-     * @param rfidKey id of the user
-     * @param stampId the TimeStamp to be deleted
-     * @return the deleted time
-     **/
-
-    /**
      * Fetches all the times assigned to the user
      *
      * @param id the user
      * @return all the times for the user
      **/
     ResponseEntity<ArrayList<TimeStamp>> getAll(String id);
-    /**
-     * Fetches all the times assigned to the user
-     *
-     * @param rfidKey the user
-     * @return all the times for the user
-     **/
 
     /**
      * Fetches the given time of a specific user
@@ -63,13 +45,6 @@ public interface TimeService {
      * @return the time we searched for
      **/
     ResponseEntity<TimeStamp> getTime(String id, String stampId);
-    /**
-     * Fetches the given time of a specific user
-     *
-     * @param rfidKey      the user
-     * @param stampId the id of the time to be fetched
-     * @return the time we searched for
-     **/
 
     /**
      * Updates the given time of a specific user
@@ -81,14 +56,13 @@ public interface TimeService {
      **/
     ResponseEntity<TimeStamp> updateTime(String id, String stampId, TimeStamp updateStamp);
 
-	ResponseEntity<TimeStamp> addTime(String id, TimeStamp newStamp);
-
     /**
      * Updates the given time of a specific user
      *
-     * @param rfidKey              the user
-     * @param stampId         the id of the time to be changed
-     * @param updatedTimeJSON JSON of the updated object
+     * @param id              the user
+     * @param newStamp the new timestamp
      * @return updated time
      **/
+	ResponseEntity<TimeStamp> addTime(String id, TimeStamp newStamp);
+
 }

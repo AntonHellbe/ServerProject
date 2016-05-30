@@ -17,12 +17,22 @@ public class ScheduleErrorHandler {
     @Autowired
     ScheduleRepository scheduleRepository;
 
+    /**
+     * Checks is the stamp is null
+     * @param scheduleStamp the stamp to check
+     * @return Status-message
+     **/
     public HttpStatus addScheduleHandler(ScheduleStamp scheduleStamp){
         if (scheduleStamp!=null)return HttpStatus.OK;
         System.out.println("Heja");
         return HttpStatus.METHOD_FAILURE;
     }
 
+    /**
+     * Checks is the list is null
+     * @param scheduleStamps the list to check
+     * @return Status-message
+     **/
     public HttpStatus updateScheduleHandler(List<ScheduleStamp> scheduleStamps){
         if(scheduleStamps!=null) return HttpStatus.OK;
         return HttpStatus.METHOD_FAILURE;

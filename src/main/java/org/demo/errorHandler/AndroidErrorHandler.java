@@ -31,18 +31,16 @@ public class AndroidErrorHandler {
     @Autowired
     ScheduleRepository scheduleRepository;
 
+    /**
+     * Checks if the user sought after is in the database
+     * @param id database-id of the account
+     * @return status-message
+     **/
     public HttpStatus getUserHandler(String id){
         if(accountRepository.findOne(id)==null){
             log.info("No user found");
             return HttpStatus.METHOD_FAILURE;
         }
         return HttpStatus.OK;
-    }
-
-    public HttpStatus logInUserHandler(Map<String, Object> getSpecificUserJSON){
-        Account loginUser = accountRepository.findByName(getSpecificUserJSON.get("firstName").toString(), getSpecificUserJSON.get("lastName").toString());
-        log.info("Logging in from Android with user: " + loginUser);
-        if (loginUser!=null)return HttpStatus.OK;
-        return HttpStatus.METHOD_FAILURE;
     }
 }
