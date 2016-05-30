@@ -30,6 +30,12 @@ public class MyLogoutHandler implements LogoutHandler {
 		this.cookiesToClear = Arrays.asList(cookiesToClear);
 	}
 
+	/**
+	 * Handles logout. removes all cookies that contains the session
+	 * @param request the client request
+	 * @param response the response
+	 * @param authentication the client authentication
+	 */
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 		log.info("doing logout ");

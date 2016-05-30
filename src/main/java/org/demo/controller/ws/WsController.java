@@ -1,7 +1,6 @@
 package org.demo.controller.ws;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.demo.model.ScheduleStamp;
 import org.demo.model.TimeStamp;
 import org.demo.model.security.Account;
 import org.demo.model.ws.ChatAnswer;
@@ -111,7 +110,7 @@ public class WsController {
 	}
 
 	/**
-	 * Handles schedule request
+	 * Handles schedule request. not implemented
 	 * @param service using the scheduleservice
 	 * @param message the request from client
 	 * @param answer the return answer from server
@@ -130,8 +129,8 @@ public class WsController {
 				case GET:
 					break;
 				case ALL:
-					ResponseEntity<List<ScheduleStamp>> list = this.scheduleService.getAll();
-					answer.setPayloadList(list.getBody().toArray());
+//					ResponseEntity<List<ScheduleStamp>> list = this.scheduleService.getAll();
+//					answer.setPayloadList(list.getBody().toArray());
 					break;
 			}
 		} else {
@@ -227,7 +226,6 @@ public class WsController {
 							answer.setError("Status code: " + serviceUser.getStatusCode()
 									+ " no username, firstname and lastname!");
 							log.info("from add "+answer.toString());
-//							return answer;
 						} else {
 							answer.setPayload(serviceUser.getBody());
 						}

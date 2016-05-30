@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by Sebastian Börebäck on 2016-04-22.
+ * @author Sebastian Boreback
+ * Connects authentication with the MongoDB. Uses provided data from authenticaion call, to look up user in mongo DB
  */
 @Component
 public class MongoUserDetailsService implements UserDetailsService {
@@ -21,7 +23,12 @@ public class MongoUserDetailsService implements UserDetailsService {
 	@Autowired
 	AccountRepository accountRepository;
 
-
+	/**
+	 * Looks up user in mongoDB. when spring boot authentication is done.
+	 * @param username username of the user that wants to login
+	 * @return a Account object of the Account
+	 * @throws UsernameNotFoundException
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("doing auth db call");

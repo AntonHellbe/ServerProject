@@ -17,19 +17,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
 /**
  * Created by Anton on 2016-04-11.
  * @author Sebastian Börebäck, Robin Johnsson, Anton Hellbe
- */
-
-/**
  * Class that handles methods used by the Android clients
  **/
-
 @Service
 public class AndroidServiceImpl implements AndroidService {
 
