@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.demo</OriginalElement>
+  <nodes>
+    <node x="719.0833333333333" y="306.0">org.demo.deserialize.RfidKeyDeserializer</node>
+    <node x="0.0" y="474.0">org.demo.ServerProjectApplicationTests</node>
+    <node x="519.0" y="698.0">org.demo.model.ws.ChatMessage</node>
+    <node x="0.0" y="698.0">org.demo.config.AuthoritiesConstants</node>
+    <node x="535.0833333333333" y="78.0">org.demo.model.RfidKey</node>
+    <node x="3038.4416666666666" y="306.0">org.demo.errorHandler.ScheduleErrorHandler</node>
+    <node x="2247.8166666666666" y="306.0">org.demo.config.UserNameGenerator</node>
+    <node x="1451.3006499287753" y="474.0">org.demo.service.TimeServiceImpl</node>
+    <node x="1093.382942404818" y="474.0">org.demo.service.PiServiceImpl</node>
+    <node x="1090.083333333333" y="306.0">org.demo.errorHandler.PiErrorHandler</node>
+    <node x="2093.0666666666666" y="474.0">org.demo.service.AccountServiceImpl</node>
+    <node x="3140.223959142709" y="474.0">org.demo.service.ScheduleServiceImpl</node>
+    <node x="1782.7229166666666" y="0.0">org.demo.repository.AccountRepositoryCustom</node>
+    <node x="1220.083333333333" y="306.0">org.demo.model.AndroidStamp</node>
+    <node x="765.0" y="547.0">org.demo.deserialize.GrantedAuthorityDeserializer</node>
+    <node x="1678.7916666666665" y="306.0">org.demo.errorHandler.AndroidErrorHandler</node>
+    <node x="2985.723959142709" y="474.0">org.demo.controller.ws.WsController</node>
+    <node x="1460.0416666666665" y="78.0">org.demo.repository.TimeRepository</node>
+    <node x="59.0" y="625.0">org.demo.config.WebSocketConfig</node>
+    <node x="2608.4416666666666" y="474.0">org.demo.controller.TimeController</node>
+    <node x="915.1354166666665" y="0.0">org.demo.repository.TimeRepositoryCustom</node>
+    <node x="991.0833333333333" y="306.0">org.demo.model.PiStamp</node>
+    <node x="1708.4729166666666" y="78.0">org.demo.repository.AccountRepositoryImpl</node>
+    <node x="373.08333333333326" y="78.0">org.demo.repository.TimeRepositoryImpl</node>
+    <node x="406.08333333333326" y="306.0">org.demo.model.AndroidBetweenQuery</node>
+    <node x="1860.0666666666666" y="474.0">org.demo.controller.PiController</node>
+    <node x="521.0" y="547.0">org.demo.config.CustomLogoutSuccessHandler</node>
+    <node x="2920.4416666666666" y="306.0">org.demo.model.ws.ChatAnswer</node>
+    <node x="197.0" y="306.0">org.demo.model.security</node>
+    <node x="319.0" y="547.0">org.demo.config.MyLogoutHandler</node>
+    <node x="1507.7916666666665" y="306.0">org.demo.errorHandler.TimeErrorHandler</node>
+    <node x="1947.8166666666666" y="306.0">org.demo.service.AccountService</node>
+    <node x="322.0" y="474.0">org.demo.controller.AccountController</node>
+    <node x="364.0" y="698.0">org.demo.controller.WebController</node>
+    <node x="290.0" y="625.0">org.demo.config.WebSecurityConfigController</node>
+    <node x="2615.4416666666666" y="306.0">org.demo.service.TimeService</node>
+    <node x="2713.4416666666666" y="78.0">org.demo.repository.ScheduleRepository</node>
+    <node x="999.0" y="547.0">org.demo.unitTest.controllerTest</node>
+    <node x="3578.300113312613" y="78.0">org.demo.model.ws.AffectedArea</node>
+    <node x="2083.8166666666666" y="306.0">org.demo.errorHandler.AccountErrorHandler</node>
+    <node x="671.0" y="698.0">org.demo.Tester</node>
+    <node x="1846.8166666666666" y="306.0">org.demo.service.PiService</node>
+    <node x="2354.6916666666666" y="474.0">org.demo.config.WebSecurityAuthenticationConfig</node>
+    <node x="2423.4416666666666" y="306.0">org.demo.service.security.MongoUserDetailsService</node>
+    <node x="3046.2541666666666" y="78.0">org.demo.repository.ScheduleRepositoryImpl</node>
+    <node x="3437.800113312613" y="306.0">org.demo.service.ScheduleService</node>
+    <node x="2006.8166666666666" y="78.0">org.demo.repository.AccountRepository</node>
+    <node x="2734.4416666666666" y="306.0">org.demo.ServerProjectApplication</node>
+    <node x="0.0" y="547.0">org.demo.config.CustomSubProtocolWebSocketHandler</node>
+    <node x="875.0833333333333" y="306.0">org.demo.model.TimeStamp</node>
+    <node x="3483.6839832621085" y="474.0">org.demo.controller.ScheduleController</node>
+    <node x="191.0" y="698.0">org.demo.controller.SecurityController</node>
+    <node x="1597.1006499287753" y="474.0">org.demo.service.AndroidServiceImpl</node>
+    <node x="581.0833333333333" y="306.0">org.demo.DummyAccount</node>
+    <node x="215.0" y="474.0">org.demo.TestClient</node>
+    <node x="3330.300113312613" y="78.0">org.demo.model.ws.CrudType</node>
+    <node x="1350.083333333333" y="306.0">org.demo.service.AndroidService</node>
+    <node x="2873.4416666666666" y="78.0">org.demo.model.ScheduleStamp</node>
+    <node x="3579.800113312613" y="306.0">org.demo.model.ws.WsMessage</node>
+    <node x="3328.800113312613" y="306.0">org.demo.model.ws.WsAnswer</node>
+    <node x="2882.0041666666666" y="0.0">org.demo.repository.ScheduleRepositoryCustom</node>
+    <node x="996.0833333333333" y="78.0">org.demo.model.Stamp</node>
+    <node x="601.8906258093759" y="474.0">org.demo.controller.AndroidController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.demo.controller.TimeController" target="org.demo.service.TimeService">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.PiServiceImpl" target="org.demo.model.TimeStamp">
+      <point x="-44.16666666666663" y="-14.0" />
+      <point x="1102.2162757381514" y="394.0" />
+      <point x="899.0833333333333" y="394.0" />
+      <point x="-24.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.ws.WsController" target="org.demo.model.ws.ChatAnswer">
+      <point x="8.5" y="-14.0" />
+      <point x="3045.223959142709" y="394.0" />
+      <point x="2968.9416666666666" y="394.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.config.UserNameGenerator" target="org.demo.repository.AccountRepository">
+      <point x="0.0" y="-14.0" />
+      <point x="2320.8166666666666" y="256.0" />
+      <point x="2093.7782051282047" y="256.0" />
+      <point x="20.461538461538453" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.PiController" target="org.demo.service.PiService">
+      <point x="0.0" y="-14.0" />
+      <point x="20.25" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AccountServiceImpl" target="org.demo.config.UserNameGenerator">
+      <point x="52.5" y="-14.0" />
+      <point x="2215.5666666666666" y="444.0" />
+      <point x="2320.8166666666666" y="444.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AndroidServiceImpl" target="org.demo.repository.ScheduleRepository">
+      <point x="55.19999999999999" y="-14.0" />
+      <point x="1721.3006499287753" y="424.0" />
+      <point x="1831.2916666666665" y="424.0" />
+      <point x="1831.2916666666665" y="286.0" />
+      <point x="2755.4416666666666" y="286.0" />
+      <point x="-28.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.deserialize.RfidKeyDeserializer" target="org.demo.model.RfidKey">
+      <point x="0.0" y="-14.0" />
+      <point x="787.0833333333333" y="146.0" />
+      <point x="594.25" y="146.0" />
+      <point x="23.666666666666657" y="14.0" />
+    </edge>
+    <edge source="org.demo.config.WebSecurityAuthenticationConfig" target="org.demo.repository.AccountRepository">
+      <point x="-53.25" y="-14.0" />
+      <point x="2407.9416666666666" y="444.0" />
+      <point x="2412.9416666666666" y="444.0" />
+      <point x="2412.9416666666666" y="246.0" />
+      <point x="2104.0089743589742" y="246.0" />
+      <point x="30.69230769230768" y="14.0" />
+    </edge>
+    <edge source="org.demo.repository.ScheduleRepository" target="org.demo.repository.ScheduleRepositoryCustom">
+      <point x="0.0" y="-14.0" />
+      <point x="2783.4416666666666" y="53.0" />
+      <point x="2927.5041666666666" y="53.0" />
+      <point x="-45.5" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.ws.WsController" target="org.demo.service.AccountService">
+      <point x="-42.5" y="-14.0" />
+      <point x="2994.223959142709" y="424.0" />
+      <point x="2043.6499999999999" y="424.0" />
+      <point x="38.33333333333334" y="14.0" />
+    </edge>
+    <edge source="org.demo.config.WebSecurityAuthenticationConfig" target="org.demo.service.security.MongoUserDetailsService">
+      <point x="53.25" y="-14.0" />
+      <point x="2514.4416666666666" y="444.0" />
+      <point x="2509.4416666666666" y="444.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.PiServiceImpl" target="org.demo.repository.TimeRepository">
+      <point x="-8.833333333333371" y="-14.0" />
+      <point x="1137.5496090714846" y="374.0" />
+      <point x="1079.5833333333333" y="374.0" />
+      <point x="1079.5833333333333" y="186.0" />
+      <point x="1481.9791666666665" y="186.0" />
+      <point x="-36.5625" y="14.0" />
+    </edge>
+    <edge source="org.demo.repository.AccountRepository" target="org.demo.repository.AccountRepositoryCustom">
+      <point x="0.0" y="-14.0" />
+      <point x="2073.3166666666666" y="53.0" />
+      <point x="1913.9729166666666" y="53.0" />
+      <point x="43.75" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.AndroidStamp" target="org.demo.model.Stamp">
+      <point x="0.0" y="-14.0" />
+      <point x="1275.083333333333" y="166.0" />
+      <point x="1052.75" y="166.0" />
+      <point x="22.66666666666663" y="14.0" />
+    </edge>
+    <edge source="org.demo.ServerProjectApplication" target="org.demo.repository.ScheduleRepository">
+      <point x="20.625" y="-14.0" />
+      <point x="2837.5666666666666" y="156.0" />
+      <point x="2783.4416666666666" y="156.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.PiErrorHandler" target="org.demo.repository.TimeRepository">
+      <point x="-27.5" y="-14.0" />
+      <point x="1117.583333333333" y="196.0" />
+      <point x="1496.6041666666665" y="196.0" />
+      <point x="-21.9375" y="14.0" />
+    </edge>
+    <edge source="org.demo.ServerProjectApplication" target="org.demo.repository.AccountRepository">
+      <point x="-20.625" y="-14.0" />
+      <point x="2796.3166666666666" y="166.0" />
+      <point x="2124.470512820513" y="166.0" />
+      <point x="51.15384615384613" y="14.0" />
+    </edge>
+    <edge source="org.demo.config.WebSocketConfig" target="org.demo.config.CustomSubProtocolWebSocketHandler">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AccountServiceImpl" target="org.demo.repository.AccountRepository">
+      <point x="-17.5" y="-14.0" />
+      <point x="2145.5666666666666" y="434.0" />
+      <point x="2073.3166666666666" y="434.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.AndroidBetweenQuery" target="org.demo.model.RfidKey">
+      <point x="0.0" y="-14.0" />
+      <point x="483.08333333333326" y="166.0" />
+      <point x="562.6944444444443" y="166.0" />
+      <point x="-7.888888888888886" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.AndroidErrorHandler" target="org.demo.repository.TimeRepository">
+      <point x="-47.33333333333334" y="-14.0" />
+      <point x="1702.4583333333333" y="186.0" />
+      <point x="1555.1041666666665" y="186.0" />
+      <point x="36.5625" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.ScheduleController" target="org.demo.service.ScheduleService">
+      <point x="0.0" y="-14.0" />
+      <point x="3551.6839832621085" y="454.0" />
+      <point x="3539.4667799792796" y="454.0" />
+      <point x="40.66666666666663" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.ws.WsController" target="org.demo.repository.AccountRepository">
+      <point x="-8.5" y="-14.0" />
+      <point x="3028.223959142709" y="404.0" />
+      <point x="2909.9416666666666" y="404.0" />
+      <point x="2909.9416666666666" y="146.0" />
+      <point x="2134.701282051282" y="146.0" />
+      <point x="61.38461538461536" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.ScheduleErrorHandler" target="org.demo.repository.ScheduleRepository">
+      <point x="0.0" y="-14.0" />
+      <point x="3113.9416666666666" y="126.0" />
+      <point x="2839.4416666666666" y="126.0" />
+      <point x="56.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.ws.WsController" target="org.demo.service.ScheduleService">
+      <point x="42.5" y="-14.0" />
+      <point x="3079.223959142709" y="444.0" />
+      <point x="3458.1334466459466" y="444.0" />
+      <point x="-40.66666666666663" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.TimeStamp" target="org.demo.model.Stamp">
+      <point x="24.0" y="-14.0" />
+      <point x="947.0833333333333" y="166.0" />
+      <point x="1007.4166666666666" y="166.0" />
+      <point x="-22.66666666666663" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.AndroidController" target="org.demo.service.AndroidService">
+      <point x="42.333333333333314" y="-14.0" />
+      <point x="707.7239591427092" y="404.0" />
+      <point x="1378.333333333333" y="404.0" />
+      <point x="-28.25" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.ws.WsMessage" target="org.demo.model.ws.AffectedArea">
+      <point x="24.75" y="-14.0" />
+      <point x="25.25" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.PiServiceImpl" target="org.demo.errorHandler.PiErrorHandler">
+      <point x="8.833333333333371" y="-14.0" />
+      <point x="1155.2162757381514" y="394.0" />
+      <point x="1145.083333333333" y="394.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.AndroidErrorHandler" target="org.demo.repository.ScheduleRepository">
+      <point x="47.33333333333334" y="-14.0" />
+      <point x="1797.1249999999998" y="276.0" />
+      <point x="2727.4416666666666" y="276.0" />
+      <point x="-56.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.AccountErrorHandler" target="org.demo.repository.AccountRepository">
+      <point x="0.0" y="-14.0" />
+      <point x="2155.8166666666666" y="266.0" />
+      <point x="2083.5474358974357" y="266.0" />
+      <point x="10.230769230769226" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.ws.WsController" target="org.demo.service.TimeService">
+      <point x="-25.5" y="-14.0" />
+      <point x="3011.223959142709" y="414.0" />
+      <point x="2697.9416666666666" y="414.0" />
+      <point x="33.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AndroidServiceImpl" target="org.demo.repository.TimeRepository">
+      <point x="-27.599999999999994" y="-14.0" />
+      <point x="1638.5006499287754" y="424.0" />
+      <point x="1657.2916666666665" y="424.0" />
+      <point x="1657.2916666666665" y="196.0" />
+      <point x="1540.4791666666665" y="196.0" />
+      <point x="21.9375" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.TimeServiceImpl" target="org.demo.repository.TimeRepository">
+      <point x="-24.799999999999955" y="-14.0" />
+      <point x="1488.5006499287754" y="424.0" />
+      <point x="1497.2916666666665" y="424.0" />
+      <point x="1497.2916666666665" y="206.0" />
+      <point x="1511.2291666666665" y="206.0" />
+      <point x="-7.3125" y="14.0" />
+    </edge>
+    <edge source="org.demo.repository.ScheduleRepositoryImpl" target="org.demo.repository.ScheduleRepositoryCustom">
+      <point x="0.0" y="-14.0" />
+      <point x="3128.7541666666666" y="53.0" />
+      <point x="3018.5041666666666" y="53.0" />
+      <point x="45.5" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.ws.WsController" target="org.demo.model.ws.WsAnswer">
+      <point x="25.5" y="-14.0" />
+      <point x="3062.223959142709" y="434.0" />
+      <point x="3373.300113312613" y="434.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.AccountController" target="org.demo.service.AccountService">
+      <point x="43.0" y="-14.0" />
+      <point x="429.5" y="444.0" />
+      <point x="1966.9833333333331" y="444.0" />
+      <point x="-38.333333333333336" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.ScheduleServiceImpl" target="org.demo.repository.ScheduleRepository">
+      <point x="-49.0" y="-14.0" />
+      <point x="3164.723959142709" y="384.0" />
+      <point x="3027.9416666666666" y="384.0" />
+      <point x="3027.9416666666666" y="136.0" />
+      <point x="2811.4416666666666" y="136.0" />
+      <point x="28.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.TestClient" target="org.demo.model.security">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.ws.WsMessage" target="org.demo.model.ws.CrudType">
+      <point x="-24.75" y="-14.0" />
+      <point x="3604.550113312613" y="276.0" />
+      <point x="3392.550113312613" y="276.0" />
+      <point x="20.75" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.security" target="org.demo.model.RfidKey">
+      <point x="0.0" y="-14.0" />
+      <point x="258.5" y="146.0" />
+      <point x="546.9166666666665" y="146.0" />
+      <point x="-23.666666666666657" y="14.0" />
+    </edge>
+    <edge source="org.demo.repository.TimeRepositoryImpl" target="org.demo.repository.TimeRepositoryCustom">
+      <point x="0.0" y="-14.0" />
+      <point x="444.08333333333326" y="53.0" />
+      <point x="954.8854166666665" y="53.0" />
+      <point x="-39.75" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.TimeErrorHandler" target="org.demo.repository.AccountRepository">
+      <point x="32.0" y="-14.0" />
+      <point x="1603.7916666666665" y="236.0" />
+      <point x="2032.3935897435895" y="236.0" />
+      <point x="-40.923076923076906" y="14.0" />
+    </edge>
+    <edge source="org.demo.repository.TimeRepository" target="org.demo.repository.TimeRepositoryCustom">
+      <point x="0.0" y="-14.0" />
+      <point x="1518.5416666666665" y="53.0" />
+      <point x="1034.3854166666665" y="53.0" />
+      <point x="39.75" y="14.0" />
+    </edge>
+    <edge source="org.demo.ServerProjectApplication" target="org.demo.model.ScheduleStamp">
+      <point x="61.875" y="-14.0" />
+      <point x="2878.8166666666666" y="286.0" />
+      <point x="2932.9416666666666" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AndroidServiceImpl" target="org.demo.errorHandler.AndroidErrorHandler">
+      <point x="27.600000000000023" y="-14.0" />
+      <point x="1693.7006499287754" y="414.0" />
+      <point x="1749.7916666666665" y="414.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.DummyAccount" target="org.demo.model.RfidKey">
+      <point x="-29.5" y="-14.0" />
+      <point x="610.5833333333333" y="166.0" />
+      <point x="578.4722222222222" y="166.0" />
+      <point x="7.888888888888886" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AccountServiceImpl" target="org.demo.service.AccountService">
+      <point x="-52.5" y="-14.0" />
+      <point x="2110.5666666666666" y="444.0" />
+      <point x="2005.3166666666666" y="444.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.repository.AccountRepositoryImpl" target="org.demo.repository.AccountRepositoryCustom">
+      <point x="0.0" y="-14.0" />
+      <point x="1787.4729166666666" y="53.0" />
+      <point x="1826.4729166666666" y="53.0" />
+      <point x="-43.75" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.PiErrorHandler" target="org.demo.repository.AccountRepository">
+      <point x="27.5" y="-14.0" />
+      <point x="1172.583333333333" y="216.0" />
+      <point x="2011.9320512820511" y="216.0" />
+      <point x="-61.38461538461539" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.ScheduleServiceImpl" target="org.demo.service.ScheduleService">
+      <point x="49.0" y="-14.0" />
+      <point x="3262.723959142709" y="454.0" />
+      <point x="3498.800113312613" y="454.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.config.WebSecurityConfigController" target="org.demo.config.MyLogoutHandler">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.security.MongoUserDetailsService" target="org.demo.repository.AccountRepository">
+      <point x="0.0" y="-14.0" />
+      <point x="2509.4416666666666" y="236.0" />
+      <point x="2114.2397435897433" y="236.0" />
+      <point x="40.923076923076906" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.TimeServiceImpl" target="org.demo.errorHandler.TimeErrorHandler">
+      <point x="0.0" y="-14.0" />
+      <point x="1513.3006499287753" y="404.0" />
+      <point x="1571.7916666666665" y="404.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.PiServiceImpl" target="org.demo.repository.AccountRepository">
+      <point x="26.5" y="-14.0" />
+      <point x="1172.882942404818" y="414.0" />
+      <point x="1486.2916666666665" y="414.0" />
+      <point x="1486.2916666666665" y="226.0" />
+      <point x="2022.1628205128204" y="226.0" />
+      <point x="-51.15384615384616" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.TimeServiceImpl" target="org.demo.service.TimeService">
+      <point x="49.60000000000002" y="-14.0" />
+      <point x="1562.9006499287752" y="454.0" />
+      <point x="2631.9416666666666" y="454.0" />
+      <point x="-33.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.ServerProjectApplication" target="org.demo.repository.TimeRepository">
+      <point x="-61.875" y="-14.0" />
+      <point x="2755.0666666666666" y="176.0" />
+      <point x="1569.7291666666665" y="176.0" />
+      <point x="51.1875" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AccountServiceImpl" target="org.demo.errorHandler.AccountErrorHandler">
+      <point x="17.5" y="-14.0" />
+      <point x="2180.5666666666666" y="444.0" />
+      <point x="2155.8166666666666" y="444.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.PiStamp" target="org.demo.model.Stamp">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.AndroidController" target="org.demo.model.AndroidBetweenQuery">
+      <point x="-42.33333333333337" y="-14.0" />
+      <point x="623.0572924760427" y="434.0" />
+      <point x="483.08333333333326" y="434.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AndroidServiceImpl" target="org.demo.service.AndroidService">
+      <point x="-55.19999999999999" y="-14.0" />
+      <point x="1610.9006499287752" y="354.0" />
+      <point x="1434.833333333333" y="354.0" />
+      <point x="28.25" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.ws.WsAnswer" target="org.demo.model.ws.CrudType">
+      <point x="-22.25" y="-14.0" />
+      <point x="-20.75" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.AccountController" target="org.demo.model.security">
+      <point x="-43.0" y="-14.0" />
+      <point x="343.5" y="454.0" />
+      <point x="299.5" y="454.0" />
+      <point x="41.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.AndroidController" target="org.demo.model.RfidKey">
+      <point x="0.0" y="-14.0" />
+      <point x="665.3906258093759" y="424.0" />
+      <point x="570.5833333333333" y="424.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.PiServiceImpl" target="org.demo.service.PiService">
+      <point x="44.16666666666663" y="-14.0" />
+      <point x="1190.5496090714846" y="434.0" />
+      <point x="1867.0666666666666" y="434.0" />
+      <point x="-20.25" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.TimeErrorHandler" target="org.demo.repository.TimeRepository">
+      <point x="-32.0" y="-14.0" />
+      <point x="1539.7916666666665" y="206.0" />
+      <point x="1525.8541666666665" y="206.0" />
+      <point x="7.3125" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.ws.WsAnswer" target="org.demo.model.ws.AffectedArea">
+      <point x="22.25" y="-14.0" />
+      <point x="3395.550113312613" y="286.0" />
+      <point x="3603.550113312613" y="286.0" />
+      <point x="-25.25" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.ScheduleServiceImpl" target="org.demo.errorHandler.ScheduleErrorHandler">
+      <point x="0.0" y="-14.0" />
+      <point x="3213.723959142709" y="374.0" />
+      <point x="3113.9416666666666" y="374.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.ServerProjectApplicationTests" target="org.demo.model.security">
+      <point x="65.0" y="-14.0" />
+      <point x="162.5" y="454.0" />
+      <point x="217.5" y="454.0" />
+      <point x="-41.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.TimeServiceImpl" target="org.demo.model.TimeStamp">
+      <point x="-49.599999999999966" y="-14.0" />
+      <point x="1463.7006499287754" y="364.0" />
+      <point x="947.0833333333333" y="364.0" />
+      <point x="24.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.AndroidServiceImpl" target="org.demo.repository.AccountRepository">
+      <point x="0.0" y="-14.0" />
+      <point x="1666.1006499287753" y="424.0" />
+      <point x="1668.2916666666665" y="424.0" />
+      <point x="1668.2916666666665" y="256.0" />
+      <point x="2052.855128205128" y="256.0" />
+      <point x="-20.461538461538453" y="14.0" />
+    </edge>
+    <edge source="org.demo.errorHandler.AndroidErrorHandler" target="org.demo.repository.AccountRepository">
+      <point x="0.0" y="-14.0" />
+      <point x="1749.7916666666665" y="266.0" />
+      <point x="2063.085897435897" y="266.0" />
+      <point x="-10.230769230769226" y="14.0" />
+    </edge>
+    <edge source="org.demo.model.TimeStamp" target="org.demo.model.RfidKey">
+      <point x="-24.0" y="-14.0" />
+      <point x="899.0833333333333" y="136.0" />
+      <point x="602.1388888888887" y="136.0" />
+      <point x="31.555555555555543" y="14.0" />
+    </edge>
+    <edge source="org.demo.ServerProjectApplicationTests" target="org.demo.repository.TimeRepository">
+      <point x="0.0" y="-14.0" />
+      <point x="97.5" y="454.0" />
+      <point x="70.5" y="454.0" />
+      <point x="70.5" y="176.0" />
+      <point x="1467.3541666666665" y="176.0" />
+      <point x="-51.1875" y="14.0" />
+    </edge>
+    <edge source="org.demo.controller.AccountController" target="org.demo.model.RfidKey">
+      <point x="0.0" y="-14.0" />
+      <point x="386.5" y="156.0" />
+      <point x="554.8055555555554" y="156.0" />
+      <point x="-15.777777777777828" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.PiServiceImpl" target="org.demo.model.PiStamp">
+      <point x="-26.5" y="-14.0" />
+      <point x="1119.882942404818" y="384.0" />
+      <point x="1030.0833333333333" y="384.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.demo.ServerProjectApplicationTests" target="org.demo.model.RfidKey">
+      <point x="-65.0" y="-14.0" />
+      <point x="32.5" y="454.0" />
+      <point x="59.5" y="454.0" />
+      <point x="59.5" y="136.0" />
+      <point x="539.0277777777778" y="136.0" />
+      <point x="-31.55555555555543" y="14.0" />
+    </edge>
+    <edge source="org.demo.service.TimeServiceImpl" target="org.demo.repository.AccountRepository">
+      <point x="24.80000000000001" y="-14.0" />
+      <point x="1538.1006499287753" y="414.0" />
+      <point x="1646.2916666666665" y="414.0" />
+      <point x="1646.2916666666665" y="246.0" />
+      <point x="2042.6243589743588" y="246.0" />
+      <point x="-30.69230769230768" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.2637837837837838" x="1839.9999999999998" y="359.20901639344265" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
