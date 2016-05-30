@@ -41,11 +41,8 @@ public class TimeRepositoryImpl implements TimeRepositoryCustom {
     @Override
     public List<TimeStamp> getBetween(AndroidBetweenQuery androidBetweenQuery){
 	    log.info("got between "+androidBetweenQuery.toString());
-//        long from = androidBetweenQuery.getFrom();
-//        long to = androidBetweenQuery.getTo();
-//        RfidKey key = androidBetweenQuery.getId();
-	    return mongoOperations.find(query(where("date").gte(androidBetweenQuery.getFrom()).lte(androidBetweenQuery.getTo()).and("rfidKey._id").is(androidBetweenQuery.getId().getId())), TimeStamp.class);
-
+	    return mongoOperations.find(query(where("date").gte(androidBetweenQuery.getFrom()).lte(androidBetweenQuery.getTo()).and("rfidKey._id").is(androidBetweenQuery.getId().getId())),
+                TimeStamp.class);
     }
 
     @Override

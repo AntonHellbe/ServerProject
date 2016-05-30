@@ -15,7 +15,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
- * Created by Anton on 2016-04-27.
+ * @Author Anton Hellbe
  */
 public class AccountRepositoryImpl implements AccountRepositoryCustom {
 
