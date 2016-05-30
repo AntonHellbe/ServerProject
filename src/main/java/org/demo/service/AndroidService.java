@@ -5,16 +5,10 @@ import org.demo.model.RfidKey;
 import org.demo.model.security.Account;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * @author Anton Hellbe
- */
-
-/**
+ * @author Anton on 2016-04-11.
  *Interface for methods used by the android clients
  **/
 public interface AndroidService {

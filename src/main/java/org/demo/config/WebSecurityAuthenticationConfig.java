@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * Created by Sebastian Börebäck on 2016-04-22.
  * @author Sebastian Börebäck
+ * Connects the MongoDB with authentication.
  */
 @Configuration
 class WebSecurityAuthenticationConfig extends GlobalAuthenticationConfigurerAdapter {
@@ -26,6 +27,12 @@ class WebSecurityAuthenticationConfig extends GlobalAuthenticationConfigurerAdap
 
 	private static final Logger log = LoggerFactory.getLogger(WebSecurityAuthenticationConfig.class);
 
+	/**
+	 * Establishes the Spring boot authentication, so that it will use
+	 * mongoUserDetailsService, which mean it will use MongoDB for looking up user that want to login
+	 * @param auth authenticationMangerbuilder, build how the login authenticion will be handled.
+	 * @throws Exception
+	 */
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();

@@ -19,9 +19,6 @@ import java.util.Calendar;
 /**
  * Created by Sebastian Börebäck on 2016-04-11.
  * @author Sebastian Börebäck, Robin Johnsson, Anton Hellbe
- */
-
-/**
  * Class that handles methods used by the RaspberryPi
  **/
 @Service

@@ -16,14 +16,15 @@ import java.util.List;
 
 /**
  * Created by Sebastian Börebäck on 2016-05-10.
+ * @author Sebastian Boreback
+ * A Resttemplate class that has interceptors for username and password.
+ * this is used for REST request to spring boot server where basci authentication is required
  */
 public class BasicAuthRestTemplate extends RestTemplate {
 
 	public BasicAuthRestTemplate(String username, String password) {
 		super(getClientHttpRequestFactory());
 		addAuthentication(username, password);
-		//this.setRequestFactory(this.clientHttpRequestFactory());
-
 	}
 
 	public BasicAuthRestTemplate(String username, String password, ClientHttpRequestFactory clientHttpRequestFactory) {
@@ -74,6 +75,9 @@ public class BasicAuthRestTemplate extends RestTemplate {
 
 	}
 
+	/**
+	 * Helps java apps with Trusting SSL. this method makes the java app trust the SSL certificate
+	 */
 	public static void trustSelfSignedSSL() {
 		try {
 			SSLContext ctx = SSLContext.getInstance("TLS");

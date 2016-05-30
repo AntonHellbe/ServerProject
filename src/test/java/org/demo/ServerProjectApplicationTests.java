@@ -46,6 +46,10 @@ public class ServerProjectApplicationTests {
 	private MongoOperations mongoOperations;
 
 
+	/**
+	 * Testing jackson serializing of JSON object to Java and otherway.
+	 * @throws IOException
+	 */
 	@Test
 	public void test1() throws IOException {
 
@@ -91,6 +95,9 @@ public class ServerProjectApplicationTests {
 		assertEquals(json1, json2);
 	}
 
+	/**
+	 * Login test
+	 */
 	@Test
 	public void loginSucceeds() {
 		RestTemplate template = new TestRestTemplate("user", "pass");
@@ -99,6 +106,10 @@ public class ServerProjectApplicationTests {
 		System.out.println(response.getBody());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
+
+	/**
+	 * Logout test
+	 */
 	@Test
 	public void logOUTSucceeds() {
 		RestTemplate template = new TestRestTemplate("user", "pass");
@@ -114,6 +125,10 @@ public class ServerProjectApplicationTests {
 		System.out.println(logoutResponse.getStatusCode());
 	}
 
+	/**
+	 * Mongo DB query test to find and sort
+	 * @throws Exception
+	 */
 	@Test
 	public void testDBQueryFindLatest() throws Exception {
 		System.out.println("Testing Lucifer Morningstar");

@@ -77,6 +77,10 @@ public class WebSocketConfig extends WebSocketMessageBrokerConfigurationSupport 
 
 	}
 
+	/**
+	 * Connects my websocket handler, to be able to manage websocket connections and disconnections.
+	 * @return
+	 */
 	@Bean
 	public WebSocketHandler subProtocolWebSocketHandler() {
 		return new CustomSubProtocolWebSocketHandler(clientInboundChannel(), clientOutboundChannel());

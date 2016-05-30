@@ -21,7 +21,6 @@ public interface PiService {
 	 * Method returns the current time from the server, used to set the clock on the pi
 	 * @return PiStamp containing current time on server
      */
-
 	ResponseEntity<PiStamp> getTime();
 
 }
