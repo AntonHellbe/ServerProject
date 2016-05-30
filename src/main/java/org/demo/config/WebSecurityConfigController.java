@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 /**
  * Created by Sebastian Börebäck on 2016-04-22.
  * @author Sebastian Börebäck, Robin Johnsson
+ * Handles spring boot endpoints, securing them and sets role premissions.
+ * sets handler for logout
  */
 @EnableWebSecurity
 @Configuration
