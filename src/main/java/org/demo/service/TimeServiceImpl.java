@@ -60,11 +60,11 @@ public class TimeServiceImpl implements TimeService {
 	@Override
 	public ResponseEntity<TimeStamp> addTime(String id, TimeStamp newStamp) {
 		try {
-			TimeStamp dildo = timeRepository.newStampCheck(newStamp.getRfidkey(), newStamp);
-			if(dildo == null) {
+			TimeStamp tempStamp = timeRepository.newStampCheck(newStamp.getRfidkey(), newStamp);
+			if(tempStamp == null) {
 				newStamp.setCheckIn(true);
 			}else {
-			newStamp.setCheckIn(!dildo.getCheckIn());
+			newStamp.setCheckIn(!tempStamp.getCheckIn());
 			}
 			timeRepository.save(newStamp);
 			return new ResponseEntity<>(newStamp, HttpStatus.OK);
