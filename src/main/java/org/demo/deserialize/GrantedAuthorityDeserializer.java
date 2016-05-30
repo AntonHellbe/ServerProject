@@ -17,11 +17,20 @@ import java.util.List;
 
 /**
  * @author Sebastian Börebäck, Anton on 2016-05-03.
+ * A Parser for parsing a JSON to a GrantedAuthority
  */
 public class GrantedAuthorityDeserializer extends JsonDeserializer<List<GrantedAuthority>> {
 
 	private static final Logger log = LoggerFactory.getLogger(GrantedAuthorityDeserializer.class);
 
+	/**
+	 * Parse a GrantedAuthority JSON to GrantedAuthority Java object
+	 * @param jsonParser the JSON
+	 * @param deserializationContext
+	 * @return a GrantedAuthority Java object
+	 * @throws IOException
+	 * @throws JsonProcessingException
+	 */
     @Override
     public List<GrantedAuthority> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
 	    List<GrantedAuthority> auths = new ArrayList<>();
