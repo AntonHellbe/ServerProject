@@ -1,7 +1,0 @@
-Harald;Svensson;C48659EC;1
-Rut;Nilsson;34915AEC;2
-Einar;Andersson;A448182B;3
-Johanna;Bok;4B79295;4
-Johan;Nilsson;247615E;5
-Anna;Ek;1C699EB6;6
-Carsten;Panduro;8BA8A996;7
