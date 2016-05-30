@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Anton on 2016-05-04.
+ * @Author Anton Hellbe, Sebastian Börebäck
  */
 @Component
 public class CustomLogoutSuccessHandler implements SessionRepository{

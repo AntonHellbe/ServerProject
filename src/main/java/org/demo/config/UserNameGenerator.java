@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Anton on 2016-04-27.
+ * @Author Anton Hellbe
  */
 @Component
 public class UserNameGenerator {
