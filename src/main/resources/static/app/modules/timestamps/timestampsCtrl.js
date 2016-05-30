@@ -86,7 +86,19 @@
 							else {
 								//$log.info("found " + vm.selectedUser.firstName);
 								//$log.info("payload " + JSON.stringify(wsUpdate.payload));
-								vm.selectedUser.stamps.push(wsUpdate.payload);
+								if(vm.selectedUser.stamps != undefined) {
+									//$log.info("has stamps");
+									if(vm.selectedUser.stamps.length <=0) {
+										//$log.info("stamps are 0 or less");
+										vm.selectedUser.stamps= [];
+									}
+									vm.selectedUser.stamps.push(wsUpdate.payload);
+								}
+								else {
+									//$log.info("has no stamps");
+									vm.selectedUser.stamps = [];
+									vm.selectedUser.stamps.push(wsUpdate.payload);
+								}
 							}
 
 							break;
