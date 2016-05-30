@@ -40,6 +40,7 @@ public class Tester {
 
 		BasicAuthRestTemplate rest = new BasicAuthRestTemplate("admin", "pass", getReqFactory());
 
+		//server need to be running at port 44344 *localhost and db need to be stared
 		String url = "http://localhost:44344/api/users/";
 //		String url2 = "https://projektessence.se/api/users/";
 

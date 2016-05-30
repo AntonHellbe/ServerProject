@@ -30,7 +30,6 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-//@WebAppConfiguration
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ServerProjectApplication.class)
