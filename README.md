@@ -55,9 +55,10 @@ then copy the created jar file to you server.
 
 ## Authors
 
+* **Sebastian Boreback**
 * **Anton Hellbe**  
 * **Robin Johnsson**  
-* **Sebastian Boreback**
+
 
 ## License
 
